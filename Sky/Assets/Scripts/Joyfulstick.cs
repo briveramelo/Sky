@@ -8,6 +8,7 @@ public class Joyfulstick : MonoBehaviour {
 	public float joystickThreshhold; //maximum distance you can move the joystick
 	public Vector2 moveDir;
 	public int movingFinger;
+	public Touch fingeringYourButthole;
 
 
 	// Use this for initialization
