@@ -65,7 +65,7 @@ public class Joyfulstick : MonoBehaviour {
 							attackDir = releaseTouchPoint - startingTouchPoint;
 							releaseDist = Vector2.Distance (releaseTouchPoint,startingTouchPoint);
 							if ( releaseDist < distToThrow){ //stab the spear
-								attackDir = jaiTransform.position - releaseTouchPoint;
+								attackDir = (Vector2)jaiTransform.position - releaseTouchPoint;
 								StartCoroutine(jaiScript.StabSpear(attackDir.normalized));
 							}
 							else { // throw the spear
