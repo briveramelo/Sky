@@ -15,6 +15,8 @@ public class Joyfulstick : MonoBehaviour {
 	public Jai jaiScript;
 	public Transform jaiTransform;
 	public float distToThrow;
+	public Vector2 attackDir;
+	public float releaseDist;
 	
 	// Use this for initialization
 	void Start () {
@@ -60,8 +62,8 @@ public class Joyfulstick : MonoBehaviour {
 					else if (finger.fingerId == spearFinger ){ //use the spear
 						if (!jaiScript.throwing && !jaiScript.stabbing){
 							releaseTouchPoint = finger.rawPosition;
-							Vector2 attackDir = releaseTouchPoint - startingTouchPoint;
-							float releaseDist = Vector2.Distance (releaseTouchPoint,startingTouchPoint);
+							attackDir = releaseTouchPoint - startingTouchPoint;
+							releaseDist = Vector2.Distance (releaseTouchPoint,startingTouchPoint);
 							if ( releaseDist < distToThrow){ //stab the spear
 								attackDir = jaiTransform.position - releaseTouchPoint;
 								StartCoroutine(jaiScript.StabSpear(attackDir.normalized));

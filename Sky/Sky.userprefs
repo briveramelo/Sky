@@ -5,13 +5,14 @@
       <File FileName="Assets/Scripts/Joystick.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/BalloonBasket.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Jai.cs" Line="32" Column="3" />
-      <File FileName="Assets/Scripts/Joyfulstick.cs" Line="53" Column="7" />
+      <File FileName="Assets/Scripts/Joyfulstick.cs" Line="52" Column="9" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Scripts" expanded="True">
+              <Node name="Jai.cs" selected="True" />
               <Node name="Joyfulstick.cs" selected="True" />
             </Node>
           </Node>
