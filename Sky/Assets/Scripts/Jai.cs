@@ -9,11 +9,19 @@ public class Jai : MonoBehaviour {
 	public int throws;
 	public int stabs;
 
+	public float throwForce;
+
+	public string ballString;
+
 	void Start(){
 		throwing = false;
+		throwForce = 10f;
+		ballString = "Prefabs/Props/Ball";
 	}
 
 	public IEnumerator ThrowSpear(Vector2 throwDir){
+		GameObject ball = Instantiate (Resources.Load (ballString), transform.position, Quaternion.identity) as GameObject;
+		ball.rigidbody2D.AddForce (throwDir * throwForce);
 		throws++;
 		yield return null;
 	}
