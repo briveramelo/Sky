@@ -13,14 +13,16 @@ public class Jai : MonoBehaviour {
 
 	public string ballString;
 
+	public GameObject ball;
+
 	void Start(){
 		throwing = false;
-		throwForce = 10f;
-		ballString = "Prefabs/Props/Ball";
+		throwForce = 1000f;
+		ballString = "Prefabs/Equipment/Ball";
 	}
 
 	public IEnumerator ThrowSpear(Vector2 throwDir){
-		GameObject ball = Instantiate (Resources.Load (ballString), transform.position, Quaternion.identity) as GameObject;
+		ball = Instantiate (Resources.Load (ballString), transform.position, Quaternion.identity) as GameObject;
 		ball.rigidbody2D.AddForce (throwDir * throwForce);
 		throws++;
 		yield return null;
