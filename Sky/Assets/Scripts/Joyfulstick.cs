@@ -25,7 +25,7 @@ public class Joyfulstick : MonoBehaviour {
 		jaiScript = GameObject.Find ("Jai").GetComponent<Jai> ();
 		jaiTransform = jaiScript.transform;
 	}
-
+	
 	// Update is called once per frame
 	void Update () {
 		if (Input.touchCount>0){
@@ -50,9 +50,6 @@ public class Joyfulstick : MonoBehaviour {
 						moveDir = Vector2.ClampMagnitude(finger.rawPosition-startingJoystickSpot,joystickThreshhold);
 						distFromStick = moveDir.magnitude;
 						joystickThumb.transform.position = startingJoystickSpot + moveDir;
-					}
-					else if (!jaiScript.throwing){ //throw the spear
-
 					}
 				}
 				else if (finger.phase == TouchPhase.Ended){ //when your finger comes off the screen
