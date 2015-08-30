@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\BalloonBasket.cs" />
+     <Compile Include="Assets\Scripts\Duck.cs" />
      <Compile Include="Assets\Scripts\Jai.cs" />
      <Compile Include="Assets\Scripts\Joyfulstick.cs" />
      <Compile Include="Assets\Scripts\Joystick.cs" />
