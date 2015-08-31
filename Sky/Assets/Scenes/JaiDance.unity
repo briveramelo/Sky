@@ -116,7 +116,8 @@ MonoBehaviour:
   releaseDist: 0
   moveForce: 0
   maxBalloonSpeed: 0
-  joystickThreshhold: 0
+  joystickAppearanceThreshhold: 0
+  joystickMaxThumbDist: 0
   joystickThumbSprite: {fileID: 0}
   jaiScript: {fileID: 0}
   jaiTransform: {fileID: 0}
@@ -392,7 +393,7 @@ Transform:
   m_GameObject: {fileID: 439306454}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.60000002, y: 1.60000002, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
@@ -605,6 +606,7 @@ GameObject:
   - 58: {fileID: 542925222}
   - 114: {fileID: 542925221}
   - 50: {fileID: 542925225}
+  - 95: {fileID: 542925226}
   m_Layer: 13
   m_Name: Jai
   m_TagString: Untagged
@@ -629,7 +631,9 @@ MonoBehaviour:
   throws: 0
   stabs: 0
   throwForce: 0
+  throwSpearTime: 0
   ballString: 
+  jaiAnimator: {fileID: 0}
   ball: {fileID: 0}
 --- !u!58 &542925222
 CircleCollider2D:
@@ -694,6 +698,21 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+--- !u!95 &542925226
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 542925220}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 09f0579b2aca8445a8e7a3c768821c15, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1001 &689822328
 Prefab:
   m_ObjectHideFlags: 0
