@@ -13,6 +13,7 @@ GameObject:
   - 114: {fileID: 11400788}
   - 50: {fileID: 5000788}
   - 58: {fileID: 5800788}
+  - 114: {fileID: 11440034}
   m_Layer: 0
   m_Name: Duck1
   m_TagString: Untagged
@@ -27,13 +28,14 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100788}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.34399998, y: .0109999999, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalPosition: {x: -1.34375, y: 0, z: 0}
+  m_LocalScale: {x: -3.125, y: 3.125, z: 3.125}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!50 &5000788
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -42,22 +44,24 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
-  m_FixedAngle: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!58 &5800788
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100788}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Material: {fileID: 0}
   m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
   m_Radius: .0599999987
-  m_Center: {x: 0, y: 0}
 --- !u!95 &9500788
 Animator:
   serializedVersion: 3
@@ -70,7 +74,9 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 1b8e09bf5d7a44ee4acf3ea24f24c84d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11400788
@@ -86,6 +92,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 0
   currentSpeed: 0
+  rigidbody2D: {fileID: 0}
+--- !u!114 &11440034
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pixelPerfectCamera: {fileID: 0}
+  fitType: 0
+  parallaxLayer: 0
+  pixelScale: 1
+  runContinously: 1
+  useParentTransform: 0
+  displayGrid: 0
 --- !u!212 &21200788
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -95,15 +120,19 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: ad12657c8faab41149fa0494e1d6ee38, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
+  m_ReflectionProbeUsage: 0
+  m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7874d1047103046aa8d77d01a7114fb7, type: 3}
@@ -119,4 +148,3 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100788}
   m_IsPrefabParent: 1
-  m_IsExploded: 1
