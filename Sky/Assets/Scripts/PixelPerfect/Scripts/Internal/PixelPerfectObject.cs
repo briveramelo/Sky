@@ -56,7 +56,7 @@ public class PixelPerfectObject : MonoBehaviour {
 	protected void SetPixelPerfect() {
 		FindPixelPerfectCamera();
 		SetPixelPerfectPosition();
-		SetPixelPerfectScale();
+		//SetPixelPerfectScale();
 	}
 	
 	void FindPixelPerfectCamera() {

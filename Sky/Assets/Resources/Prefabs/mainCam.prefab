@@ -13,6 +13,7 @@ GameObject:
   - 124: {fileID: 12484922}
   - 81: {fileID: 8184922}
   - 114: {fileID: 11439096}
+  - 114: {fileID: 11429118}
   m_Layer: 0
   m_Name: mainCam
   m_TagString: MainCamera
@@ -50,9 +51,9 @@ Camera:
     height: 1
   near clip plane: .300000012
   far clip plane: 1000
-  field of view: 53.7016296
-  orthographic: 0
-  orthographic size: 5.0625
+  field of view: 90
+  orthographic: 1
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -80,6 +81,20 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 184922}
   m_Enabled: 1
+--- !u!114 &11429118
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 184922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289ff84f28a264cdd9bc6a786479f4ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startSpot: {x: 0, y: 0, z: 0}
+  shift: {x: 0, y: 0, z: 0}
+  shaking: 0
 --- !u!114 &11439096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -92,9 +107,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fitType: 0
-  targetPixelHeight: 324
+  targetPixelHeight: 320
   parallaxLayerCount: 10
-  cameraZoom: 1
+  cameraZoom: 2
   pixelatedPostProcessing: 1
   heightError: 0
   showGizmos: 1

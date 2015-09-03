@@ -23,9 +23,10 @@ public class Joyfulstick : MonoBehaviour {
 	public float joystickMaxThumbDist;
 	public float correctionPixelFactor;
 
-	public SpriteRenderer joystickThumbSprite;
+	public SpriteRenderer controlStickSprite;
 
 	public Jai jaiScript;
+	public Spear spearScript;
 	public Transform jaiTransform;
 
 	public int n;
@@ -44,7 +45,7 @@ public class Joyfulstick : MonoBehaviour {
 		spearFinger = -2;
 		moveForce = 5f;
 		jaiScript = GameObject.Find ("Jai").GetComponent<Jai> ();
-		joystickThumbSprite = GameObject.Find ("ThumbJoystick").GetComponent<SpriteRenderer>();
+		controlStickSprite = GameObject.Find ("ControlStick").GetComponent<SpriteRenderer>();
 		jaiTransform = jaiScript.transform;
 		balloonBasketBody = GameObject.Find ("BalloonBasket").GetComponent<Rigidbody2D>();
 		//correctionPixels = new Vector2 (Screen.width/2,-Screen.height/2);
@@ -53,6 +54,7 @@ public class Joyfulstick : MonoBehaviour {
 		correctionPixelFactor = 5f / 320f; //5 game units divided by 320 pixels
 		maxBalloonSpeed = balloonBasketBody.GetComponent<BalloonBasket>().maxBalloonSpeed;
 		Physics2D.IgnoreLayerCollision (14, 13); //ignore basket and spear collision
+		Physics2D.IgnoreLayerCollision (16, 16); //ignore birds hitting birds
 	}
 
 	Vector2 ConvertFingerPosition(Vector2 fingerIn){
@@ -70,7 +72,7 @@ public class Joyfulstick : MonoBehaviour {
 					distFromStick = Vector2.Distance(touchSpot,startingJoystickSpot);
 					if (distFromStick<joystickMaxThumbDist){
 						joystickFinger = finger.fingerId;
-						joystickThumbSprite.enabled = true;
+						controlStickSprite.enabled = true;
 					}
 					else{
 						if (Input.touchCount<3){
@@ -87,7 +89,7 @@ public class Joyfulstick : MonoBehaviour {
 							moveDir = moveDir.normalized * joystickAppearanceThreshhold;
 						}
 						distFromStick = moveDir.magnitude;
-						joystickThumbSprite.transform.position = startingJoystickSpot + moveDir;
+						controlStickSprite.transform.position = startingJoystickSpot + moveDir;
 						if (balloonBasketBody.velocity.magnitude<maxBalloonSpeed){
 							balloonBasketBody.AddForce (moveDir * moveForce);
 						}
@@ -95,20 +97,16 @@ public class Joyfulstick : MonoBehaviour {
 				}
 				else if (finger.phase == TouchPhase.Ended){ //when your finger comes off the screen
 					if (finger.fingerId == joystickFinger){ //release the joystick
-						joystickThumbSprite.enabled = false;
+						controlStickSprite.enabled = false;
 						joystickFinger = -1;
 					}
 					else if (finger.fingerId == spearFinger ){ //use the spear
-						if (!jaiScript.throwing && !jaiScript.stabbing){
-							spearFinger = -2;
-							releaseTouchPoint = ConvertFingerPosition(finger.position);
-							attackDir = releaseTouchPoint - startingTouchPoint;
-							releaseDist = Vector2.Distance (releaseTouchPoint,startingTouchPoint);
-							if ( releaseDist < distToThrow){ //stab the spear
-								attackDir = (Vector2)jaiTransform.position - releaseTouchPoint;
-								StartCoroutine(jaiScript.StabSpear(attackDir.normalized));
-							}
-							else { // throw the spear
+						spearFinger = -2;
+						releaseTouchPoint = ConvertFingerPosition(finger.position);
+						attackDir = releaseTouchPoint - startingTouchPoint;
+						releaseDist = Vector2.Distance (releaseTouchPoint,startingTouchPoint);
+						if (!spearScript.flying){
+							if ( releaseDist > distToThrow){ //throw the spear
 								StartCoroutine(jaiScript.ThrowSpear(attackDir.normalized));
 							}
 						}

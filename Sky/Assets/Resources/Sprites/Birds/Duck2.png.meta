@@ -1,7 +1,13 @@
 fileFormatVersion: 2
 guid: d976dfb231b9b4173821dbdc53716adb
+timeCreated: 1441144522
+licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Duck2_0
+    21300002: Duck2_1
+    21300004: Duck2_2
+    21300006: Duck2_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -44,9 +50,53 @@ TextureImporter:
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
-  buildTargetSettings: []
+  buildTargetSettings:
+  - buildTarget: Standalone
+    maxTextureSize: 8192
+    textureFormat: -3
+    compressionQuality: 50
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Duck2_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 15
+        width: 19
+        height: 6
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Duck2_1
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 15
+        width: 21
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Duck2_2
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 14
+        width: 19
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Duck2_3
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 6
+        width: 19
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 
