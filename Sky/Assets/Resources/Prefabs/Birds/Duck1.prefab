@@ -1,20 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &100788
+--- !u!1 &172524
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 400788}
-  - 212: {fileID: 21200788}
-  - 95: {fileID: 9500788}
-  - 114: {fileID: 11400788}
-  - 50: {fileID: 5000788}
-  - 58: {fileID: 5800788}
-  - 114: {fileID: 11440034}
-  - 114: {fileID: 11460350}
+  - 4: {fileID: 481140}
+  - 212: {fileID: 21207092}
+  - 95: {fileID: 9511552}
+  - 114: {fileID: 11485238}
+  - 50: {fileID: 5076892}
+  - 114: {fileID: 11488596}
+  - 114: {fileID: 11433176}
+  - 61: {fileID: 6130950}
   m_Layer: 16
   m_Name: Duck1
   m_TagString: Untagged
@@ -22,25 +22,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &400788
+--- !u!4 &481140
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100788}
+  m_GameObject: {fileID: 172524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1, y: 0, z: 0}
-  m_LocalScale: {x: -3.125, y: 3.125, z: 3.125}
+  m_LocalScale: {x: 3.125, y: 3.125, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!50 &5000788
+--- !u!50 &5076892
 Rigidbody2D:
   serializedVersion: 2
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100788}
+  m_GameObject: {fileID: 172524}
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
@@ -50,26 +50,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &5800788
-CircleCollider2D:
+--- !u!61 &6130950
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100788}
+  m_GameObject: {fileID: 172524}
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: .0599999987
---- !u!95 &9500788
+  m_Size: {x: .159999996, y: .0700000003}
+--- !u!95 &9511552
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100788}
+  m_GameObject: {fileID: 172524}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 1b8e09bf5d7a44ee4acf3ea24f24c84d, type: 2}
@@ -80,12 +80,29 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11400788
+--- !u!114 &11433176
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100788}
+  m_GameObject: {fileID: 172524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 884c3137713c84e6581bda55ae91e923, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  birdType: 0
+  gutSplosions: []
+  randomGutNumber: 0
+  thisGutSplosion: 
+  balloonBasketScript: {fileID: 0}
+--- !u!114 &11485238
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172524}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f061d6ff1cc794296a229a8432680d3c, type: 3}
@@ -93,13 +110,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 0
   currentSpeed: 0
+  pixelScale: {x: 0, y: 0, z: 0}
+  pixelScaleReversed: {x: 0, y: 0, z: 0}
   rigidbod: {fileID: 0}
---- !u!114 &11440034
+--- !u!114 &11488596
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100788}
+  m_GameObject: {fileID: 172524}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
@@ -112,28 +131,12 @@ MonoBehaviour:
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
---- !u!114 &11460350
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 884c3137713c84e6581bda55ae91e923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 0
-  birdType: 0
-  gutSplosions: []
-  randomGutNumber: 0
-  thisGutSplosion: 
---- !u!212 &21200788
+--- !u!212 &21207092
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100788}
+  m_GameObject: {fileID: 172524}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -163,5 +166,5 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 100788}
+  m_RootGameObject: {fileID: 172524}
   m_IsPrefabParent: 1

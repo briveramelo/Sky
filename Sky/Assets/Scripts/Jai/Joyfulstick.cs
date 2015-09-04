@@ -53,8 +53,6 @@ public class Joyfulstick : MonoBehaviour {
 		//correctionPixelFactor = 5 / Screen.height;
 		correctionPixelFactor = 5f / 320f; //5 game units divided by 320 pixels
 		maxBalloonSpeed = balloonBasketBody.GetComponent<BalloonBasket>().maxBalloonSpeed;
-		Physics2D.IgnoreLayerCollision (14, 13); //ignore basket and spear collision
-		Physics2D.IgnoreLayerCollision (16, 16); //ignore birds hitting birds
 	}
 
 	Vector2 ConvertFingerPosition(Vector2 fingerIn){
@@ -105,7 +103,7 @@ public class Joyfulstick : MonoBehaviour {
 						releaseTouchPoint = ConvertFingerPosition(finger.position);
 						attackDir = releaseTouchPoint - startingTouchPoint;
 						releaseDist = Vector2.Distance (releaseTouchPoint,startingTouchPoint);
-						if (!spearScript.flying){
+						if (!spearScript.throwing){
 							if ( releaseDist > distToThrow){ //throw the spear
 								StartCoroutine(jaiScript.ThrowSpear(attackDir.normalized));
 							}

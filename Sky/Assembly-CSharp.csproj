@@ -52,7 +52,6 @@
      <Compile Include="Assets\Scripts\Birds\Pigeon.cs" />
      <Compile Include="Assets\Scripts\Birds\SelfDestruct.cs" />
      <Compile Include="Assets\Scripts\Birds\Stork.cs" />
-     <Compile Include="Assets\Scripts\Camera\ScreenShake.cs" />
      <Compile Include="Assets\Scripts\Gear\Balloon.cs" />
      <Compile Include="Assets\Scripts\Gear\BalloonBasket.cs" />
      <Compile Include="Assets\Scripts\Gear\Spear.cs" />
@@ -67,6 +66,8 @@
      <Compile Include="Assets\Scripts\PixelPerfect\Scripts\Internal\PixelPerfectObject.cs" />
      <Compile Include="Assets\Scripts\PixelPerfect\Scripts\PixelPerfectCamera.cs" />
      <Compile Include="Assets\Scripts\PixelPerfect\Scripts\PixelPerfectSprite.cs" />
+     <Compile Include="Assets\Scripts\World\ScreenShake.cs" />
+     <Compile Include="Assets\Scripts\World\Waves.cs" />
      <None Include="Assets\Scripts\PixelPerfect\Scripts\Internal\Resources\PixelPerfectShader.shader" />
      <None Include="Assets\Scripts\PixelPerfect\README.txt" />
      <None Include="Assets\Scripts\PixelArtRotation\Documentation\Documentation.txt" />

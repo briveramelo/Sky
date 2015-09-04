@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f58e6fded977d44e08930ae55febb28c
-timeCreated: 1441143002
+timeCreated: 1441310470
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -77,9 +77,9 @@ TextureImporter:
     - name: Jai_ThrowUp_0
       rect:
         serializedVersion: 2
-        x: 5
+        x: 4
         y: 1
-        width: 17
+        width: 18
         height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -87,99 +87,99 @@ TextureImporter:
     - name: Jai_ThrowUp_1
       rect:
         serializedVersion: 2
-        x: 31
+        x: 30
         y: 1
-        width: 17
+        width: 18
         height: 29
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Jai_ThrowUp_2
       rect:
         serializedVersion: 2
-        x: 57
+        x: 56
         y: 1
-        width: 17
+        width: 18
         height: 29
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Jai_ThrowUp_3
       rect:
         serializedVersion: 2
-        x: 83
+        x: 82
         y: 1
-        width: 17
+        width: 18
         height: 29
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Jai_ThrowUp_4
       rect:
         serializedVersion: 2
-        x: 109
+        x: 108
         y: 1
-        width: 17
+        width: 18
         height: 29
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Jai_ThrowUp_5
       rect:
         serializedVersion: 2
-        x: 135
+        x: 134
         y: 1
-        width: 17
+        width: 18
         height: 29
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Jai_ThrowUp_6
       rect:
         serializedVersion: 2
-        x: 161
+        x: 160
         y: 1
-        width: 17
+        width: 18
         height: 29
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Jai_ThrowUp_7
       rect:
         serializedVersion: 2
-        x: 187
+        x: 186
         y: 1
-        width: 17
+        width: 18
         height: 29
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Jai_ThrowUp_8
       rect:
         serializedVersion: 2
-        x: 213
+        x: 212
         y: 1
-        width: 17
+        width: 18
         height: 29
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Jai_ThrowUp_9
       rect:
         serializedVersion: 2
-        x: 239
+        x: 238
         y: 1
-        width: 17
+        width: 18
         height: 29
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Jai_ThrowUp_10
       rect:
         serializedVersion: 2
-        x: 265
+        x: 264
         y: 1
-        width: 17
+        width: 18
         height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -187,9 +187,9 @@ TextureImporter:
     - name: Jai_ThrowUp_11
       rect:
         serializedVersion: 2
-        x: 291
+        x: 290
         y: 1
-        width: 17
+        width: 18
         height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -197,9 +197,9 @@ TextureImporter:
     - name: Jai_ThrowUp_12
       rect:
         serializedVersion: 2
-        x: 317
+        x: 316
         y: 1
-        width: 17
+        width: 18
         height: 29
       alignment: 0
       pivot: {x: 0, y: 0}

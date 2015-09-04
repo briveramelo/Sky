@@ -112,7 +112,7 @@ MonoBehaviour:
   cameraZoom: 2
   pixelatedPostProcessing: 1
   heightError: 0
-  showGizmos: 1
+  showGizmos: 0
   subpixelOffset: {x: 0, y: 0}
   pixelZoomMode: 0
 --- !u!124 &12484922

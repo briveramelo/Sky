@@ -19,25 +19,18 @@ public class Balloon : MonoBehaviour {
 		balloonBasketScript = GameObject.Find ("BalloonBasket").GetComponent<BalloonBasket> ();
 		screenShakeScript = GameObject.Find ("mainCam").GetComponent<ScreenShake> ();
 		balloonBasketBody = GameObject.Find ("BalloonBasket").GetComponent<Rigidbody2D> ();
-		dropForce = 5f;
+		dropForce = 100f;
 		popping = false;
 		balloonCollider = GetComponent<CircleCollider2D> ();
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.layer == 16){//bird layer
-			StartCoroutine (SlowTime());
+			StartCoroutine (balloonBasketScript.SlowTime(.5f,.75f));
 			StartCoroutine(PopBalloon());
 			StartCoroutine(balloonBasketScript.Invincibility());
 			StartCoroutine(screenShakeScript.CameraShake());
 		}
-	}
-
-	public IEnumerator SlowTime(){
-		Time.timeScale = 0.75f;
-		yield return new WaitForSeconds (.5f);
-		Time.timeScale = 1f;
-		yield return null;
 	}
 
 	public IEnumerator PopBalloon(){
@@ -46,6 +39,7 @@ public class Balloon : MonoBehaviour {
 			popNoise.Play ();
 			balloonAnimator.SetInteger("AnimState",1);
 			balloonBasketBody.AddForce (Vector2.down * dropForce);
+			Destroy (transform.GetChild(0).gameObject);
 			while (popNoise.isPlaying){
 				yield return null;
 			}
