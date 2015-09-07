@@ -1,15 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Birds/Albatross.cs">
     <Files>
-      <File FileName="Assets/Scripts/Gear/Spear.cs" Line="26" Column="1" />
-      <File FileName="Assets/Scripts/Birds/Duck.cs" Line="42" Column="37" />
-      <File FileName="Assets/Scripts/Birds/GutSplosion.cs" Line="47" Column="4" />
-      <File FileName="Assets/Scripts/Birds/GetHurt.cs" Line="21" Column="3" />
-      <File FileName="Assets/Scripts/Birds/Pigeon.cs" Line="22" Column="45" />
-      <File FileName="Assets/Scripts/Gear/BalloonBasket.cs" Line="11" Column="9" />
-      <File FileName="Assets/Scripts/World/Waves.cs" Line="74" Column="1" />
-      <File FileName="Assets/Scripts/Birds/Albatross.cs" Line="17" Column="28" />
+      <File FileName="Assets/Scripts/Birds/Eagle.cs" Line="28" Column="56" />
+      <File FileName="Assets/Scripts/Jai/Joyfulstick.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Birds/Albatross.cs" Line="18" Column="18" />
+      <File FileName="Assets/Scripts/Gear/BalloonBasket.cs" Line="15" Column="12" />
+      <File FileName="Assets/Scripts/Gear/Balloon.cs" Line="31" Column="33" />
+      <File FileName="Assets/Scripts/Gear/Spear.cs" Line="97" Column="1" />
+      <File FileName="Assets/Scripts/Birds/GetHurt.cs" Line="52" Column="17" />
+      <File FileName="Assets/Scripts/World/TeleportSideToSide.cs" Line="26" Column="64" />
+      <File FileName="Assets/Scripts/Birds/Duck.cs" Line="18" Column="56" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
