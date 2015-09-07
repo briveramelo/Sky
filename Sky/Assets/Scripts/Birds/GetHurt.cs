@@ -4,17 +4,20 @@ using System.Collections;
 public class GetHurt : MonoBehaviour {
 
 	public int health;
-	public int birdType;
-	public string[] gutSplosions;
-	public int randomGutNumber;
+	public string gutSplosionParentString;
+	public int gutValue;
 	public string thisGutSplosion;
+	public string[] gutSplosions;
 	public BalloonBasket balloonBasketScript;
 	public Waves wavesScript;
+	public int birdType;
+	public GameObject guts;
 
 	// Use this for initialization
 	void Awake () {
 		health = 1;
 		wavesScript = GameObject.Find ("WorldBounds").GetComponent<Waves> ();
+		gutSplosionParentString = "Prefabs/Birds/GutSplosionParent";
 		gutSplosions = new string[]{
 			"Prefabs/GutSplosions/GutSplosion1a", //small birds  //0
 			"Prefabs/GutSplosions/GutSplosion2a", //medium birds //1
@@ -25,21 +28,28 @@ public class GetHurt : MonoBehaviour {
 			"Prefabs/GutSplosions/GutSplosion3a", //big birds	 //5
 			"Prefabs/GutSplosions/GutSplosion3b",				 //6
 		};
-
 		if (GetComponent<Pigeon>()){
 			birdType = 0;
-			thisGutSplosion = gutSplosions [0];
+			gutValue = 3;
 		}
 		else if (GetComponent<Duck> ()) {
-			randomGutNumber = Random.Range (1, 5);
 			birdType = 1;
-			thisGutSplosion = gutSplosions [randomGutNumber];
+			gutValue = 5;
 		} 
 		else if (GetComponent<Stork>()){
-			birdType = 5;
+			birdType = 2;
 			health = 2;
-			randomGutNumber = Random.Range (5, 7);
-			thisGutSplosion = gutSplosions [randomGutNumber];
+			gutValue = 7;
+		}
+		else if (GetComponent<Eagle>()){
+			birdType = 3;
+			health = 2;
+			gutValue = 9;
+		}
+		else if (GetComponent<Albatross>()){
+			birdType = 4;
+			health = 7;
+			gutValue = 11;
 		}
 		balloonBasketScript = GameObject.Find ("BalloonBasket").GetComponent<BalloonBasket> ();
 	}
@@ -47,10 +57,11 @@ public class GetHurt : MonoBehaviour {
 	public IEnumerator TakeDamage(Vector2 gutDirection){
 		health--;
 		if (health>0){
-			randomGutNumber = 0;
+			gutValue = 0;
 		}
-		GameObject guts = Instantiate (Resources.Load (gutSplosions [randomGutNumber]), transform.position, Quaternion.identity) as GameObject;
+		guts = Instantiate (Resources.Load (gutSplosions[6]), transform.position, Quaternion.identity) as GameObject;
 		guts.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2 (gutDirection.x * .3f,5f);
+		StartCoroutine (guts.GetComponent<GutSplosion> ().GenerateGuts (gutValue));
 		if (health<1){
 			StartCoroutine (balloonBasketScript.SlowTime(.1f,.5f));
 			wavesScript.currentWaveBirdsStillAlive[birdType]--;

@@ -12,7 +12,7 @@ public class BalloonBasket : MonoBehaviour {
 	public int balloonCount;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		balloonCount = 3;
 		maxBalloonSpeed = 2f;
 		rigidbod = GetComponent<Rigidbody2D> ();

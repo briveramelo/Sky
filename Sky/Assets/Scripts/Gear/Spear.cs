@@ -17,9 +17,12 @@ public class Spear : MonoBehaviour {
 	public Joyfulstick joyfulstickScript; //joystickScript;
 	public float time2Destroy;
 	public float time2Reappear;
-	public BoxCollider2D spearTipCollider;
+	public CircleCollider2D spearTipCollider;
 	public string spearString;
 	public Vector3[] throwAdjustmentVector;
+
+	public Transform spearTipParentTransform;
+	public Transform spearTipTransform;
 
 	// Use this for initialization
 	void Awake () {
@@ -29,8 +32,9 @@ public class Spear : MonoBehaviour {
 		flying = false;
 		throwing = false;
 		spearString = "Prefabs/Gear/Spear";
-		spearTipCollider = GetComponent<BoxCollider2D> ();
-		spearTipCollider.enabled = false;
+		spearTipParentTransform = transform.GetChild (0);
+		spearTipTransform = transform.GetChild (0).GetChild(0);
+		spearTipCollider = spearTipTransform.GetComponent<CircleCollider2D> ();
 		pixelRotationScript = GetComponent<PixelRotation> ();
 		pixelRotationScript.Angle = 0;
 		joyfulstickScript = GameObject.Find ("StickHole").GetComponent<Joyfulstick> ();
@@ -48,6 +52,7 @@ public class Spear : MonoBehaviour {
 	void Update(){
 		if (flying){
 			pixelRotationScript.Angle = ConvertVector2Angle(rigbod.velocity);
+			spearTipParentTransform.rotation = Quaternion.Euler(0f,0f,ConvertVector2Angle(rigbod.velocity));
 		}
 	}
 

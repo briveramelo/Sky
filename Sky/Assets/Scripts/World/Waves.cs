@@ -12,9 +12,11 @@ public class Waves : MonoBehaviour {
 	public int[] currentWaveBirdsToSpawn;
 	public int[] currentWaveBirdsStillAlive;
 	public int numberOfBirdsToSpawn;
+	public int currentWaveBirdsSpawned;
 	public int numberOfBirdsToSpawnOfThisType;
 	public int numberOfBirdsStillAlive;
 	public int numberOfBirdsStillAliveOfThisType;
+	public Vector3[][] spawnPoints;
 
 	public string prefix;
 	public string[] birdNames;
@@ -42,8 +44,17 @@ public class Waves : MonoBehaviour {
 			birdNames[i] = prefix+birdName;
 			i++;
 		}
+
+		spawnPoints = new Vector3[][]{
+			new Vector3[]{ new Vector3 (-8, 0, 0),new Vector3 (-8, -2, 0),new Vector3 (-8, 2, 0), Vector3.zero,Vector3.zero,Vector3.zero, },
+			new Vector3[]{ new Vector3 (8, -2, 0), new Vector3 (8, -3, 0), new Vector3 (8, 4, 0),Vector3.zero,Vector3.zero,Vector3.zero, },
+			new Vector3[]{ new Vector3 (-8, 2, 0),new Vector3 (-8, 4, 0), new Vector3 (-8, -1, 0),Vector3.zero,Vector3.zero,Vector3.zero },
+			new Vector3[]{ new Vector3 (-8, 2, 0),new Vector3 (-8, 4, 0), new Vector3 (-8, -1, 0),new Vector3 (-8, 2, 0),new Vector3 (-8, 4, 0), new Vector3 (-8, -1, 0) },
+			new Vector3[]{ new Vector3 (-8, 2, 0),new Vector3 (-8, 4, 0), new Vector3 (-8, -1, 0),new Vector3 (-8, 2, 0),new Vector3 (-8, 4, 0), new Vector3 (-8, -1, 0) }
+		};
 		currentWaveBirdsToSpawn = new int[waveBirds [0].Length];
 		currentWaveBirdsStillAlive = new int[waveBirds [0].Length];
+		currentWaveBirdsSpawned = 0;
 		birdType = 0;
 		currentWave = 0;
 		StartCoroutine (PrepareNextWave ());
@@ -60,9 +71,10 @@ public class Waves : MonoBehaviour {
 		StartCoroutine (CheckBirds ());
 		if (numberOfBirdsToSpawn>0){ //spawn remaining birds
 			if (numberOfBirdsToSpawnOfThisType>0){ //if more pigeons to spawn, spawn them!
-				bird = Instantiate (Resources.Load (birdNames [birdType]), Vector3.zero, Quaternion.identity) as GameObject;
+				bird = Instantiate (Resources.Load (birdNames [birdType]),spawnPoints[currentWave-1][currentWaveBirdsSpawned], Quaternion.identity) as GameObject;
+				currentWaveBirdsSpawned++;
 				currentWaveBirdsToSpawn [birdType]--;
-				yield return new WaitForSeconds (2f);
+				yield return new WaitForSeconds (4f);
 			}
 			else if (birdType<7){ //if no more pigeons to spawn, spawn ducks!
 				birdType++;
@@ -75,15 +87,16 @@ public class Waves : MonoBehaviour {
 	public IEnumerator PrepareNextWave(){
 		yield return new WaitForSeconds (3f);
 		currentWave++;
+		currentWaveBirdsSpawned = 0;
 		birdType=0;
 		int k = 0;
-		foreach (int j in waveBirds[currentWave]){
+		foreach (int j in waveBirds[currentWave-1]){
 			currentWaveBirdsToSpawn[k] = j;
 			k++;
 		}
 		k = 0;
 		foreach (int j in currentWaveBirdsToSpawn){
-			currentWaveBirdsStillAlive[k] = currentWaveBirdsToSpawn[k];
+			currentWaveBirdsStillAlive[k] = j;
 			k++;
 		}
 		StartCoroutine (SpawnBirdsInThisWave ());

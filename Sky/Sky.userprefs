@@ -1,27 +1,32 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Gear/Balloon.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Birds/Albatross.cs">
     <Files>
-      <File FileName="Assets/Scripts/Gear/Balloon.cs" Line="22" Column="22" />
-      <File FileName="Assets/Scripts/Birds/GetHurt.cs" Line="53" Column="55" />
-      <File FileName="Assets/Scripts/Gear/BalloonBasket.cs" Line="28" Column="35" />
-      <File FileName="Assets/Scripts/Jai/Jai.cs" Line="30" Column="28" />
-      <File FileName="Assets/Scripts/Gear/Spear.cs" Line="8" Column="2" />
-      <File FileName="Assets/Scripts/Jai/Joyfulstick.cs" Line="55" Column="85" />
-      <File FileName="Assets/Scripts/Birds/GutSplosion.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Birds/Stork.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/World/Waves.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Gear/Spear.cs" Line="26" Column="1" />
+      <File FileName="Assets/Scripts/Birds/Duck.cs" Line="42" Column="37" />
+      <File FileName="Assets/Scripts/Birds/GutSplosion.cs" Line="47" Column="4" />
+      <File FileName="Assets/Scripts/Birds/GetHurt.cs" Line="21" Column="3" />
+      <File FileName="Assets/Scripts/Birds/Pigeon.cs" Line="22" Column="45" />
+      <File FileName="Assets/Scripts/Gear/BalloonBasket.cs" Line="11" Column="9" />
+      <File FileName="Assets/Scripts/World/Waves.cs" Line="74" Column="1" />
+      <File FileName="Assets/Scripts/Birds/Albatross.cs" Line="17" Column="28" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Scripts" expanded="True">
-              <Node name="Birds" expanded="True" />
-              <Node name="Gear" expanded="True">
-                <Node name="Balloon.cs" selected="True" />
+              <Node name="Birds" expanded="True">
+                <Node name="Albatross.cs" selected="True" />
               </Node>
+              <Node name="Gear" expanded="True" />
               <Node name="Jai" expanded="True" />
+              <Node name="PixelArtRotation" expanded="True">
+                <Node name="Scripts" expanded="True">
+                  <Node name="Internal" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="World" expanded="True" />
             </Node>
           </Node>
         </State>

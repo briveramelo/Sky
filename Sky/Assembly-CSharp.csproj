@@ -46,7 +46,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Birds\Albatross.cs" />
      <Compile Include="Assets\Scripts\Birds\Duck.cs" />
+     <Compile Include="Assets\Scripts\Birds\Eagle.cs" />
      <Compile Include="Assets\Scripts\Birds\GetHurt.cs" />
      <Compile Include="Assets\Scripts\Birds\GutSplosion.cs" />
      <Compile Include="Assets\Scripts\Birds\Pigeon.cs" />
@@ -67,6 +69,7 @@
      <Compile Include="Assets\Scripts\PixelPerfect\Scripts\PixelPerfectCamera.cs" />
      <Compile Include="Assets\Scripts\PixelPerfect\Scripts\PixelPerfectSprite.cs" />
      <Compile Include="Assets\Scripts\World\ScreenShake.cs" />
+     <Compile Include="Assets\Scripts\World\TeleportSideToSide.cs" />
      <Compile Include="Assets\Scripts\World\Waves.cs" />
      <None Include="Assets\Scripts\PixelPerfect\Scripts\Internal\Resources\PixelPerfectShader.shader" />
      <None Include="Assets\Scripts\PixelPerfect\README.txt" />

@@ -43,7 +43,7 @@ public class Joyfulstick : MonoBehaviour {
 		distToThrow = .1f;
 		joystickFinger = -1;
 		spearFinger = -2;
-		moveForce = 5f;
+		moveForce = 10f;
 		jaiScript = GameObject.Find ("Jai").GetComponent<Jai> ();
 		controlStickSprite = GameObject.Find ("ControlStick").GetComponent<SpriteRenderer>();
 		jaiTransform = jaiScript.transform;

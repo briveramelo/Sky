@@ -26,9 +26,9 @@ public class Balloon : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.layer == 16){//bird layer
+			StartCoroutine(balloonBasketScript.Invincibility());
 			StartCoroutine (balloonBasketScript.SlowTime(.5f,.75f));
 			StartCoroutine(PopBalloon());
-			StartCoroutine(balloonBasketScript.Invincibility());
 			StartCoroutine(screenShakeScript.CameraShake());
 		}
 	}
