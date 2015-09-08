@@ -28,6 +28,10 @@ public class GetHurt : MonoBehaviour {
 			"Prefabs/GutSplosions/GutSplosion3a", //big birds	 //5
 			"Prefabs/GutSplosions/GutSplosion3b",				 //6
 		};
+		if (GetComponent<BabyCrow> ()) {
+			birdType = 5;
+			gutValue = 3;
+		}
 		if (GetComponent<Pigeon>()){
 			birdType = 0;
 			gutValue = 3;
@@ -36,9 +40,9 @@ public class GetHurt : MonoBehaviour {
 			birdType = 1;
 			gutValue = 5;
 		} 
-		else if (GetComponent<Stork>()){
+		else if (GetComponent<Crow>()){
 			birdType = 2;
-			health = 2;
+			health = 1;
 			gutValue = 7;
 		}
 		else if (GetComponent<Eagle>()){

@@ -40,8 +40,8 @@ public class Spear : MonoBehaviour {
 		joyfulstickScript = GameObject.Find ("StickHole").GetComponent<Joyfulstick> ();
 		jaiScript = GameObject.Find ("Jai").GetComponent<Jai> ();
 		jaiTransform = jaiScript.transform;
-		jaiScript.spearScript = this;
-		joyfulstickScript.spearScript = this;
+		jaiScript.spearScript = GetComponent<Spear>();
+		joyfulstickScript.spearScript = GetComponent<Spear>();
 		stockPosition = transform.position - jaiTransform.position;
 		throwAdjustmentVector = new Vector3[]{ 
 			new Vector3 (0f, .26f,0f),
@@ -71,6 +71,7 @@ public class Spear : MonoBehaviour {
 			Destroy (gameObject, time2Destroy);
 			yield return new WaitForSeconds (.45f);
 			flying = true;
+			jaiTransform.DetachChildren();
 			gameObject.AddComponent<Rigidbody2D> ();
 			rigbod = GetComponent<Rigidbody2D> ();
 			rigbod.AddForce (throwDir * throwForce);

@@ -1,33 +1,23 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Birds/Albatross.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Gear/Balloon.cs">
     <Files>
-      <File FileName="Assets/Scripts/Birds/Eagle.cs" Line="28" Column="56" />
+      <File FileName="Assets/Scripts/Jai/Jai.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Gear/Spear.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Gear/BalloonBasket.cs" Line="13" Column="38" />
+      <File FileName="Assets/Scripts/Gear/Balloon.cs" Line="4" Column="21" />
       <File FileName="Assets/Scripts/Jai/Joyfulstick.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Birds/Albatross.cs" Line="18" Column="18" />
-      <File FileName="Assets/Scripts/Gear/BalloonBasket.cs" Line="15" Column="12" />
-      <File FileName="Assets/Scripts/Gear/Balloon.cs" Line="31" Column="33" />
-      <File FileName="Assets/Scripts/Gear/Spear.cs" Line="97" Column="1" />
-      <File FileName="Assets/Scripts/Birds/GetHurt.cs" Line="52" Column="17" />
-      <File FileName="Assets/Scripts/World/TeleportSideToSide.cs" Line="26" Column="64" />
-      <File FileName="Assets/Scripts/Birds/Duck.cs" Line="18" Column="56" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Scripts" expanded="True">
-              <Node name="Birds" expanded="True">
-                <Node name="Albatross.cs" selected="True" />
+              <Node name="Birds" expanded="True" />
+              <Node name="Gear" expanded="True">
+                <Node name="Balloon.cs" selected="True" />
               </Node>
-              <Node name="Gear" expanded="True" />
               <Node name="Jai" expanded="True" />
-              <Node name="PixelArtRotation" expanded="True">
-                <Node name="Scripts" expanded="True">
-                  <Node name="Internal" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="World" expanded="True" />
             </Node>
           </Node>
         </State>

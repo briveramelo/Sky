@@ -48,7 +48,7 @@ public class Eagle : MonoBehaviour {
 	public IEnumerator UpRight(){
 		transform.position = startPos [0];
 		rigbod.velocity = moveDir [0];
-		transform.localScale = pixelScaleReversed;
+		transform.localScale = pixelScale;
 		yield return new WaitForSeconds(4f);
 		StartCoroutine (UpLeft ());
 	}
@@ -56,7 +56,7 @@ public class Eagle : MonoBehaviour {
 	public IEnumerator UpLeft(){
 		transform.position = startPos [1];
 		rigbod.velocity = moveDir [1];
-		transform.localScale = pixelScale;
+		transform.localScale = pixelScaleReversed;
 		yield return new WaitForSeconds(6f);
 		rigbod.velocity = Vector2.zero;
 		StartCoroutine (Strike ());
@@ -64,17 +64,17 @@ public class Eagle : MonoBehaviour {
 	
 	public IEnumerator Strike(){
 		while (Mathf.Abs(xSpace)>xWorldBounds){
-			xSpace = balloonBasketTransform.position.x + Random.Range (-20, 21) * .1f;
+			xSpace = balloonBasketTransform.position.x + Random.Range (-30, 31) * .1f;
 		}
 
 		transform.position = new Vector3 (xSpace, 6f, 0f);
 		attackDir = (balloonBasketTransform.position - transform.position + offSet).normalized;
 		rigbod.velocity = attackDir * attackSpeed;
 		if (attackDir.x>0){
-			transform.localScale = -pixelScale;
+			transform.localScale = pixelScale;
 		}
 		else{
-			transform.localScale = pixelScale;
+			transform.localScale = pixelScaleReversed;
 		}
 		attacks--;
 		if (attacks>0){

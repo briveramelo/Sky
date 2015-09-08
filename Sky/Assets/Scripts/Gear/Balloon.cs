@@ -3,48 +3,35 @@ using System.Collections;
 
 public class Balloon : MonoBehaviour {
 
-	public Animator balloonAnimator;
-	public AudioSource popNoise;
+
 	public BalloonBasket balloonBasketScript;
-	public Rigidbody2D balloonBasketBody;
-	public float dropForce;
 	public bool popping;
-	public CircleCollider2D balloonCollider;
-	public ScreenShake screenShakeScript;
+	public int balloonNumber;
 
 	// Use this for initialization
 	void Awake () {
-		balloonAnimator = GetComponent<Animator> ();
-		popNoise = GetComponent<AudioSource> ();
 		balloonBasketScript = GameObject.Find ("BalloonBasket").GetComponent<BalloonBasket> ();
-		screenShakeScript = GameObject.Find ("mainCam").GetComponent<ScreenShake> ();
-		balloonBasketBody = GameObject.Find ("BalloonBasket").GetComponent<Rigidbody2D> ();
-		dropForce = 100f;
 		popping = false;
-		balloonCollider = GetComponent<CircleCollider2D> ();
+		if (name == "PinkBalloon"){
+			balloonNumber = 0;
+		}
+		else if (name == "TealBalloon"){
+			balloonNumber = 1;
+		}
+		else if (name == "GreyBalloon"){
+			balloonNumber = 2;
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.layer == 16){//bird layer
-			StartCoroutine(balloonBasketScript.Invincibility());
-			StartCoroutine (balloonBasketScript.SlowTime(.5f,.75f));
-			StartCoroutine(PopBalloon());
-			StartCoroutine(screenShakeScript.CameraShake());
-		}
-	}
-
-	public IEnumerator PopBalloon(){
-		if (!popping){
+		if (!popping && col.gameObject.layer == 16){//bird layer
 			popping = true;
-			popNoise.Play ();
-			balloonAnimator.SetInteger("AnimState",1);
-			balloonBasketBody.AddForce (Vector2.down * dropForce);
-			Destroy (transform.GetChild(0).gameObject);
-			while (popNoise.isPlaying){
-				yield return null;
+			foreach (Balloon balloonScript in balloonBasketScript.balloonScripts){
+				if (balloonScript){
+					balloonScript.popping = true;
+				}
 			}
-			Destroy (gameObject);
+			StartCoroutine (balloonBasketScript.BeginPopping(balloonNumber));
 		}
-		yield return null;
 	}
 }

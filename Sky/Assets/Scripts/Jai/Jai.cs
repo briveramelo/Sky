@@ -11,16 +11,13 @@ public class Jai : MonoBehaviour {
 
 
 	public Vector3 fixVector;
-	public string ballString;
 
 	public Animator jaiAnimator;
 
 	public Spear spearScript;
-	public GameObject ball;
 
 	void Awake(){
-		throwForce = 1000f;
-		ballString = "Prefabs/Gear/Ball";
+		throwForce = 1500f;
 		throwSpearTime = 0.5f;
 		fixVector = new Vector3 (0f, .02f);
 		jaiAnimator = GetComponent<Animator> ();
@@ -49,8 +46,6 @@ public class Jai : MonoBehaviour {
 			yield return new WaitForSeconds (throwSpearTime);
 			jaiAnimator.SetInteger("AnimState",0);
 			//transform.position += fixVector;
-			//ball = Instantiate (Resources.Load (ballString), transform.position, Quaternion.identity) as GameObject;
-			//ball.GetComponent<Rigidbody2D>().AddForce (throwDir * throwForce);
 			throws++;
 		}
 		yield return null;

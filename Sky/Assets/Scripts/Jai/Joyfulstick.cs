@@ -70,7 +70,6 @@ public class Joyfulstick : MonoBehaviour {
 					distFromStick = Vector2.Distance(touchSpot,startingJoystickSpot);
 					if (distFromStick<joystickMaxThumbDist){
 						joystickFinger = finger.fingerId;
-						controlStickSprite.enabled = true;
 					}
 					else{
 						if (Input.touchCount<3){
@@ -95,7 +94,7 @@ public class Joyfulstick : MonoBehaviour {
 				}
 				else if (finger.phase == TouchPhase.Ended){ //when your finger comes off the screen
 					if (finger.fingerId == joystickFinger){ //release the joystick
-						controlStickSprite.enabled = false;
+						controlStickSprite.transform.position = transform.position;
 						joystickFinger = -1;
 					}
 					else if (finger.fingerId == spearFinger ){ //use the spear
