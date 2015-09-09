@@ -7,6 +7,7 @@ public class Crow : MonoBehaviour {
 	public Rigidbody2D rigbod;
 	public BalloonBasket balloonBasketScript;
 	public Murder murderScript;
+	public BoxCollider2D crowBox;
 
 	public Transform targetTransform;
 
@@ -37,11 +38,13 @@ public class Crow : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		rigbod = GetComponent<Rigidbody2D> ();
+		crowBox = GetComponent<BoxCollider2D> ();
+		crowBox.enabled = false;
 		balloonBasketScript = GameObject.Find ("BalloonBasket").GetComponent<BalloonBasket>();
 		murderScript = transform.parent.gameObject.GetComponent<Murder>();
 		startPosition = transform.position;
 		moveSpeed = 7.5f;
-		turnDistance = 1.5f;
+		turnDistance = .9f;
 		commitDistance = 6f;
 		resetDistance = 20f;
 		sin45 = Mathf.Sin (Mathf.Deg2Rad * 75f);
@@ -95,6 +98,7 @@ public class Crow : MonoBehaviour {
 		committed = false;
 		reset = false;
 		rigbod.velocity = Vector2.zero;
+		crowBox.enabled = false;
 		transform.position = startPosition;
 		yield return null;
 	}

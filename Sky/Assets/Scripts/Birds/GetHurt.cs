@@ -14,6 +14,7 @@ public class GetHurt : MonoBehaviour {
 	public GameObject guts;
 	public bool summonCrows;
 	public SummonTheCrows summonTheCrowsScript;
+	public bool invincible;
 
 	// Use this for initialization
 	void Awake () {
@@ -46,12 +47,11 @@ public class GetHurt : MonoBehaviour {
 		} 
 		else if (GetComponent<Crow>()){
 			birdType = 2;
-			health = 1;
 			gutValue = 7;
 		}
 		else if (GetComponent<Eagle>()){
 			birdType = 3;
-			health = 2;
+			health = 3;
 			gutValue = 9;
 		}
 		else if (GetComponent<Albatross>()){
@@ -61,24 +61,33 @@ public class GetHurt : MonoBehaviour {
 		}
 		balloonBasketScript = GameObject.Find ("BalloonBasket").GetComponent<BalloonBasket> ();
 	}
-
+	
 	public IEnumerator TakeDamage(Vector2 gutDirection){
-		health--;
-		if (health>0){
-			gutValue = 0;
-		}
-		guts = Instantiate (Resources.Load (gutSplosions[6]), transform.position, Quaternion.identity) as GameObject;
-		guts.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2 (gutDirection.x * .3f,5f);
-		StartCoroutine (guts.GetComponent<GutSplosion> ().GenerateGuts (gutValue));
-		if (health<1){
-			StartCoroutine (balloonBasketScript.SlowTime(.1f,.5f));
-			wavesScript.currentWaveBirdsStillAlive[birdType]--;
-			StartCoroutine(wavesScript.CheckBirds());
-			if (summonCrows){
-				StartCoroutine (summonTheCrowsScript.Murder());
+		if (!invincible){
+			invincible = true;
+			StartCoroutine (Vincible());
+			health--;
+			if (health>0){
+				gutValue = 0;
 			}
-			Destroy(gameObject);
+			guts = Instantiate (Resources.Load (gutSplosions[6]), transform.position, Quaternion.identity) as GameObject;
+			guts.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2 (gutDirection.x * .3f,5f);
+			StartCoroutine (guts.GetComponent<GutSplosion> ().GenerateGuts (gutValue));
+			if (health<1){
+				StartCoroutine (balloonBasketScript.SlowTime(.1f,.5f));
+				wavesScript.currentWaveBirdsStillAlive[birdType]--;
+				StartCoroutine(wavesScript.CheckBirds());
+				if (summonCrows){
+					StartCoroutine (summonTheCrowsScript.Murder());
+				}
+				Destroy(gameObject);
+			}
 		}
 		yield return null;
+	}
+
+	public IEnumerator Vincible(){
+		yield return new WaitForSeconds (.5f);
+		invincible = false;
 	}
 }

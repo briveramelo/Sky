@@ -100,6 +100,8 @@ MonoBehaviour:
   wavesScript: {fileID: 0}
   birdType: 0
   guts: {fileID: 0}
+  summonCrows: 0
+  summonTheCrowsScript: {fileID: 0}
 --- !u!114 &11457038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -114,21 +116,27 @@ MonoBehaviour:
   rigbod: {fileID: 0}
   balloonBasketScript: {fileID: 0}
   murderScript: {fileID: 0}
+  crowBox: {fileID: 6114714}
   targetTransform: {fileID: 0}
   startPosition: {x: 0, y: 0, z: 0}
   targetPosition: {x: 0, y: 0, z: 0}
+  extraTargetHeight: {x: 0, y: 0, z: 0}
   moveDir: {x: 0, y: 0}
   correctionVector: {x: 0, y: 0}
   isKiller: 0
   swooping: 0
   turned: 0
   committed: 0
+  reset: 0
   crowNumber: 0
   moveSpeed: 0
   sin45: 0
   correctionScalar: 0
   turnDistance: 0
   commitDistance: 0
+  resetDistance: 0
+  lastDistance: 0
+  currentDistance: 0
 --- !u!114 &11497986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -179,7 +187,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: crowBox
+      value: 
+      objectReference: {fileID: 6114714}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 125454}

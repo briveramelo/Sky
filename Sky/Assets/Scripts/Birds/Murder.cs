@@ -53,6 +53,7 @@ public class Murder : MonoBehaviour {
 	public IEnumerator ChooseNextCrow(int crowToGo){
 		crowsToGo = crowsToGo.Where(number => number!=crowToGo).ToArray();
 		crowScripts [crowToGo].swooping = true;
+		crowScripts [crowToGo].crowBox.enabled = true;
 		numGone = 6-crowsToGo.Length;
 		if (numGone==2){
 			crowScripts[crowsToGo[Random.Range(0,crowsToGo.Length)]].isKiller = true;
