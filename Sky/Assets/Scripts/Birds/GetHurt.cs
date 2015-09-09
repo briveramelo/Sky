@@ -12,11 +12,14 @@ public class GetHurt : MonoBehaviour {
 	public Waves wavesScript;
 	public int birdType;
 	public GameObject guts;
+	public bool summonCrows;
+	public SummonTheCrows summonTheCrowsScript;
 
 	// Use this for initialization
 	void Awake () {
 		health = 1;
 		wavesScript = GameObject.Find ("WorldBounds").GetComponent<Waves> ();
+		summonTheCrowsScript = GameObject.Find ("WorldBounds").GetComponent<SummonTheCrows> ();
 		gutSplosionParentString = "Prefabs/Birds/GutSplosionParent";
 		gutSplosions = new string[]{
 			"Prefabs/GutSplosions/GutSplosion1a", //small birds  //0
@@ -31,6 +34,7 @@ public class GetHurt : MonoBehaviour {
 		if (GetComponent<BabyCrow> ()) {
 			birdType = 5;
 			gutValue = 3;
+			summonCrows = true;
 		}
 		if (GetComponent<Pigeon>()){
 			birdType = 0;
@@ -70,6 +74,9 @@ public class GetHurt : MonoBehaviour {
 			StartCoroutine (balloonBasketScript.SlowTime(.1f,.5f));
 			wavesScript.currentWaveBirdsStillAlive[birdType]--;
 			StartCoroutine(wavesScript.CheckBirds());
+			if (summonCrows){
+				StartCoroutine (summonTheCrowsScript.Murder());
+			}
 			Destroy(gameObject);
 		}
 		yield return null;

@@ -3,6 +3,8 @@ using System.Collections;
 
 public class BabyCrow : MonoBehaviour {
 
+	public GetHurt getHurtScript;
+	public Animator babyCrowAnimator;
 	public float moveSpeed;
 	public Vector2 moveFullDir;
 	public Rigidbody2D rigbod;
@@ -16,19 +18,20 @@ public class BabyCrow : MonoBehaviour {
 	public string crowString;
 	public float triggerShiftDistance;
 	public float speedDistance;
+	public float zeroDistance;
 	public float currentSpeed;
 	public float minSpeed;
 	public Vector3 pixelScale;
 	public Vector3 pixelScaleReversed;
 	public float switchTime;
 	public bool switching;
-	public bool summonCrows;
-	public SummonTheCrows summonTheCrowsScript;
+
 
 	// Use this for initialization
 	void Awake () {
+		getHurtScript = GetComponent<GetHurt> ();
 		rigbod = GetComponent<Rigidbody2D> ();
-		summonTheCrowsScript = GameObject.Find ("WorldBounds").GetComponent<SummonTheCrows> ();
+		babyCrowAnimator = GetComponent<Animator> ();
 		moveSpeed = 2f;
 		switchTime = 0.25f;
 		pixelScale = Vector3.one * 3.125f;
@@ -36,20 +39,21 @@ public class BabyCrow : MonoBehaviour {
 		triggerShiftDistance = 0.05f;
 		balloonBasketTransform = GameObject.Find ("Jai").transform;
 		shifty = new Vector3[]{
-			new Vector3 (-.9f, 0.1f, 0f),
-			new Vector3 (1.1f , 0.1f, 0f),
-			new Vector3 (0.1f,  -1.5f,0f)
+			new Vector3 (-1f, 0.25f, 0f),
+			new Vector3 (1.3f , 0.25f, 0f),
+			new Vector3 (0.1f,  -1f,0f)
 		};
 		i = 0;
 		maxShifts = 5;
 		speedDistance = .3f;
-		minSpeed = .6f;
+		zeroDistance = 0.05f;
+		minSpeed = 0.55f;
 		shifts = 0;
 		shiftingSequence = true;
-		summonCrows = true;
-		shifting = false;
+		shifting = true;
 		crowString = "Prefabs/Birds/Murder";
 		switching = false;
+		StartCoroutine (FlyFree ());
 	}
 
 	public IEnumerator FlyFree(){
@@ -57,7 +61,6 @@ public class BabyCrow : MonoBehaviour {
 		shiftingSequence = false;
 	}
 
-	// Update is called once per frame
 	void Update () {
 		if (shiftingSequence){
 			ApproachShifts ();
@@ -77,10 +80,29 @@ public class BabyCrow : MonoBehaviour {
 		}
 	}
 
+	public IEnumerator ShiftSpots(){
+		if (shifting){
+			shifting = false;
+			babyCrowAnimator.SetInteger("AnimState",1);
+			yield return new WaitForSeconds (2f);
+			i++;
+			shifts++;
+			if (i>2){
+				i=0;
+			}
+			shifting = true;
+			babyCrowAnimator.SetInteger("AnimState",0);
+			if (shifts>maxShifts){
+				shiftingSequence = false;
+			}
+		}
+		yield return null;
+	}
+
 	void FlyAway(){
-		moveFullDir = (Vector3.one * 9f - transform.position);
+		moveFullDir = (Vector3.right * 9f - transform.position);
 		if (moveFullDir.magnitude<triggerShiftDistance){
-			summonCrows = false;
+			getHurtScript.summonCrows = false;
 			Destroy(gameObject);
 		}
 	}
@@ -90,6 +112,9 @@ public class BabyCrow : MonoBehaviour {
 			currentSpeed = moveSpeed * moveFullDir.magnitude;
 			if (currentSpeed<minSpeed){
 				currentSpeed = minSpeed;
+			}
+			if (moveFullDir.magnitude<zeroDistance){
+				currentSpeed = 0;
 			}
 		}
 		else{
@@ -101,11 +126,11 @@ public class BabyCrow : MonoBehaviour {
 		if (!switching){
 			if (rigbod.velocity.x>0){
 				StartCoroutine ( SwitchDirections());
-				transform.localScale = pixelScaleReversed;
+				transform.localScale = pixelScale;
 			}
 			else{
 				StartCoroutine ( SwitchDirections());
-				transform.localScale = pixelScale;
+				transform.localScale = pixelScaleReversed;
 			}
 		}
 	}
@@ -116,28 +141,7 @@ public class BabyCrow : MonoBehaviour {
 		switching = false;
 	}
 
-	void OnDestroy(){
-		if (summonCrows){
-			StartCoroutine (summonTheCrowsScript.Murder());
-		}
-	}
 
-	public IEnumerator ShiftSpots(){
-		if (!shifting){
-			shifting = true;
-			yield return new WaitForSeconds (2f);
-			i++;
-			shifts++;
-			if (i>2){
-				i=0;
-			}
-			shifting = false;
-			if (shifts>maxShifts){
-				shiftingSequence = false;
-			}
-		}
-		yield return null;
-	}
 
 
 }

@@ -57,7 +57,7 @@ public class Waves : MonoBehaviour {
 		currentWaveBirdsSpawned = 0;
 		birdType = 0;
 		currentWave = 0;
-		StartCoroutine (PrepareNextWave ());
+		//StartCoroutine (PrepareNextWave ());
 	}
 
 	/*void Update(){
@@ -117,7 +117,7 @@ public class Waves : MonoBehaviour {
 		numberOfBirdsToSpawnOfThisType = currentWaveBirdsToSpawn [birdType];
 		numberOfBirdsStillAliveOfThisType = currentWaveBirdsStillAlive [birdType];
 		if (numberOfBirdsStillAlive<1){
-			StartCoroutine(PrepareNextWave());
+			//StartCoroutine(PrepareNextWave());
 		}
 		yield return null;
 	}
