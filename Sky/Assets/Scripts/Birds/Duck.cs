@@ -8,17 +8,18 @@ public class Duck : MonoBehaviour {
 
 	public Vector3 pixelScale;
 	public Vector3 pixelScaleReversed;
+	public Vector3 targetSpot;
 
 	public Vector2[] chooseDir;
+	public Vector2[] scatterDir;
 	public Vector2 moveDir;
-
+	
 	public float moveSpeed;
-	public float distanceToSpot;
+	public float transitionSpeed;
 
 	public int formationNumber;
 
 	public bool bouncing;
-	public bool allGood;
 
 
 	// Use this for initialization
@@ -26,9 +27,8 @@ public class Duck : MonoBehaviour {
 		pixelScale = Vector3.one * 3.125f;
 		pixelScaleReversed = new Vector3 (-3.125f,3.125f,1f);
 		moveSpeed = 2f;
+		transitionSpeed = 2.5f;
 		rigbod = GetComponent<Rigidbody2D> ();
-		distanceToSpot = 10f;
-		allGood = true;
 		chooseDir = new Vector2[]
 		{
 			new Vector2 (1,1).normalized,
@@ -36,7 +36,17 @@ public class Duck : MonoBehaviour {
 			new Vector2 (1,-1).normalized,
 			new Vector2 (-1,-1).normalized
 		};
+		scatterDir = new Vector2[]{
+			chooseDir [0],
+			chooseDir [1],
+			chooseDir [2],
+			chooseDir [3],
+			chooseDir [0],
+			chooseDir [1]
+		};
+		moveDir = chooseDir [0];
 		if (!transform.parent){
+			formationNumber = Random.Range(0,4);
 			StartCoroutine(Scatter());
 		}
 	}
@@ -46,19 +56,18 @@ public class Duck : MonoBehaviour {
 		{
 			VelocityBouncer ();
 		}
+		else{
+			StayInFormation();
+		}
 	}
 
-	public IEnumerator GetInTheV(){
-		while (allGood) {
-			distanceToSpot = Vector3.Distance(transform.position,duckLeaderScript.setPositions[formationNumber] + duckLeaderScript.transform.position);
-			rigbod.velocity = (duckLeaderScript.setPositions[formationNumber] + duckLeaderScript.transform.position - transform.position).normalized * moveSpeed;
-			yield return null;
-		}
-
+	void StayInFormation(){
+		targetSpot = duckLeaderScript.setPositions [formationNumber] + duckLeaderScript.transform.position;
+		transform.position = Vector3.MoveTowards (transform.position, targetSpot, transitionSpeed * Time.deltaTime);
 	}
 
 	public IEnumerator Scatter(){
-		rigbod.velocity = chooseDir[Random.Range(0,5)] * moveSpeed;
+		rigbod.velocity = scatterDir[formationNumber] * moveSpeed;
 		bouncing = true;
 		yield return null;
 	}

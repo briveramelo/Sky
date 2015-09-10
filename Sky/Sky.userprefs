@@ -1,10 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Birds/GetHurt.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Birds/DuckLeader.cs">
     <Files>
-      <File FileName="Assets/Scripts/Birds/DuckLeader.cs" Line="27" Column="4" />
-      <File FileName="Assets/Scripts/GenericFunctions/ConvertAnglesAndVectors.cs" Line="8" Column="3" />
-      <File FileName="Assets/Scripts/Birds/GetHurt.cs" Line="73" Column="4" />
+      <File FileName="Assets/Scripts/Birds/DuckLeader.cs" Line="119" Column="3" />
+      <File FileName="Assets/Scripts/GenericFunctions/ConvertAnglesAndVectors.cs" Line="27" Column="17" />
+      <File FileName="Assets/Scripts/Birds/GetHurt.cs" Line="107" Column="73" />
+      <File FileName="Assets/Scripts/Birds/Eagle.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Gear/Spear.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Birds/Crow.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Birds/Duck.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -12,9 +16,18 @@
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Scripts" expanded="True">
               <Node name="Birds" expanded="True">
-                <Node name="GetHurt.cs" selected="True" />
+                <Node name="DuckLeader.cs" selected="True" />
               </Node>
+              <Node name="Gear" expanded="True" />
               <Node name="GenericFunctions" expanded="True" />
+              <Node name="PixelArtRotation" expanded="True">
+                <Node name="Scripts" expanded="True">
+                  <Node name="Internal" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="PixelPerfect" expanded="True">
+                <Node name="Scripts" expanded="True" />
+              </Node>
             </Node>
           </Node>
         </State>

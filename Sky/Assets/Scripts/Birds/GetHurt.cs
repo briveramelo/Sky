@@ -49,27 +49,31 @@ public class GetHurt : MonoBehaviour {
 			birdType = 1;
 			gutValue = 5;
 		} 
-		else if (GetComponent<Albatross>()){
+		else if (GetComponent<DuckLeader>()){
 			birdType = 2;
+			gutValue = 7;
+		}
+		else if (GetComponent<Albatross>()){
+			birdType = 3;
 			health = 7;
 			gutValue = 11;
 		}
 		else if (GetComponent<BabyCrow> ()) {
-			birdType = 3;
+			birdType = 4;
 			gutValue = 3;
 			summonCrows = true;
 		}
 		else if (GetComponent<Crow>()){
-			birdType = 4;
+			birdType = 5;
 			gutValue = 7;
 		}
 		else if (GetComponent<Eagle>()){
-			birdType = 5;
+			birdType = 6;
 			health = 3;
 			gutValue = 9;
 		}
 		else if (GetComponent<BirdOfParadise>()){
-			birdType = 6;
+			birdType = 7;
 			gutValue = 15;
 			spawnBalloon = true;
 		}
@@ -104,7 +108,7 @@ public class GetHurt : MonoBehaviour {
 				}
 				else if (duckScript){
 					if (duckScript.duckLeaderScript){
-						//duckScript.duckLeaderScript.
+						StartCoroutine(duckScript.duckLeaderScript.ReShuffle(duckScript.formationNumber));
 					}
 				}
 				Destroy(gameObject);

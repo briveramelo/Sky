@@ -43,8 +43,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 408030}
   - 68: {fileID: 6814216}
-  - 114: {fileID: 11495578}
   - 114: {fileID: 11449554}
+  - 114: {fileID: 11497560}
   m_Layer: 0
   m_Name: WorldBounds
   m_TagString: Untagged
@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crowString: 
---- !u!114 &11495578
+--- !u!114 &11497560
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -239,22 +239,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 156416}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e165bd5df65e44f796e3552c6cf0346, type: 3}
+  m_Script: {fileID: 11500000, guid: ec5b7b2b5c44f49ccb7f559539cef9c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnBirds: 0
-  currentWave: 0
-  birdType: 0
-  currentWaveBirdsToSpawn: 
-  currentWaveBirdsStillAlive: 
-  numberOfBirdsToSpawn: 0
-  currentWaveBirdsSpawned: 0
-  numberOfBirdsToSpawnOfThisType: 0
-  numberOfBirdsStillAlive: 0
-  numberOfBirdsStillAliveOfThisType: 0
-  prefix: 
-  birdNames: []
   bird: {fileID: 0}
+  birdNames: []
+  birdType: 0
+  spawnBirds: 0
 --- !u!249 &24919712
 AreaEffector2D:
   serializedVersion: 2
@@ -287,7 +278,7 @@ AreaEffector2D:
     serializedVersion: 2
     m_Bits: 4294852552
   m_UseGlobalAngle: 0
-  m_ForceAngle: 0
+  m_ForceAngle: 90
   m_ForceMagnitude: 6
   m_ForceVariation: 0
   m_Drag: 3

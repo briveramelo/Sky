@@ -67,7 +67,7 @@ public class Spear : MonoBehaviour {
 	public IEnumerator FlyFree(Vector2 throwDir, float throwForce, int lowOrHighThrow){
 		if (!throwing){
 			throwing = true;
-			theSetAngle = ConvertAnglesAndVectors.ConvertVector2Angle(throwDir);
+			theSetAngle = ConvertAnglesAndVectors.ConvertVector2Angle(throwDir)-90;
 			pixelRotationScript.Angle = theSetAngle;
 			transform.position = jaiTransform.position + throwAdjustmentVector[lowOrHighThrow-1];
 			spearTipCollider.enabled = true;
