@@ -5,6 +5,7 @@ public class ScreenShake : MonoBehaviour {
 
 	public Vector3 startSpot;
 	public Vector3 shift;
+
 	public bool shaking;
 
 	public IEnumerator CameraShake(){

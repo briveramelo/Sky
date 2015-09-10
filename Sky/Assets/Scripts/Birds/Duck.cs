@@ -3,12 +3,15 @@ using System.Collections;
 
 public class Duck : MonoBehaviour {
 
-	public float moveSpeed;
-	public Vector3 pixelScale;
-	public Vector3 pixelScaleReversed;
 	public Rigidbody2D rigidbod;
 
+	public Vector3 pixelScale;
+	public Vector3 pixelScaleReversed;
+
 	public Vector2 moveDir;
+
+	public float moveSpeed;
+
 	public bool bouncing;
 
 

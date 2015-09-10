@@ -3,18 +3,17 @@ using System.Collections;
 
 public class Jai : MonoBehaviour {
 	
-	public int throws; //counts number of throws he's done
-	public int animInt;
+	public Spear spearScript;
+
+	public Animator jaiAnimator;
+
+	public Vector3 fixVector;
 
 	public float throwForce; //Force with which Jai throws the spear
 	public float throwSpearTime; //time between initiating the throw and when the spear leaves his hand
 
-
-	public Vector3 fixVector;
-
-	public Animator jaiAnimator;
-
-	public Spear spearScript;
+	public int throws; //counts number of throws he's done
+	public int animInt;
 
 	void Awake(){
 		throwForce = 1500f;

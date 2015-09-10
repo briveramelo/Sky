@@ -4,7 +4,9 @@ using System.Collections;
 public class GutSplosion : MonoBehaviour {
 
 	public AudioSource gutSplode;
+
 	public string[] gutSplosions;
+
 	public int[] numberOfGuts;
 	public int total;
 

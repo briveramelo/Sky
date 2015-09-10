@@ -3,42 +3,55 @@ using System.Collections;
 
 public class Waves : MonoBehaviour {
 
-	public bool spawnBirds;
+	public GameObject bird;
 
-	public int[][] waveBirds; //tells the total number of birds alive in wave 1 (and so on for each)
+	public Vector3[][] spawnPoints;
+
+	public string[] birdNames;
+	public string prefix;
+
+	public int[][] waveBirdsToSpawn; //tells the total number of birds alive in wave 1 (and so on for each)
+	public int[][] waveBirdsStillAlive;
+
 	public int currentWave;
-
 	public int birdType;
-	public int[] currentWaveBirdsToSpawn;
-	public int[] currentWaveBirdsStillAlive;
 	public int numberOfBirdsToSpawn;
 	public int currentWaveBirdsSpawned;
 	public int numberOfBirdsToSpawnOfThisType;
 	public int numberOfBirdsStillAlive;
-	public int numberOfBirdsStillAliveOfThisType;
-	public Vector3[][] spawnPoints;
 
-	public string prefix;
-	public string[] birdNames;
-
-	public GameObject bird;
+	public bool spawnBirds;
 
 	// Use this for initialization
-	void Awake () {      //pigeon, duck1, duck2, BlueParrot, GreenParrot, Stork1, Stork2 
+	void Awake () {      					//pigeon, duck2, albatross,  
 		prefix = "Prefabs/Birds/"; //		  0       1          2         3         		4          5       6
-		birdNames =  new string[]{		"Pigeon", "Duck1",   "Duck2" , "BlueParrot", "GreenParrot","Stork1", "Stork2"};
-		waveBirds = new int[][]{new int[]{ 	  3    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   0  },  //0
-							 new int[]{ 	  0    ,  3  ,  	 0   ,     0     ,  	    0      ,   0   ,   0  },  //1
-							 new int[]{ 	  0    ,  0  , 		 3   ,     0     ,    	    0      ,   0   ,   0  },  //2
-							 new int[]{ 	  2    ,  2  ,  	 2   ,     0     ,  	    0      ,   0   ,   0  },  //3
-							 new int[]{ 	  0    ,  0  ,  	 0   ,     3     , 		    0      ,   0   ,   0  },  //4
-							 new int[]{ 	  0    ,  0  ,  	 0   ,     0     , 		    3      ,   0   ,   0  },  //5
-							 new int[]{ 	  0    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   0  },  //6
-							 new int[]{ 	  0    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   0  },  //7
-							 new int[]{ 	  0    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   0  },  //8
-							 new int[]{ 	  0    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   0  },  //9
-							 new int[]{ 	  0    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   0  },  //10
-							 new int[]{  	  0    ,  0  ,  	 0   ,     0     ,  	    0      ,   0   ,   0  }}; //11
+		birdNames =  new string[]{		"Pigeon", "Duck2","Albatross", "BabyCrow",       "Crow"    ,"Eagle", "BirdOfParadise"};
+		waveBirdsToSpawn = new int[][]{
+							 new int[]{ 	  3    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   0  				},  //0
+							 new int[]{ 	  0    ,  3  ,  	 0   ,     0     ,  	    0      ,   0   ,   0 				 },  //1
+							 new int[]{ 	  2    ,  2  , 		 1   ,     0     ,    	    0      ,   0   ,   0 				 },  //2
+							 new int[]{ 	  0    ,  0  ,  	 0   ,     0     ,  	    0      ,   0   ,   1 				 },  //3
+							 new int[]{ 	  2    ,  3  ,  	 0   ,     1     , 		    0      ,   0   ,   0 				 },  //4
+							 new int[]{ 	  0    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   1 				 },  //5
+							 new int[]{ 	  3    ,  2  ,  	 0   ,     0     , 		    0      ,   1   ,   0 				 },  //6
+							 new int[]{ 	  0    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   0 				 },  //7
+							 new int[]{ 	  0    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   0 				 },  //8
+							 new int[]{ 	  0    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   0 				 },  //9
+							 new int[]{ 	  0    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   0 				 },  //10
+							 new int[]{  	  0    ,  0  ,  	 0   ,     0     ,  	    0      ,   0   ,   0 				 }}; //11
+		waveBirdsStillAlive = new int[][]{
+			new int[]{ 	  3    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   0  				},  //0
+			new int[]{ 	  0    ,  3  ,  	 0   ,     0     ,  	    0      ,   0   ,   0 				 },  //1
+			new int[]{ 	  2    ,  2  , 		 1   ,     0     ,    	    0      ,   0   ,   0 				 },  //2
+			new int[]{ 	  0    ,  0  ,  	 0   ,     0     ,  	    0      ,   0   ,   1 				 },  //3
+			new int[]{ 	  2    ,  3  ,  	 0   ,     1     , 		    0      ,   0   ,   0 				 },  //4
+			new int[]{ 	  0    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   1 				 },  //5
+			new int[]{ 	  3    ,  2  ,  	 0   ,     0     , 		    0      ,   1   ,   0 				 },  //6
+			new int[]{ 	  0    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   0 				 },  //7
+			new int[]{ 	  0    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   0 				 },  //8
+			new int[]{ 	  0    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   0 				 },  //9
+			new int[]{ 	  0    ,  0  ,  	 0   ,     0     , 		    0      ,   0   ,   0 				 },  //10
+			new int[]{ 	  0    ,  0  ,  	 0   ,     0     ,  	    0      ,   0   ,   0 				 }}; //11
 		int i = 0;
 		foreach (string birdName in birdNames){
 			birdNames[i] = prefix+birdName;
@@ -46,26 +59,18 @@ public class Waves : MonoBehaviour {
 		}
 
 		spawnPoints = new Vector3[][]{
-			new Vector3[]{ new Vector3 (-8, 0, 0),new Vector3 (-8, -2, 0),new Vector3 (-8, 2, 0), Vector3.zero,Vector3.zero,Vector3.zero, },
-			new Vector3[]{ new Vector3 (8, -2, 0), new Vector3 (8, -3, 0), new Vector3 (8, 4, 0),Vector3.zero,Vector3.zero,Vector3.zero, },
-			new Vector3[]{ new Vector3 (-8, 2, 0),new Vector3 (-8, 4, 0), new Vector3 (-8, -1, 0),Vector3.zero,Vector3.zero,Vector3.zero },
-			new Vector3[]{ new Vector3 (-8, 2, 0),new Vector3 (-8, 4, 0), new Vector3 (-8, -1, 0),new Vector3 (-8, 2, 0),new Vector3 (-8, 4, 0), new Vector3 (-8, -1, 0) },
-			new Vector3[]{ new Vector3 (-8, 2, 0),new Vector3 (-8, 4, 0), new Vector3 (-8, -1, 0),new Vector3 (-8, 2, 0),new Vector3 (-8, 4, 0), new Vector3 (-8, -1, 0) }
+			new Vector3[]{ new Vector3 (-8, 0, 0),new Vector3 (-8, -2, 0),new Vector3 (-8, 2, 0), new Vector3 (-8, 0, 0),new Vector3 (-8, -2, 0),new Vector3 (-8, 2, 0) }, //0
+			new Vector3[]{ new Vector3 (8, -2, 0), new Vector3 (8, -3, 0), new Vector3 (8, 4, 0), new Vector3 (-8, 0, 0),new Vector3 (-8, -2, 0),new Vector3 (-8, 2, 0) },  //1
+			new Vector3[]{ new Vector3 (-8, 2, 0),new Vector3 (-8, 4, 0), new Vector3 (-8, -1, 0),new Vector3 (-8, 0, 0),new Vector3 (-8, -2, 0),new Vector3 (-8, 2, 0) },  //2
+			new Vector3[]{ new Vector3 (-8, 2, 0),new Vector3 (-8, 4, 0), new Vector3 (-8, -1, 0),new Vector3 (-8, 2, 0),new Vector3 (-8, 4, 0), new Vector3 (-8, -1, 0) }, //3
+			new Vector3[]{ new Vector3 (-8, 2, 0),new Vector3 (-8, 4, 0), new Vector3 (-8, -1, 0),new Vector3 (-8, 2, 0),new Vector3 (-8, 4, 0), new Vector3 (-8, -1, 0) }, //4
+			new Vector3[]{ new Vector3 (-8, 2, 0),new Vector3 (-8, 4, 0), new Vector3 (-8, -1, 0),new Vector3 (-8, 2, 0),new Vector3 (-8, 4, 0), new Vector3 (-8, -1, 0) }  //5
 		};
-		currentWaveBirdsToSpawn = new int[waveBirds [0].Length];
-		currentWaveBirdsStillAlive = new int[waveBirds [0].Length];
 		currentWaveBirdsSpawned = 0;
 		birdType = 0;
 		currentWave = 0;
-		//StartCoroutine (PrepareNextWave ());
+		StartCoroutine (PrepareNextWave ());
 	}
-
-	/*void Update(){
-		if (spawnBirds){
-			spawnBirds = false;
-			StartCoroutine(SpawnBirdsInThisWave());
-		}
-	}*/
 
 	public IEnumerator SpawnBirdsInThisWave(){
 		StartCoroutine (CheckBirds ());
@@ -73,10 +78,10 @@ public class Waves : MonoBehaviour {
 			if (numberOfBirdsToSpawnOfThisType>0){ //if more pigeons to spawn, spawn them!
 				bird = Instantiate (Resources.Load (birdNames [birdType]),spawnPoints[currentWave-1][currentWaveBirdsSpawned], Quaternion.identity) as GameObject;
 				currentWaveBirdsSpawned++;
-				currentWaveBirdsToSpawn [birdType]--;
+				waveBirdsToSpawn[currentWave-1][birdType]--;
 				yield return new WaitForSeconds (4f);
 			}
-			else if (birdType<7){ //if no more pigeons to spawn, spawn ducks!
+			else if (birdType<6){ //if no more pigeons to spawn, spawn ducks!
 				birdType++;
 			}
 			StartCoroutine(SpawnBirdsInThisWave());
@@ -89,35 +94,32 @@ public class Waves : MonoBehaviour {
 		currentWave++;
 		currentWaveBirdsSpawned = 0;
 		birdType=0;
+		numberOfBirdsToSpawn = 0;
 		int k = 0;
-		foreach (int j in waveBirds[currentWave-1]){
-			currentWaveBirdsToSpawn[k] = j;
+		foreach (int j in waveBirdsToSpawn[currentWave-1]){
+			numberOfBirdsToSpawn += j;
 			k++;
 		}
-		k = 0;
-		foreach (int j in currentWaveBirdsToSpawn){
-			currentWaveBirdsStillAlive[k] = j;
-			k++;
-		}
+
+		numberOfBirdsToSpawnOfThisType = waveBirdsToSpawn[currentWave-1] [0];
 		StartCoroutine (SpawnBirdsInThisWave ());
 		yield return null;
 	}
 
 	public IEnumerator CheckBirds(){
 		numberOfBirdsToSpawn = 0;
-		foreach (int birdSpawnCount in currentWaveBirdsToSpawn){
+		foreach (int birdSpawnCount in waveBirdsToSpawn[currentWave-1]){
 			numberOfBirdsToSpawn += birdSpawnCount;
 		}
 
 		numberOfBirdsStillAlive = 0;
-		foreach (int birdAliveCount in currentWaveBirdsStillAlive){
+		foreach (int birdAliveCount in waveBirdsStillAlive[currentWave-1]){
 			numberOfBirdsStillAlive += birdAliveCount;
 		}
 
-		numberOfBirdsToSpawnOfThisType = currentWaveBirdsToSpawn [birdType];
-		numberOfBirdsStillAliveOfThisType = currentWaveBirdsStillAlive [birdType];
+		numberOfBirdsToSpawnOfThisType = waveBirdsToSpawn[currentWave-1] [birdType];
 		if (numberOfBirdsStillAlive<1){
-			//StartCoroutine(PrepareNextWave());
+			StartCoroutine(PrepareNextWave());
 		}
 		yield return null;
 	}

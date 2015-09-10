@@ -3,18 +3,22 @@ using System.Collections;
 
 public class GetHurt : MonoBehaviour {
 
-	public int health;
-	public string gutSplosionParentString;
-	public int gutValue;
-	public string thisGutSplosion;
-	public string[] gutSplosions;
-	public BalloonBasket balloonBasketScript;
-	public Waves wavesScript;
-	public int birdType;
 	public GameObject guts;
-	public bool summonCrows;
+	public Basket basketScript;
 	public SummonTheCrows summonTheCrowsScript;
+	public Waves wavesScript;
+
+	public string[] gutSplosions;
+	public string gutSplosionParentString;
+	public string thisGutSplosion;
+
+	public int health;
+	public int gutValue;
+	public int birdType;
+
+	public bool summonCrows;
 	public bool invincible;
+	public bool spawnBalloon;
 
 	// Use this for initialization
 	void Awake () {
@@ -32,11 +36,6 @@ public class GetHurt : MonoBehaviour {
 			"Prefabs/GutSplosions/GutSplosion3a", //big birds	 //5
 			"Prefabs/GutSplosions/GutSplosion3b",				 //6
 		};
-		if (GetComponent<BabyCrow> ()) {
-			birdType = 5;
-			gutValue = 3;
-			summonCrows = true;
-		}
 		if (GetComponent<Pigeon>()){
 			birdType = 0;
 			gutValue = 3;
@@ -45,21 +44,32 @@ public class GetHurt : MonoBehaviour {
 			birdType = 1;
 			gutValue = 5;
 		} 
-		else if (GetComponent<Crow>()){
-			birdType = 2;
-			gutValue = 7;
-		}
-		else if (GetComponent<Eagle>()){
-			birdType = 3;
-			health = 3;
-			gutValue = 9;
-		}
 		else if (GetComponent<Albatross>()){
-			birdType = 4;
+			birdType = 2;
 			health = 7;
 			gutValue = 11;
 		}
-		balloonBasketScript = GameObject.Find ("BalloonBasket").GetComponent<BalloonBasket> ();
+		else if (GetComponent<BabyCrow> ()) {
+			birdType = 3;
+			gutValue = 3;
+			summonCrows = true;
+		}
+		else if (GetComponent<Crow>()){
+			birdType = 4;
+			gutValue = 7;
+		}
+		else if (GetComponent<Eagle>()){
+			birdType = 5;
+			health = 3;
+			gutValue = 9;
+		}
+		else if (GetComponent<BirdOfParadise>()){
+			birdType = 6;
+			gutValue = 15;
+			spawnBalloon = true;
+		}
+
+		basketScript = GameObject.Find ("BalloonBasket").GetComponent<Basket> ();
 	}
 	
 	public IEnumerator TakeDamage(Vector2 gutDirection){
@@ -74,11 +84,15 @@ public class GetHurt : MonoBehaviour {
 			guts.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2 (gutDirection.x * .3f,5f);
 			StartCoroutine (guts.GetComponent<GutSplosion> ().GenerateGuts (gutValue));
 			if (health<1){
-				StartCoroutine (balloonBasketScript.SlowTime(.1f,.5f));
-				wavesScript.currentWaveBirdsStillAlive[birdType]--;
-				StartCoroutine(wavesScript.CheckBirds());
+				StartCoroutine (basketScript.SlowTime(.1f,.5f));
+				wavesScript.waveBirdsStillAlive[wavesScript.currentWave-1][birdType]--;
+				wavesScript.numberOfBirdsStillAlive--;
 				if (summonCrows){
 					StartCoroutine (summonTheCrowsScript.Murder());
+					wavesScript.waveBirdsStillAlive[wavesScript.currentWave-1] [4] = 6;//add 6 crows to the wave tracker
+				}
+				else if (spawnBalloon){
+					StartCoroutine (basketScript.SpawnNewBalloon());
 				}
 				Destroy(gameObject);
 			}

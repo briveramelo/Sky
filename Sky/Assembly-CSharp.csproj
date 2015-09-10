@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Birds\Albatross.cs" />
      <Compile Include="Assets\Scripts\Birds\BabyCrow.cs" />
+     <Compile Include="Assets\Scripts\Birds\BirdOfParadise.cs" />
      <Compile Include="Assets\Scripts\Birds\Crow.cs" />
      <Compile Include="Assets\Scripts\Birds\Duck.cs" />
      <Compile Include="Assets\Scripts\Birds\Eagle.cs" />
@@ -57,7 +58,7 @@
      <Compile Include="Assets\Scripts\Birds\Pigeon.cs" />
      <Compile Include="Assets\Scripts\Birds\SelfDestruct.cs" />
      <Compile Include="Assets\Scripts\Gear\Balloon.cs" />
-     <Compile Include="Assets\Scripts\Gear\BalloonBasket.cs" />
+     <Compile Include="Assets\Scripts\Gear\Basket.cs" />
      <Compile Include="Assets\Scripts\Gear\Spear.cs" />
      <Compile Include="Assets\Scripts\Jai\Jai.cs" />
      <Compile Include="Assets\Scripts\Jai\Joyfulstick.cs" />

@@ -4,25 +4,32 @@ using PixelArtRotation;
 
 public class Spear : MonoBehaviour {
 
-	public bool flying; //is the spear flying through the air?
-	public bool throwing; //has throwing the spear commenced?
-	public Rigidbody2D rigbod; //the spear's rigidbody
-	public Vector2 hitVelocity; //speed the spear hits the bird
-	public float bounceForce; //force at which the spear bounces back from the bird
-	public Vector3 stockPosition; //position the spear should return to when Jai reels it back
-	public Transform jaiTransform; //jai's transform
-	public int theSetAngle; //angle the spear releases as determined by the finger swipe direction
 	public PixelRotation pixelRotationScript; //allows for pixel perfect sprite rotations
 	public Jai jaiScript; //Our boy, Jai's Script
 	public Joyfulstick joyfulstickScript; //joystickScript;
-	public float time2Destroy;
-	public float time2Reappear;
-	public CircleCollider2D spearTipCollider;
-	public string spearString;
-	public Vector3[] throwAdjustmentVector;
 
+	public Rigidbody2D rigbod; //the spear's rigidbody
 	public Transform spearTipParentTransform;
 	public Transform spearTipTransform;
+	public Transform jaiTransform; //jai's transform
+
+	public CircleCollider2D spearTipCollider;
+
+	public string spearString;
+
+	public Vector3[] throwAdjustmentVector;
+	public Vector3 stockPosition; //position the spear should return to when Jai reels it back
+
+	public Vector2 hitVelocity; //speed the spear hits the bird
+	
+	public float time2Destroy;
+	public float time2Reappear;
+	public float bounceForce; //force at which the spear bounces back from the bird
+
+	public int theSetAngle; //angle the spear releases as determined by the finger swipe direction
+
+	public bool flying; //is the spear flying through the air?
+	public bool throwing; //has throwing the spear commenced?
 
 	// Use this for initialization
 	void Awake () {

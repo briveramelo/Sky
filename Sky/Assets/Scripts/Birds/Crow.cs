@@ -1,74 +1,129 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq;
+using PixelArtRotation;
 
 public class Crow : MonoBehaviour {
 
-	public Rigidbody2D rigbod;
-	public BalloonBasket balloonBasketScript;
+	public Basket basketScript;
+	public PixelRotation pixelRotationScript;
 	public Murder murderScript;
-	public BoxCollider2D crowBox;
 
+	public Rigidbody2D rigbod;
+	public CircleCollider2D crowCollider;
 	public Transform targetTransform;
+	public Animator crowAnimator;
 
 	public Vector3 startPosition;
 	public Vector3 targetPosition;
+	public Vector3 pixelScale;
+	public Vector3 pixelScaleReversed;
 	public Vector3 extraTargetHeight;
+
 	public Vector2 moveDir;
-	public Vector2 correctionVector;
-
-	public bool isKiller;
-	public bool swooping;
-	public bool turned;
-	public bool committed;
-	public bool reset;
-
-	public int crowNumber;
 
 	public float moveSpeed;
-	public float sin45;
-	public float correctionScalar;
 	public float turnDistance;
 	public float commitDistance;
 	public float resetDistance;
 	public float lastDistance;
 	public float currentDistance;
+
+	public int crowNumber;
+	public int newAngle;
+	public int currentAngle;
+	public int maxAngleDelta;
+	public int angleDelta;
+	public int targetAngle;
+	public int rotationSpeed;
+
+	public bool isKiller;
+	public bool swooping;
+	public bool turned;
+	public bool turning;
+	public bool committed;
+	public bool reset;
 	
 
 	// Use this for initialization
 	void Awake () {
 		rigbod = GetComponent<Rigidbody2D> ();
-		crowBox = GetComponent<BoxCollider2D> ();
-		crowBox.enabled = false;
-		balloonBasketScript = GameObject.Find ("BalloonBasket").GetComponent<BalloonBasket>();
+		crowAnimator = GetComponent<Animator> ();
+		crowCollider = GetComponent<CircleCollider2D> ();
+		pixelRotationScript = GetComponent<PixelRotation> ();
+		crowCollider.enabled = false;
+		basketScript = GameObject.Find ("BalloonBasket").GetComponent<Basket>();
 		murderScript = transform.parent.gameObject.GetComponent<Murder>();
-		startPosition = transform.position;
-		moveSpeed = 7.5f;
-		turnDistance = .9f;
-		commitDistance = 6f;
-		resetDistance = 20f;
-		sin45 = Mathf.Sin (Mathf.Deg2Rad * 75f);
-		correctionScalar = sin45 / (sin45 - 1f);
-		correctionVector = new Vector2 (sin45, sin45 + correctionScalar);
-		int i = 0;
+		moveSpeed = 6f;
+		turnDistance = 3.5f;
+		commitDistance = 4f; 
+		resetDistance = 20f;//needs to be greater than commitDistance
+		RandomizeRedirection ();
 		targetTransform = GameObject.Find ("Jai").transform;
-		extraTargetHeight = Vector3.up * 1.3f;
+		extraTargetHeight = new Vector3 (0.1f, 1.4f,0f);
 		lastDistance = 100f;
+		pixelScale = Vector3.one * 3.125f;
+		pixelScaleReversed = new Vector3 (-3.125f,3.125f,1f);
+	}
+
+	void RandomizeRedirection(){
+		int i = Random.Range(0,2);
+		if (i==0){
+			maxAngleDelta = 45;
+			rotationSpeed = 4;
+		}
+		else{
+			maxAngleDelta = -45;
+			rotationSpeed = -4;
+		}
+	}
+
+	int ConvertVector2Angle(Vector2 inputVector){
+		return Mathf.RoundToInt (Mathf.Atan2 (inputVector.y, inputVector.x) * Mathf.Rad2Deg);
+	}
+
+	int ConvertVector2PositiveAngle(Vector2 inputVector){
+		return Mathf.RoundToInt (Mathf.Atan2 (Mathf.Abs(inputVector.y), inputVector.x) * Mathf.Rad2Deg);
+	}
+
+	int ConvertVector2AngleForPixelRotation(Vector2 inputVector){
+		int output = Mathf.RoundToInt (Mathf.Atan2 (inputVector.y, inputVector.x) * Mathf.Rad2Deg);
+		if (rigbod.velocity.x<0){
+			output = 180 - output; 
+		}
+		return output;
+	}
+
+	Vector2 ConvertAngle2Vector(int inputAngle){
+		return new Vector2(Mathf.Cos (Mathf.Deg2Rad * inputAngle),Mathf.Sin (Mathf.Deg2Rad * inputAngle));
 	}
 
 	void Update(){
-		if (swooping){
+		if (swooping){ //approach balloons
 			currentDistance = Vector3.Distance(targetTransform.position + extraTargetHeight,transform.position);
-			if (committed){
-				if ((currentDistance < turnDistance || currentDistance>lastDistance) && !turned){
-					if (!isKiller){
-						moveDir = (rigbod.velocity.normalized * correctionScalar + correctionVector);
-					}
+			if (committed){ //targetPoint is now fixed
+				if (currentDistance < turnDistance && !turned && !turning){ //trigger next crow + delayed position Reset
+					currentAngle = ConvertVector2Angle(rigbod.velocity);
+					targetAngle = currentAngle + maxAngleDelta;
 					turned = true;
+					if (!isKiller){
+						turning = true;
+						crowAnimator.SetInteger("AnimState",1);
+					}
 					StartCoroutine (PauseToReset());
 				}
 				else if (currentDistance > resetDistance && !reset){
 					reset = true;
+				}
+				else if (turning){ //turning
+					currentAngle = ConvertVector2Angle(rigbod.velocity);
+					newAngle = currentAngle + rotationSpeed;
+					angleDelta += rotationSpeed;
+					moveDir = ConvertAngle2Vector(newAngle);
+					if (Mathf.Abs(angleDelta)>Mathf.Abs (maxAngleDelta)){
+						turning = false;
+						crowAnimator.SetInteger("AnimState",0);
+					}
 				}
 			}
 			else{
@@ -80,8 +135,26 @@ public class Crow : MonoBehaviour {
 			}
 
 			rigbod.velocity = (moveDir).normalized * moveSpeed;
+			pixelRotationScript.Angle = ConvertVector2AngleForPixelRotation(rigbod.velocity);
+			AnimateIt();
 			lastDistance = Vector3.Distance(targetTransform.position + extraTargetHeight,transform.position);
 		}
+	}
+
+	void AnimateIt(){
+		if (rigbod.velocity.x<0){
+			transform.localScale = pixelScaleReversed;
+		}
+		else{
+			transform.localScale = pixelScale;
+		}
+
+		/*if (crowAnimator.GetInteger("AnimState")==0 && Conver){
+			crowAnimator.SetInteger("AnimState",1);
+		}
+		else if (crowAnimator.GetInteger("AnimState")==1 ){
+			crowAnimator.SetInteger("AnimState",0);
+		}*/
 	}
 
 	public IEnumerator PauseToReset(){
@@ -95,15 +168,22 @@ public class Crow : MonoBehaviour {
 		swooping = false;
 		isKiller = false;
 		turned = false;
+		turning = false;
 		committed = false;
 		reset = false;
+		angleDelta = 0;
 		rigbod.velocity = Vector2.zero;
-		crowBox.enabled = false;
+		crowCollider.enabled = false;
+		crowAnimator.SetInteger("AnimState",0);
+		RandomizeRedirection ();
 		transform.position = startPosition;
 		yield return null;
 	}
 
 	void OnDestroy(){
+		if (isKiller){
+			murderScript.killerIsAlive = false;
+		}
 		murderScript.crowScripts [crowNumber].turned = true;
 		murderScript.crowsToGo = murderScript.crowsToGo.Where (number => number!=crowNumber).ToArray();
 	}

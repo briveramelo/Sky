@@ -11,10 +11,11 @@ GameObject:
   - 212: {fileID: 21253972}
   - 95: {fileID: 9595530}
   - 114: {fileID: 11457038}
-  - 61: {fileID: 6114714}
   - 114: {fileID: 11425194}
   - 114: {fileID: 11497986}
   - 50: {fileID: 5095336}
+  - 114: {fileID: 11450568}
+  - 58: {fileID: 5833688}
   m_Layer: 16
   m_Name: Crow
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 125454}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 9, z: 0}
+  m_LocalPosition: {x: 2.25, y: 9.25, z: 0}
   m_LocalScale: {x: 3.125, y: 3.125, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -50,8 +51,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &6114714
-BoxCollider2D:
+--- !u!58 &5833688
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -62,7 +63,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: .159999996, y: .0700000003}
+  m_Radius: .0700000003
 --- !u!95 &9595530
 Animator:
   serializedVersion: 3
@@ -102,6 +103,21 @@ MonoBehaviour:
   guts: {fileID: 0}
   summonCrows: 0
   summonTheCrowsScript: {fileID: 0}
+  invincible: 0
+--- !u!114 &11450568
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 125454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45251146cf068bf4b8bbee7cfd1f74b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Angle: 0
+  Filter: 0
+  PixelsPerUnit: 100
 --- !u!114 &11457038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -115,17 +131,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigbod: {fileID: 0}
   balloonBasketScript: {fileID: 0}
+  pixelRotationScript: {fileID: 0}
   murderScript: {fileID: 0}
-  crowBox: {fileID: 6114714}
+  crowCollider: {fileID: 0}
   targetTransform: {fileID: 0}
   startPosition: {x: 0, y: 0, z: 0}
   targetPosition: {x: 0, y: 0, z: 0}
+  pixelScale: {x: 0, y: 0, z: 0}
+  pixelScaleReversed: {x: 0, y: 0, z: 0}
   extraTargetHeight: {x: 0, y: 0, z: 0}
   moveDir: {x: 0, y: 0}
   correctionVector: {x: 0, y: 0}
   isKiller: 0
   swooping: 0
   turned: 0
+  turning: 0
   committed: 0
   reset: 0
   crowNumber: 0
@@ -137,6 +157,12 @@ MonoBehaviour:
   resetDistance: 0
   lastDistance: 0
   currentDistance: 0
+  newAngle: 0
+  currentAngle: 0
+  maxAngleDelta: 0
+  angleDelta: 0
+  targetAngle: 0
+  rotationSpeed: 0
 --- !u!114 &11497986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -191,7 +217,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: crowBox
       value: 
-      objectReference: {fileID: 6114714}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 125454}

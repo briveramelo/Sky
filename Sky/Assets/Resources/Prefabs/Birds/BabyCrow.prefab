@@ -12,9 +12,9 @@ GameObject:
   - 95: {fileID: 9531916}
   - 114: {fileID: 11465960}
   - 50: {fileID: 5091728}
-  - 61: {fileID: 6146634}
   - 114: {fileID: 11407028}
   - 114: {fileID: 11476726}
+  - 58: {fileID: 5862866}
   m_Layer: 16
   m_Name: BabyCrow
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 173176}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.484375, y: 1.984375, z: 0}
+  m_LocalPosition: {x: -10.953125, y: .765625, z: 0}
   m_LocalScale: {x: 3.125, y: 3.125, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -50,8 +50,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &6146634
-BoxCollider2D:
+--- !u!58 &5862866
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -62,7 +62,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: .109999999, y: .0500000007}
+  m_Radius: .0500000007
 --- !u!95 &9531916
 Animator:
   serializedVersion: 3
@@ -106,6 +106,7 @@ MonoBehaviour:
   crowString: 
   triggerShiftDistance: 0
   speedDistance: 0
+  zeroDistance: 0
   currentSpeed: 0
   minSpeed: 0
   pixelScale: {x: 0, y: 0, z: 0}
@@ -152,6 +153,7 @@ MonoBehaviour:
   guts: {fileID: 0}
   summonCrows: 0
   summonTheCrowsScript: {fileID: 0}
+  invincible: 0
 --- !u!212 &21282088
 SpriteRenderer:
   m_ObjectHideFlags: 1

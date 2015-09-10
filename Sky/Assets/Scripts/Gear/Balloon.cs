@@ -1,16 +1,18 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Balloon : MonoBehaviour {
 
 
-	public BalloonBasket balloonBasketScript;
-	public bool popping;
+	public Basket basketScript;
+
 	public int balloonNumber;
+
+	public bool popping;
 
 	// Use this for initialization
 	void Awake () {
-		balloonBasketScript = GameObject.Find ("BalloonBasket").GetComponent<BalloonBasket> ();
+		basketScript = GameObject.Find ("BalloonBasket").GetComponent<Basket> ();
 		popping = false;
 		if (name == "PinkBalloon"){
 			balloonNumber = 0;
@@ -26,12 +28,12 @@ public class Balloon : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col){
 		if (!popping && col.gameObject.layer == 16){//bird layer
 			popping = true;
-			foreach (Balloon balloonScript in balloonBasketScript.balloonScripts){
+			foreach (Balloon balloonScript in basketScript.balloonScripts){
 				if (balloonScript){
 					balloonScript.popping = true;
 				}
 			}
-			StartCoroutine (balloonBasketScript.BeginPopping(balloonNumber));
+			StartCoroutine (basketScript.BeginPopping(balloonNumber));
 		}
 	}
 }

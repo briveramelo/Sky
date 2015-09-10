@@ -1,23 +1,23 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Birds/Murder.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/World/Waves.cs">
     <Files>
-      <File FileName="Assets/Scripts/Birds/Crow.cs" Line="75" Column="37" />
-      <File FileName="Assets/Scripts/Birds/Murder.cs" Line="72" Column="24" />
-      <File FileName="Assets/Scripts/PixelPerfect/Scripts/PixelPerfectSprite.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Gear/BalloonBasket.cs" Line="65" Column="9" />
+      <File FileName="Assets/Scripts/Gear/Basket.cs" Line="38" Column="1" />
+      <File FileName="Assets/Scripts/Jai/Joyfulstick.cs" Line="33" Column="25" />
+      <File FileName="Assets/Scripts/World/Waves.cs" Line="73" Column="3" />
+      <File FileName="Assets/Scripts/Birds/BabyCrow.cs" Line="34" Column="31" />
+      <File FileName="Assets/Scripts/Birds/GetHurt.cs" Line="92" Column="64" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Scripts" expanded="True">
-              <Node name="Birds" expanded="True">
-                <Node name="Murder.cs" selected="True" />
-              </Node>
+              <Node name="Birds" expanded="True" />
               <Node name="Gear" expanded="True" />
-              <Node name="PixelPerfect" expanded="True">
-                <Node name="Scripts" expanded="True" />
+              <Node name="Jai" expanded="True" />
+              <Node name="World" expanded="True">
+                <Node name="Waves.cs" selected="True" />
               </Node>
             </Node>
           </Node>

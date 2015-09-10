@@ -2,16 +2,21 @@ using UnityEngine;
 using System.Collections;
 
 public class Joyfulstick : MonoBehaviour {
+	
+	public Jai jaiScript;
+	public Spear spearScript;
+
+	public Rigidbody2D basketBody;
+
+	public SpriteRenderer controlStickSprite;
 
 	public Vector2 startingJoystickSpot; //position of the joystick on screen
 	public Vector2 touchSpot;
 	public Vector2 moveDir;
 	public Vector2 rawFinger;
-
 	public Vector2 startingTouchPoint;
 	public Vector2 releaseTouchPoint;
 	public Vector2 attackDir;
-
 	public Vector2 correctionPixels;
 
 	public float distFromStick; //distance your finger is from the joystick
@@ -22,21 +27,21 @@ public class Joyfulstick : MonoBehaviour {
 	public float joystickAppearanceThreshhold; //maximum distance you can move the joystick
 	public float joystickMaxThumbDist;
 	public float correctionPixelFactor;
-
-	public SpriteRenderer controlStickSprite;
-
-	public Jai jaiScript;
-	public Spear spearScript;
-	public Transform jaiTransform;
-
+	
 	public int n;
 	public int joystickFinger;
 	public int spearFinger;
 
-	public Rigidbody2D balloonBasketBody;
-
 	// Use this for initialization
-	void Start () {
+	void Awake () {
+		basketBody = GameObject.Find ("BalloonBasket").GetComponent<Rigidbody2D>();
+		controlStickSprite = GameObject.Find ("ControlStick").GetComponent<SpriteRenderer>();
+		jaiScript = GameObject.Find ("Jai").GetComponent<Jai> ();
+		maxBalloonSpeed = 2f;
+
+		correctionPixels = new Vector2 (560,-960); //half of the screen width is 560 and yeah the heights weird [1280-640]
+
+
 		startingJoystickSpot = transform.position;
 		joystickAppearanceThreshhold = .8f;
 		joystickMaxThumbDist = 1.3f;
@@ -44,20 +49,14 @@ public class Joyfulstick : MonoBehaviour {
 		joystickFinger = -1;
 		spearFinger = -2;
 		moveForce = 10f;
-		jaiScript = GameObject.Find ("Jai").GetComponent<Jai> ();
-		controlStickSprite = GameObject.Find ("ControlStick").GetComponent<SpriteRenderer>();
-		jaiTransform = jaiScript.transform;
-		balloonBasketBody = GameObject.Find ("BalloonBasket").GetComponent<Rigidbody2D>();
-		//correctionPixels = new Vector2 (Screen.width/2,-Screen.height/2);
-		correctionPixels = new Vector2 (560,-960); //half of the screen width is 560 and yeah the heights weird [1280-640]
-		//correctionPixelFactor = 5 / Screen.height;
 		correctionPixelFactor = 5f / 320f; //5 game units divided by 320 pixels
-		maxBalloonSpeed = balloonBasketBody.GetComponent<BalloonBasket>().maxBalloonSpeed;
+
+		//correctionPixels = new Vector2 (Screen.width/2,-Screen.height/2);
+		//correctionPixelFactor = 5 / Screen.height;
 	}
 
 	Vector2 ConvertFingerPosition(Vector2 fingerIn){
-		Vector2 convertedFingerSpot = (fingerIn + correctionPixels) * correctionPixelFactor ;
-		return convertedFingerSpot;
+		return (fingerIn + correctionPixels) * correctionPixelFactor;
 	}
 
 	// Update is called once per frame
@@ -87,8 +86,8 @@ public class Joyfulstick : MonoBehaviour {
 						}
 						distFromStick = moveDir.magnitude;
 						controlStickSprite.transform.position = startingJoystickSpot + moveDir;
-						if (balloonBasketBody.velocity.magnitude<maxBalloonSpeed){
-							balloonBasketBody.AddForce (moveDir * moveForce);
+						if (basketBody.velocity.magnitude<maxBalloonSpeed){
+							basketBody.AddForce (moveDir * moveForce);
 						}
 					}
 				}

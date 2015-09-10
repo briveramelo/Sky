@@ -3,20 +3,17 @@ using System.Collections;
 
 public class TeleportSideToSide : MonoBehaviour {
 
-	public bool hi;
-	public Vector3 destination;
 	public Collider2D buddyCollider;
-
+	
+	public Vector3 destination;
 
 	// Use this for initialization
 	void Start () {
 
 		if (name.Contains("Right")){
-			hi = true;
 			buddyCollider = GameObject.Find ("Teleport_LeftSide").GetComponent<BoxCollider2D>();
 		}
 		else if (name.Contains("Left")){
-			hi = true;
 			buddyCollider = GameObject.Find ("Teleport_RightSide").GetComponent<BoxCollider2D>();
 		}
 		destination = new Vector3 (buddyCollider.transform.position.x, 0, 0);

@@ -4,28 +4,34 @@ using System.Collections;
 public class BabyCrow : MonoBehaviour {
 
 	public GetHurt getHurtScript;
+
 	public Animator babyCrowAnimator;
-	public float moveSpeed;
-	public Vector2 moveFullDir;
 	public Rigidbody2D rigbod;
-	public Transform balloonBasketTransform;
+	public Transform basketTransform;
+
 	public Vector3[] shifty; 
-	public int i;
-	public bool shifting;
-	public bool shiftingSequence;
-	public int shifts;
-	public int maxShifts;
+	public Vector3 pixelScale;
+	public Vector3 pixelScaleReversed;
+
+	public Vector2 moveFullDir;
+
 	public string crowString;
+
 	public float triggerShiftDistance;
 	public float speedDistance;
 	public float zeroDistance;
 	public float currentSpeed;
 	public float minSpeed;
-	public Vector3 pixelScale;
-	public Vector3 pixelScaleReversed;
 	public float switchTime;
-	public bool switching;
+	public float moveSpeed;
 
+	public int shifts;
+	public int maxShifts;
+	public int i;
+
+	public bool switching;
+	public bool shifting;
+	public bool shiftingSequence;
 
 	// Use this for initialization
 	void Awake () {
@@ -37,10 +43,10 @@ public class BabyCrow : MonoBehaviour {
 		pixelScale = Vector3.one * 3.125f;
 		pixelScaleReversed = new Vector3 (-3.125f,3.125f,1f);
 		triggerShiftDistance = 0.05f;
-		balloonBasketTransform = GameObject.Find ("Jai").transform;
+		basketTransform = GameObject.Find ("Jai").transform;
 		shifty = new Vector3[]{
-			new Vector3 (-1f, 0.25f, 0f),
-			new Vector3 (1.3f , 0.25f, 0f),
+			new Vector3 (-1.0f, 0.7f, 0f),
+			new Vector3 (1.3f , 0.7f, 0f),
 			new Vector3 (0.1f,  -1f,0f)
 		};
 		i = 0;
@@ -74,7 +80,7 @@ public class BabyCrow : MonoBehaviour {
 	}
 
 	void ApproachShifts(){
-		moveFullDir = (balloonBasketTransform.position + shifty [i] - transform.position);
+		moveFullDir = (basketTransform.position + shifty [i] - transform.position);
 		if (moveFullDir.magnitude<triggerShiftDistance){
 			StartCoroutine (ShiftSpots());
 		}
@@ -140,8 +146,5 @@ public class BabyCrow : MonoBehaviour {
 		yield return new WaitForSeconds (switchTime);
 		switching = false;
 	}
-
-
-
 
 }
