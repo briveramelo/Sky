@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\Birds\BirdOfParadise.cs" />
      <Compile Include="Assets\Scripts\Birds\Crow.cs" />
      <Compile Include="Assets\Scripts\Birds\Duck.cs" />
+     <Compile Include="Assets\Scripts\Birds\DuckLeader.cs" />
      <Compile Include="Assets\Scripts\Birds\Eagle.cs" />
      <Compile Include="Assets\Scripts\Birds\GetHurt.cs" />
      <Compile Include="Assets\Scripts\Birds\GutSplosion.cs" />
@@ -60,6 +61,7 @@
      <Compile Include="Assets\Scripts\Gear\Balloon.cs" />
      <Compile Include="Assets\Scripts\Gear\Basket.cs" />
      <Compile Include="Assets\Scripts\Gear\Spear.cs" />
+     <Compile Include="Assets\Scripts\GenericFunctions\ConvertAnglesAndVectors.cs" />
      <Compile Include="Assets\Scripts\Jai\Jai.cs" />
      <Compile Include="Assets\Scripts\Jai\Joyfulstick.cs" />
      <Compile Include="Assets\Scripts\PixelArtRotation\Scripts\Internal\Rotation.cs" />
@@ -71,6 +73,7 @@
      <Compile Include="Assets\Scripts\PixelPerfect\Scripts\PixelPerfectCamera.cs" />
      <Compile Include="Assets\Scripts\PixelPerfect\Scripts\PixelPerfectSprite.cs" />
      <Compile Include="Assets\Scripts\World\ScreenShake.cs" />
+     <Compile Include="Assets\Scripts\World\SpawnBirds.cs" />
      <Compile Include="Assets\Scripts\World\SummonTheCrows.cs" />
      <Compile Include="Assets\Scripts\World\TeleportSideToSide.cs" />
      <Compile Include="Assets\Scripts\World\Waves.cs" />

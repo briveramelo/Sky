@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using PixelArtRotation;
+using GenericFunctions;
 
 public class Eagle : MonoBehaviour {
 
@@ -58,7 +59,7 @@ public class Eagle : MonoBehaviour {
 		transform.position = startPos [0];
 		rigbod.velocity = moveDir [0];
 		transform.localScale = pixelScale;
-		pixelRotationScript.Angle = ConvertVector2AngleForPixelRotation (moveDir [0]);
+		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2AngleForPixelRotation (moveDir [0]);
 		yield return new WaitForSeconds(4f);
 		StartCoroutine (UpLeft ());
 	}
@@ -67,18 +68,10 @@ public class Eagle : MonoBehaviour {
 		transform.position = startPos [1];
 		rigbod.velocity = moveDir [1];
 		transform.localScale = pixelScaleReversed;
-		pixelRotationScript.Angle = ConvertVector2AngleForPixelRotation (moveDir [1]);
+		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2AngleForPixelRotation (moveDir [1]);
 		yield return new WaitForSeconds(6f);
 		rigbod.velocity = Vector2.zero;
 		StartCoroutine (Strike ());
-	}
-
-	int ConvertVector2AngleForPixelRotation(Vector2 inputVector){
-		int output = Mathf.RoundToInt (Mathf.Atan2 (inputVector.y, inputVector.x) * Mathf.Rad2Deg);
-		if (rigbod.velocity.x<0){
-			output = 180 - output; 
-		}
-		return output;
 	}
 
 	public IEnumerator Strike(){
@@ -96,7 +89,7 @@ public class Eagle : MonoBehaviour {
 		else{
 			transform.localScale = pixelScaleReversed;
 		}
-		pixelRotationScript.Angle = ConvertVector2AngleForPixelRotation (attackDir);
+		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2AngleForPixelRotation (attackDir);
 
 		attacks--;
 		if (attacks>0){

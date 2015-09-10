@@ -6,6 +6,8 @@ public class GetHurt : MonoBehaviour {
 	public GameObject guts;
 	public Basket basketScript;
 	public SummonTheCrows summonTheCrowsScript;
+	public DuckLeader duckLeaderScript;
+	public Duck duckScript;
 	public Waves wavesScript;
 
 	public string[] gutSplosions;
@@ -23,8 +25,11 @@ public class GetHurt : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		health = 1;
-		wavesScript = GameObject.Find ("WorldBounds").GetComponent<Waves> ();
+		//wavesScript = GameObject.Find ("WorldBounds").GetComponent<Waves> ();
 		summonTheCrowsScript = GameObject.Find ("WorldBounds").GetComponent<SummonTheCrows> ();
+		duckLeaderScript = GetComponent<DuckLeader> ();
+		duckScript = GetComponent<Duck> ();
+
 		gutSplosionParentString = "Prefabs/Birds/GutSplosionParent";
 		gutSplosions = new string[]{
 			"Prefabs/GutSplosions/GutSplosion1a", //small birds  //0
@@ -85,14 +90,22 @@ public class GetHurt : MonoBehaviour {
 			StartCoroutine (guts.GetComponent<GutSplosion> ().GenerateGuts (gutValue));
 			if (health<1){
 				StartCoroutine (basketScript.SlowTime(.1f,.5f));
-				wavesScript.waveBirdsStillAlive[wavesScript.currentWave-1][birdType]--;
-				wavesScript.numberOfBirdsStillAlive--;
+				//wavesScript.waveBirdsStillAlive[wavesScript.currentWave-1][birdType]--;
+				//wavesScript.numberOfBirdsStillAlive--;
 				if (summonCrows){
 					StartCoroutine (summonTheCrowsScript.Murder());
-					wavesScript.waveBirdsStillAlive[wavesScript.currentWave-1] [4] = 6;//add 6 crows to the wave tracker
+					//wavesScript.waveBirdsStillAlive[wavesScript.currentWave-1] [4] = 6;//add 6 crows to the wave tracker
 				}
 				else if (spawnBalloon){
 					StartCoroutine (basketScript.SpawnNewBalloon());
+				}
+				else if (duckLeaderScript){
+					StartCoroutine (duckLeaderScript.BreakTheV());
+				}
+				else if (duckScript){
+					if (duckScript.duckLeaderScript){
+						//duckScript.duckLeaderScript.
+					}
 				}
 				Destroy(gameObject);
 			}

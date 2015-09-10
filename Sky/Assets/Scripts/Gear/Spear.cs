@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using PixelArtRotation;
+using GenericFunctions;
 
 public class Spear : MonoBehaviour {
 
@@ -58,19 +59,15 @@ public class Spear : MonoBehaviour {
 
 	void Update(){
 		if (flying){
-			pixelRotationScript.Angle = ConvertVector2Angle(rigbod.velocity);
-			spearTipParentTransform.rotation = Quaternion.Euler(0f,0f,ConvertVector2Angle(rigbod.velocity));
+			pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2Angle(rigbod.velocity)-90;
+			spearTipParentTransform.rotation = Quaternion.Euler(0f,0f,ConvertAnglesAndVectors.ConvertVector2Angle(rigbod.velocity)-90);
 		}
-	}
-
-	int ConvertVector2Angle(Vector2 inputVector){
-		return Mathf.RoundToInt (Mathf.Atan2 (inputVector.y, inputVector.x) * Mathf.Rad2Deg)-90;
 	}
 
 	public IEnumerator FlyFree(Vector2 throwDir, float throwForce, int lowOrHighThrow){
 		if (!throwing){
 			throwing = true;
-			theSetAngle = ConvertVector2Angle(throwDir);
+			theSetAngle = ConvertAnglesAndVectors.ConvertVector2Angle(throwDir);
 			pixelRotationScript.Angle = theSetAngle;
 			transform.position = jaiTransform.position + throwAdjustmentVector[lowOrHighThrow-1];
 			spearTipCollider.enabled = true;

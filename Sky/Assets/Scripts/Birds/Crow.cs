@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using PixelArtRotation;
+using GenericFunctions;
 
 public class Crow : MonoBehaviour {
 
@@ -78,32 +79,12 @@ public class Crow : MonoBehaviour {
 		}
 	}
 
-	int ConvertVector2Angle(Vector2 inputVector){
-		return Mathf.RoundToInt (Mathf.Atan2 (inputVector.y, inputVector.x) * Mathf.Rad2Deg);
-	}
-
-	int ConvertVector2PositiveAngle(Vector2 inputVector){
-		return Mathf.RoundToInt (Mathf.Atan2 (Mathf.Abs(inputVector.y), inputVector.x) * Mathf.Rad2Deg);
-	}
-
-	int ConvertVector2AngleForPixelRotation(Vector2 inputVector){
-		int output = Mathf.RoundToInt (Mathf.Atan2 (inputVector.y, inputVector.x) * Mathf.Rad2Deg);
-		if (rigbod.velocity.x<0){
-			output = 180 - output; 
-		}
-		return output;
-	}
-
-	Vector2 ConvertAngle2Vector(int inputAngle){
-		return new Vector2(Mathf.Cos (Mathf.Deg2Rad * inputAngle),Mathf.Sin (Mathf.Deg2Rad * inputAngle));
-	}
-
 	void Update(){
 		if (swooping){ //approach balloons
 			currentDistance = Vector3.Distance(targetTransform.position + extraTargetHeight,transform.position);
 			if (committed){ //targetPoint is now fixed
 				if (currentDistance < turnDistance && !turned && !turning){ //trigger next crow + delayed position Reset
-					currentAngle = ConvertVector2Angle(rigbod.velocity);
+					currentAngle = ConvertAnglesAndVectors.ConvertVector2Angle(rigbod.velocity);
 					targetAngle = currentAngle + maxAngleDelta;
 					turned = true;
 					if (!isKiller){
@@ -116,10 +97,10 @@ public class Crow : MonoBehaviour {
 					reset = true;
 				}
 				else if (turning){ //turning
-					currentAngle = ConvertVector2Angle(rigbod.velocity);
+					currentAngle = ConvertAnglesAndVectors.ConvertVector2Angle(rigbod.velocity);
 					newAngle = currentAngle + rotationSpeed;
 					angleDelta += rotationSpeed;
-					moveDir = ConvertAngle2Vector(newAngle);
+					moveDir = ConvertAnglesAndVectors.ConvertAngleToVector2(newAngle);
 					if (Mathf.Abs(angleDelta)>Mathf.Abs (maxAngleDelta)){
 						turning = false;
 						crowAnimator.SetInteger("AnimState",0);
@@ -135,7 +116,7 @@ public class Crow : MonoBehaviour {
 			}
 
 			rigbod.velocity = (moveDir).normalized * moveSpeed;
-			pixelRotationScript.Angle = ConvertVector2AngleForPixelRotation(rigbod.velocity);
+			pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2AngleForPixelRotation(rigbod.velocity);
 			AnimateIt();
 			lastDistance = Vector3.Distance(targetTransform.position + extraTargetHeight,transform.position);
 		}
@@ -148,13 +129,6 @@ public class Crow : MonoBehaviour {
 		else{
 			transform.localScale = pixelScale;
 		}
-
-		/*if (crowAnimator.GetInteger("AnimState")==0 && Conver){
-			crowAnimator.SetInteger("AnimState",1);
-		}
-		else if (crowAnimator.GetInteger("AnimState")==1 ){
-			crowAnimator.SetInteger("AnimState",0);
-		}*/
 	}
 
 	public IEnumerator PauseToReset(){
