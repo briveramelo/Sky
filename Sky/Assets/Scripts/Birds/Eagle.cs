@@ -9,6 +9,7 @@ public class Eagle : MonoBehaviour {
 
 	public Rigidbody2D rigbod;
 	public Transform jaiTransform;
+	public SpriteRenderer eagleSprite;
 
 	public Vector3 attackDir;
 
@@ -34,18 +35,21 @@ public class Eagle : MonoBehaviour {
 		rigbod = GetComponent<Rigidbody2D> ();
 		jaiTransform = GameObject.Find ("Jai").transform;
 		startPos = new Vector2[]{
-			new Vector2(-9,-5.5f),
-			new Vector2(9f,-5.5f)
+			new Vector2(-9.5f,-5.8f),
+			new Vector2(9.5f,-5.8f)
 		};
 		moveDir = new Vector2[]{
 			new Vector2(1120,650).normalized * moveSpeed,
 			new Vector2(-1120,650).normalized * moveSpeed,
 		};
+		eagleSprite = GetComponent<SpriteRenderer> ();
+		eagleSprite.enabled = false;
 		StartCoroutine (InitiateAttack (1f));
 	}
 
 	public IEnumerator InitiateAttack(float waitTime){
 		yield return new WaitForSeconds(waitTime);
+		eagleSprite.enabled = true;
 		StartCoroutine (UpRight ());
 	}
 

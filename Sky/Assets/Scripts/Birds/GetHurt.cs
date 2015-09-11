@@ -61,7 +61,7 @@ public class GetHurt : MonoBehaviour {
 			birdType = 6;
 			health = 3;
 			damageGutValue = 4;
-			killGutValue = 70;
+			killGutValue = 50;
 		}
 		else if (GetComponent<BirdOfParadise>()){
 			birdType = 7;
