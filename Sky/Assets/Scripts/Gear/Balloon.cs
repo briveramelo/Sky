@@ -55,28 +55,14 @@ public class Balloon : MonoBehaviour {
 		balloonAnimator.SetInteger("AnimState",1);
 		Destroy (transform.GetChild(0).gameObject);
 		popNoise.Play ();
-		while (popNoise.isPlaying){
-			yield return null;
-		}
-		Destroy (gameObject);
+		Destroy (gameObject,Constants.time2Destroy);
 		yield return null;
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (!popping && (col.gameObject.layer == 16)){//bird layer
+		if (!popping && (col.gameObject.layer == 16 && !transform.parent)){//bird layer pops free balloon
 			popping = true;
-			if (transform.parent){
-				foreach (Balloon balloonScript in basketScript.balloonScripts){
-					if (balloonScript){
-						balloonScript.popping = true;
-					}
-				}
-				balloonAnimator.SetInteger("AnimState",1);
-				StartCoroutine (basketScript.BeginPopping(balloonNumber));
-			}
-			else {
-				StartCoroutine(LocalPop());
-			}
+			StartCoroutine(LocalPop());
 		}
 	}
 }

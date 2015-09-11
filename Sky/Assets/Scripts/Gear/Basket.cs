@@ -92,16 +92,27 @@ public class Basket : MonoBehaviour {
 	public IEnumerator BeginPopping(int balloonNumber){
 		if (!popping){
 			popping = true;
+			StartCoroutine(PopBalloon(balloonNumber));
 			StartCoroutine(Invincibility());
 			StartCoroutine (SlowTime(.5f,.75f));
-			StartCoroutine(PopBalloon(balloonNumber));
 			StartCoroutine(screenShakeScript.CameraShake());
 		}
 		yield return null;
 	}
-	
-	public IEnumerator Invincibility(){
+
+	public IEnumerator PopBalloon(int i){
+		popNoise.Play ();
+		balloonAnimators[i].SetInteger("AnimState",1);
+		rigbod.AddForce (Vector2.down * dropForce);
+		Destroy (balloons[i].transform.GetChild(0).gameObject);
+		popped [i] = true;
 		balloonCount--;
+		Destroy (balloons[i],Constants.time2Destroy);
+		yield return null;
+	}
+
+
+	public IEnumerator Invincibility(){
 		if (balloonCount<1){
 			rigbod.gravityScale = 1;
 			foreach (CircleCollider2D cirCol in balloonColliders){
@@ -120,26 +131,7 @@ public class Basket : MonoBehaviour {
 				cirCol.enabled = true;
 			}
 		}
-	}
-	
-	public IEnumerator PopBalloon(int i){
-		popping = true;
-		popNoise.Play ();
-		balloonAnimators[i].SetInteger("AnimState",1);
-		rigbod.AddForce (Vector2.down * dropForce);
-		Destroy (balloons[i].transform.GetChild(0).gameObject);
-		popped [i] = true;
-		while (popNoise.isPlaying){
-			yield return null;
-		}
-		Destroy (balloons[i]);
 		popping = false;
-		foreach (Balloon balloonScript in balloonScripts){
-			if (balloonScript){
-				balloonScript.popping = false;
-			}
-		}
-		yield return null;
 	}
 	
 	public IEnumerator SlowTime(float slowDuration, float timeScale){
@@ -164,16 +156,7 @@ public class Basket : MonoBehaviour {
 	}
 
 	public IEnumerator SpawnNewBalloon(){
-		numToFill = 0;
-		int q = 0;
-		foreach (bool pop in popped){
-			if (pop){
-				numToFill = q;
-				break;
-			}
-			q++;
-		}
-		GameObject newBal = Instantiate (Resources.Load (balloonPrefabNames[numToFill]),new Vector3 (Random.Range(-6f,6f),-8f,0f),Quaternion.identity) as GameObject;
+		GameObject newBal = Instantiate (Resources.Load (balloonPrefabNames[Random.Range (0,3)]),new Vector3 (Random.Range(-6f,6f),-8f,0f),Quaternion.identity) as GameObject;
 		yield return null;
 	}
 

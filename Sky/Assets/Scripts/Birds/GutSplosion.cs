@@ -15,7 +15,7 @@ public class GutSplosion : MonoBehaviour {
 
 	void Awake(){
 		gutIndices = Constants.NegativeOnes(100);
-		Destroy(gameObject,2f);
+		Destroy(gameObject,Constants.time2Destroy);
 		gutSplosions = new string[]{
 			"Prefabs/GutSplosions/GutSplosion1a", //small birds  //0
 			"Prefabs/GutSplosions/GutSplosion2a", //medium birds //1
