@@ -28,6 +28,7 @@ public class Basket : MonoBehaviour {
 	public int balloonCount;
 	public int poppedBalloon;
 	public int numToFill;
+	public int x;
 
 	public bool[] popped;
 	public bool popping;
@@ -87,7 +88,19 @@ public class Basket : MonoBehaviour {
 			false,
 			false,
 		}; 
+		//InvokeRepeating ("CountBalloons", 0.01f, 0.1f);
 	}
+
+	/*void CountBalloons(){
+		x = 0;
+		popped = new bool[3];
+		balloonCount = 0;
+		foreach (GameObject balloon in balloons){
+			popped[x] = balloon ? false : true;
+			balloonCount += balloon ? 1 : 0;
+		}
+
+	}*/
 
 	public IEnumerator BeginPopping(int balloonNumber){
 		if (!popping){
@@ -115,9 +128,10 @@ public class Basket : MonoBehaviour {
 	public IEnumerator Invincibility(){
 		if (balloonCount<1){
 			rigbod.gravityScale = 1;
-			foreach (CircleCollider2D cirCol in balloonColliders){
-				if (cirCol){
-					cirCol.enabled = false;
+			foreach (Balloon balloon in balloonScripts){
+				if (balloon){
+					balloon.balloonCollider.enabled = false;
+					balloon.popping = true;
 				}
 			}
 			basketCollider.enabled = false;
@@ -126,9 +140,10 @@ public class Basket : MonoBehaviour {
 		Physics2D.IgnoreLayerCollision (16, 17, true);//ignore birds and balloons for a second;
 		yield return new WaitForSeconds(1.5f);
 		Physics2D.IgnoreLayerCollision (16, 17, false); //resume
-		foreach (CircleCollider2D cirCol in balloonColliders){
-			if (cirCol){
-				cirCol.enabled = true;
+		foreach (Balloon balloon in balloonScripts){
+			if (balloon){
+				balloon.balloonCollider.enabled = true;
+				balloon.popping = false;
 			}
 		}
 		popping = false;
@@ -163,9 +178,9 @@ public class Basket : MonoBehaviour {
 	public IEnumerator CollectNewBalloon(GameObject newBalloon){
 		int balloonNumber = 0;
 		bool collect = false;
-		for (int i =0;i<popped.Length;i++){
-			if (popped[i]){
-				balloonNumber = i;
+		for (int fun =0;fun<popped.Length;fun++){
+			if (popped[fun]){
+				balloonNumber = fun;
 				collect = true;
 				break;
 			}

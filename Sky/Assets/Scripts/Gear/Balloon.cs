@@ -26,7 +26,6 @@ public class Balloon : MonoBehaviour {
 		popNoise = GetComponent<AudioSource> ();
 		moveSpeed = 0.75f;
 		popping = false;
-		moving = true;
 		if (name.Contains("PinkBalloon")){
 			balloonNumber = 0;
 		}
@@ -38,6 +37,7 @@ public class Balloon : MonoBehaviour {
 		}
 		if (!transform.parent){
 			gameObject.layer = 18;
+			moving = true;
 			transform.localScale = Constants.Pixel625(true);
 			StartCoroutine (MoveUp ());
 		}
@@ -60,9 +60,14 @@ public class Balloon : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (!popping && (col.gameObject.layer == 16 && !transform.parent)){//bird layer pops free balloon
+		if (!popping && (col.gameObject.layer == 16)){//bird layer pops free balloon
 			popping = true;
-			StartCoroutine(LocalPop());
+			if (!transform.parent){
+				StartCoroutine(LocalPop());
+			}
+			else {
+				StartCoroutine (basketScript.BeginPopping(balloonNumber));
+			}
 		}
 	}
 }
