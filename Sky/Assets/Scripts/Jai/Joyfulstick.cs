@@ -61,6 +61,7 @@ public class Joyfulstick : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
 		if (Input.touchCount>0){
 			foreach (Touch finger in Input.touches){
 				rawFinger = finger.position;

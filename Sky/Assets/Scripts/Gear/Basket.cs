@@ -25,7 +25,6 @@ public class Basket : MonoBehaviour {
 	public float[] distanceAway;
 	public float dropForce;
 
-	public int lowestRemainingBalloon;
 	public int balloonCount;
 	public int poppedBalloon;
 	public int numToFill;
@@ -36,7 +35,6 @@ public class Basket : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		dropForce = 100f;
-		lowestRemainingBalloon = 0;
 		balloonCount = 3;
 		distanceAway = new float[3];
 		screenShakeScript = GameObject.Find ("mainCam").GetComponent<ScreenShake> ();
@@ -161,7 +159,7 @@ public class Basket : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.layer == 18){
-			StartCoroutine (CollectNewBalloon(col.gameObject,col.GetComponent<Balloon>().balloonNumber));
+			StartCoroutine (CollectNewBalloon(col.gameObject));
 		}
 	}
 
@@ -179,14 +177,25 @@ public class Basket : MonoBehaviour {
 		yield return null;
 	}
 
-	public IEnumerator CollectNewBalloon(GameObject newBalloon, int balloonNumber){
-		if (popped[balloonNumber]){
+	public IEnumerator CollectNewBalloon(GameObject newBalloon){
+		int balloonNumber = 0;
+		bool collect = false;
+		for (int i =0;i<popped.Length;i++){
+			if (popped[i]){
+				balloonNumber = i;
+				collect = true;
+				break;
+			}
+		}
+		
+		if (collect){
 			balloons[balloonNumber] = newBalloon;
 			balloonColliders[balloonNumber] = balloons[balloonNumber].GetComponent<CircleCollider2D>();
 			balloonAnimators[balloonNumber] = balloons[balloonNumber].GetComponent<Animator>();
 			balloonSprites[balloonNumber] = balloons[balloonNumber].GetComponent<SpriteRenderer>();
 			balloonScripts[balloonNumber] = balloons[balloonNumber].GetComponent<Balloon>();
 			balloonScripts[balloonNumber].moving = false;
+			balloonScripts[balloonNumber].balloonNumber = balloonNumber;
 
 			balloons[balloonNumber].transform.SetParent(transform);
 			balloons[balloonNumber].transform.localScale = Vector3.one;

@@ -1,20 +1,27 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Birds/GutSplosion.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Gear/Spear.cs">
     <Files>
-      <File FileName="Assets/Scripts/Birds/GutSplosion.cs" Line="17" Column="44" />
+      <File FileName="Assets/Scripts/Birds/GetHurt.cs" Line="89" Column="43" />
+      <File FileName="Assets/Scripts/Jai/Joyfulstick.cs" Line="60" Column="3" />
+      <File FileName="Assets/Scripts/Birds/Crow.cs" Line="82" Column="33" />
+      <File FileName="Assets/Scripts/Birds/Murder.cs" Line="69" Column="23" />
+      <File FileName="Assets/Scripts/Gear/Balloon.cs" Line="55" Column="45" />
+      <File FileName="Assets/Scripts/Gear/Basket.cs" Line="198" Column="64" />
+      <File FileName="Assets/Scripts/Gear/Spear.cs" Line="99" Column="3" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Scripts" expanded="True">
-              <Node name="Birds" expanded="True">
-                <Node name="GutSplosion.cs" selected="True" />
+              <Node name="Birds" expanded="True" />
+              <Node name="Gear" expanded="True">
+                <Node name="Spear.cs" selected="True" />
               </Node>
-              <Node name="Gear" expanded="True" />
               <Node name="GenericFunctions" expanded="True" />
               <Node name="Jai" expanded="True" />
+              <Node name="World" expanded="True" />
             </Node>
           </Node>
         </State>

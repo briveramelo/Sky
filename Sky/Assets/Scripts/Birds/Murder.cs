@@ -16,6 +16,7 @@ public class Murder : MonoBehaviour {
 	public int numGone;
 
 	public bool killerIsAlive;
+	public bool triggerNext;
 
 	// Use this for initialization
 	void Awake () {
@@ -56,9 +57,16 @@ public class Murder : MonoBehaviour {
 			crowScripts[crowsToGo[Random.Range(0,crowsToGo.Length)]].isKiller = true;
 			//put on the right sprite here
 		}
-		while (!crowScripts [crowToGo].triggeredNextCrow){
+		while (!triggerNext){
+			if (crowScripts[crowToGo]){
+				triggerNext = crowScripts [crowToGo].triggeredNextCrow;
+			}
+			else{
+				triggerNext = true;
+			}
 			yield return null;
 		}
+		triggerNext = false;
 		if (numGone<6){
 			i = crowsToGo[Random.Range (0,crowsToGo.Length)];
 			StartCoroutine (ChooseNextCrow (i));
