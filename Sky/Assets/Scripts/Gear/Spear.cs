@@ -94,20 +94,20 @@ public class Spear : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.layer == 16) { //if it hits a bird
-			StartCoroutine(HurtBird(col.gameObject,rigbod.velocity));
+			StartCoroutine(HurtBird(col,rigbod.velocity));
 		}
 	}
 
-	public IEnumerator HurtBird(GameObject bird, Vector2 gutVel){
-		GetHurt getHurtScript = bird.GetComponent<GetHurt> ();
+	public IEnumerator HurtBird(Collider2D birdCol, Vector2 gutVel){
+		GetHurt getHurtScript = birdCol.GetComponent<GetHurt> ();
+
 		if (getHurtScript.health>1){ //bounce on hurting
-			rigbod.velocity = Vector2.zero;
-			rigbod.AddForce(-gutVel.normalized * bounceForce);
+			rigbod.velocity = 0.2f * Vector2.Reflect(gutVel,(transform.position-birdCol.bounds.ClosestPoint (transform.position)).normalized);
 		}
-		else{ //lose half speed on killing
+		else{ //lose 20% speed on killing
 			rigbod.velocity = gutVel * .8f;
 		}
-		StartCoroutine (getHurtScript.TakeDamage (gutVel));
+		StartCoroutine (getHurtScript.TakeDamage (gutVel,spearTipCollider));
 		yield return null;
 	}
 

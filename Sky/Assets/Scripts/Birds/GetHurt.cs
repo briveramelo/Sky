@@ -10,6 +10,8 @@ public class GetHurt : MonoBehaviour {
 	public Duck duckScript;
 	public Waves wavesScript;
 
+	public CircleCollider2D[] spearColliders;
+
 	public string gutSplosionParentString;
 
 	public int health;
@@ -18,7 +20,6 @@ public class GetHurt : MonoBehaviour {
 	public int birdType;
 
 	public bool summonCrows;
-	public bool invincible;
 	public bool spawnBalloon;
 
 	// Use this for initialization
@@ -28,6 +29,7 @@ public class GetHurt : MonoBehaviour {
 		summonTheCrowsScript = GameObject.Find ("WorldBounds").GetComponent<SummonTheCrows> ();
 		duckLeaderScript = GetComponent<DuckLeader> ();
 		duckScript = GetComponent<Duck> ();
+
 
 		gutSplosionParentString = "Prefabs/GutSplosions/GutSplosionParent";
 		if (GetComponent<Pigeon>()){
@@ -68,15 +70,23 @@ public class GetHurt : MonoBehaviour {
 			killGutValue = 40;
 			spawnBalloon = true;
 		}
-
+		spearColliders = new CircleCollider2D[health];
 		basketScript = GameObject.Find ("BalloonBasket").GetComponent<Basket> ();
 	}
 	
-	public IEnumerator TakeDamage(Vector2 gutDirection){
+	public IEnumerator TakeDamage(Vector2 gutDirection, CircleCollider2D spearCollider){
+		bool invincible = false;
+		int i = 0;
+		for (i=0;i<spearColliders.Length;i++){
+			if (spearCollider==spearColliders[i]){
+				invincible = true;
+				break;
+			}
+		}
+
 		if (!invincible){
-			invincible = true;
-			StartCoroutine (Vincible());
 			health--;
+			spearColliders[health] = spearCollider;
 			guts = Instantiate (Resources.Load (gutSplosionParentString), transform.position, Quaternion.identity) as GameObject;
 
 			if (health>0){
@@ -106,10 +116,5 @@ public class GetHurt : MonoBehaviour {
 			}
 		}
 		yield return null;
-	}
-
-	public IEnumerator Vincible(){
-		yield return new WaitForSeconds (.5f);
-		invincible = false;
 	}
 }

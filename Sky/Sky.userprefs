@@ -1,21 +1,18 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Gear/Spear.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Birds/GutSplosion.cs">
     <Files>
-      <File FileName="Assets/Scripts/GenericFunctions/Constants.cs" Line="15" Column="42" />
-      <File FileName="Assets/Scripts/Jai/Jai.cs" Line="39" Column="1" />
-      <File FileName="Assets/Scripts/Jai/Joyfulstick.cs" Line="40" Column="22" />
-      <File FileName="Assets/Scripts/Gear/Spear.cs" Line="59" Column="3" />
+      <File FileName="Assets/Scripts/Birds/GutSplosion.cs" Line="17" Column="44" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Scripts" expanded="True">
-              <Node name="Birds" expanded="True" />
-              <Node name="Gear" expanded="True">
-                <Node name="Spear.cs" selected="True" />
+              <Node name="Birds" expanded="True">
+                <Node name="GutSplosion.cs" selected="True" />
               </Node>
+              <Node name="Gear" expanded="True" />
               <Node name="GenericFunctions" expanded="True" />
               <Node name="Jai" expanded="True" />
             </Node>

@@ -248,7 +248,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11497560, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
       propertyPath: spawnBirds
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11497560, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
       propertyPath: birdType
@@ -380,7 +380,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11439096, guid: 717f91b238a4646e29c26158627ee9bf, type: 2}
       propertyPath: showGizmos
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2084922, guid: 717f91b238a4646e29c26158627ee9bf, type: 2}
       propertyPath: field of view

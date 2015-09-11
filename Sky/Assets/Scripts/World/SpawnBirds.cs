@@ -34,7 +34,7 @@ public class SpawnBirds : MonoBehaviour {
 	}
 
 	public IEnumerator SpawnNextBird(int birdTypeInput){
-		bird = Instantiate (Resources.Load (birdNames [birdTypeInput]), new Vector3(Mathf.Sign (Random.insideUnitCircle.x) * 9f,Random.Range (-4.5f,4.5f),0f), Quaternion.identity) as GameObject;
+		bird = Instantiate (Resources.Load (birdNames [birdTypeInput]), new Vector3(/*Mathf.Sign (Random.insideUnitCircle.x) * 9f*/-9f,/*Random.Range (-4.5f,4.5f)*/0f,0f), Quaternion.identity) as GameObject;
 		//birdsSpawned++;
 		yield return null;
 	}

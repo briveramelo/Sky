@@ -16,7 +16,7 @@ public class DuckLeader : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		separationDistance = 1.5f;
+		separationDistance = 1.4f;
 		duckScripts = new Duck[]{
 			transform.GetChild(0).GetComponent<Duck>(),
 			transform.GetChild(1).GetComponent<Duck>(),
@@ -46,19 +46,18 @@ public class DuckLeader : MonoBehaviour {
 			duck.duckLeaderScript = this;
 			setPositions[i] *= separationDistance;
 			formations[i] = true;
-
 			i++;
 		}
-		Invoke ("Empower",.1f);
+		//Invoke ("Empower",.1f);
 		rigbod = GetComponent<Rigidbody2D> ();
 		moveSpeed = 2.5f;
 		rigbod.velocity = Vector2.right * moveSpeed;
 		StartCoroutine (FanTheV ());
 	}
 
-	void Empower(){
+	/*void OnDestroy(){
 		transform.DetachChildren ();
-	}
+	}*/
 
 	public IEnumerator FanTheV(){
 		foreach (Duck duck in duckScripts){
@@ -121,6 +120,12 @@ public class DuckLeader : MonoBehaviour {
 				Shuffle (formToFill,4);
 			}			
 			break;
+		case 4:
+			KillOff(formToFill);
+			break;
+		case 5:
+			KillOff(formToFill);
+			break;
 		}
 		yield return null;
 	}
@@ -136,7 +141,13 @@ public class DuckLeader : MonoBehaviour {
 		formations [formMovingUp] = false;
 	}
 
+	void KillOff(int formNumb){
+		duckScripts[formNumb] = null;
+		formations [formNumb] = false;
+	}
+
 	public IEnumerator BreakTheV(){
+		transform.DetachChildren ();
 		foreach (Duck duck in duckScripts){
 			if (duck){
 				StartCoroutine(duck.Scatter());

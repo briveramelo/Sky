@@ -54,19 +54,30 @@ public class Duck : MonoBehaviour {
 		if (bouncing)
 		{
 			VelocityBouncer ();
+			AnimateBouncing();
 		}
 		else{
 			StayInFormation();
+			AnimateInFormation ();
 		}
-		Animate ();
+
 	}
 
-	void Animate(){
+	void AnimateBouncing(){
 		if (rigbod.velocity.x>0){
-			transform.localScale = Constants.Pixel625(true);
+			transform.localScale = Constants.Pixel625(false);
 		}
 		else {
-			transform.localScale = Constants.Pixel625(false);
+			transform.localScale = Constants.Pixel625(true);
+		}
+	}
+
+	void AnimateInFormation(){
+		if (rigbod.velocity.x>0){
+			transform.localScale = Constants.Pixel1(false);
+		}
+		else {
+			transform.localScale = Constants.Pixel1(true);
 		}
 	}
 

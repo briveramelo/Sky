@@ -29,7 +29,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140138}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.78125, y: 2.40625, z: 0}
+  m_LocalPosition: {x: -1.90625, y: -1.0625, z: 0}
   m_LocalScale: {x: 6.25, y: 6.25, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -60,9 +60,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -.00999999978}
   serializedVersion: 2
-  m_Size: {x: .340000004, y: .100000001}
+  m_Size: {x: .300000012, y: .0299999993}
 --- !u!95 &9550106
 Animator:
   serializedVersion: 3
@@ -97,11 +97,10 @@ MonoBehaviour:
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
   wavesScript: {fileID: 0}
-  gutSplosions: []
   gutSplosionParentString: 
-  thisGutSplosion: 
   health: 0
-  gutValue: 0
+  killGutValue: 0
+  damageGutValue: 0
   birdType: 0
   summonCrows: 0
   invincible: 0
@@ -119,7 +118,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigbod: {fileID: 0}
   jaiTransform: {fileID: 0}
-  offSet: {x: 0, y: 0, z: 0}
   moveDir: {x: 0, y: 0}
   moveSpeed: 0
 --- !u!114 &11482616
@@ -164,7 +162,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 554d89d64b13e4ef18aca13e2305f34c, type: 3}
+  m_Sprite: {fileID: 21300006, guid: 554d89d64b13e4ef18aca13e2305f34c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:

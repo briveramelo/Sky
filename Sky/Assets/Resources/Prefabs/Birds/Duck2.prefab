@@ -29,7 +29,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121926}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.859375, y: 2.125, z: 0}
+  m_LocalPosition: {x: 2.59375, y: -.6875, z: 0}
   m_LocalScale: {x: 6.25, y: 6.25, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -60,9 +60,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: .0199999996}
   serializedVersion: 2
-  m_Size: {x: .209999993, y: .100000001}
+  m_Size: {x: .219999999, y: .0599999987}
 --- !u!95 &9579652
 Animator:
   serializedVersion: 3
@@ -116,6 +116,7 @@ MonoBehaviour:
   scatterDir: []
   moveDir: {x: 0, y: 0}
   moveSpeed: 0
+  maxTransition: 0
   transitionSpeed: 0
   distanceToSpot: 0
   formationNumber: 0
@@ -137,11 +138,10 @@ MonoBehaviour:
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
   wavesScript: {fileID: 0}
-  gutSplosions: []
   gutSplosionParentString: 
-  thisGutSplosion: 
   health: 0
-  gutValue: 0
+  killGutValue: 0
+  damageGutValue: 0
   birdType: 0
   summonCrows: 0
   invincible: 0
