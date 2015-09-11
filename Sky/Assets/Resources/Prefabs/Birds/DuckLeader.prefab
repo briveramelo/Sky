@@ -161,7 +161,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 142290}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .00499999989, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 419460}
@@ -173,7 +173,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 118486}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .00499999989, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 419460}
@@ -185,7 +185,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120816}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.00499999989, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 419460}
@@ -198,7 +198,7 @@ Transform:
   m_GameObject: {fileID: 150922}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -17.03125, y: .28125, z: 0}
-  m_LocalScale: {x: 3.125, y: 3.125, z: 1}
+  m_LocalScale: {x: -6.25, y: 6.25, z: 1}
   m_Children:
   - {fileID: 400602}
   - {fileID: 405424}
@@ -215,7 +215,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131080}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.00499999989, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 419460}
@@ -227,7 +227,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 101100}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .00499999989, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 419460}
@@ -239,7 +239,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 177978}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .00499999989, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 419460}
@@ -579,13 +579,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigbod: {fileID: 0}
   duckLeaderScript: {fileID: 0}
-  pixelScale: {x: 0, y: 0, z: 0}
-  pixelScaleReversed: {x: 0, y: 0, z: 0}
   targetSpot: {x: 0, y: 0, z: 0}
   chooseDir: []
+  scatterDir: []
   moveDir: {x: 0, y: 0}
   moveSpeed: 0
   transitionSpeed: 0
+  distanceToSpot: 0
   formationNumber: 0
   bouncing: 0
 --- !u!114 &11408548
@@ -699,13 +699,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigbod: {fileID: 0}
   duckLeaderScript: {fileID: 0}
-  pixelScale: {x: 0, y: 0, z: 0}
-  pixelScaleReversed: {x: 0, y: 0, z: 0}
   targetSpot: {x: 0, y: 0, z: 0}
   chooseDir: []
+  scatterDir: []
   moveDir: {x: 0, y: 0}
   moveSpeed: 0
   transitionSpeed: 0
+  distanceToSpot: 0
   formationNumber: 0
   bouncing: 0
 --- !u!114 &11439094
@@ -765,13 +765,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigbod: {fileID: 0}
   duckLeaderScript: {fileID: 0}
-  pixelScale: {x: 0, y: 0, z: 0}
-  pixelScaleReversed: {x: 0, y: 0, z: 0}
   targetSpot: {x: 0, y: 0, z: 0}
   chooseDir: []
+  scatterDir: []
   moveDir: {x: 0, y: 0}
   moveSpeed: 0
   transitionSpeed: 0
+  distanceToSpot: 0
   formationNumber: 0
   bouncing: 0
 --- !u!114 &11450532
@@ -830,13 +830,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigbod: {fileID: 0}
   duckLeaderScript: {fileID: 0}
-  pixelScale: {x: 0, y: 0, z: 0}
-  pixelScaleReversed: {x: 0, y: 0, z: 0}
   targetSpot: {x: 0, y: 0, z: 0}
   chooseDir: []
+  scatterDir: []
   moveDir: {x: 0, y: 0}
   moveSpeed: 0
   transitionSpeed: 0
+  distanceToSpot: 0
   formationNumber: 0
   bouncing: 0
 --- !u!114 &11460120
@@ -870,13 +870,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigbod: {fileID: 0}
   duckLeaderScript: {fileID: 0}
-  pixelScale: {x: 0, y: 0, z: 0}
-  pixelScaleReversed: {x: 0, y: 0, z: 0}
   targetSpot: {x: 0, y: 0, z: 0}
   chooseDir: []
+  scatterDir: []
   moveDir: {x: 0, y: 0}
   moveSpeed: 0
   transitionSpeed: 0
+  distanceToSpot: 0
   formationNumber: 0
   bouncing: 0
 --- !u!114 &11463690
@@ -936,13 +936,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigbod: {fileID: 0}
   duckLeaderScript: {fileID: 0}
-  pixelScale: {x: 0, y: 0, z: 0}
-  pixelScaleReversed: {x: 0, y: 0, z: 0}
   targetSpot: {x: 0, y: 0, z: 0}
   chooseDir: []
+  scatterDir: []
   moveDir: {x: 0, y: 0}
   moveSpeed: 0
   transitionSpeed: 0
+  distanceToSpot: 0
   formationNumber: 0
   bouncing: 0
 --- !u!114 &11476282
@@ -1211,7 +1211,19 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.x
+      value: -6.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.y
+      value: 6.25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 150922}

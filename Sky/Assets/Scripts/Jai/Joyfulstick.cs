@@ -37,14 +37,14 @@ public class Joyfulstick : MonoBehaviour {
 		basketBody = GameObject.Find ("BalloonBasket").GetComponent<Rigidbody2D>();
 		controlStickSprite = GameObject.Find ("ControlStick").GetComponent<SpriteRenderer>();
 		jaiScript = GameObject.Find ("Jai").GetComponent<Jai> ();
-		maxBalloonSpeed = 2f;
+		maxBalloonSpeed = 3f;
 
 		correctionPixels = new Vector2 (560,-960); //half of the screen width is 560 and yeah the heights weird [1280-640]
 
 
 		startingJoystickSpot = transform.position;
-		joystickAppearanceThreshhold = .8f;
-		joystickMaxThumbDist = 1.3f;
+		joystickAppearanceThreshhold = .8f + 0.3f;
+		joystickMaxThumbDist = 1.3f + 1f;
 		distToThrow = .1f;
 		joystickFinger = -1;
 		spearFinger = -2;
@@ -69,6 +69,8 @@ public class Joyfulstick : MonoBehaviour {
 					distFromStick = Vector2.Distance(touchSpot,startingJoystickSpot);
 					if (distFromStick<joystickMaxThumbDist){
 						joystickFinger = finger.fingerId;
+						moveDir = Vector2.ClampMagnitude(touchSpot - startingJoystickSpot,joystickAppearanceThreshhold);
+						controlStickSprite.transform.position = startingJoystickSpot + moveDir;
 					}
 					else{
 						if (Input.touchCount<3){
@@ -80,10 +82,10 @@ public class Joyfulstick : MonoBehaviour {
 				else if (finger.phase == TouchPhase.Moved){ //while your finger is moving on the screen (joystick only)
 					if (finger.fingerId == joystickFinger){ //move the joystick
 						touchSpot = ConvertFingerPosition(finger.position);
-						moveDir = touchSpot - startingJoystickSpot;
-						if (moveDir.magnitude>joystickAppearanceThreshhold){
+						moveDir = Vector2.ClampMagnitude(touchSpot - startingJoystickSpot,joystickAppearanceThreshhold);
+						/*if (moveDir.magnitude>joystickAppearanceThreshhold){
 							moveDir = moveDir.normalized * joystickAppearanceThreshhold;
-						}
+						}*/
 						distFromStick = moveDir.magnitude;
 						controlStickSprite.transform.position = startingJoystickSpot + moveDir;
 						if (basketBody.velocity.magnitude<maxBalloonSpeed){

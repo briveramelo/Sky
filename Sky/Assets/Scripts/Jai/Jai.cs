@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GenericFunctions;
 
 public class Jai : MonoBehaviour {
 	
@@ -10,41 +11,45 @@ public class Jai : MonoBehaviour {
 	public Vector3 fixVector;
 
 	public float throwForce; //Force with which Jai throws the spear
-	public float throwSpearTime; //time between initiating the throw and when the spear leaves his hand
 
 	public int throws; //counts number of throws he's done
 	public int animInt;
+	public int highLow;
+
+	public bool throwing;
 
 	void Awake(){
-		throwForce = 1500f;
-		throwSpearTime = 0.5f;
+		throwForce = 1750f;
 		fixVector = new Vector3 (0f, .02f);
 		jaiAnimator = GetComponent<Animator> ();
 	}
 
 	public IEnumerator ThrowSpear(Vector2 throwDir){
-		if (!spearScript.throwing){
-			if (throwDir.y>.2f){
-				animInt = 2; //highThrow
+		if (!throwing){
+			throwing = true;
+			if (throwDir.y<=.2f && throwDir.x<=0){
+				animInt = 1; //downLeft
+				highLow = 1;
 			}
-			else{
-				animInt = 1;// low throw
+			else if (throwDir.y<=.2f && throwDir.x>0){
+				animInt = 2; //downRight
+				highLow = 1;
+			}
+			else if (throwDir.y>.2f && throwDir.x<=0){
+				animInt = 3; //upLeft
+				highLow = 2;
+			}
+			else if (throwDir.y>.2f && throwDir.x>0){
+				animInt = 4; //upRight
+				highLow = 2;
 			}
 
-			StartCoroutine (spearScript.FlyFree(throwDir, throwForce,animInt));
-
-			if ((throwDir.x>0 && animInt==1) || (throwDir.x<0 && animInt == 2)){
-				transform.localScale = new Vector3 (-1,1,1); 
-				spearScript.transform.localScale = new Vector3 (-1,1,1);
-			}
-			else{
-				transform.localScale = new Vector3 (1,1,1);
-			}
+			StartCoroutine (spearScript.FlyFree(throwDir, throwForce, highLow));
 
 			jaiAnimator.SetInteger("AnimState",animInt);
-			yield return new WaitForSeconds (throwSpearTime);
+			yield return new WaitForSeconds (Constants.timeToThrow);
+			throwing = false;
 			jaiAnimator.SetInteger("AnimState",0);
-			//transform.position += fixVector;
 			throws++;
 		}
 		yield return null;

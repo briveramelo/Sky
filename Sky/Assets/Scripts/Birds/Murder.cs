@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq;
+using GenericFunctions;
 
 public class Murder : MonoBehaviour {
 
 	public Crow[] crowScripts;
-
-	public Vector3[] crowPositions;
-
+	
 	public float switchTime;
 
 	public int[] crowsToGo;
@@ -29,20 +28,11 @@ public class Murder : MonoBehaviour {
 			transform.GetChild(5).GetComponent<Crow>()
 		};
 
-		crowPositions = new Vector3[]{
-			new Vector3(0f   ,  7f , 0f),
-			new Vector3(9.2f ,  5.3f , 0f),
-			new Vector3(9f   , -5.3f , 0f),
-			new Vector3(0f   , -7f , 0f),
-			new Vector3(-9.2f, -5.3f , 0f),
-			new Vector3(-9.2f,  5.3f , 0f),
-		};
-
 		int j = 0;
 		foreach (Crow crowScript in crowScripts){
 			crowScript.crowNumber = j;
-			crowScript.transform.position = crowPositions[j];
-			crowScript.startPosition = crowPositions[j];
+			crowScript.transform.position = Constants.crowPositions[j];
+			crowScript.startPosition = Constants.crowPositions[j];
 			j++;
 		}
 
@@ -66,7 +56,7 @@ public class Murder : MonoBehaviour {
 			crowScripts[crowsToGo[Random.Range(0,crowsToGo.Length)]].isKiller = true;
 			//put on the right sprite here
 		}
-		while (!crowScripts [crowToGo].turned){
+		while (!crowScripts [crowToGo].triggeredNextCrow){
 			yield return null;
 		}
 		if (numGone<6){

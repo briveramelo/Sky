@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7874d1047103046aa8d77d01a7114fb7
-timeCreated: 1441144798
+timeCreated: 1441952898
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -23,7 +23,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: .25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   grayScaleToAlpha: 0
   generateCubemap: 0
   cubemapConvolution: 0
@@ -49,11 +49,11 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
-  textureType: 8
+  textureType: 5
   buildTargetSettings:
   - buildTarget: Standalone
     maxTextureSize: 8192
-    textureFormat: -3
+    textureFormat: 5
     compressionQuality: 50
   spriteSheet:
     sprites:
@@ -61,41 +61,41 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 5
+        y: 4
         width: 16
-        height: 10
+        height: 12
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Duck1_1
       rect:
         serializedVersion: 2
         x: 18
-        y: 5
+        y: 4
         width: 16
-        height: 7
+        height: 12
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Duck1_2
       rect:
         serializedVersion: 2
         x: 36
-        y: 3
+        y: 4
         width: 16
-        height: 9
+        height: 12
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Duck1_3
       rect:
         serializedVersion: 2
         x: 54
-        y: 5
+        y: 4
         width: 16
-        height: 8
+        height: 12
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

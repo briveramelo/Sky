@@ -10,7 +10,6 @@ namespace GenericFunctions
 		/// </summary>
 		public static Vector2 ConvertAngleToVector2(int inputAngle)
 		{
-
 			return new Vector2(Mathf.Cos (Mathf.Deg2Rad * inputAngle),Mathf.Sin (Mathf.Deg2Rad * inputAngle));
 		}
 
@@ -30,15 +29,7 @@ namespace GenericFunctions
 			return Mathf.RoundToInt (Mathf.Atan2 (inputVector.y, inputVector.x) * Mathf.Rad2Deg);
 		}
 
-		/// <summary>Uses x,y of a (Vector3)vector and
-		/// <para> transforms it into a (float)angle </para>
-		/// </summary>
-		public static int ConvertVector3Angle(Vector3 inputVector)
-		{
-			return Mathf.RoundToInt (Mathf.Atan2 (inputVector.y, inputVector.x) * Mathf.Rad2Deg);
-		}
-
-		public static int ConvertVector2AngleForPixelRotation(Vector2 inputVector, float xVelocity)
+		public static int ConvertVector2Angle(Vector2 inputVector, float xVelocity)
 		{
 			int pixelAngle = Mathf.RoundToInt (Mathf.Atan2 (inputVector.y, inputVector.x) * Mathf.Rad2Deg);
 			if (xVelocity<0){
@@ -47,7 +38,15 @@ namespace GenericFunctions
 			return pixelAngle;
 		}
 
-		public static int ConvertVector2AngleForPixelRotation(Vector2 inputVector)
+		public static int ConvertVector2SpearAngle(Vector2 inputVector, float yVelocity)
+		{
+			return Mathf.RoundToInt (Mathf.Atan2 (inputVector.y, inputVector.x) * Mathf.Rad2Deg)-90;
+		}
+
+		/// <summary>Uses x,y of a (Vector3)vector and
+		/// <para> transforms it into a (float)angle </para>
+		/// </summary>
+		public static int ConvertVector3Angle(Vector3 inputVector)
 		{
 			return Mathf.RoundToInt (Mathf.Atan2 (inputVector.y, inputVector.x) * Mathf.Rad2Deg);
 		}

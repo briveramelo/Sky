@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 0b57a5d7a9bcf468693d56aa829699ee
-timeCreated: 1441150238
+timeCreated: 1441961794
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -8,6 +8,10 @@ TextureImporter:
     21300002: gutsplosoin3_1
     21300004: gutsplosoin3_2
     21300006: gutsplosoin3_3
+    21300008: GutSplosion3a_0
+    21300010: GutSplosion3a_1
+    21300012: GutSplosion3a_2
+    21300014: GutSplosion3a_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -57,45 +61,45 @@ TextureImporter:
     compressionQuality: 50
   spriteSheet:
     sprites:
-    - name: gutsplosoin3_0
+    - name: GutSplosion3a_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
         y: 0
-        width: 13
+        width: 12
         height: 12
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: gutsplosoin3_1
+    - name: GutSplosion3a_1
       rect:
         serializedVersion: 2
-        x: 13
+        x: 14
         y: 0
-        width: 13
+        width: 12
         height: 12
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: gutsplosoin3_2
+    - name: GutSplosion3a_2
       rect:
         serializedVersion: 2
-        x: 26
+        x: 27
         y: 0
-        width: 13
+        width: 12
         height: 12
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: gutsplosoin3_3
+    - name: GutSplosion3a_3
       rect:
         serializedVersion: 2
-        x: 39
+        x: 40
         y: 0
-        width: 13
+        width: 12
         height: 12
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

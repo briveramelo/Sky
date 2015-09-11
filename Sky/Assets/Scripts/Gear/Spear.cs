@@ -20,8 +20,6 @@ public class Spear : MonoBehaviour {
 
 	public Vector3[] throwAdjustmentVector;
 	public Vector3 stockPosition; //position the spear should return to when Jai reels it back
-
-	public Vector2 hitVelocity; //speed the spear hits the bird
 	
 	public float time2Destroy;
 	public float time2Reappear;
@@ -36,7 +34,7 @@ public class Spear : MonoBehaviour {
 	void Awake () {
 		bounceForce = 20f;
 		time2Destroy = 3f;
-		time2Reappear = .9f;
+		time2Reappear = Constants.timeToThrow;
 		flying = false;
 		throwing = false;
 		spearString = "Prefabs/Gear/Spear";
@@ -52,28 +50,34 @@ public class Spear : MonoBehaviour {
 		joyfulstickScript.spearScript = GetComponent<Spear>();
 		stockPosition = transform.position - jaiTransform.position;
 		throwAdjustmentVector = new Vector3[]{ 
-			new Vector3 (0f, .26f,0f),
-			new Vector3 (0f, .31f,0f)
+			new Vector3 (0f, .26f,0f) * 2f,
+			new Vector3 (0f, .31f,0f) * 2f
 		};
+		Invoke ("SetParent", 0.01f);
+	}
+
+	void SetParent(){
+		transform.parent = jaiTransform;
+		transform.localScale = Vector3.one;
 	}
 
 	void Update(){
 		if (flying){
-			pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2Angle(rigbod.velocity)-90;
-			spearTipParentTransform.rotation = Quaternion.Euler(0f,0f,ConvertAnglesAndVectors.ConvertVector2Angle(rigbod.velocity)-90);
+			pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2SpearAngle(rigbod.velocity,rigbod.velocity.y);
+			spearTipParentTransform.rotation = Quaternion.Euler(0f,0f,ConvertAnglesAndVectors.ConvertVector2SpearAngle(rigbod.velocity,rigbod.velocity.y));
 		}
 	}
 
 	public IEnumerator FlyFree(Vector2 throwDir, float throwForce, int lowOrHighThrow){
 		if (!throwing){
 			throwing = true;
-			theSetAngle = ConvertAnglesAndVectors.ConvertVector2Angle(throwDir)-90;
+			theSetAngle = ConvertAnglesAndVectors.ConvertVector2SpearAngle(throwDir,throwDir.y);
 			pixelRotationScript.Angle = theSetAngle;
 			transform.position = jaiTransform.position + throwAdjustmentVector[lowOrHighThrow-1];
 			spearTipCollider.enabled = true;
 			StartCoroutine(NewSpear());
 			Destroy (gameObject, time2Destroy);
-			yield return new WaitForSeconds (.45f);
+			yield return new WaitForSeconds (Constants.timeToThrow/2);
 			flying = true;
 			jaiTransform.DetachChildren();
 			gameObject.AddComponent<Rigidbody2D> ();
@@ -86,14 +90,11 @@ public class Spear : MonoBehaviour {
 	public IEnumerator NewSpear(){
 		yield return new WaitForSeconds (time2Reappear);
 		GameObject spear = Instantiate (Resources.Load (spearString), jaiTransform.position + stockPosition, Quaternion.identity) as GameObject;
-		spear.transform.parent = GameObject.Find ("Jai").transform;
-		spear.transform.localScale = Vector3.one;
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.layer == 16) { //if it hits a bird
-			hitVelocity = rigbod.velocity;
-			StartCoroutine(HurtBird(col.gameObject,hitVelocity));
+			StartCoroutine(HurtBird(col.gameObject,rigbod.velocity));
 		}
 	}
 
@@ -104,7 +105,7 @@ public class Spear : MonoBehaviour {
 			rigbod.AddForce(-gutVel.normalized * bounceForce);
 		}
 		else{ //lose half speed on killing
-			rigbod.velocity = gutVel * .5f;
+			rigbod.velocity = gutVel * .8f;
 		}
 		StartCoroutine (getHurtScript.TakeDamage (gutVel));
 		yield return null;

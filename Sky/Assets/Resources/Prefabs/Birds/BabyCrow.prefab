@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 173176}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -10.953125, y: .765625, z: 0}
-  m_LocalScale: {x: 3.125, y: 3.125, z: 1}
+  m_LocalScale: {x: 6.25, y: 6.25, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -93,26 +93,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   getHurtScript: {fileID: 0}
   babyCrowAnimator: {fileID: 0}
-  moveSpeed: 0
-  moveFullDir: {x: 0, y: 0}
   rigbod: {fileID: 0}
-  balloonBasketTransform: {fileID: 0}
+  basketTransform: {fileID: 0}
   shifty: []
-  i: 0
-  shifting: 0
-  shiftingSequence: 0
-  shifts: 0
-  maxShifts: 0
+  moveFullDir: {x: 0, y: 0}
   crowString: 
   triggerShiftDistance: 0
   speedDistance: 0
   zeroDistance: 0
   currentSpeed: 0
   minSpeed: 0
-  pixelScale: {x: 0, y: 0, z: 0}
-  pixelScaleReversed: {x: 0, y: 0, z: 0}
   switchTime: 0
+  moveSpeed: 0
+  shifts: 0
+  maxShifts: 0
+  i: 0
   switching: 0
+  shifting: 0
+  shiftingSequence: 0
 --- !u!114 &11465960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -142,18 +140,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 884c3137713c84e6581bda55ae91e923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  gutSplosionParentString: 
-  gutValue: 0
-  thisGutSplosion: 
-  gutSplosions: []
-  balloonBasketScript: {fileID: 0}
-  wavesScript: {fileID: 0}
-  birdType: 0
   guts: {fileID: 0}
-  summonCrows: 0
+  basketScript: {fileID: 0}
   summonTheCrowsScript: {fileID: 0}
+  duckLeaderScript: {fileID: 0}
+  duckScript: {fileID: 0}
+  wavesScript: {fileID: 0}
+  gutSplosions: []
+  gutSplosionParentString: 
+  thisGutSplosion: 
+  health: 0
+  gutValue: 0
+  birdType: 0
+  summonCrows: 0
   invincible: 0
+  spawnBalloon: 0
 --- !u!212 &21282088
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -186,7 +187,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.x
+      value: 6.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.y
+      value: 6.25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 173176}

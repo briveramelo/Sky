@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 156092}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.8125, y: -1.40625, z: 0}
-  m_LocalScale: {x: 3.125, y: 3.125, z: 1}
+  m_LocalScale: {x: 6.25, y: 6.25, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -92,8 +92,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guts: {fileID: 0}
-  balloonBasketScript: {fileID: 0}
+  basketScript: {fileID: 0}
   summonTheCrowsScript: {fileID: 0}
+  duckLeaderScript: {fileID: 0}
+  duckScript: {fileID: 0}
   wavesScript: {fileID: 0}
   gutSplosions: []
   gutSplosionParentString: 
@@ -116,8 +118,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbod: {fileID: 0}
-  pixelScale: {x: 0, y: 0, z: 0}
-  pixelScaleReversed: {x: 0, y: 0, z: 0}
   duckMoveDirections: []
   moveSpeed: 0
 --- !u!114 &11475130
@@ -170,7 +170,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.x
+      value: 6.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.y
+      value: 6.25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 156092}

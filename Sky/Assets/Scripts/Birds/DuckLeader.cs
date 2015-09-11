@@ -16,7 +16,7 @@ public class DuckLeader : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		separationDistance = .6f;
+		separationDistance = 1.5f;
 		duckScripts = new Duck[]{
 			transform.GetChild(0).GetComponent<Duck>(),
 			transform.GetChild(1).GetComponent<Duck>(),
@@ -51,7 +51,7 @@ public class DuckLeader : MonoBehaviour {
 		}
 		Invoke ("Empower",.1f);
 		rigbod = GetComponent<Rigidbody2D> ();
-		moveSpeed = 2f;
+		moveSpeed = 2.5f;
 		rigbod.velocity = Vector2.right * moveSpeed;
 		StartCoroutine (FanTheV ());
 	}
@@ -77,13 +77,15 @@ public class DuckLeader : MonoBehaviour {
 				if (formations[4]){
 					Shuffle(2,4);
 				}
-			}
-			else if (formations[5]){
-				Shuffle (formToFill,3);
-				Shuffle (3,5);
+				else if (formations[5]){
+					Shuffle (2,5);
+				}
 			}
 			else if (formations[3]){
 				Shuffle (formToFill,3);
+				if (formations[5]){
+					Shuffle (3,5);
+				}
 			}
 			break;
 		case 1:
@@ -92,13 +94,15 @@ public class DuckLeader : MonoBehaviour {
 				if (formations[5]){
 					Shuffle(3,5);
 				}
-			}
-			else if (formations[4]){
-				Shuffle (formToFill,2);
-				Shuffle (2,4);
+				else if (formations[4]){
+					Shuffle (3,4);
+				}
 			}
 			else if (formations[2]){
 				Shuffle (formToFill,2);
+				if (formations[4]){
+					Shuffle (2,4);
+				}
 			}
 			break;
 		case 2:

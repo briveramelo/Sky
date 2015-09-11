@@ -1,7 +1,10 @@
 fileFormatVersion: 2
 guid: 91d83c8d104984ef1896d420ac2e24fd
+timeCreated: 1441953819
+licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: VesselFullSplitBack_0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -35,7 +38,7 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -50,7 +53,17 @@ TextureImporter:
     textureFormat: 5
     compressionQuality: 50
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: VesselFullSplitBack_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 

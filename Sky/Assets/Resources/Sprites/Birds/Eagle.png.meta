@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 86fa671c3a16d44c49cd231a6100aae9
-timeCreated: 1441659320
+timeCreated: 1441953186
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -65,90 +65,90 @@ TextureImporter:
     - name: Eagle_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 9
-        width: 41
-        height: 51
+        x: 4
+        y: 8
+        width: 44
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Eagle_1
       rect:
         serializedVersion: 2
-        x: 56
-        y: 9
-        width: 41
-        height: 51
+        x: 54
+        y: 8
+        width: 44
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Eagle_2
       rect:
         serializedVersion: 2
-        x: 106
-        y: 9
-        width: 41
-        height: 51
+        x: 104
+        y: 8
+        width: 44
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Eagle_3
       rect:
         serializedVersion: 2
-        x: 156
-        y: 9
-        width: 41
-        height: 51
+        x: 154
+        y: 8
+        width: 44
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Eagle_4
       rect:
         serializedVersion: 2
-        x: 206
-        y: 9
-        width: 41
-        height: 51
+        x: 204
+        y: 8
+        width: 44
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Eagle_5
       rect:
         serializedVersion: 2
-        x: 256
-        y: 9
-        width: 41
-        height: 51
+        x: 254
+        y: 8
+        width: 44
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Eagle_6
       rect:
         serializedVersion: 2
-        x: 306
-        y: 9
-        width: 41
-        height: 51
+        x: 304
+        y: 8
+        width: 44
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Eagle_7
       rect:
         serializedVersion: 2
-        x: 356
-        y: 9
-        width: 41
-        height: 51
+        x: 354
+        y: 8
+        width: 44
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Eagle_8
       rect:
         serializedVersion: 2
-        x: 406
-        y: 9
-        width: 41
-        height: 51
+        x: 404
+        y: 8
+        width: 44
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

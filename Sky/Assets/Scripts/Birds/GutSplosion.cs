@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
+using GenericFunctions;
 
 public class GutSplosion : MonoBehaviour {
 
-	public AudioSource gutSplode;
+	public GameObject[] guts;
 
 	public string[] gutSplosions;
 
-	public int[] numberOfGuts;
-	public int total;
+	public int[] gutIndices;
+	public int gutValue;
+	public int subGutValue;
 
 	void Awake(){
-		numberOfGuts = new int[3];
-		StartCoroutine (DestroySelf ());
+		gutIndices = Constants.NegativeOnes(100);
+		Destroy(gameObject,2f);
 		gutSplosions = new string[]{
 			"Prefabs/GutSplosions/GutSplosion1a", //small birds  //0
 			"Prefabs/GutSplosions/GutSplosion2a", //medium birds //1
@@ -25,49 +28,40 @@ public class GutSplosion : MonoBehaviour {
 		};
 	}
 
-	//3 do 1 + 2
-	//5 do 1 + 2 + 2
-	//7 do 2 + 2 + 3
-
-	public IEnumerator GenerateGuts(int gutValue){
-		numberOfGuts [0] = Random.Range (0, 3); //0,1,2
-		foreach (int gutNum in numberOfGuts){
-			total += gutNum;
-		}
-		numberOfGuts [1] = Random.Range (0, 3);
-		if (total>=gutValue){
-
-		}
-
-		switch (gutValue) {
+	public int ConvertGutValueToIndex(int subGutterValue){
+		int gutIndex = 0;
+		switch (subGutterValue){
+		case 1:
+			gutIndex = 0;
+			break;
+		case 2:
+			gutIndex = Random.Range(1,5);
+			break;
 		case 3:
-			numberOfGuts = new int[] { 1 , 1 , 0};
-			break;
-		case 5:
-			numberOfGuts = new int[] { 5 , 0 , 0};
-			numberOfGuts = new int[] { 3 , 1 , 0};
-			numberOfGuts = new int[] { 1 , 2 , 0};
-			numberOfGuts = new int[] { 2 , 0 , 1};
-			numberOfGuts = new int[] { 0 , 1 , 1};
-			break;
-		case 7:
-			numberOfGuts = new int[] { 1 , 1 , 0};
-			numberOfGuts = new int[] { 1 , 1 , 0};
+			gutIndex = Random.Range(5,7);
 			break;
 		}
-
-		int random2 = Random.Range (1, 5);
-		Vector3 randomPos = new Vector3 (Random.insideUnitCircle.x,Random.insideUnitCircle.y,0f) * .05f + transform.position;
-		GameObject gut = Instantiate (Resources.Load(gutSplosions[random2]),randomPos,Quaternion.identity) as GameObject;
-		gut.transform.SetParent (transform);
-		yield return null;
+		return gutIndex;
 	}
 
-	public IEnumerator DestroySelf(){
-		while (gutSplode.isPlaying){
-			yield return null;
+	public IEnumerator GenerateGuts(int totalGutValue, Vector2 gutDirection){
+		int j = 0;
+		while (gutValue<totalGutValue){
+			subGutValue = Mathf.Clamp(Random.Range(1,4),1,totalGutValue-gutValue);
+			gutIndices[j] = ConvertGutValueToIndex(subGutValue);
+			gutValue += subGutValue;
+			j++;
 		}
-		Destroy (gameObject);
+		gutIndices = gutIndices.Where (number => number != -1).ToArray ();
+		guts = new GameObject[gutIndices.Length];
+		j = 0;
+		foreach (int i in gutIndices){
+			guts[j] = Instantiate (Resources.Load(gutSplosions[i]),new Vector3 (Random.insideUnitCircle.x,Random.insideUnitCircle.y,0f) * .2f + transform.position,Quaternion.identity) as GameObject;
+			guts[j].GetComponent<Rigidbody2D>().velocity = new Vector2 (Random.Range(gutDirection.x * .1f,gutDirection.x * .4f),Random.Range(3f,8f));
+			guts[j].transform.parent = transform;
+			j++;
+		}
+
 		yield return null;
 	}
 }

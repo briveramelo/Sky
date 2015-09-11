@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 175384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.109375, y: -.234375, z: 0}
-  m_LocalScale: {x: 3.125, y: 3.125, z: 1}
+  m_LocalScale: {x: 6.25, y: 6.25, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -106,18 +106,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 884c3137713c84e6581bda55ae91e923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  gutSplosionParentString: 
-  gutValue: 0
-  thisGutSplosion: 
-  gutSplosions: []
-  balloonBasketScript: {fileID: 0}
-  wavesScript: {fileID: 0}
-  birdType: 0
   guts: {fileID: 0}
-  summonCrows: 0
+  basketScript: {fileID: 0}
   summonTheCrowsScript: {fileID: 0}
+  duckLeaderScript: {fileID: 0}
+  duckScript: {fileID: 0}
+  wavesScript: {fileID: 0}
+  gutSplosions: []
+  gutSplosionParentString: 
+  thisGutSplosion: 
+  health: 0
+  gutValue: 0
+  birdType: 0
+  summonCrows: 0
   invincible: 0
+  spawnBalloon: 0
 --- !u!114 &11492958
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -148,19 +151,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pixelRotationScript: {fileID: 0}
-  startPos: []
-  moveDir: []
-  moveSpeed: 0
-  attackSpeed: 0
   rigbod: {fileID: 0}
-  balloonBasketTransform: {fileID: 0}
-  attacks: 0
-  xWorldBounds: 0
-  xSpace: 0
+  jaiTransform: {fileID: 0}
   offSet: {x: 0, y: 0, z: 0}
   attackDir: {x: 0, y: 0, z: 0}
-  pixelScale: {x: 0, y: 0, z: 0}
-  pixelScaleReversed: {x: 0, y: 0, z: 0}
+  startPos: []
+  moveDir: []
+  attacks: 0
+  moveSpeed: 0
+  attackSpeed: 0
+  xWorldBounds: 0
+  xSpace: 0
 --- !u!212 &21261556
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -193,7 +194,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.x
+      value: 6.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.y
+      value: 6.25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 175384}

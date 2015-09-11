@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 8c5f15bc2fc544ebb94ffb1c3eb98473
-timeCreated: 1441263651
+timeCreated: 1441948941
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -62,9 +62,9 @@ TextureImporter:
     - name: PinkBalloon_0
       rect:
         serializedVersion: 2
-        x: 4
+        x: 3
         y: 2
-        width: 21
+        width: 24
         height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -72,9 +72,9 @@ TextureImporter:
     - name: PinkBalloon_1
       rect:
         serializedVersion: 2
-        x: 34
+        x: 33
         y: 2
-        width: 21
+        width: 24
         height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -82,9 +82,9 @@ TextureImporter:
     - name: PinkBalloon_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 63
         y: 2
-        width: 21
+        width: 24
         height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -92,9 +92,9 @@ TextureImporter:
     - name: PinkBalloon_3
       rect:
         serializedVersion: 2
-        x: 94
+        x: 93
         y: 2
-        width: 21
+        width: 24
         height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -102,9 +102,9 @@ TextureImporter:
     - name: PinkBalloon_4
       rect:
         serializedVersion: 2
-        x: 124
+        x: 123
         y: 2
-        width: 21
+        width: 24
         height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -112,9 +112,9 @@ TextureImporter:
     - name: PinkBalloon_5
       rect:
         serializedVersion: 2
-        x: 154
+        x: 153
         y: 2
-        width: 21
+        width: 24
         height: 28
       alignment: 0
       pivot: {x: 0, y: 0}

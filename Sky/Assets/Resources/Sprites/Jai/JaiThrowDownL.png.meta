@@ -1,22 +1,18 @@
 fileFormatVersion: 2
-guid: f58e6fded977d44e08930ae55febb28c
-timeCreated: 1441310470
+guid: bc6eca1bf2ec342f69d188130508ca78
+timeCreated: 1441950963
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Jai_ThrowUp_0
-    21300002: Jai_ThrowUp_1
-    21300004: Jai_ThrowUp_2
-    21300006: Jai_ThrowUp_3
-    21300008: Jai_ThrowUp_4
-    21300010: Jai_ThrowUp_5
-    21300012: Jai_ThrowUp_6
-    21300014: Jai_ThrowUp_7
-    21300016: Jai_ThrowUp_8
-    21300018: Jai_ThrowUp_9
-    21300020: Jai_ThrowUp_10
-    21300022: Jai_ThrowUp_11
-    21300024: Jai_ThrowUp_12
+    21300000: JaiThrowDownL_0
+    21300002: JaiThrowDownL_1
+    21300004: JaiThrowDownL_2
+    21300006: JaiThrowDownL_3
+    21300008: JaiThrowDownL_4
+    21300010: JaiThrowDownL_5
+    21300012: JaiThrowDownL_6
+    21300014: JaiThrowDownL_7
+    21300016: JaiThrowDownL_8
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -60,147 +56,99 @@ TextureImporter:
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings:
-  - buildTarget: Web
-    maxTextureSize: 2048
-    textureFormat: -1
-    compressionQuality: 50
   - buildTarget: Standalone
     maxTextureSize: 8192
     textureFormat: -3
     compressionQuality: 50
-  - buildTarget: Samsung TV
-    maxTextureSize: 2048
-    textureFormat: -1
-    compressionQuality: 50
   spriteSheet:
     sprites:
-    - name: Jai_ThrowUp_0
+    - name: JaiThrowDownL_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 1
+        x: 1
+        y: 5
         width: 18
-        height: 29
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Jai_ThrowUp_1
+    - name: JaiThrowDownL_1
       rect:
         serializedVersion: 2
-        x: 30
-        y: 1
+        x: 21
+        y: 5
         width: 18
-        height: 29
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Jai_ThrowUp_2
-      rect:
-        serializedVersion: 2
-        x: 56
-        y: 1
-        width: 18
-        height: 29
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Jai_ThrowUp_3
-      rect:
-        serializedVersion: 2
-        x: 82
-        y: 1
-        width: 18
-        height: 29
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Jai_ThrowUp_4
-      rect:
-        serializedVersion: 2
-        x: 108
-        y: 1
-        width: 18
-        height: 29
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Jai_ThrowUp_5
-      rect:
-        serializedVersion: 2
-        x: 134
-        y: 1
-        width: 18
-        height: 29
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Jai_ThrowUp_6
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 1
-        width: 18
-        height: 29
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Jai_ThrowUp_7
-      rect:
-        serializedVersion: 2
-        x: 186
-        y: 1
-        width: 18
-        height: 29
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Jai_ThrowUp_8
-      rect:
-        serializedVersion: 2
-        x: 212
-        y: 1
-        width: 18
-        height: 29
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Jai_ThrowUp_9
-      rect:
-        serializedVersion: 2
-        x: 238
-        y: 1
-        width: 18
-        height: 29
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Jai_ThrowUp_10
-      rect:
-        serializedVersion: 2
-        x: 264
-        y: 1
-        width: 18
-        height: 29
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Jai_ThrowUp_11
+    - name: JaiThrowDownL_2
       rect:
         serializedVersion: 2
-        x: 290
-        y: 1
+        x: 41
+        y: 5
         width: 18
-        height: 29
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Jai_ThrowUp_12
+    - name: JaiThrowDownL_3
       rect:
         serializedVersion: 2
-        x: 316
-        y: 1
+        x: 61
+        y: 5
         width: 18
-        height: 29
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: JaiThrowDownL_4
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 5
+        width: 18
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: JaiThrowDownL_5
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 5
+        width: 18
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: JaiThrowDownL_6
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 5
+        width: 18
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: JaiThrowDownL_7
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 5
+        width: 18
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: JaiThrowDownL_8
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 5
+        width: 18
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GenericFunctions;
 
 public class Duck : MonoBehaviour {
 
 	public Rigidbody2D rigbod;
 	public DuckLeader duckLeaderScript;
 
-	public Vector3 pixelScale;
-	public Vector3 pixelScaleReversed;
 	public Vector3 targetSpot;
 
 	public Vector2[] chooseDir;
@@ -15,7 +14,9 @@ public class Duck : MonoBehaviour {
 	public Vector2 moveDir;
 	
 	public float moveSpeed;
+	public float maxTransition;
 	public float transitionSpeed;
+	public float distanceToSpot;
 
 	public int formationNumber;
 
@@ -24,10 +25,8 @@ public class Duck : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		pixelScale = Vector3.one * 3.125f;
-		pixelScaleReversed = new Vector3 (-3.125f,3.125f,1f);
-		moveSpeed = 2f;
-		transitionSpeed = 2.5f;
+		moveSpeed = 2.5f;
+		maxTransition = 4f;
 		rigbod = GetComponent<Rigidbody2D> ();
 		chooseDir = new Vector2[]
 		{
@@ -44,7 +43,7 @@ public class Duck : MonoBehaviour {
 			chooseDir [0],
 			chooseDir [1]
 		};
-		moveDir = chooseDir [0];
+		moveDir = chooseDir [0] * moveSpeed;
 		if (!transform.parent){
 			formationNumber = Random.Range(0,4);
 			StartCoroutine(Scatter());
@@ -59,10 +58,22 @@ public class Duck : MonoBehaviour {
 		else{
 			StayInFormation();
 		}
+		Animate ();
+	}
+
+	void Animate(){
+		if (rigbod.velocity.x>0){
+			transform.localScale = Constants.Pixel625(true);
+		}
+		else {
+			transform.localScale = Constants.Pixel625(false);
+		}
 	}
 
 	void StayInFormation(){
 		targetSpot = duckLeaderScript.setPositions [formationNumber] + duckLeaderScript.transform.position;
+		distanceToSpot = Vector3.Distance (targetSpot, transform.position);
+		transitionSpeed = Mathf.Clamp (4*Mathf.Pow (10,distanceToSpot), moveSpeed + 0.5f, maxTransition);
 		transform.position = Vector3.MoveTowards (transform.position, targetSpot, transitionSpeed * Time.deltaTime);
 	}
 
@@ -81,11 +92,11 @@ public class Duck : MonoBehaviour {
 		}
 		else if (transform.position.x>8.8f){
 			rigbod.velocity = new Vector2 (-moveDir.x, rigbod.velocity.y);
-			transform.localScale = pixelScale;
+			transform.localScale = Constants.Pixel625(true);
 		}
 		else if (transform.position.x<-8.8f){
 			rigbod.velocity = new Vector2 (moveDir.x, rigbod.velocity.y);
-			transform.localScale = pixelScaleReversed;
+			transform.localScale = Constants.Pixel625(false);
 		}
 	}
 }

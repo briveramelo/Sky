@@ -17,9 +17,6 @@ public class Crow : MonoBehaviour {
 
 	public Vector3 startPosition;
 	public Vector3 targetPosition;
-	public Vector3 pixelScale;
-	public Vector3 pixelScaleReversed;
-	public Vector3 extraTargetHeight;
 
 	public Vector2 moveDir;
 
@@ -29,6 +26,7 @@ public class Crow : MonoBehaviour {
 	public float resetDistance;
 	public float lastDistance;
 	public float currentDistance;
+	public float triggerDistance;
 
 	public int crowNumber;
 	public int newAngle;
@@ -44,6 +42,7 @@ public class Crow : MonoBehaviour {
 	public bool turning;
 	public bool committed;
 	public bool reset;
+	public bool triggeredNextCrow;
 	
 
 	// Use this for initialization
@@ -55,35 +54,36 @@ public class Crow : MonoBehaviour {
 		crowCollider.enabled = false;
 		basketScript = GameObject.Find ("BalloonBasket").GetComponent<Basket>();
 		murderScript = transform.parent.gameObject.GetComponent<Murder>();
-		moveSpeed = 6f;
-		turnDistance = 3.5f;
-		commitDistance = 4f; 
+		moveSpeed = 7f;
+		turnDistance = 4.5f;
+		commitDistance = 5f; 
+		triggerDistance = 6f;
 		resetDistance = 20f;//needs to be greater than commitDistance
 		RandomizeRedirection ();
 		targetTransform = GameObject.Find ("Jai").transform;
-		extraTargetHeight = new Vector3 (0.1f, 1.4f,0f);
 		lastDistance = 100f;
-		pixelScale = Vector3.one * 3.125f;
-		pixelScaleReversed = new Vector3 (-3.125f,3.125f,1f);
 	}
 
 	void RandomizeRedirection(){
 		int i = Random.Range(0,2);
 		if (i==0){
-			maxAngleDelta = 45;
-			rotationSpeed = 4;
+			maxAngleDelta = 60;
+			rotationSpeed = 5;
 		}
 		else{
-			maxAngleDelta = -45;
-			rotationSpeed = -4;
+			maxAngleDelta = -60;
+			rotationSpeed = -5;
 		}
 	}
 
 	void Update(){
 		if (swooping){ //approach balloons
-			currentDistance = Vector3.Distance(targetTransform.position + extraTargetHeight,transform.position);
+			currentDistance = Vector3.Distance(targetTransform.position + Constants.balloonOffset,transform.position);
+			if (currentDistance < triggerDistance && !triggeredNextCrow){ //trigger next Crow
+				triggeredNextCrow = true;
+			}
 			if (committed){ //targetPoint is now fixed
-				if (currentDistance < turnDistance && !turned && !turning){ //trigger next crow + delayed position Reset
+				if (currentDistance < turnDistance && !turned && !turning){ //trigger reset position
 					currentAngle = ConvertAnglesAndVectors.ConvertVector2Angle(rigbod.velocity);
 					targetAngle = currentAngle + maxAngleDelta;
 					turned = true;
@@ -91,7 +91,7 @@ public class Crow : MonoBehaviour {
 						turning = true;
 						crowAnimator.SetInteger("AnimState",1);
 					}
-					StartCoroutine (PauseToReset());
+					StartCoroutine (TriggerReset());
 				}
 				else if (currentDistance > resetDistance && !reset){
 					reset = true;
@@ -108,30 +108,30 @@ public class Crow : MonoBehaviour {
 				}
 			}
 			else{
-				moveDir = targetTransform.position + extraTargetHeight - transform.position;
+				moveDir = targetTransform.position + Constants.balloonOffset - transform.position;
 				if (currentDistance < commitDistance){
 					committed = true;
-					targetPosition = targetTransform.position + extraTargetHeight;
+					targetPosition = targetTransform.position + Constants.balloonOffset;
 				}
 			}
 
 			rigbod.velocity = (moveDir).normalized * moveSpeed;
-			pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2AngleForPixelRotation(rigbod.velocity);
+			pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2Angle(rigbod.velocity,rigbod.velocity.x);
 			AnimateIt();
-			lastDistance = Vector3.Distance(targetTransform.position + extraTargetHeight,transform.position);
+			lastDistance = Vector3.Distance(targetTransform.position + Constants.balloonOffset,transform.position);
 		}
 	}
 
 	void AnimateIt(){
 		if (rigbod.velocity.x<0){
-			transform.localScale = pixelScaleReversed;
+			transform.localScale = Constants.Pixel625(false);
 		}
 		else{
-			transform.localScale = pixelScale;
+			transform.localScale = Constants.Pixel625(true);
 		}
 	}
 
-	public IEnumerator PauseToReset(){
+	public IEnumerator TriggerReset(){
 		while (!reset){
 			yield return null;
 		}
@@ -145,6 +145,7 @@ public class Crow : MonoBehaviour {
 		turning = false;
 		committed = false;
 		reset = false;
+		triggeredNextCrow = false;
 		angleDelta = 0;
 		rigbod.velocity = Vector2.zero;
 		crowCollider.enabled = false;

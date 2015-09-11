@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 42d917a7ec6aa4fc29b535c39da85338
-timeCreated: 1441763023
+timeCreated: 1441952768
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -23,7 +23,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: .25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   grayScaleToAlpha: 0
   generateCubemap: 0
   cubemapConvolution: 0
@@ -49,11 +49,11 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
-  textureType: 8
+  textureType: 5
   buildTargetSettings:
   - buildTarget: Standalone
     maxTextureSize: 8192
-    textureFormat: -3
+    textureFormat: 5
     compressionQuality: 50
   spriteSheet:
     sprites:
@@ -61,9 +61,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 3
-        y: 4
-        width: 11
-        height: 11
+        y: 3
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -71,9 +71,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 19
-        y: 4
-        width: 11
-        height: 11
+        y: 3
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -81,9 +81,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 35
-        y: 4
-        width: 11
-        height: 11
+        y: 3
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -91,9 +91,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 51
-        y: 4
-        width: 11
-        height: 11
+        y: 3
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

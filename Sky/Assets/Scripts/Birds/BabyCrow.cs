@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GenericFunctions;
 
 public class BabyCrow : MonoBehaviour {
 
@@ -10,8 +11,6 @@ public class BabyCrow : MonoBehaviour {
 	public Transform basketTransform;
 
 	public Vector3[] shifty; 
-	public Vector3 pixelScale;
-	public Vector3 pixelScaleReversed;
 
 	public Vector2 moveFullDir;
 
@@ -40,14 +39,12 @@ public class BabyCrow : MonoBehaviour {
 		babyCrowAnimator = GetComponent<Animator> ();
 		moveSpeed = 2f;
 		switchTime = 0.25f;
-		pixelScale = Vector3.one * 3.125f;
-		pixelScaleReversed = new Vector3 (-3.125f,3.125f,1f);
 		triggerShiftDistance = 0.05f;
 		basketTransform = GameObject.Find ("Jai").transform;
 		shifty = new Vector3[]{
-			new Vector3 (-1.0f, 0.7f, 0f),
-			new Vector3 (1.3f , 0.7f, 0f),
-			new Vector3 (0.1f,  -1f,0f)
+			new Vector3 (-1.0f, 0.7f, 0f) * 2f,
+			new Vector3 (1.3f , 0.7f, 0f) * 2f,
+			new Vector3 (0.1f,  -1f,0f) * 2f
 		};
 		i = 0;
 		maxShifts = 5;
@@ -132,11 +129,11 @@ public class BabyCrow : MonoBehaviour {
 		if (!switching){
 			if (rigbod.velocity.x>0){
 				StartCoroutine ( SwitchDirections());
-				transform.localScale = pixelScale;
+				transform.localScale = Constants.Pixel625(true);
 			}
 			else{
 				StartCoroutine ( SwitchDirections());
-				transform.localScale = pixelScaleReversed;
+				transform.localScale = Constants.Pixel625(false);
 			}
 		}
 	}

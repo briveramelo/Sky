@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GenericFunctions;
 
 public class Basket : MonoBehaviour {
 	
@@ -158,8 +159,14 @@ public class Basket : MonoBehaviour {
 		yield return null;
 	}
 
+	void OnTriggerEnter2D(Collider2D col){
+		if (col.gameObject.layer == 18){
+			StartCoroutine (CollectNewBalloon(col.gameObject,col.GetComponent<Balloon>().balloonNumber));
+		}
+	}
+
 	public IEnumerator SpawnNewBalloon(){
-		numToFill = -1;
+		numToFill = 0;
 		int q = 0;
 		foreach (bool pop in popped){
 			if (pop){
@@ -168,16 +175,25 @@ public class Basket : MonoBehaviour {
 			}
 			q++;
 		}
-		if (numToFill!=-1){
-			balloons[numToFill] = Instantiate (Resources.Load (balloonPrefabNames[numToFill]),relativeBalloonPositions[numToFill],Quaternion.identity) as GameObject;
-			balloons[numToFill].transform.SetParent(transform);
-			balloons[numToFill].transform.localScale = Vector3.one;
-			balloons[numToFill].transform.position = jaiTransform.position + relativeBalloonPositions[numToFill];
-			popped[numToFill] = false;
-			balloonColliders[numToFill] = balloons[numToFill].GetComponent<CircleCollider2D>();
-			balloonAnimators[numToFill] = balloons[numToFill].GetComponent<Animator>();
-			balloonSprites[numToFill] = balloons[numToFill].GetComponent<SpriteRenderer>();
+		GameObject newBal = Instantiate (Resources.Load (balloonPrefabNames[numToFill]),new Vector3 (Random.Range(-6f,6f),-8f,0f),Quaternion.identity) as GameObject;
+		yield return null;
+	}
+
+	public IEnumerator CollectNewBalloon(GameObject newBalloon, int balloonNumber){
+		if (popped[balloonNumber]){
+			balloons[balloonNumber] = newBalloon;
+			balloonColliders[balloonNumber] = balloons[balloonNumber].GetComponent<CircleCollider2D>();
+			balloonAnimators[balloonNumber] = balloons[balloonNumber].GetComponent<Animator>();
+			balloonSprites[balloonNumber] = balloons[balloonNumber].GetComponent<SpriteRenderer>();
+			balloonScripts[balloonNumber] = balloons[balloonNumber].GetComponent<Balloon>();
+			balloonScripts[balloonNumber].moving = false;
+
+			balloons[balloonNumber].transform.SetParent(transform);
+			balloons[balloonNumber].transform.localScale = Vector3.one;
+			balloons[balloonNumber].transform.position = jaiTransform.position + relativeBalloonPositions[balloonNumber];
+			popped[balloonNumber] = false;
 			balloonCount++;
+			balloons[balloonNumber].layer = 17;
 		}
 		yield return null;
 	}
