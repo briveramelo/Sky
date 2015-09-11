@@ -1,13 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/World/SpawnBirds.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Gear/Balloon.cs" Line="29" Column="1" />
+      <File FileName="Assets/Scripts/Gear/Basket.cs" Line="181" Column="22" />
+      <File FileName="Assets/Scripts/GenericFunctions/Constants.cs" Line="37" Column="5" />
+      <File FileName="Assets/Scripts/World/SpawnBirds.cs" Line="37" Column="155" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Scripts" expanded="True">
-              <Node name="Gear" expanded="True">
-                <Node name="Spear.cs" selected="True" />
+              <Node name="Gear" expanded="True" />
+              <Node name="GenericFunctions" expanded="True" />
+              <Node name="World" expanded="True">
+                <Node name="SpawnBirds.cs" selected="True" />
               </Node>
             </Node>
           </Node>
