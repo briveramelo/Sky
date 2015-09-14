@@ -252,7 +252,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11497560, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
       propertyPath: birdType
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6143208, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
       propertyPath: m_Offset.x
