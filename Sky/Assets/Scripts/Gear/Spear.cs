@@ -103,6 +103,7 @@ public class Spear : MonoBehaviour {
 
 	public IEnumerator HurtBird(Collider2D birdCol, Vector2 gutVel){
 		GetHurt getHurtScript = birdCol.GetComponent<GetHurt> ();
+		StartCoroutine (getHurtScript.TakeDamage (gutVel,spearTipCollider));
 
 		if (getHurtScript.health>1){ //bounce on hurting
 			rigbod.velocity = 0.2f * Vector2.Reflect(gutVel,(transform.position-birdCol.bounds.ClosestPoint (transform.position)).normalized);
@@ -110,7 +111,6 @@ public class Spear : MonoBehaviour {
 		else{ //lose 20% speed on killing
 			rigbod.velocity = gutVel * .8f;
 		}
-		StartCoroutine (getHurtScript.TakeDamage (gutVel,spearTipCollider));
 		yield return null;
 	}
 

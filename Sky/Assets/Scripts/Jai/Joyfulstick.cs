@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using GenericFunctions;
 
 public class Joyfulstick : MonoBehaviour {
 	
@@ -11,66 +12,92 @@ public class Joyfulstick : MonoBehaviour {
 	public SpriteRenderer controlStickSprite;
 
 	public Vector2 startingJoystickSpot; //position of the joystick on screen
-	public Vector2 touchSpot;
+	//public Vector2 touchSpot;
 	public Vector2 moveDir;
 	public Vector2 rawFinger;
 	public Vector2 startingTouchPoint;
 	public Vector2 releaseTouchPoint;
 	public Vector2 attackDir;
 	public Vector2 correctionPixels;
+	public Vector2 velVector;
 
 	public float distFromStick; //distance your finger is from the joystick
 	public float distToThrow;
 	public float releaseDist;
 	public float moveForce;
 	public float maxBalloonSpeed;
-	public float joystickAppearanceThreshhold; //maximum distance you can move the joystick
-	public float joystickMaxThumbDist;
+	public float joystickMaxMoveDistance; //maximum distance you can move the joystick
+	public float joystickMaxStartDist;
 	public float correctionPixelFactor;
-	
-	public int n;
+	public float speed;
+	public float maxVectorSpeed;
+
+
 	public int joystickFinger;
 	public int spearFinger;
+
+	public bool forceMovement;
+	public bool velocityMovement;
 
 	// Use this for initialization
 	void Awake () {
 		basketBody = GameObject.Find ("BalloonBasket").GetComponent<Rigidbody2D>();
 		controlStickSprite = GameObject.Find ("ControlStick").GetComponent<SpriteRenderer>();
 		jaiScript = GameObject.Find ("Jai").GetComponent<Jai> ();
-		maxBalloonSpeed = 3f;
-
-		correctionPixels = new Vector2 (560,-960); //half of the screen width is 560 and yeah the heights weird [1280-640]
-
+		maxBalloonSpeed = 2.5f;//3f;
+		maxVectorSpeed = Mathf.Sqrt (maxBalloonSpeed);
 
 		startingJoystickSpot = transform.position;
-		joystickAppearanceThreshhold = .8f + 0.3f;
-		joystickMaxThumbDist = 1.3f + 1f;
+		joystickMaxMoveDistance = 1.1f;
+		joystickMaxStartDist = 2.3f;
 		distToThrow = .1f;
 		joystickFinger = -1;
 		spearFinger = -2;
-		moveForce = 10f;
-		correctionPixelFactor = 5f / 320f; //5 game units divided by 320 pixels
+		moveForce = 20f;//10f;
+		correctionPixels = new Vector2 (Screen.width/2,(-3*Screen.height/2));
+		correctionPixelFactor = 10f / Screen.height;
 
-		//correctionPixels = new Vector2 (Screen.width/2,-Screen.height/2);
-		//correctionPixelFactor = 5 / Screen.height;
+		forceMovement = true;
+		velocityMovement = false;
 	}
 
 	Vector2 ConvertFingerPosition(Vector2 fingerIn){
 		return (fingerIn + correctionPixels) * correctionPixelFactor;
 	}
 
+	void DoPhysics(){
+		if (Mathf.Sign (velVector.x) != Mathf.Sign (moveDir.x)){
+			basketBody.AddForce (Vector2.right * moveDir.x * moveForce);
+		}
+		else {
+			if (Mathf.Abs (speed)<maxBalloonSpeed){
+				basketBody.AddForce (Vector2.right * moveDir.x * moveForce);
+			}
+		}
+		if (Mathf.Sign (velVector.y) != Mathf.Sign (moveDir.y)){
+			basketBody.AddForce (Vector2.up * moveDir.y * moveForce);
+		}
+		else {
+			if (Mathf.Abs (speed)<maxBalloonSpeed){
+				basketBody.AddForce (Vector2.up * moveDir.y * moveForce);
+			}
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
+		velVector = basketBody.velocity;
+		speed = velVector.magnitude;
 
 		if (Input.touchCount>0){
 			foreach (Touch finger in Input.touches){
-				rawFinger = finger.position;
+				//rawFinger = finger.position;
+				//touchSpot = ConvertFingerPosition(finger.position);
 				if (finger.phase == TouchPhase.Began){
-					touchSpot = ConvertFingerPosition(finger.position);
-					distFromStick = Vector2.Distance(touchSpot,startingJoystickSpot);
-					if (distFromStick<joystickMaxThumbDist){
+						distFromStick = Vector2.Distance(ConvertFingerPosition(finger.position),startingJoystickSpot);
+					if (distFromStick<joystickMaxStartDist){
 						joystickFinger = finger.fingerId;
-						moveDir = Vector2.ClampMagnitude(touchSpot - startingJoystickSpot,joystickAppearanceThreshhold);
+						moveDir = Vector2.ClampMagnitude(ConvertFingerPosition(finger.position) - startingJoystickSpot,joystickMaxMoveDistance);
 						controlStickSprite.transform.position = startingJoystickSpot + moveDir;
 					}
 					else{
@@ -82,16 +109,9 @@ public class Joyfulstick : MonoBehaviour {
 				}
 				else if (finger.phase == TouchPhase.Moved){ //while your finger is moving on the screen (joystick only)
 					if (finger.fingerId == joystickFinger){ //move the joystick
-						touchSpot = ConvertFingerPosition(finger.position);
-						moveDir = Vector2.ClampMagnitude(touchSpot - startingJoystickSpot,joystickAppearanceThreshhold);
-						/*if (moveDir.magnitude>joystickAppearanceThreshhold){
-							moveDir = moveDir.normalized * joystickAppearanceThreshhold;
-						}*/
-						distFromStick = moveDir.magnitude;
+						moveDir = Vector2.ClampMagnitude(ConvertFingerPosition(finger.position) - startingJoystickSpot,joystickMaxMoveDistance);
 						controlStickSprite.transform.position = startingJoystickSpot + moveDir;
-						if (basketBody.velocity.magnitude<maxBalloonSpeed){
-							basketBody.AddForce (moveDir * moveForce);
-						}
+						DoPhysics();
 					}
 				}
 				else if (finger.phase == TouchPhase.Ended){ //when your finger comes off the screen

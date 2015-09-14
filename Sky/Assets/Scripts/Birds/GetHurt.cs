@@ -11,8 +11,11 @@ public class GetHurt : MonoBehaviour {
 	public Waves wavesScript;
 
 	public CircleCollider2D[] spearColliders;
+	public Collider2D birdCollider;
 
 	public string gutSplosionParentString;
+
+	public Vector2 hitPoint;
 
 	public int health;
 	public int killGutValue;
@@ -29,7 +32,7 @@ public class GetHurt : MonoBehaviour {
 		summonTheCrowsScript = GameObject.Find ("WorldBounds").GetComponent<SummonTheCrows> ();
 		duckLeaderScript = GetComponent<DuckLeader> ();
 		duckScript = GetComponent<Duck> ();
-
+		birdCollider = GetComponent<Collider2D> ();
 
 		gutSplosionParentString = "Prefabs/GutSplosions/GutSplosionParent";
 		if (GetComponent<Pigeon>()){
@@ -86,6 +89,13 @@ public class GetHurt : MonoBehaviour {
 
 		if (!invincible){
 			health--;
+
+			hitPoint = birdCollider.bounds.ClosestPoint(spearCollider.bounds.ClosestPoint(transform.position));
+			if (birdType==3 && hitPoint.y<transform.position.y && hitPoint.x>birdCollider.bounds.min.x && hitPoint.x<birdCollider.bounds.max.x){ //kill albatross with a tactical shot to the underbelly
+				health = 0;
+				//super kill!
+			}
+
 			spearColliders[health] = spearCollider;
 			guts = Instantiate (Resources.Load (gutSplosionParentString), transform.position, Quaternion.identity) as GameObject;
 
