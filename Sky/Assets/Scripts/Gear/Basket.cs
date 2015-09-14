@@ -19,9 +19,7 @@ public class Basket : MonoBehaviour {
 	public AudioSource popNoise; 
 
 	public Vector3[] relativeBalloonPositions;
-
-	public string[] balloonPrefabNames;
-
+	
 	public float[] distanceAway;
 	public float dropForce;
 
@@ -48,11 +46,7 @@ public class Basket : MonoBehaviour {
 			GameObject.Find("TealBalloon"),
 			GameObject.Find("GreyBalloon")
 		};
-		balloonPrefabNames = new string[]{
-			"Prefabs/Gear/PinkBalloon",
-			"Prefabs/Gear/TealBalloon",
-			"Prefabs/Gear/GreyBalloon",
-		};
+
 
 		balloonSprites = new SpriteRenderer[]{
 			balloons[0].GetComponent<SpriteRenderer>(),
@@ -88,26 +82,14 @@ public class Basket : MonoBehaviour {
 			false,
 			false,
 		}; 
-		//InvokeRepeating ("CountBalloons", 0.01f, 0.1f);
 	}
-
-	/*void CountBalloons(){
-		x = 0;
-		popped = new bool[3];
-		balloonCount = 0;
-		foreach (GameObject balloon in balloons){
-			popped[x] = balloon ? false : true;
-			balloonCount += balloon ? 1 : 0;
-		}
-
-	}*/
 
 	public IEnumerator BeginPopping(int balloonNumber){
 		if (!popping){
 			popping = true;
 			StartCoroutine(PopBalloon(balloonNumber));
 			StartCoroutine(Invincibility());
-			StartCoroutine (SlowTime(.5f,.75f));
+			StartCoroutine (TimeEffects.SlowTime(.5f,.75f));
 			StartCoroutine(screenShakeScript.CameraShake());
 		}
 		yield return null;
@@ -123,8 +105,7 @@ public class Basket : MonoBehaviour {
 		Destroy (balloons[i],Constants.time2Destroy);
 		yield return null;
 	}
-
-
+	
 	public IEnumerator Invincibility(){
 		if (balloonCount<1){
 			rigbod.gravityScale = 1;
@@ -149,30 +130,10 @@ public class Basket : MonoBehaviour {
 		popping = false;
 	}
 	
-	public IEnumerator SlowTime(float slowDuration, float timeScale){
-		StartCoroutine (WaitForRealSeconds (slowDuration));
-		Time.timeScale = timeScale;
-		yield return null;
-	}
-	
-	public IEnumerator WaitForRealSeconds(float slowDuration){
-		float startTime = Time.realtimeSinceStartup;
-		while (Time.realtimeSinceStartup - startTime < slowDuration){
-			yield return null;
-		}
-		Time.timeScale = 1f;
-		yield return null;
-	}
-
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.layer == 18){
 			StartCoroutine (CollectNewBalloon(col.gameObject));
 		}
-	}
-
-	public IEnumerator SpawnNewBalloon(){
-		GameObject newBal = Instantiate (Resources.Load (balloonPrefabNames[Random.Range (0,3)]),new Vector3 (Random.Range(-6f,6f),-8f,0f),Quaternion.identity) as GameObject;
-		yield return null;
 	}
 
 	public IEnumerator CollectNewBalloon(GameObject newBalloon){

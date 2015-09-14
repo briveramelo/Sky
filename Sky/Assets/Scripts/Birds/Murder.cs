@@ -32,8 +32,8 @@ public class Murder : MonoBehaviour {
 		int j = 0;
 		foreach (Crow crowScript in crowScripts){
 			crowScript.crowNumber = j;
-			crowScript.transform.position = Constants.crowPositions[j];
-			crowScript.startPosition = Constants.crowPositions[j];
+			crowScript.transform.position = Spawn.crowPositions[j];
+			crowScript.startPosition = Spawn.crowPositions[j];
 			j++;
 		}
 

@@ -28,13 +28,5 @@ namespace GenericFunctions{
 			return negs;
 		}
 
-		public static Vector3[] crowPositions  = new Vector3[]{
-			new Vector3(0f   ,  7f , 0f),
-			new Vector3(9.5f ,  5.3f , 0f),
-			new Vector3(9.5f   , -5.3f , 0f),
-			new Vector3(0f   , -7f , 0f),
-			new Vector3(-9.5f, -5.3f , 0f),
-			new Vector3(-9.5f,  5.3f , 0f),
-		};
 	}
 }

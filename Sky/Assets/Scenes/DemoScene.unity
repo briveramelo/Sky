@@ -37,9 +37,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
---- !u!127 &3
-LevelGameManager:
-  m_ObjectHideFlags: 0
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -68,6 +65,7 @@ LightmapSettings:
     m_TextureCompression: 1
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
+    m_ReflectionCompression: 2
   m_LightmapSnapshot: {fileID: 0}
   m_RuntimeCPUUsage: 25
 --- !u!196 &5
@@ -176,23 +174,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 11456900, guid: abbbe6cb39e794bbea430f29a1ae015e, type: 2}
-      propertyPath: pixelPerfectCamera
-      value: 
-      objectReference: {fileID: 1226980275}
-    - target: {fileID: 11435488, guid: abbbe6cb39e794bbea430f29a1ae015e, type: 2}
-      propertyPath: pixelPerfectCamera
-      value: 
-      objectReference: {fileID: 1226980275}
-    - target: {fileID: 11438116, guid: abbbe6cb39e794bbea430f29a1ae015e, type: 2}
-      propertyPath: pixelPerfectCamera
-      value: 
-      objectReference: {fileID: 1226980275}
-    - target: {fileID: 11413852, guid: abbbe6cb39e794bbea430f29a1ae015e, type: 2}
-      propertyPath: pixelPerfectCamera
-      value: 
-      objectReference: {fileID: 1226980275}
-    - target: {fileID: 11410366, guid: abbbe6cb39e794bbea430f29a1ae015e, type: 2}
+    - target: {fileID: 11461806, guid: abbbe6cb39e794bbea430f29a1ae015e, type: 2}
       propertyPath: pixelPerfectCamera
       value: 
       objectReference: {fileID: 1226980275}
@@ -200,120 +182,28 @@ Prefab:
       propertyPath: pixelPerfectCamera
       value: 
       objectReference: {fileID: 1226980275}
-    - target: {fileID: 11461806, guid: abbbe6cb39e794bbea430f29a1ae015e, type: 2}
+    - target: {fileID: 11410366, guid: abbbe6cb39e794bbea430f29a1ae015e, type: 2}
+      propertyPath: pixelPerfectCamera
+      value: 
+      objectReference: {fileID: 1226980275}
+    - target: {fileID: 11413852, guid: abbbe6cb39e794bbea430f29a1ae015e, type: 2}
+      propertyPath: pixelPerfectCamera
+      value: 
+      objectReference: {fileID: 1226980275}
+    - target: {fileID: 11438116, guid: abbbe6cb39e794bbea430f29a1ae015e, type: 2}
+      propertyPath: pixelPerfectCamera
+      value: 
+      objectReference: {fileID: 1226980275}
+    - target: {fileID: 11435488, guid: abbbe6cb39e794bbea430f29a1ae015e, type: 2}
+      propertyPath: pixelPerfectCamera
+      value: 
+      objectReference: {fileID: 1226980275}
+    - target: {fileID: 11456900, guid: abbbe6cb39e794bbea430f29a1ae015e, type: 2}
       propertyPath: pixelPerfectCamera
       value: 
       objectReference: {fileID: 1226980275}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: abbbe6cb39e794bbea430f29a1ae015e, type: 2}
-  m_IsPrefabParent: 0
---- !u!1001 &818617821
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -6
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11455584, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: pixelPerfectCamera
-      value: 
-      objectReference: {fileID: 1226980275}
-    - target: {fileID: 121926, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_Name
-      value: Duck2 (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 121926, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-  m_IsPrefabParent: 0
---- !u!1001 &977736725
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -7
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11455584, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: pixelPerfectCamera
-      value: 
-      objectReference: {fileID: 1226980275}
-    - target: {fileID: 121926, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_Name
-      value: Duck2 (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 121926, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1184327619
 Prefab:
@@ -476,7 +366,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 484922, guid: 717f91b238a4646e29c26158627ee9bf, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 11439096, guid: 717f91b238a4646e29c26158627ee9bf, type: 2}
       propertyPath: cameraZoom
@@ -552,110 +442,6 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5452e0427bdfd4f7ab1d8ce24f108947, type: 2}
-  m_IsPrefabParent: 0
---- !u!1001 &1571896809
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -8
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 11455584, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: pixelPerfectCamera
-      value: 
-      objectReference: {fileID: 1226980275}
-    - target: {fileID: 121926, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_Name
-      value: Duck2 (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 121926, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-  m_IsPrefabParent: 0
---- !u!1001 &1869288049
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -9
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 422268, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 11455584, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: pixelPerfectCamera
-      value: 
-      objectReference: {fileID: 1226980275}
-    - target: {fileID: 121926, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1923901808
 Prefab:

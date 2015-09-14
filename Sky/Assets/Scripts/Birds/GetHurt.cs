@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GenericFunctions;
 
 public class GetHurt : MonoBehaviour {
 
@@ -104,7 +105,7 @@ public class GetHurt : MonoBehaviour {
 			}
 			else{
 				StartCoroutine (guts.GetComponent<GutSplosion> ().GenerateGuts (killGutValue, gutDirection));
-				StartCoroutine (basketScript.SlowTime(.1f,.5f));
+				StartCoroutine (TimeEffects.SlowTime(.1f,.5f));
 				//wavesScript.waveBirdsStillAlive[wavesScript.currentWave-1][birdType]--;
 				//wavesScript.numberOfBirdsStillAlive--;
 				if (summonCrows){
@@ -112,7 +113,7 @@ public class GetHurt : MonoBehaviour {
 					//wavesScript.waveBirdsStillAlive[wavesScript.currentWave-1] [4] = 6;//add 6 crows to the wave tracker
 				}
 				else if (spawnBalloon){
-					StartCoroutine (basketScript.SpawnNewBalloon());
+					StartCoroutine (Spawn.NewBalloon());
 				}
 				else if (duckLeaderScript){
 					StartCoroutine (duckLeaderScript.BreakTheV());
