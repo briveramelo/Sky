@@ -96,9 +96,6 @@ public class Spear : MonoBehaviour {
 		if (col.gameObject.layer == 16) { //if it hits a bird
 			StartCoroutine(HurtBird(col,rigbod.velocity));
 		}
-		else if (col.gameObject.layer == 18){
-			StartCoroutine(col.GetComponent<Balloon>().LocalPop());
-		}
 	}
 
 	public IEnumerator HurtBird(Collider2D birdCol, Vector2 gutVel){

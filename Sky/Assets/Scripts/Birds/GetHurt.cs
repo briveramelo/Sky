@@ -10,6 +10,7 @@ public class GetHurt : MonoBehaviour {
 	public DuckLeader duckLeaderScript;
 	public Duck duckScript;
 	public Waves wavesScript;
+	public TimeEffects timeEffectsScript;
 
 	public CircleCollider2D[] spearColliders;
 	public Collider2D birdCollider;
@@ -31,6 +32,7 @@ public class GetHurt : MonoBehaviour {
 		health = 1;
 		//wavesScript = GameObject.Find ("WorldBounds").GetComponent<Waves> ();
 		summonTheCrowsScript = GameObject.Find ("WorldBounds").GetComponent<SummonTheCrows> ();
+		timeEffectsScript = GameObject.Find ("Dummy").GetComponent<TimeEffects> ();
 		duckLeaderScript = GetComponent<DuckLeader> ();
 		duckScript = GetComponent<Duck> ();
 		birdCollider = GetComponent<Collider2D> ();
@@ -105,7 +107,7 @@ public class GetHurt : MonoBehaviour {
 			}
 			else{
 				StartCoroutine (guts.GetComponent<GutSplosion> ().GenerateGuts (killGutValue, gutDirection));
-				StartCoroutine (TimeEffects.SlowTime(.1f,.5f));
+				StartCoroutine (timeEffectsScript.SlowTime(.1f,.5f));
 				//wavesScript.waveBirdsStillAlive[wavesScript.currentWave-1][birdType]--;
 				//wavesScript.numberOfBirdsStillAlive--;
 				if (summonCrows){

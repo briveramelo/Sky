@@ -6,6 +6,7 @@ public class Basket : MonoBehaviour {
 	
 	public Balloon[] balloonScripts;
 	public ScreenShake screenShakeScript;
+	public TimeEffects timeEffectsScript;
 
 	public CircleCollider2D[] balloonColliders;
 	public GameObject[] balloons;
@@ -37,6 +38,7 @@ public class Basket : MonoBehaviour {
 		balloonCount = 3;
 		distanceAway = new float[3];
 		screenShakeScript = GameObject.Find ("mainCam").GetComponent<ScreenShake> ();
+		timeEffectsScript = GameObject.Find ("Dummy").GetComponent<TimeEffects> ();
 		popNoise = GetComponent<AudioSource> ();
 		rigbod = GetComponent<Rigidbody2D> ();
 		jaiTransform = GameObject.Find ("Jai").transform;
@@ -82,6 +84,19 @@ public class Basket : MonoBehaviour {
 			false,
 			false,
 		}; 
+		InvokeRepeating ("CheckBalloonCount", 0.25f, 0.25f);
+	}
+
+	void CheckBalloonCount(){
+		int flab = 0;
+		balloonCount = 3;
+		foreach (Balloon balloonScript in balloonScripts) {
+			if (balloonScript==null){
+				popped[flab] = true;
+				balloonCount--;
+			}
+			flab++;
+		}
 	}
 
 	public IEnumerator BeginPopping(int balloonNumber){
@@ -89,7 +104,7 @@ public class Basket : MonoBehaviour {
 			popping = true;
 			StartCoroutine(PopBalloon(balloonNumber));
 			StartCoroutine(Invincibility());
-			StartCoroutine (TimeEffects.SlowTime(.5f,.75f));
+			StartCoroutine (timeEffectsScript.SlowTime(.5f,.75f));
 			StartCoroutine(screenShakeScript.CameraShake());
 		}
 		yield return null;
@@ -109,10 +124,10 @@ public class Basket : MonoBehaviour {
 	public IEnumerator Invincibility(){
 		if (balloonCount<1){
 			rigbod.gravityScale = 1;
-			foreach (Balloon balloon in balloonScripts){
-				if (balloon){
-					balloon.balloonCollider.enabled = false;
-					balloon.popping = true;
+			foreach (Balloon balloonScript in balloonScripts){
+				if (balloonScript){
+					balloonScript.balloonCollider.enabled = false;
+					balloonScript.popping = true;
 				}
 			}
 			basketCollider.enabled = false;
@@ -121,10 +136,10 @@ public class Basket : MonoBehaviour {
 		Physics2D.IgnoreLayerCollision (16, 17, true);//ignore birds and balloons for a second;
 		yield return new WaitForSeconds(1.5f);
 		Physics2D.IgnoreLayerCollision (16, 17, false); //resume
-		foreach (Balloon balloon in balloonScripts){
-			if (balloon){
-				balloon.balloonCollider.enabled = true;
-				balloon.popping = false;
+		foreach (Balloon balloonScript in balloonScripts){
+			if (balloonScript){
+				balloonScript.balloonCollider.enabled = true;
+				balloonScript.popping = false;
 			}
 		}
 		popping = false;

@@ -16,7 +16,7 @@ namespace GenericFunctions{
 			return forward ? Vector3.one : new Vector3 (-1f, 1f, 1f);
 		}
 
-		public static float timeToThrow = .67f;
+		public static float timeToThrow = .66667f;
 		public static Vector3 balloonOffset = new Vector3 (0.2f, 2.7f, 0f);
 		public static float time2Destroy = 2f;
 
