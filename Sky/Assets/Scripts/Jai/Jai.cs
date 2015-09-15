@@ -7,9 +7,7 @@ public class Jai : MonoBehaviour {
 	public Spear spearScript;
 
 	public Animator jaiAnimator;
-
-	public Vector3 fixVector;
-
+	
 	public float throwForce; //Force with which Jai throws the spear
 
 	public int throws; //counts number of throws he's done
@@ -20,7 +18,6 @@ public class Jai : MonoBehaviour {
 
 	void Awake(){
 		throwForce = 1750f;
-		fixVector = new Vector3 (0f, .02f);
 		jaiAnimator = GetComponent<Animator> ();
 	}
 

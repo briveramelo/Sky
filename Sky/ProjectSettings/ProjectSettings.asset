@@ -463,7 +463,7 @@ PlayerSettings:
   WebGL::template: APPLICATION:Default
   additionalIl2CppArgs::additionalIl2CppArgs: 
   firstStreamedSceneWithResources: 0
-  cloudProjectId: 
-  projectName: 
-  organizationId: 
+  cloudProjectId: 1eafd912-c9b3-4a8f-8467-b633b1a0b356
+  projectName: Sky
+  organizationId: briveramelo
   cloudEnabled: 0

@@ -65,14 +65,20 @@ public class GetHurt : MonoBehaviour {
 			birdType = 5;
 			killGutValue = 5;
 		}
-		else if (GetComponent<Eagle>()){
+		else if (GetComponent<Pelican>()){
 			birdType = 6;
+			health = 3;
+			damageGutValue = 4;
+			killGutValue = 15;
+		}
+		else if (GetComponent<Eagle>()){
+			birdType = 7;
 			health = 5;
 			damageGutValue = 4;
 			killGutValue = 80;
 		}
 		else if (GetComponent<BirdOfParadise>()){
-			birdType = 7;
+			birdType = 8;
 			killGutValue = 40;
 			spawnBalloon = true;
 		}
@@ -94,7 +100,7 @@ public class GetHurt : MonoBehaviour {
 			health--;
 
 			hitPoint = birdCollider.bounds.ClosestPoint(spearCollider.bounds.ClosestPoint(transform.position));
-			if (birdType==3 && hitPoint.y<transform.position.y && hitPoint.x>birdCollider.bounds.min.x && hitPoint.x<birdCollider.bounds.max.x){ //kill albatross with a tactical shot to the underbelly
+			if (birdType==3 && gutDirection.y>0 && hitPoint.y<transform.position.y && hitPoint.x>birdCollider.bounds.min.x && hitPoint.x<birdCollider.bounds.max.x){ //kill albatross with a tactical shot to the underbelly
 				health = 0;
 				//super kill!
 			}

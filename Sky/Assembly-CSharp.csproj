@@ -55,6 +55,7 @@
      <Compile Include="Assets\Scripts\Birds\GetHurt.cs" />
      <Compile Include="Assets\Scripts\Birds\GutSplosion.cs" />
      <Compile Include="Assets\Scripts\Birds\Murder.cs" />
+     <Compile Include="Assets\Scripts\Birds\Pelican.cs" />
      <Compile Include="Assets\Scripts\Birds\Pigeon.cs" />
      <Compile Include="Assets\Scripts\Birds\SelfDestruct.cs" />
      <Compile Include="Assets\Scripts\Gear\Balloon.cs" />

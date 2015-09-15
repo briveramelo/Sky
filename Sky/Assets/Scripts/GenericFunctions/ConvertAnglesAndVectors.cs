@@ -8,7 +8,7 @@ namespace GenericFunctions
 		/// <summary>Takes an (float)angle and
 		/// <para> transforms it into a (Vector2)vector </para>
 		/// </summary>
-		public static Vector2 ConvertAngleToVector2(int inputAngle)
+		public static Vector2 ConvertAngleToVector2(float inputAngle)
 		{
 			return new Vector2(Mathf.Cos (Mathf.Deg2Rad * inputAngle),Mathf.Sin (Mathf.Deg2Rad * inputAngle));
 		}
@@ -24,12 +24,17 @@ namespace GenericFunctions
 		/// <summary>Takes a (Vector2)vector and
 		/// <para> transforms it into a (float)angle </para>
 		/// </summary>
-		public static int ConvertVector2Angle(Vector2 inputVector)
+		public static int ConvertVector2IntAngle(Vector2 inputVector)
 		{
 			return Mathf.RoundToInt (Mathf.Atan2 (inputVector.y, inputVector.x) * Mathf.Rad2Deg);
 		}
 
-		public static int ConvertVector2Angle(Vector2 inputVector, float xVelocity)
+		public static float ConvertVector2FloatAngle(Vector2 inputVector)
+		{
+			return Mathf.Atan2 (inputVector.y, inputVector.x) * Mathf.Rad2Deg;
+		}
+
+		public static int ConvertVector2IntAngle(Vector2 inputVector, float xVelocity)
 		{
 			int pixelAngle = Mathf.RoundToInt (Mathf.Atan2 (inputVector.y, inputVector.x) * Mathf.Rad2Deg);
 			if (xVelocity<0){

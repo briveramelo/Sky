@@ -84,7 +84,7 @@ public class Crow : MonoBehaviour {
 			}
 			if (committed){ //targetPoint is now fixed
 				if (currentDistance < turnDistance && !turned && !turning){ //trigger reset position
-					currentAngle = ConvertAnglesAndVectors.ConvertVector2Angle(rigbod.velocity);
+					currentAngle = ConvertAnglesAndVectors.ConvertVector2IntAngle(rigbod.velocity);
 					targetAngle = currentAngle + maxAngleDelta;
 					turned = true;
 					if (!isKiller){
@@ -97,7 +97,7 @@ public class Crow : MonoBehaviour {
 					reset = true;
 				}
 				else if (turning){ //turning
-					currentAngle = ConvertAnglesAndVectors.ConvertVector2Angle(rigbod.velocity);
+					currentAngle = ConvertAnglesAndVectors.ConvertVector2IntAngle(rigbod.velocity);
 					newAngle = currentAngle + rotationSpeed;
 					angleDelta += rotationSpeed;
 					moveDir = ConvertAnglesAndVectors.ConvertAngleToVector2(newAngle);
@@ -116,7 +116,7 @@ public class Crow : MonoBehaviour {
 			}
 
 			rigbod.velocity = (moveDir).normalized * moveSpeed;
-			pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2Angle(rigbod.velocity,rigbod.velocity.x);
+			pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle(rigbod.velocity,rigbod.velocity.x);
 			AnimateIt();
 			lastDistance = Vector3.Distance(targetTransform.position + Constants.balloonOffset,transform.position);
 		}

@@ -57,7 +57,7 @@ public class Eagle : MonoBehaviour {
 		transform.position = startPos [0];
 		rigbod.velocity = moveDir [0];
 		transform.localScale = Constants.Pixel625(true);
-		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2Angle (moveDir [0],moveDir[0].x);
+		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle (moveDir [0],moveDir[0].x);
 		yield return new WaitForSeconds(4f);
 		StartCoroutine (UpLeft ());
 	}
@@ -66,7 +66,7 @@ public class Eagle : MonoBehaviour {
 		transform.position = startPos [1];
 		rigbod.velocity = moveDir [1];
 		transform.localScale = Constants.Pixel625(false);
-		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2Angle (moveDir [1],moveDir[1].x);
+		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle (moveDir [1],moveDir[1].x);
 		yield return new WaitForSeconds(6f);
 		rigbod.velocity = Vector2.zero;
 		StartCoroutine (Strike ());
@@ -87,7 +87,7 @@ public class Eagle : MonoBehaviour {
 		else{
 			transform.localScale = Constants.Pixel625(false);
 		}
-		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2Angle (attackDir,attackDir.x);
+		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle (attackDir,attackDir.x);
 
 		attacks--;
 		if (attacks>0){
