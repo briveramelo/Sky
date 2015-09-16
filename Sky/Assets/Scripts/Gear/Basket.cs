@@ -84,19 +84,6 @@ public class Basket : MonoBehaviour {
 			false,
 			false,
 		}; 
-		InvokeRepeating ("CheckBalloonCount", 0.25f, 0.25f);
-	}
-
-	void CheckBalloonCount(){
-		int flab = 0;
-		balloonCount = 3;
-		foreach (Balloon balloonScript in balloonScripts) {
-			if (balloonScript==null){
-				popped[flab] = true;
-				balloonCount--;
-			}
-			flab++;
-		}
 	}
 
 	public IEnumerator BeginPopping(int balloonNumber){
@@ -117,6 +104,10 @@ public class Basket : MonoBehaviour {
 		Destroy (balloons[i].transform.GetChild(0).gameObject);
 		popped [i] = true;
 		balloonCount--;
+		balloonAnimators [i] = null;
+		balloonColliders [i] = null;
+		balloonScripts [i] = null;
+		balloonSprites [i] = null;
 		Destroy (balloons[i],Constants.time2Destroy);
 		yield return null;
 	}
@@ -124,14 +115,16 @@ public class Basket : MonoBehaviour {
 	public IEnumerator Invincibility(){
 		if (balloonCount<1){
 			rigbod.gravityScale = 1;
-			foreach (Balloon balloonScript in balloonScripts){
-				if (balloonScript){
-					balloonScript.balloonCollider.enabled = false;
-					balloonScript.popping = true;
-				}
-			}
 			basketCollider.enabled = false;
 			StartCoroutine (EndGame());
+		}
+		int qf = 0;
+		foreach (Balloon balloonScript in balloonScripts){
+			if (!popped[qf]){
+				balloonScript.balloonCollider.enabled = false;
+				balloonScript.popping = true;
+			}
+			qf++;
 		}
 		Physics2D.IgnoreLayerCollision (16, 17, true);//ignore birds and balloons for a second;
 		yield return new WaitForSeconds(1.5f);

@@ -36,15 +36,12 @@ public class Joyfulstick : MonoBehaviour {
 	public int joystickFinger;
 	public int spearFinger;
 
-	public bool forceMovement;
-	public bool velocityMovement;
-
 	// Use this for initialization
 	void Awake () {
 		basketBody = GameObject.Find ("BalloonBasket").GetComponent<Rigidbody2D>();
 		controlStickSprite = GameObject.Find ("ControlStick").GetComponent<SpriteRenderer>();
 		jaiScript = GameObject.Find ("Jai").GetComponent<Jai> ();
-		maxBalloonSpeed = 2.5f;//3f;
+		maxBalloonSpeed = 3f;//3f;
 		maxVectorSpeed = Mathf.Sqrt (maxBalloonSpeed);
 
 		startingJoystickSpot = transform.position;
@@ -56,9 +53,6 @@ public class Joyfulstick : MonoBehaviour {
 		moveForce = 20f;//10f;
 		correctionPixels = new Vector2 (Screen.width/2,(-3*Screen.height/2));
 		correctionPixelFactor = 10f / Screen.height;
-
-		forceMovement = true;
-		velocityMovement = false;
 	}
 
 	Vector2 ConvertFingerPosition(Vector2 fingerIn){

@@ -47,6 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Birds\Albatross.cs" />
      <Compile Include="Assets\Scripts\Birds\BabyCrow.cs" />
+     <Compile Include="Assets\Scripts\Birds\Bat.cs" />
      <Compile Include="Assets\Scripts\Birds\BirdOfParadise.cs" />
      <Compile Include="Assets\Scripts\Birds\Crow.cs" />
      <Compile Include="Assets\Scripts\Birds\Duck.cs" />

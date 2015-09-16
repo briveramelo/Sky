@@ -9,15 +9,15 @@ public class SpawnBirds : MonoBehaviour {
 
 	public string[] birdNames; //file location so you can load the right bird
 
-	[Range(0,7)]
+	[Range(0,9)]
 	public int birdType;
 
 	public bool spawnBirds;
 
 	// Use this for initialization
 	void Awake () {
-									 //		0       1          2     	    3        	 4    		  5  	  6			7	    		8 
-		birdNames =  new string[]{		"Pigeon", "Duck2", "DuckLeader", "Albatross", "BabyCrow","Murder", "Pelican", "Eagle", "BirdOfParadise"};
+									 //		0       1          2     	    3        	 4    		  5  	  6			7	    8			  9 
+		birdNames =  new string[]{		"Pigeon", "Duck2", "DuckLeader", "Albatross", "BabyCrow","Murder", "Pelican", "Bat", "Eagle", "BirdOfParadise"};
 		int i = 0;
 		foreach (string birdName in birdNames){
 			birdNames[i] = "Prefabs/Birds/"+birdName;
