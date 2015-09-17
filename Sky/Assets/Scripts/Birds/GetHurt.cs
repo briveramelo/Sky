@@ -30,7 +30,6 @@ public class GetHurt : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		health = 1;
-		//wavesScript = GameObject.Find ("WorldBounds").GetComponent<Waves> ();
 		summonTheCrowsScript = GameObject.Find ("WorldBounds").GetComponent<SummonTheCrows> ();
 		timeEffectsScript = GameObject.Find ("Dummy").GetComponent<TimeEffects> ();
 		duckLeaderScript = GetComponent<DuckLeader> ();
@@ -65,24 +64,34 @@ public class GetHurt : MonoBehaviour {
 			birdType = 5;
 			killGutValue = 5;
 		}
+//		else if (GetComponent<Seagull>()){
+//			birdType = 6;
+//			killGutValue = 4;
+//		}
+		else if (GetComponent<Tentacles>()){
+			birdType = 7;
+			health = 25;
+			damageGutValue = 4;
+			killGutValue = 80;
+		}
 		else if (GetComponent<Pelican>()){
-			birdType = 6;
+			birdType = 8;
 			health = 3;
 			damageGutValue = 4;
 			killGutValue = 15;
 		}
 		else if (GetComponent<Bat>()){
-			birdType = 7;
+			birdType = 9;
 			killGutValue = 3;
 		}
 		else if (GetComponent<Eagle>()){
-			birdType = 8;
+			birdType = 10;
 			health = 5;
 			damageGutValue = 4;
 			killGutValue = 80;
 		}
 		else if (GetComponent<BirdOfParadise>()){
-			birdType = 9;
+			birdType = 11;
 			killGutValue = 40;
 			spawnBalloon = true;
 		}
@@ -118,11 +127,8 @@ public class GetHurt : MonoBehaviour {
 			else{
 				StartCoroutine (guts.GetComponent<GutSplosion> ().GenerateGuts (killGutValue, gutDirection));
 				StartCoroutine (timeEffectsScript.SlowTime(.1f,.5f));
-				//wavesScript.waveBirdsStillAlive[wavesScript.currentWave-1][birdType]--;
-				//wavesScript.numberOfBirdsStillAlive--;
 				if (summonCrows){
 					StartCoroutine (summonTheCrowsScript.Murder());
-					//wavesScript.waveBirdsStillAlive[wavesScript.currentWave-1] [4] = 6;//add 6 crows to the wave tracker
 				}
 				else if (spawnBalloon){
 					StartCoroutine (Spawn.NewBalloon());

@@ -17,6 +17,8 @@ namespace GenericFunctions{
 		}
 
 		public static float timeToThrow = .66667f;
+		public static float timeToStab = .1f;
+
 		public static Vector3 balloonOffset = new Vector3 (0.1f, 2.7f, 0f);
 		public static float time2Destroy = 2f;
 

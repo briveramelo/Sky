@@ -5,6 +5,7 @@ using GenericFunctions;
 public class Jai : MonoBehaviour {
 	
 	public Spear spearScript;
+	public Tentacles tentaclesScript;
 
 	public Animator jaiAnimator;
 	
@@ -15,6 +16,7 @@ public class Jai : MonoBehaviour {
 	public int highLow;
 
 	public bool throwing;
+	public bool stabbing;
 
 	void Awake(){
 		throwForce = 1750f;
@@ -48,6 +50,18 @@ public class Jai : MonoBehaviour {
 			throwing = false;
 			jaiAnimator.SetInteger("AnimState",0);
 			throws++;
+		}
+		yield return null;
+	}
+
+	public IEnumerator StabTheBeast(){
+		if (!stabbing){
+			stabbing = true;
+			jaiAnimator.SetInteger("AnimState",5);
+			StartCoroutine (tentaclesScript.TakeStabs()); //stab the tentacle!
+			yield return new WaitForSeconds (Constants.timeToStab);
+			stabbing = false;
+			jaiAnimator.SetInteger("AnimState",0);
 		}
 		yield return null;
 	}

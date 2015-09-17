@@ -59,6 +59,8 @@
      <Compile Include="Assets\Scripts\Birds\Pelican.cs" />
      <Compile Include="Assets\Scripts\Birds\Pigeon.cs" />
      <Compile Include="Assets\Scripts\Birds\SelfDestruct.cs" />
+     <Compile Include="Assets\Scripts\Birds\Tentacles.cs" />
+     <Compile Include="Assets\Scripts\Birds\TentaclesSensor.cs" />
      <Compile Include="Assets\Scripts\Gear\Balloon.cs" />
      <Compile Include="Assets\Scripts\Gear\Basket.cs" />
      <Compile Include="Assets\Scripts\Gear\Spear.cs" />

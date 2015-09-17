@@ -36,6 +36,8 @@ public class Joyfulstick : MonoBehaviour {
 	public int joystickFinger;
 	public int spearFinger;
 
+	public bool beingHeld;
+
 	// Use this for initialization
 	void Awake () {
 		basketBody = GameObject.Find ("BalloonBasket").GetComponent<Rigidbody2D>();
@@ -87,42 +89,49 @@ public class Joyfulstick : MonoBehaviour {
 			foreach (Touch finger in Input.touches){
 				//rawFinger = finger.position;
 				//touchSpot = ConvertFingerPosition(finger.position);
-				if (finger.phase == TouchPhase.Began){
+				if(!beingHeld){
+					if (finger.phase == TouchPhase.Began){
 						distFromStick = Vector2.Distance(ConvertFingerPosition(finger.position),startingJoystickSpot);
-					if (distFromStick<joystickMaxStartDist){
-						joystickFinger = finger.fingerId;
-						moveDir = Vector2.ClampMagnitude(ConvertFingerPosition(finger.position) - startingJoystickSpot,joystickMaxMoveDistance);
-						controlStickSprite.transform.position = startingJoystickSpot + moveDir;
-					}
-					else{
-						if (Input.touchCount<3){
-							startingTouchPoint = ConvertFingerPosition(finger.position);
-							spearFinger = finger.fingerId;
+						if (distFromStick<joystickMaxStartDist){
+							joystickFinger = finger.fingerId;
+							moveDir = Vector2.ClampMagnitude(ConvertFingerPosition(finger.position) - startingJoystickSpot,joystickMaxMoveDistance);
+							controlStickSprite.transform.position = startingJoystickSpot + moveDir;
 						}
-					}
-				}
-				else if (finger.phase == TouchPhase.Moved){ //while your finger is moving on the screen (joystick only)
-					if (finger.fingerId == joystickFinger){ //move the joystick
-						moveDir = Vector2.ClampMagnitude(ConvertFingerPosition(finger.position) - startingJoystickSpot,joystickMaxMoveDistance);
-						controlStickSprite.transform.position = startingJoystickSpot + moveDir;
-						DoPhysics();
-					}
-				}
-				else if (finger.phase == TouchPhase.Ended){ //when your finger comes off the screen
-					if (finger.fingerId == joystickFinger){ //release the joystick
-						controlStickSprite.transform.position = transform.position;
-						joystickFinger = -1;
-					}
-					else if (finger.fingerId == spearFinger ){ //use the spear
-						spearFinger = -2;
-						releaseTouchPoint = ConvertFingerPosition(finger.position);
-						attackDir = releaseTouchPoint - startingTouchPoint;
-						releaseDist = Vector2.Distance (releaseTouchPoint,startingTouchPoint);
-						if (!spearScript.throwing){
-							if ( releaseDist > distToThrow){ //throw the spear
-								StartCoroutine(jaiScript.ThrowSpear(attackDir.normalized));
+						else{
+							if (Input.touchCount<3){
+								startingTouchPoint = ConvertFingerPosition(finger.position);
+								spearFinger = finger.fingerId;
 							}
 						}
+					}
+					else if (finger.phase == TouchPhase.Moved){ //while your finger is moving on the screen (joystick only)
+						if (finger.fingerId == joystickFinger){ //move the joystick
+							moveDir = Vector2.ClampMagnitude(ConvertFingerPosition(finger.position) - startingJoystickSpot,joystickMaxMoveDistance);
+							controlStickSprite.transform.position = startingJoystickSpot + moveDir;
+							DoPhysics();
+						}
+					}
+					else if (finger.phase == TouchPhase.Ended){ //when your finger comes off the screen
+						if (finger.fingerId == joystickFinger){ //release the joystick
+							controlStickSprite.transform.position = transform.position;
+							joystickFinger = -1;
+						}
+						else if (finger.fingerId == spearFinger ){ //use the spear
+							spearFinger = -2;
+							releaseTouchPoint = ConvertFingerPosition(finger.position);
+							attackDir = releaseTouchPoint - startingTouchPoint;
+							releaseDist = Vector2.Distance (releaseTouchPoint,startingTouchPoint);
+							if (!spearScript.throwing){
+								if ( releaseDist > distToThrow){ //throw the spear
+									StartCoroutine(jaiScript.ThrowSpear(attackDir.normalized));
+								}
+							}
+						}
+					}
+				}
+				else{
+					if (finger.phase == TouchPhase.Began){
+						StartCoroutine (jaiScript.StabTheBeast());
 					}
 				}
 			}

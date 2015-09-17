@@ -20,11 +20,13 @@ public class Bat : MonoBehaviour {
 	public float angleStep;
 	public float angleTilt;
 	public float speedPhaseShift;
+	public float erraticDistance;
 
 	public Vector3[] targets;
 	public Vector3 batPos;
 	public Vector3 orbVec;
 	public Vector3 targetSpot;
+	public Vector3 crossDir;
 
 	public Vector2 moveDir;
 
@@ -48,6 +50,7 @@ public class Bat : MonoBehaviour {
 		orbitSpeed = 2.8f;
 		frameDelay = 4;
 		windowLength = 20;
+		erraticDistance = 1f;
 		orbitXDistances = new float[]{
 			2f, 3f, 4f
 		};
