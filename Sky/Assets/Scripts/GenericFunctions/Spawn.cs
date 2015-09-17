@@ -25,6 +25,11 @@ namespace GenericFunctions{
 			yield return null;
 		}
 
+		public static IEnumerator EndGame(){
+			yield return new WaitForSeconds (1.5f);
+			UnityEditor.EditorApplication.isPlaying = false;
+		}
+
 	}
 
 }

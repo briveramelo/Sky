@@ -116,7 +116,7 @@ public class Basket : MonoBehaviour {
 		if (balloonCount<1){
 			rigbod.gravityScale = 1;
 			basketCollider.enabled = false;
-			StartCoroutine (EndGame());
+			StartCoroutine (Spawn.EndGame());
 		}
 		int qf = 0;
 		foreach (Balloon balloonScript in balloonScripts){
@@ -174,8 +174,5 @@ public class Basket : MonoBehaviour {
 		yield return null;
 	}
 
-	public IEnumerator EndGame(){
-		yield return new WaitForSeconds (1.5f);
-		UnityEditor.EditorApplication.isPlaying = false;
-	}
+
 }
