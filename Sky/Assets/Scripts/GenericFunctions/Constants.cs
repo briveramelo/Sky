@@ -42,7 +42,7 @@ namespace GenericFunctions{
 		public static int birdOfParadise = 11;
 
 		public static Vector3 balloonOffset = new Vector3 (0.1f, 2.7f, 0f);
-		public static Vector3 tentacleTipOffset = new Vector3 (-0f, 1.25f, 0f);
+		public static Vector3 tentacleTipOffset = new Vector3 (0f, 1.25f, 0f);
 		public static Vector3 tentacleHomeSpot = new Vector3 (0f, -6.75f, 0f);
 		public static float time2Destroy = 2f;
 

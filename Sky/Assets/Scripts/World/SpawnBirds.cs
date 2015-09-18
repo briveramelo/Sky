@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
+using GenericFunctions;
 
 public class SpawnBirds : MonoBehaviour {
 
@@ -9,7 +10,7 @@ public class SpawnBirds : MonoBehaviour {
 
 	public string[] birdNames; //file location so you can load the right bird
 
-	[Range(0,9)]
+	[Range(0,10)]
 	public int birdType;
 
 	public bool spawnBirds;
@@ -34,7 +35,13 @@ public class SpawnBirds : MonoBehaviour {
 	}
 
 	public IEnumerator SpawnNextBird(int birdTypeInput){
-		bird = Instantiate (Resources.Load (birdNames [birdTypeInput]), new Vector3(/*Mathf.Sign (Random.insideUnitCircle.x) * 9f*/-9f,Random.Range (-4.5f,4.5f),0f), Quaternion.identity) as GameObject;
+		float xSpot = -9f;
+		float ySpot = Random.Range (-4.5f, 4.5f);
+		if (birdTypeInput == 6){
+			xSpot = Constants.tentacleHomeSpot.x;
+			ySpot = Constants.tentacleHomeSpot.y;
+		}
+		bird = Instantiate (Resources.Load (birdNames [birdTypeInput]), new Vector3(/*Mathf.Sign (Random.insideUnitCircle.x) * 9f*/xSpot,ySpot,0f), Quaternion.identity) as GameObject;
 		//birdsSpawned++;
 		yield return null;
 	}

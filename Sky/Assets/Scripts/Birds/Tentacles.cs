@@ -17,6 +17,8 @@ public class Tentacles : MonoBehaviour {
 
 	public Rigidbody2D basketBody;
 	public Rigidbody2D rigbod;
+
+	public Vector3 jaiCorrection;
 	
 	public float descendSpeed;
 	public float attackSpeed;
@@ -40,6 +42,7 @@ public class Tentacles : MonoBehaviour {
 		attackSpeed = 1.5f;
 		resetSpeed = 1f;
 		boundaryHeight = -2f;
+		jaiCorrection = new Vector3 (0f,-.3f,0f);
 		homeHeight = Constants.tentacleHomeSpot.y + Constants.tentacleTipOffset.y;
 		deathHeight = homeHeight - 1.2f;
 		rigbod = GetComponent<Rigidbody2D> ();
@@ -77,7 +80,7 @@ public class Tentacles : MonoBehaviour {
 		attacking = true;
 		resetting = false;
 		while (!holding && attacking && !resetting){
-			rigbod.velocity = (jaiTransform.position - (transform.position + Constants.tentacleTipOffset)).normalized * attackSpeed;
+			rigbod.velocity = (jaiTransform.position + jaiCorrection - (transform.position + Constants.tentacleTipOffset)).normalized * attackSpeed;
 			FaceTowardYou();
 			yield return null;
 		}
