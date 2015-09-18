@@ -6,6 +6,8 @@ public class Joyfulstick : MonoBehaviour {
 	
 	public Jai jaiScript;
 	public Spear spearScript;
+	public Collider2D basketCollider;
+	public Collider2D worldBoundsCollider;
 
 	public Rigidbody2D basketBody;
 
@@ -42,6 +44,8 @@ public class Joyfulstick : MonoBehaviour {
 	void Awake () {
 		basketBody = GameObject.Find ("BalloonBasket").GetComponent<Rigidbody2D>();
 		controlStickSprite = GameObject.Find ("ControlStick").GetComponent<SpriteRenderer>();
+		basketCollider = GameObject.Find ("Basket").GetComponent<BoxCollider2D> ();
+		worldBoundsCollider = GameObject.Find ("WorldBounds").GetComponent<EdgeCollider2D> ();
 		jaiScript = GameObject.Find ("Jai").GetComponent<Jai> ();
 		maxBalloonSpeed = 3f;//3f;
 		maxVectorSpeed = Mathf.Sqrt (maxBalloonSpeed);
@@ -82,6 +86,7 @@ public class Joyfulstick : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		Physics2D.IgnoreCollision (basketCollider, worldBoundsCollider, (basketBody.velocity.y > 0||beingHeld));
 		velVector = basketBody.velocity;
 		speed = velVector.magnitude;
 

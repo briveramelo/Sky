@@ -93,39 +93,32 @@ public class Spear : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.layer == 16) { //if it hits a bird
-			StartCoroutine(HurtBird(col,rigbod.velocity));
-		}
-		else if (col.gameObject.layer == 19){ //tentacle
-			StartCoroutine (HurtTentacle(col,rigbod.velocity));
+		if (col.gameObject.layer == Constants.birdLayer || col.gameObject.layer == Constants.tentacleLayer) { //if it hits a bird
+			StartCoroutine (HurtThings(col,rigbod.velocity));
 		}
 	}
 
-	void Bounce(){
+	public IEnumerator HurtThings(Collider2D col, Vector2 gutVel){
+		bool hitIt = true;
 
-	}
+		GetHurt getHurtScript = col.GetComponent<GetHurt> ();
+		foreach (Collider2D spearTip in getHurtScript.spearColliders){
+			if (spearTipCollider == spearTip){
+				hitIt = false;
+				break;
+			}
+		}
 
-	public IEnumerator HurtBird(Collider2D birdCol, Vector2 gutVel){
-		GetHurt getHurtScript = birdCol.GetComponent<GetHurt> ();
-		StartCoroutine (getHurtScript.TakeDamage (gutVel,spearTipCollider));
-		if (getHurtScript.health>0){ //bounce on hurting
-			rigbod.velocity = 0.2f * Vector2.Reflect(gutVel,(transform.position-birdCol.bounds.ClosestPoint (transform.position)).normalized);
+		if (hitIt){
+			StartCoroutine (getHurtScript.TakeDamage(gutVel,spearTipCollider, true));
+			if (getHurtScript.health>0){ //bounce on hurting
+				rigbod.velocity = 0.2f * Vector2.Reflect(gutVel,(transform.position-col.bounds.ClosestPoint (transform.position)).normalized);
+			}
+			else{ //lose 20% speed on killing
+				rigbod.velocity = gutVel * .8f;
+			}
 		}
-		else{ //lose 20% speed on killing
-			rigbod.velocity = gutVel * .8f;
-		}
-		yield return null;
-	}
-
-	public IEnumerator HurtTentacle(Collider2D tentaCol, Vector2 gutVel){
-		Tentacles tentaclesScript = tentaCol.GetComponent<Tentacles> ();
-		StartCoroutine (tentaclesScript.TakeDamage (gutVel,spearTipCollider));
-		if (tentaclesScript.health>0){ //bounce on hurting
-			rigbod.velocity = 0.2f * Vector2.Reflect(gutVel,(transform.position-tentaCol.bounds.ClosestPoint (transform.position)).normalized);
-		}
-		else{ //lose 20% speed on killing
-			rigbod.velocity = gutVel * .8f;
-		}
+	
 		yield return null;
 	}
 

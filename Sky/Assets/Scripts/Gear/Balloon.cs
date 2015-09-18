@@ -36,7 +36,7 @@ public class Balloon : MonoBehaviour {
 			balloonNumber = 2;
 		}
 		if (!transform.parent){
-			gameObject.layer = 18;
+			gameObject.layer = Constants.balloonFloatingLayer;
 			moving = true;
 			transform.localScale = Constants.Pixel625(true);
 			StartCoroutine (MoveUp ());
@@ -60,7 +60,7 @@ public class Balloon : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (!popping && (col.gameObject.layer == 16)){//bird layer pops free balloon
+		if (!popping && (col.gameObject.layer == Constants.birdLayer)){//bird layer pops free balloon
 			popping = true;
 			if (!transform.parent){
 				StartCoroutine(LocalPop());

@@ -41,7 +41,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 191300}
-  m_Mass: 9.99999975e-05
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -142,13 +142,29 @@ MonoBehaviour:
   vel: 0
   orbAng: 0
   targetAng: 0
-  orbitSpeeds: []
-  orbitDistances: []
+  dist2Spot: 0
+  distanceDelta: 0
+  curvature: 0
+  orbitSpeed: 0
+  orbitXDistances: []
+  orbitYDistances: []
+  stepDistance: 0
+  angleStep: 0
+  angleTilt: 0
+  speedPhaseShift: 0
+  erraticDistance: 0
+  targets: []
   batPos: {x: 0, y: 0, z: 0}
   orbVec: {x: 0, y: 0, z: 0}
   targetSpot: {x: 0, y: 0, z: 0}
+  crossDir: {x: 0, y: 0, z: 0}
   moveDir: {x: 0, y: 0}
-  batLayer: 0
+  batXLayer: 0
+  batYLayer: 0
+  frameDelay: 0
+  windowLength: 0
+  i: 0
+  used: 0
   startingOff: 0
   clockwise: 0
   orbiting: 0
@@ -192,6 +208,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalScale.y
       value: 6.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

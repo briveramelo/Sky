@@ -160,7 +160,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 1
-  m_Offset: {x: -10, y: 0}
+  m_Offset: {x: -9.25, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 10}
 --- !u!61 &6143208
@@ -173,7 +173,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 1
-  m_Offset: {x: 10, y: 0}
+  m_Offset: {x: 9.25, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 10}
 --- !u!61 &6147620
@@ -186,7 +186,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 1
-  m_Offset: {x: 0, y: 5}
+  m_Offset: {x: 0, y: 5.5}
   serializedVersion: 2
   m_Size: {x: 20, y: 1}
 --- !u!61 &6175486
@@ -199,7 +199,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 1
-  m_Offset: {x: 0, y: -5}
+  m_Offset: {x: 0, y: -5.5}
   serializedVersion: 2
   m_Size: {x: 20, y: 1}
 --- !u!68 &6814216
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bird: {fileID: 0}
   birdNames: []
-  birdType: 0
+  birdType: 7
   spawnBirds: 0
 --- !u!249 &24919712
 AreaEffector2D:
@@ -257,7 +257,7 @@ AreaEffector2D:
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
-    m_Bits: 4294852552
+    m_Bits: 4293017544
   m_UseGlobalAngle: 0
   m_ForceAngle: 270
   m_ForceMagnitude: 6
@@ -276,7 +276,7 @@ AreaEffector2D:
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
-    m_Bits: 4294852552
+    m_Bits: 4293017544
   m_UseGlobalAngle: 0
   m_ForceAngle: 90
   m_ForceMagnitude: 6
@@ -295,7 +295,7 @@ AreaEffector2D:
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
-    m_Bits: 4294852552
+    m_Bits: 4293017544
   m_UseGlobalAngle: 0
   m_ForceAngle: 180
   m_ForceMagnitude: 6
@@ -314,7 +314,7 @@ AreaEffector2D:
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
-    m_Bits: 4294852552
+    m_Bits: 4293017544
   m_UseGlobalAngle: 0
   m_ForceAngle: 0
   m_ForceMagnitude: 6

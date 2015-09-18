@@ -11,6 +11,7 @@ public class GetHurt : MonoBehaviour {
 	public Duck duckScript;
 	public Waves wavesScript;
 	public TimeEffects timeEffectsScript;
+	public Tentacles tentaclesScript;
 
 	public CircleCollider2D[] spearColliders;
 	public Collider2D birdCollider;
@@ -35,33 +36,34 @@ public class GetHurt : MonoBehaviour {
 		duckLeaderScript = GetComponent<DuckLeader> ();
 		duckScript = GetComponent<Duck> ();
 		birdCollider = GetComponent<Collider2D> ();
+		tentaclesScript = GetComponent<Tentacles> ();
 
 		gutSplosionParentString = "Prefabs/GutSplosions/GutSplosionParent";
 		if (GetComponent<Pigeon>()){
-			birdType = 0;
+			birdType = Constants.pigeon;
 			killGutValue = 3;
 		}
 		else if (GetComponent<Duck> ()) {
-			birdType = 1;
+			birdType = Constants.duck;
 			killGutValue = 4;
 		} 
 		else if (GetComponent<DuckLeader>()){
-			birdType = 2;
+			birdType = Constants.duckLeader;
 			killGutValue = 7;
 		}
 		else if (GetComponent<Albatross>()){
-			birdType = 3;
+			birdType = Constants.albatross;
 			health = 7;
 			damageGutValue = 4;
 			killGutValue = 20;
 		}
 		else if (GetComponent<BabyCrow> ()) {
-			birdType = 4;
+			birdType = Constants.babyCrow;
 			killGutValue = 2;
 			summonCrows = true;
 		}
 		else if (GetComponent<Crow>()){
-			birdType = 5;
+			birdType = Constants.crow;
 			killGutValue = 5;
 		}
 //		else if (GetComponent<Seagull>()){
@@ -69,29 +71,29 @@ public class GetHurt : MonoBehaviour {
 //			killGutValue = 4;
 //		}
 		else if (GetComponent<Tentacles>()){
-			birdType = 7;
+			birdType = Constants.tentacles;
 			health = 25;
 			damageGutValue = 4;
 			killGutValue = 80;
 		}
 		else if (GetComponent<Pelican>()){
-			birdType = 8;
+			birdType = Constants.pelican;
 			health = 3;
 			damageGutValue = 4;
 			killGutValue = 15;
 		}
 		else if (GetComponent<Bat>()){
-			birdType = 9;
+			birdType = Constants.bat;
 			killGutValue = 3;
 		}
 		else if (GetComponent<Eagle>()){
-			birdType = 10;
+			birdType = Constants.eagle;
 			health = 5;
 			damageGutValue = 4;
 			killGutValue = 80;
 		}
 		else if (GetComponent<BirdOfParadise>()){
-			birdType = 11;
+			birdType = Constants.birdOfParadise;
 			killGutValue = 40;
 			spawnBalloon = true;
 		}
@@ -99,50 +101,55 @@ public class GetHurt : MonoBehaviour {
 		basketScript = GameObject.Find ("BalloonBasket").GetComponent<Basket> ();
 	}
 	
-	public IEnumerator TakeDamage(Vector2 gutDirection, CircleCollider2D spearCollider){
-		bool invincible = false;
-		int i = 0;
-		for (i=0;i<spearColliders.Length;i++){
-			if (spearCollider==spearColliders[i]){
-				invincible = true;
-				break;
-			}
+	public IEnumerator TakeDamage(Vector2 gutDirection, CircleCollider2D spearCollider, bool hurtHealth){
+		Vector3 spawnSpot = transform.position;
+
+		if (hurtHealth){
+			health--;
+			spearColliders[health] = spearCollider;
 		}
 
-		if (!invincible){
-			health--;
-
-			hitPoint = birdCollider.bounds.ClosestPoint(spearCollider.bounds.ClosestPoint(transform.position));
-			if (birdType==3 && gutDirection.y>0 && hitPoint.y<transform.position.y && hitPoint.x>birdCollider.bounds.min.x && hitPoint.x<birdCollider.bounds.max.x){ //kill albatross with a tactical shot to the underbelly
+		if (birdType == Constants.tentacles && !hurtHealth){
+			spawnSpot = transform.position + Constants.tentacleTipOffset;
+			gutDirection = new Vector3 (Mathf.Abs (Random.insideUnitCircle.x), Mathf.Abs (Random.insideUnitCircle.y),0f).normalized;
+		}
+		else if (birdType == Constants.tentacles && hurtHealth){
+			spawnSpot = birdCollider.bounds.ClosestPoint(spearCollider.transform.position);
+		}
+		else if (birdType == Constants.albatross){
+			hitPoint = birdCollider.bounds.ClosestPoint(spearCollider.transform.position);
+			if (gutDirection.y>0 && hitPoint.y<transform.position.y && hitPoint.x>birdCollider.bounds.min.x && hitPoint.x<birdCollider.bounds.max.x){ //kill albatross with a tactical shot to the underbelly
 				health = 0;
 				//super kill!
 			}
+		}
+		guts = Instantiate (Resources.Load (gutSplosionParentString), spawnSpot, Quaternion.identity) as GameObject;
 
-			spearColliders[health] = spearCollider;
-			guts = Instantiate (Resources.Load (gutSplosionParentString), transform.position, Quaternion.identity) as GameObject;
-
-			if (health>0){
-				StartCoroutine (guts.GetComponent<GutSplosion> ().GenerateGuts (damageGutValue, gutDirection));
+		if (health>0){
+			StartCoroutine (guts.GetComponent<GutSplosion> ().GenerateGuts (damageGutValue, gutDirection));
+		}
+		else{
+			StartCoroutine (guts.GetComponent<GutSplosion> ().GenerateGuts (killGutValue, gutDirection));
+			StartCoroutine (timeEffectsScript.SlowTime(.1f,.5f));
+			if (summonCrows){
+				StartCoroutine (summonTheCrowsScript.Murder());
 			}
-			else{
-				StartCoroutine (guts.GetComponent<GutSplosion> ().GenerateGuts (killGutValue, gutDirection));
-				StartCoroutine (timeEffectsScript.SlowTime(.1f,.5f));
-				if (summonCrows){
-					StartCoroutine (summonTheCrowsScript.Murder());
-				}
-				else if (spawnBalloon){
-					StartCoroutine (Spawn.NewBalloon());
-				}
-				else if (duckLeaderScript){
-					StartCoroutine (duckLeaderScript.BreakTheV());
-				}
-				else if (duckScript){
-					if (duckScript.duckLeaderScript){
-						StartCoroutine(duckScript.duckLeaderScript.ReShuffle(duckScript.formationNumber));
-					}
-				}
-				Destroy(gameObject);
+			else if (spawnBalloon){
+				StartCoroutine (Spawn.NewBalloon());
 			}
+			else if (duckLeaderScript){
+				StartCoroutine (duckLeaderScript.BreakTheV());
+			}
+			else if (duckScript){
+				if (duckScript.duckLeaderScript){
+					StartCoroutine(duckScript.duckLeaderScript.ReShuffle(duckScript.formationNumber));
+				}
+			}
+			else if (tentaclesScript){
+				StartCoroutine(tentaclesScript.StopThemAll());
+				StartCoroutine(tentaclesScript.tentaclesSensorScript.StopThem());
+			}
+			Destroy(gameObject);
 		}
 		yield return null;
 	}

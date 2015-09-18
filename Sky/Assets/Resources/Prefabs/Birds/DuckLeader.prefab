@@ -331,7 +331,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199352}
-  m_Mass: 9.99999975e-05
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -660,13 +660,16 @@ MonoBehaviour:
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
   wavesScript: {fileID: 0}
+  timeEffectsScript: {fileID: 0}
+  spearColliders: []
+  birdCollider: {fileID: 0}
   gutSplosionParentString: 
+  hitPoint: {x: 0, y: 0}
   health: 0
   killGutValue: 0
   damageGutValue: 0
   birdType: 0
   summonCrows: 0
-  invincible: 0
   spawnBalloon: 0
 --- !u!114 &11436062
 MonoBehaviour:
@@ -802,13 +805,16 @@ MonoBehaviour:
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
   wavesScript: {fileID: 0}
+  timeEffectsScript: {fileID: 0}
+  spearColliders: []
+  birdCollider: {fileID: 0}
   gutSplosionParentString: 
+  hitPoint: {x: 0, y: 0}
   health: 0
   killGutValue: 0
   damageGutValue: 0
   birdType: 0
   summonCrows: 0
-  invincible: 0
   spawnBalloon: 0
 --- !u!114 &11462088
 MonoBehaviour:
@@ -868,13 +874,16 @@ MonoBehaviour:
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
   wavesScript: {fileID: 0}
+  timeEffectsScript: {fileID: 0}
+  spearColliders: []
+  birdCollider: {fileID: 0}
   gutSplosionParentString: 
+  hitPoint: {x: 0, y: 0}
   health: 0
   killGutValue: 0
   damageGutValue: 0
   birdType: 0
   summonCrows: 0
-  invincible: 0
   spawnBalloon: 0
 --- !u!114 &11464516
 MonoBehaviour:
@@ -893,13 +902,16 @@ MonoBehaviour:
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
   wavesScript: {fileID: 0}
+  timeEffectsScript: {fileID: 0}
+  spearColliders: []
+  birdCollider: {fileID: 0}
   gutSplosionParentString: 
+  hitPoint: {x: 0, y: 0}
   health: 0
   killGutValue: 0
   damageGutValue: 0
   birdType: 0
   summonCrows: 0
-  invincible: 0
   spawnBalloon: 0
 --- !u!114 &11475466
 MonoBehaviour:
@@ -918,13 +930,16 @@ MonoBehaviour:
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
   wavesScript: {fileID: 0}
+  timeEffectsScript: {fileID: 0}
+  spearColliders: []
+  birdCollider: {fileID: 0}
   gutSplosionParentString: 
+  hitPoint: {x: 0, y: 0}
   health: 0
   killGutValue: 0
   damageGutValue: 0
   birdType: 0
   summonCrows: 0
-  invincible: 0
   spawnBalloon: 0
 --- !u!114 &11480506
 MonoBehaviour:
@@ -943,13 +958,16 @@ MonoBehaviour:
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
   wavesScript: {fileID: 0}
+  timeEffectsScript: {fileID: 0}
+  spearColliders: []
+  birdCollider: {fileID: 0}
   gutSplosionParentString: 
+  hitPoint: {x: 0, y: 0}
   health: 0
   killGutValue: 0
   damageGutValue: 0
   birdType: 0
   summonCrows: 0
-  invincible: 0
   spawnBalloon: 0
 --- !u!114 &11480714
 MonoBehaviour:
@@ -968,13 +986,16 @@ MonoBehaviour:
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
   wavesScript: {fileID: 0}
+  timeEffectsScript: {fileID: 0}
+  spearColliders: []
+  birdCollider: {fileID: 0}
   gutSplosionParentString: 
+  hitPoint: {x: 0, y: 0}
   health: 0
   killGutValue: 0
   damageGutValue: 0
   birdType: 0
   summonCrows: 0
-  invincible: 0
   spawnBalloon: 0
 --- !u!114 &11482846
 MonoBehaviour:
@@ -1210,7 +1231,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 199352}

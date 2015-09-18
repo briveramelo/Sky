@@ -16,8 +16,8 @@ public class SpawnBirds : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-									 //		0       1          2     	    3        	 4    		  5  	  6			7	    8			  9 
-		birdNames =  new string[]{		"Pigeon", "Duck2", "DuckLeader", "Albatross", "BabyCrow","Murder", "Pelican", "Bat", "Eagle", "BirdOfParadise"};
+									 //		0       1          2     	    3        	 4    		  5  	   		6			7	    8		9			10 
+		birdNames =  new string[]{		"Pigeon", "Duck2", "DuckLeader", "Albatross", "BabyCrow","Murder", "TentacleSensor", "Pelican", "Bat", "Eagle", "BirdOfParadise"};
 		int i = 0;
 		foreach (string birdName in birdNames){
 			birdNames[i] = "Prefabs/Birds/"+birdName;

@@ -7,6 +7,7 @@ public class Basket : MonoBehaviour {
 	public Balloon[] balloonScripts;
 	public ScreenShake screenShakeScript;
 	public TimeEffects timeEffectsScript;
+	public Joyfulstick joyfulstickScript;
 
 	public CircleCollider2D[] balloonColliders;
 	public GameObject[] balloons;
@@ -14,7 +15,7 @@ public class Basket : MonoBehaviour {
 	public SpriteRenderer[] balloonSprites;
 
 	public Rigidbody2D rigbod;
-	public BoxCollider2D basketCollider;
+	public BoxCollider2D[] basketColliders;
 	public Transform jaiTransform;
 
 	public AudioSource popNoise; 
@@ -39,10 +40,11 @@ public class Basket : MonoBehaviour {
 		distanceAway = new float[3];
 		screenShakeScript = GameObject.Find ("mainCam").GetComponent<ScreenShake> ();
 		timeEffectsScript = GameObject.Find ("Dummy").GetComponent<TimeEffects> ();
+		joyfulstickScript = GameObject.Find ("StickHole").GetComponent<Joyfulstick> ();
 		popNoise = GetComponent<AudioSource> ();
 		rigbod = GetComponent<Rigidbody2D> ();
 		jaiTransform = GameObject.Find ("Jai").transform;
-		basketCollider = GameObject.Find ("Basket").GetComponent<BoxCollider2D> ();
+		basketColliders = GameObject.Find ("Basket").GetComponents<BoxCollider2D> ();
 		balloons = new GameObject[]{
 			GameObject.Find("PinkBalloon"),
 			GameObject.Find("TealBalloon"),
@@ -89,10 +91,11 @@ public class Basket : MonoBehaviour {
 	public IEnumerator BeginPopping(int balloonNumber){
 		if (!popping){
 			popping = true;
-			StartCoroutine(PopBalloon(balloonNumber));
-			StartCoroutine(Invincibility());
+			StartCoroutine (PopBalloon(balloonNumber));
+			StartCoroutine (Invincibility());
+			StartCoroutine (CheckForEndTimes());
 			StartCoroutine (timeEffectsScript.SlowTime(.5f,.75f));
-			StartCoroutine(screenShakeScript.CameraShake());
+			StartCoroutine (screenShakeScript.CameraShake());
 		}
 		yield return null;
 	}
@@ -100,7 +103,9 @@ public class Basket : MonoBehaviour {
 	public IEnumerator PopBalloon(int i){
 		popNoise.Play ();
 		balloonAnimators[i].SetInteger("AnimState",1);
-		rigbod.AddForce (Vector2.down * dropForce);
+		if (!joyfulstickScript.beingHeld){
+			rigbod.AddForce (Vector2.down * dropForce);
+		}
 		Destroy (balloons[i].transform.GetChild(0).gameObject);
 		popped [i] = true;
 		balloonCount--;
@@ -113,11 +118,6 @@ public class Basket : MonoBehaviour {
 	}
 	
 	public IEnumerator Invincibility(){
-		if (balloonCount<1){
-			rigbod.gravityScale = 1;
-			basketCollider.enabled = false;
-			StartCoroutine (Spawn.EndGame());
-		}
 		int qf = 0;
 		foreach (Balloon balloonScript in balloonScripts){
 			if (!popped[qf]){
@@ -126,9 +126,9 @@ public class Basket : MonoBehaviour {
 			}
 			qf++;
 		}
-		Physics2D.IgnoreLayerCollision (16, 17, true);//ignore birds and balloons for a second;
+		Physics2D.IgnoreLayerCollision (Constants.birdLayer, Constants.balloonLayer, true);//ignore birds and balloons for a second;
 		yield return new WaitForSeconds(1.5f);
-		Physics2D.IgnoreLayerCollision (16, 17, false); //resume
+		Physics2D.IgnoreLayerCollision (Constants.birdLayer, Constants.balloonLayer, false); //resume
 		foreach (Balloon balloonScript in balloonScripts){
 			if (balloonScript){
 				balloonScript.balloonCollider.enabled = true;
@@ -137,9 +137,19 @@ public class Basket : MonoBehaviour {
 		}
 		popping = false;
 	}
-	
+
+	public IEnumerator CheckForEndTimes(){
+		if (balloonCount<1){
+			rigbod.gravityScale = 1;
+			basketColliders[0].enabled = false;
+			basketColliders[1].enabled = false;
+			StartCoroutine (Spawn.EndGame());
+		}
+		yield return null;
+	}
+
 	void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.layer == 18){
+		if (col.gameObject.layer == Constants.balloonFloatingLayer){
 			StartCoroutine (CollectNewBalloon(col.gameObject));
 		}
 	}
@@ -169,7 +179,7 @@ public class Basket : MonoBehaviour {
 			balloons[balloonNumber].transform.position = jaiTransform.position + relativeBalloonPositions[balloonNumber];
 			popped[balloonNumber] = false;
 			balloonCount++;
-			balloons[balloonNumber].layer = 17;
+			balloons[balloonNumber].layer = Constants.balloonLayer;
 		}
 		yield return null;
 	}

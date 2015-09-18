@@ -57,11 +57,11 @@ public class Jai : MonoBehaviour {
 	public IEnumerator StabTheBeast(){
 		if (!stabbing){
 			stabbing = true;
-			jaiAnimator.SetInteger("AnimState",5);
+			//jaiAnimator.SetInteger("AnimState",5);
 			StartCoroutine (tentaclesScript.TakeStabs()); //stab the tentacle!
 			yield return new WaitForSeconds (Constants.timeToStab);
 			stabbing = false;
-			jaiAnimator.SetInteger("AnimState",0);
+			//jaiAnimator.SetInteger("AnimState",0);
 		}
 		yield return null;
 	}

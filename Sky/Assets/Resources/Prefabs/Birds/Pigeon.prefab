@@ -43,7 +43,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 176178}
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: .0500000007
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -129,13 +129,16 @@ MonoBehaviour:
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
   wavesScript: {fileID: 0}
+  timeEffectsScript: {fileID: 0}
+  spearColliders: []
+  birdCollider: {fileID: 0}
   gutSplosionParentString: 
+  hitPoint: {x: 0, y: 0}
   health: 0
   killGutValue: 0
   damageGutValue: 0
   birdType: 0
   summonCrows: 0
-  invincible: 0
   spawnBalloon: 0
 --- !u!212 &21216788
 SpriteRenderer:
@@ -177,6 +180,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalScale.y
       value: 6.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_AngularDrag
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

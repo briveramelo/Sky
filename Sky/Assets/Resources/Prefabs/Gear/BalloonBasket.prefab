@@ -169,7 +169,8 @@ GameObject:
   - 114: {fileID: 11493722}
   - 95: {fileID: 9539358}
   - 114: {fileID: 11435488}
-  m_Layer: 0
+  - 58: {fileID: 5889772}
+  m_Layer: 20
   m_Name: Jai
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +269,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 191976}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .0799999982, y: -.140000001, z: 0}
+  m_LocalPosition: {x: .0823999941, y: -.13059999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 437298}
@@ -280,7 +281,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 103322}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .0700000003, y: .344999999, z: 0}
+  m_LocalPosition: {x: .0723999962, y: .354400009, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 497194}
@@ -306,7 +307,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 128170}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: .360000014, y: 1.15999997, z: 0}
   m_LocalScale: {x: 6.25, y: 6.25, z: 1}
   m_Children:
   - {fileID: 437726}
@@ -324,7 +325,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 198938}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .129999995, y: .254999995, z: 0}
+  m_LocalPosition: {x: .132399991, y: .264400005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 480068}
@@ -337,7 +338,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 191382}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .0349999964, y: 0, z: 0}
+  m_LocalPosition: {x: .0350000039, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 419996}
@@ -350,7 +351,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182764}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .0799999982, y: -.119999997, z: 0}
+  m_LocalPosition: {x: .0823999941, y: -.110599995, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 441732}
@@ -363,7 +364,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 127686}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .0199999996, y: .254999995, z: 0}
+  m_LocalPosition: {x: .0223999973, y: .264400005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 405032}
@@ -376,7 +377,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182012}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .0799999982, y: -.209999993, z: 0}
+  m_LocalPosition: {x: .0823999941, y: -.200599983, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 437298}
@@ -498,6 +499,19 @@ CircleCollider2D:
   m_Offset: {x: .00499999989, y: .00999999978}
   serializedVersion: 2
   m_Radius: .0549999997
+--- !u!58 &5889772
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182764}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: -.100000001}
+  serializedVersion: 2
+  m_Radius: .0299999993
 --- !u!61 &6144234
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -1004,12 +1018,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   balloonScripts: []
   screenShakeScript: {fileID: 0}
+  timeEffectsScript: {fileID: 0}
+  joyfulstickScript: {fileID: 0}
   balloonColliders: []
   balloons: []
   balloonAnimators: []
   balloonSprites: []
   rigbod: {fileID: 0}
-  basketCollider: {fileID: 0}
+  basketColliders: []
   jaiTransform: {fileID: 0}
   popNoise: {fileID: 0}
   relativeBalloonPositions: []
@@ -1139,13 +1155,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spearScript: {fileID: 0}
+  tentaclesScript: {fileID: 0}
   jaiAnimator: {fileID: 0}
-  fixVector: {x: 0, y: 0, z: 0}
   throwForce: 0
   throws: 0
   animInt: 0
   highLow: 0
   throwing: 0
+  stabbing: 0
 --- !u!212 &21209194
 SpriteRenderer:
   m_ObjectHideFlags: 1

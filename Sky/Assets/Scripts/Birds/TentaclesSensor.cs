@@ -1,21 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GenericFunctions;
 
 public class TentaclesSensor : MonoBehaviour {
 
+	public GameObject tentacles;
 	public Tentacles tentaclesScript;
-
-	// Use this for initialization
+	
 	void Awake () {
-		tentaclesScript = transform.parent.GetComponent<Tentacles> ();
+		tentacles = Instantiate (Resources.Load ("Prefabs/Birds/Tentacles"), Constants.tentacleHomeSpot, Quaternion.identity) as GameObject;
+		tentaclesScript = tentacles.GetComponent<Tentacles> ();
+		tentaclesScript.tentaclesSensorScript = this;
 	}
 	
-	void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.layer==13){ //rise against the basket
-			StartCoroutine (tentaclesScript.Surface(col.gameObject.layer,-1));
+	void OnTriggerStay2D(Collider2D enter){
+		if (!tentaclesScript.holding && !tentaclesScript.attacking && !tentaclesScript.hurt){
+			if (enter.gameObject.layer==Constants.basketLayer){ //rise against the basket
+				StartCoroutine (tentaclesScript.GoForTheKill());
+			}
 		}
-		else if (col.gameObject.layer==16){
-			StartCoroutine (tentaclesScript.Surface(col.gameObject.layer,col.gameObject.GetComponent<GetHurt>().birdType));
+	}
+
+	void OnTriggerExit2D(Collider2D exit){
+		if (tentaclesScript.attacking){
+			if (exit.gameObject.layer==Constants.basketLayer){ //rise against the basket
+				StartCoroutine (tentaclesScript.ResetPosition());
+			}
 		}
+	}
+
+	public IEnumerator StopThem(){
+		StopAllCoroutines ();
+		yield return null;
 	}
 }
