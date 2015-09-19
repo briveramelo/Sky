@@ -4,6 +4,13 @@ using System.Collections;
 namespace GenericFunctions{
 	public static class Constants{
 
+		public static string tentaclePrefab = "Prefabs/Birds/Tentacles";
+		public static string pooSmearPrefab = "Prefabs/Gear/PooSmear";
+		public static string pooNuggetPrefab = "Prefabs/Gear/PooNugget";
+		public static string spearPrefab = "Prefabs/Gear/Spear";
+		public static string murderPrefab = "Prefabs/Birds/Murder";
+		public static string gutSplosionParentPrefab = "Prefabs/GutSplosions/GutSplosionParent";
+
 		public static Vector3 Pixel3125(bool forward){
 			return forward ? new Vector3 (3.125f, 3.125f, 1f) : new Vector3 (-3.125f, 3.125f, 1f);
 		}
@@ -19,6 +26,7 @@ namespace GenericFunctions{
 		public static float timeToThrow = .66667f;
 		public static float timeToStab = .1f;
 
+		public static int defaultLater = 0;
 		public static int basketLayer = 13;
 		public static int spearLayer = 14;
 		public static int joystickLayer = 15;
@@ -27,6 +35,11 @@ namespace GenericFunctions{
 		public static int balloonFloatingLayer = 18;
 		public static int tentacleLayer = 19;
 		public static int jaiLayer = 20;
+		public static int pooFingerLayer = 21;
+		public static int pooSmearLayer = 22;
+		public static int faceLayer = 23;
+
+		public static int totalPooSpots = 20;
 
 		public static int pigeon = 0;
 		public static int duck = 1;
@@ -44,6 +57,7 @@ namespace GenericFunctions{
 		public static Vector3 balloonOffset = new Vector3 (0.1f, 2.7f, 0f);
 		public static Vector3 tentacleTipOffset = new Vector3 (0f, 1.25f, 0f);
 		public static Vector3 tentacleHomeSpot = new Vector3 (0f, -6.75f, 0f);
+		public static Vector3 seagullOffset = balloonOffset + Vector3.up * 2f;
 		public static float time2Destroy = 2f;
 
 		public static int[] NegativeOnes(int numberOfNegativeOnes){

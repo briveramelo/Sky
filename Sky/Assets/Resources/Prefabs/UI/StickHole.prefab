@@ -1,34 +1,17 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &103454
+--- !u!1 &141762
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 459926}
-  - 212: {fileID: 21231350}
-  - 114: {fileID: 11444876}
-  m_Layer: 0
-  m_Name: ControlStick
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &176966
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 435076}
-  - 212: {fileID: 21245536}
-  - 58: {fileID: 5809930}
-  - 114: {fileID: 11403246}
-  - 114: {fileID: 11445984}
+  - 4: {fileID: 464034}
+  - 212: {fileID: 21227200}
+  - 58: {fileID: 5867554}
+  - 114: {fileID: 11419046}
+  - 114: {fileID: 11477776}
   m_Layer: 0
   m_Name: StickHole
   m_TagString: Untagged
@@ -36,37 +19,114 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &435076
+--- !u!1 &157866
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 466770}
+  - 212: {fileID: 21225006}
+  - 114: {fileID: 11411196}
+  m_Layer: 0
+  m_Name: ControlStick
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &187064
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 475632}
+  - 58: {fileID: 5821086}
+  - 114: {fileID: 11448544}
+  - 50: {fileID: 5090740}
+  m_Layer: 21
+  m_Name: PooFinger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &464034
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 176966}
+  m_GameObject: {fileID: 141762}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6, y: -2.5, z: 0}
-  m_LocalScale: {x: 3.125, y: 3.125, z: 1}
+  m_LocalScale: {x: 6.25, y: 6.25, z: 1}
   m_Children:
-  - {fileID: 459926}
+  - {fileID: 466770}
+  - {fileID: 475632}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!4 &459926
+--- !u!4 &466770
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 103454}
+  m_GameObject: {fileID: 157866}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 435076}
+  m_Father: {fileID: 464034}
   m_RootOrder: 0
---- !u!58 &5809930
+--- !u!4 &475632
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 187064}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 464034}
+  m_RootOrder: 1
+--- !u!50 &5090740
+Rigidbody2D:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 187064}
+  m_Mass: 9.99999975e-05
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!58 &5821086
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 176966}
+  m_GameObject: {fileID: 187064}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: .100000001
+--- !u!58 &5867554
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141762}
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -74,12 +134,12 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: .200000003
---- !u!114 &11403246
+--- !u!114 &11411196
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 176966}
+  m_GameObject: {fileID: 157866}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
@@ -92,12 +152,12 @@ MonoBehaviour:
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
---- !u!114 &11444876
+--- !u!114 &11419046
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 103454}
+  m_GameObject: {fileID: 141762}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
@@ -110,47 +170,68 @@ MonoBehaviour:
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
---- !u!114 &11445984
+--- !u!114 &11448544
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 176966}
+  m_GameObject: {fileID: 187064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2aac97df580641fb83b58dcd49c5c32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pooCleanSpeed: 0
+  pooSpotsToClean: 0
+  joyfulstickScript: {fileID: 0}
+  pooFingerCollider: {fileID: 0}
+  goingAtIt: 0
+--- !u!114 &11477776
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141762}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f25540c9e9e5847e0b4c18ca03ff0d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jaiScript: {fileID: 0}
+  spearScript: {fileID: 0}
+  basketCollider: {fileID: 0}
+  worldBoundsCollider: {fileID: 0}
+  fingerWiperTransform: {fileID: 0}
+  basketBody: {fileID: 0}
+  controlStickSprite: {fileID: 0}
   startingJoystickSpot: {x: 0, y: 0}
-  touchSpot: {x: 0, y: 0}
   moveDir: {x: 0, y: 0}
   rawFinger: {x: 0, y: 0}
   startingTouchPoint: {x: 0, y: 0}
   releaseTouchPoint: {x: 0, y: 0}
   attackDir: {x: 0, y: 0}
   correctionPixels: {x: 0, y: 0}
+  velVector: {x: 0, y: 0}
   distFromStick: 0
   distToThrow: 0
   releaseDist: 0
   moveForce: 0
   maxBalloonSpeed: 0
-  joystickAppearanceThreshhold: 0
-  joystickMaxThumbDist: 0
+  joystickMaxMoveDistance: 0
+  joystickMaxStartDist: 0
   correctionPixelFactor: 0
-  controlStickSprite: {fileID: 0}
-  jaiScript: {fileID: 0}
-  spearScript: {fileID: 0}
-  jaiTransform: {fileID: 0}
-  n: 0
+  speed: 0
+  maxVectorSpeed: 0
   joystickFinger: 0
   spearFinger: 0
-  balloonBasketBody: {fileID: 0}
---- !u!212 &21231350
+  pooOnYou: 0
+  beingHeld: 0
+--- !u!212 &21225006
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 103454}
+  m_GameObject: {fileID: 157866}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -171,12 +252,12 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: c0f29076bcef246c7ac752fb1ef83ad9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!212 &21245536
+--- !u!212 &21227200
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 176966}
+  m_GameObject: {fileID: 141762}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -206,5 +287,5 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 176966}
+  m_RootGameObject: {fileID: 141762}
   m_IsPrefabParent: 1

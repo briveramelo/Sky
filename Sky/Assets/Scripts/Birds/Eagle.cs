@@ -89,23 +89,12 @@ public class Eagle : MonoBehaviour {
 		}
 		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle (attackDir,attackDir.x);
 
-		attacks--;
-		if (attacks>0){
-			StartCoroutine (InitiateAttack(5f));
-		}
-		else{
-			StartCoroutine (SelfDestruct(6f));
-		}
+		StartCoroutine (InitiateAttack(5f));
 		yield return null;
 	}
 
 	void OnDestroy(){
 		StopAllCoroutines ();
-	}
-
-	public IEnumerator SelfDestruct(float destroyTime){
-		yield return new WaitForSeconds (destroyTime);
-		Destroy (gameObject);
 	}
 
 

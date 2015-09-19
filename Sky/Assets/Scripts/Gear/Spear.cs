@@ -15,9 +15,7 @@ public class Spear : MonoBehaviour {
 	public Transform jaiTransform; //jai's transform
 
 	public CircleCollider2D spearTipCollider;
-
-	public string spearString;
-
+	
 	public Vector3[] throwAdjustmentVector;
 	public Vector3 stockPosition; //position the spear should return to when Jai reels it back
 	
@@ -37,7 +35,6 @@ public class Spear : MonoBehaviour {
 		time2Reappear = Constants.timeToThrow;
 		flying = false;
 		throwing = false;
-		spearString = "Prefabs/Gear/Spear";
 		spearTipParentTransform = transform.GetChild (0);
 		spearTipTransform = transform.GetChild (0).GetChild(0);
 		spearTipCollider = spearTipTransform.GetComponent<CircleCollider2D> ();
@@ -89,7 +86,7 @@ public class Spear : MonoBehaviour {
 
 	public IEnumerator NewSpear(){
 		yield return new WaitForSeconds (time2Reappear);
-		GameObject spear = Instantiate (Resources.Load (spearString), jaiTransform.position + stockPosition, Quaternion.identity) as GameObject;
+		GameObject spear = Instantiate (Resources.Load (Constants.spearPrefab), jaiTransform.position + stockPosition, Quaternion.identity) as GameObject;
 	}
 
 	void OnTriggerEnter2D(Collider2D col){

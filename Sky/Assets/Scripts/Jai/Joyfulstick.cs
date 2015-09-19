@@ -8,6 +8,7 @@ public class Joyfulstick : MonoBehaviour {
 	public Spear spearScript;
 	public Collider2D basketCollider;
 	public Collider2D worldBoundsCollider;
+	public Transform fingerWiperTransform;
 
 	public Rigidbody2D basketBody;
 
@@ -37,6 +38,7 @@ public class Joyfulstick : MonoBehaviour {
 
 	public int joystickFinger;
 	public int spearFinger;
+	public int pooOnYou;
 
 	public bool beingHeld;
 
@@ -47,7 +49,8 @@ public class Joyfulstick : MonoBehaviour {
 		basketCollider = GameObject.Find ("Basket").GetComponent<BoxCollider2D> ();
 		worldBoundsCollider = GameObject.Find ("WorldBounds").GetComponent<EdgeCollider2D> ();
 		jaiScript = GameObject.Find ("Jai").GetComponent<Jai> ();
-		maxBalloonSpeed = 3f;//3f;
+		fingerWiperTransform = transform.GetChild (1);
+		maxBalloonSpeed = 3f;
 		maxVectorSpeed = Mathf.Sqrt (maxBalloonSpeed);
 
 		startingJoystickSpot = transform.position;
@@ -114,6 +117,9 @@ public class Joyfulstick : MonoBehaviour {
 							moveDir = Vector2.ClampMagnitude(ConvertFingerPosition(finger.position) - startingJoystickSpot,joystickMaxMoveDistance);
 							controlStickSprite.transform.position = startingJoystickSpot + moveDir;
 							DoPhysics();
+						}
+						else if (pooOnYou>0){
+							fingerWiperTransform.position = ConvertFingerPosition(finger.position);
 						}
 					}
 					else if (finger.phase == TouchPhase.Ended){ //when your finger comes off the screen

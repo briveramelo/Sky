@@ -16,7 +16,7 @@ GameObject:
   - 114: {fileID: 11490652}
   - 61: {fileID: 6126700}
   m_Layer: 16
-  m_Name: Duck2
+  m_Name: Duck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,6 +139,7 @@ MonoBehaviour:
   duckScript: {fileID: 0}
   wavesScript: {fileID: 0}
   timeEffectsScript: {fileID: 0}
+  tentaclesScript: {fileID: 0}
   spearColliders: []
   birdCollider: {fileID: 0}
   gutSplosionParentString: 

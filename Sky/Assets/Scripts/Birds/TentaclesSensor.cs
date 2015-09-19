@@ -8,7 +8,7 @@ public class TentaclesSensor : MonoBehaviour {
 	public Tentacles tentaclesScript;
 	
 	void Awake () {
-		tentacles = Instantiate (Resources.Load ("Prefabs/Birds/Tentacles"), Constants.tentacleHomeSpot, Quaternion.identity) as GameObject;
+		tentacles = Instantiate (Resources.Load (Constants.tentaclePrefab), Constants.tentacleHomeSpot, Quaternion.identity) as GameObject;
 		tentaclesScript = tentacles.GetComponent<Tentacles> ();
 		tentaclesScript.tentaclesSensorScript = this;
 	}

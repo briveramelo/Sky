@@ -9,15 +9,12 @@ public class GetHurt : MonoBehaviour {
 	public SummonTheCrows summonTheCrowsScript;
 	public DuckLeader duckLeaderScript;
 	public Duck duckScript;
-	public Waves wavesScript;
 	public TimeEffects timeEffectsScript;
 	public Tentacles tentaclesScript;
 
 	public CircleCollider2D[] spearColliders;
 	public Collider2D birdCollider;
-
-	public string gutSplosionParentString;
-
+	
 	public Vector2 hitPoint;
 
 	public int health;
@@ -38,7 +35,6 @@ public class GetHurt : MonoBehaviour {
 		birdCollider = GetComponent<Collider2D> ();
 		tentaclesScript = GetComponent<Tentacles> ();
 
-		gutSplosionParentString = "Prefabs/GutSplosions/GutSplosionParent";
 		if (GetComponent<Pigeon>()){
 			birdType = Constants.pigeon;
 			killGutValue = 3;
@@ -66,10 +62,10 @@ public class GetHurt : MonoBehaviour {
 			birdType = Constants.crow;
 			killGutValue = 5;
 		}
-//		else if (GetComponent<Seagull>()){
-//			birdType = 6;
-//			killGutValue = 4;
-//		}
+		else if (GetComponent<Seagull>()){
+			birdType = Constants.seagull;
+			killGutValue = 4;
+		}
 		else if (GetComponent<Tentacles>()){
 			birdType = Constants.tentacles;
 			health = 25;
@@ -123,7 +119,7 @@ public class GetHurt : MonoBehaviour {
 				//super kill!
 			}
 		}
-		guts = Instantiate (Resources.Load (gutSplosionParentString), spawnSpot, Quaternion.identity) as GameObject;
+		guts = Instantiate (Resources.Load (Constants.gutSplosionParentPrefab), spawnSpot, Quaternion.identity) as GameObject;
 
 		if (health>0){
 			StartCoroutine (guts.GetComponent<GutSplosion> ().GenerateGuts (damageGutValue, gutDirection));
