@@ -5,16 +5,12 @@ using GenericFunctions;
 public class PooNugget : MonoBehaviour {
 
 	public bool splat;
-	public PooFinger pooFingerScript;
-	public Joyfulstick joyfulstickScript;
 	public Seagull seagullScript;
-	public SpriteRenderer pooSprite;
+	public SpriteRenderer nuggetSprite;
 
 	// Use this for initialization
 	void Awake () {
-		pooFingerScript = GameObject.Find ("PooFinger").GetComponent<PooFinger> ();
-		joyfulstickScript = GameObject.Find ("StickHole").GetComponent<Joyfulstick> ();
-		pooSprite = GetComponent<SpriteRenderer> ();
+		nuggetSprite = GetComponent<SpriteRenderer> ();
 		Invoke ("CheckForHit", 3f);
 	}
 
@@ -32,14 +28,13 @@ public class PooNugget : MonoBehaviour {
 	}
 
 	public IEnumerator PooSplatter(){
-		GameObject pooSmear = Instantiate (Resources.Load (Constants.pooSmearPrefab), Vector3.zero, Quaternion.identity) as GameObject;
-		joyfulstickScript.pooOnYou++;
-		StartCoroutine (pooFingerScript.CheckForSufficientCleaning (gameObject, pooSmear, seagullScript));
-		pooSprite.enabled = false;
-		Destroy(GetComponent<Rigidbody2D> ());
+		GameObject pooSplat = Instantiate (Resources.Load (Constants.pooSplatPrefab), Vector3.zero, Quaternion.identity) as GameObject;
+		pooSplat.GetComponent<PooSlide>().gullScript = seagullScript;
+		nuggetSprite.enabled = false;
 		if (seagullScript){
 			seagullScript.directHit = true;
 		}
+		Destroy(gameObject);
 		yield return null;
 	}
 }

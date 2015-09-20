@@ -8,14 +8,14 @@ public class Joyfulstick : MonoBehaviour {
 	public Spear spearScript;
 	public Collider2D basketCollider;
 	public Collider2D worldBoundsCollider;
-	public Transform fingerWiperTransform;
+	public CameraMasking cameraMaskingScript;
 
 	public Rigidbody2D basketBody;
 
 	public SpriteRenderer controlStickSprite;
 
 	public Vector2 startingJoystickSpot; //position of the joystick on screen
-	//public Vector2 touchSpot;
+	public Vector2 touchSpot;
 	public Vector2 moveDir;
 	public Vector2 rawFinger;
 	public Vector2 startingTouchPoint;
@@ -42,14 +42,13 @@ public class Joyfulstick : MonoBehaviour {
 
 	public bool beingHeld;
 
-	// Use this for initialization
 	void Awake () {
 		basketBody = GameObject.Find ("BalloonBasket").GetComponent<Rigidbody2D>();
 		controlStickSprite = GameObject.Find ("ControlStick").GetComponent<SpriteRenderer>();
 		basketCollider = GameObject.Find ("Basket").GetComponent<BoxCollider2D> ();
 		worldBoundsCollider = GameObject.Find ("WorldBounds").GetComponent<EdgeCollider2D> ();
 		jaiScript = GameObject.Find ("Jai").GetComponent<Jai> ();
-		fingerWiperTransform = transform.GetChild (1);
+		cameraMaskingScript = GameObject.Find ("Mask Camera").GetComponent<CameraMasking> ();
 		maxBalloonSpeed = 3f;
 		maxVectorSpeed = Mathf.Sqrt (maxBalloonSpeed);
 
@@ -59,7 +58,7 @@ public class Joyfulstick : MonoBehaviour {
 		distToThrow = .1f;
 		joystickFinger = -1;
 		spearFinger = -2;
-		moveForce = 20f;//10f;
+		moveForce = 20f;
 		correctionPixels = new Vector2 (Screen.width/2,(-3*Screen.height/2));
 		correctionPixelFactor = 10f / Screen.height;
 	}
@@ -92,11 +91,10 @@ public class Joyfulstick : MonoBehaviour {
 		Physics2D.IgnoreCollision (basketCollider, worldBoundsCollider, (basketBody.velocity.y > 0||beingHeld));
 		velVector = basketBody.velocity;
 		speed = velVector.magnitude;
-
 		if (Input.touchCount>0){
 			foreach (Touch finger in Input.touches){
 				//rawFinger = finger.position;
-				//touchSpot = ConvertFingerPosition(finger.position);
+				touchSpot = ConvertFingerPosition(finger.position);
 				if(!beingHeld){
 					if (finger.phase == TouchPhase.Began){
 						distFromStick = Vector2.Distance(ConvertFingerPosition(finger.position),startingJoystickSpot);
@@ -117,9 +115,6 @@ public class Joyfulstick : MonoBehaviour {
 							moveDir = Vector2.ClampMagnitude(ConvertFingerPosition(finger.position) - startingJoystickSpot,joystickMaxMoveDistance);
 							controlStickSprite.transform.position = startingJoystickSpot + moveDir;
 							DoPhysics();
-						}
-						else if (pooOnYou>0){
-							fingerWiperTransform.position = ConvertFingerPosition(finger.position);
 						}
 					}
 					else if (finger.phase == TouchPhase.Ended){ //when your finger comes off the screen
@@ -146,6 +141,9 @@ public class Joyfulstick : MonoBehaviour {
 					}
 				}
 			}
+		}
+		else{
+			touchSpot = Vector2.up * 20f;
 		}
 	}
 }

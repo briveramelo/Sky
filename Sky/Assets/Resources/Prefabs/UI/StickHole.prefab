@@ -44,10 +44,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 475632}
-  - 58: {fileID: 5821086}
-  - 114: {fileID: 11448544}
-  - 50: {fileID: 5090740}
-  m_Layer: 21
+  m_Layer: 0
   m_Name: PooFinger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,35 +89,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 464034}
   m_RootOrder: 1
---- !u!50 &5090740
-Rigidbody2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 187064}
-  m_Mass: 9.99999975e-05
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
---- !u!58 &5821086
-CircleCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 187064}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: .100000001
 --- !u!58 &5867554
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -170,22 +138,6 @@ MonoBehaviour:
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
---- !u!114 &11448544
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 187064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2aac97df580641fb83b58dcd49c5c32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pooCleanSpeed: 0
-  pooSpotsToClean: 0
-  joyfulstickScript: {fileID: 0}
-  pooFingerCollider: {fileID: 0}
-  goingAtIt: 0
 --- !u!114 &11477776
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -201,7 +153,8 @@ MonoBehaviour:
   spearScript: {fileID: 0}
   basketCollider: {fileID: 0}
   worldBoundsCollider: {fileID: 0}
-  fingerWiperTransform: {fileID: 0}
+  pooFingerTransform: {fileID: 0}
+  cameraMaskingScript: {fileID: 0}
   basketBody: {fileID: 0}
   controlStickSprite: {fileID: 0}
   startingJoystickSpot: {x: 0, y: 0}
@@ -226,6 +179,7 @@ MonoBehaviour:
   spearFinger: 0
   pooOnYou: 0
   beingHeld: 0
+  wipingPoo: 0
 --- !u!212 &21225006
 SpriteRenderer:
   m_ObjectHideFlags: 1

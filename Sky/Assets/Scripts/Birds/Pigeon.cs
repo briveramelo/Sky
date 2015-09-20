@@ -18,4 +18,6 @@ public class Pigeon : MonoBehaviour {
 		rigidbod.velocity = Vector2.right * moveSpeed;
 		transform.localScale = Constants.Pixel625(false);
 	}
+
+
 }
