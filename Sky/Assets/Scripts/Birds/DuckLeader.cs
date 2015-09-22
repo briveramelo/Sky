@@ -16,7 +16,7 @@ public class DuckLeader : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		separationDistance = 1.4f;
+		separationDistance = .9f;
 		duckScripts = new Duck[]{
 			transform.GetChild(0).GetComponent<Duck>(),
 			transform.GetChild(1).GetComponent<Duck>(),

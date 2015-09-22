@@ -48,14 +48,14 @@ public class Bat : MonoBehaviour {
 		startingOff = true;
 		jaiTransform = GameObject.Find ("Jai").transform;
 		orbitSpeed = 2.8f;
-		frameDelay = 4;
+		frameDelay = 3;
 		windowLength = 20;
 		erraticDistance = 1f;
 		orbitXDistances = new float[]{
-			2f, 3f, 4f
+			1.25f, 1.5f, 1.75f
 		};
 		orbitYDistances = new float[]{
-			2f, 3f, 4f
+			1.25f, 1.5f, 1.75f
 		};
 		stepDistance = 0.5f;
 		angleStep = 4f;
@@ -92,6 +92,7 @@ public class Bat : MonoBehaviour {
 		}
 		orbVec = new Vector3 ( orbitXDistances[batXLayer] * Mathf.Cos((orbAng+angleTilt) * Mathf.Deg2Rad), orbitYDistances[batYLayer] * Mathf.Sin(orbAng * Mathf.Deg2Rad),0f);
 		ResetLagWindow ();
+		transform.Face4ward (transform.position.x > jaiTransform.position.x);
 	}
 
 	void ResetLagWindow(){

@@ -1,32 +1,20 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Gear/PooSlide.cs">
-    <Files>
-      <File FileName="Assets/Scripts/Jai/Joyfulstick.cs" Line="94" Column="27" />
-      <File FileName="Assets/Scripts/World/CameraMasking.cs" Line="44" Column="3" />
-      <File FileName="Assets/Scripts/Gear/PooSlide.cs" Line="28" Column="40" />
-      <File FileName="Assets/Scripts/Gear/PooNugget.cs" Line="32" Column="63" />
-      <File FileName="Assets/Scripts/GenericFunctions/Constants.cs" Line="8" Column="67" />
-      <File FileName="Assets/EraseDemo/MaskCamera.cs" Line="43" Column="6" />
-      <File FileName="Assets/Scripts/Birds/Seagull.cs" Line="129" Column="19" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
-            <Node name="EraseDemo" expanded="True" />
-            <Node name="Resources" expanded="True">
-              <Node name="Prefabs" expanded="True">
-                <Node name="Effects" expanded="True" />
-              </Node>
-            </Node>
             <Node name="Scripts" expanded="True">
-              <Node name="Birds" expanded="True" />
-              <Node name="Gear" expanded="True">
-                <Node name="PooSlide.cs" selected="True" />
+              <Node name="Birds" expanded="True">
+                <Node name="Bat.cs" selected="True" />
               </Node>
+              <Node name="Gear" expanded="True" />
               <Node name="GenericFunctions" expanded="True" />
               <Node name="Jai" expanded="True" />
+              <Node name="PixelArtRotation" expanded="True">
+                <Node name="Scripts" expanded="True" />
+              </Node>
               <Node name="World" expanded="True" />
             </Node>
           </Node>

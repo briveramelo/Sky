@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: bdef92e182c914a9caa940232bc4daa3
-timeCreated: 1441949263
+timeCreated: 1442894141
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -36,10 +36,11 @@ TextureImporter:
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
-  rGBM: 0
+  rGBM: 2
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 2
-  spriteExtrude: 1
+  spriteExtrude: 0
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: .5, y: .5}
@@ -52,17 +53,23 @@ TextureImporter:
     maxTextureSize: 8192
     textureFormat: 5
     compressionQuality: 50
+    allowsAlphaSplitting: 0
+  - buildTarget: iPhone
+    maxTextureSize: 8192
+    textureFormat: 4
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
   spriteSheet:
     sprites:
     - name: SpearFull_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
         y: 1
         width: 28
         height: 28
-      alignment: 0
-      pivot: {x: .5, y: .5}
+      alignment: 9
+      pivot: {x: .482142866, y: .482142866}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

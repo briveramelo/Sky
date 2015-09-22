@@ -4,28 +4,31 @@ using GenericFunctions;
 
 public class Tentacles : MonoBehaviour {
 
+	public Transform tipTransform;
+	public BoxCollider2D bottomOfTheWorldCollider;
 	public CircleCollider2D dummyCollider;
-	public TimeEffects timeEffectsScript;
 	public Joyfulstick joyfulStickScript;
 	public Basket basketScript;
 	public Collider2D tentaCollider;
 	public GetHurt getHurtScript;
 	public ScreenShake screenShakeScript;
 	public TentaclesSensor tentaclesSensorScript;
+	public WorldEffects worldEffectsScript;
 
-	public Transform jaiTransform;
+	public Transform basketTransform;
 
 	public Rigidbody2D basketBody;
 	public Rigidbody2D rigbod;
 
 	public Vector3 jaiCorrection;
+
+	public Vector2 homeSpot;
 	
 	public float descendSpeed;
 	public float attackSpeed;
 	public float resetSpeed;
-	public float boundaryHeight;
-	public float homeHeight;
 	public float deathHeight;
+	public float resetHeight;
 
 	public int stabsTaken;
 	public int stabs2Retreat;
@@ -37,42 +40,30 @@ public class Tentacles : MonoBehaviour {
 	public bool killedHim;
 
 	void Awake(){
+		bottomOfTheWorldCollider = GameObject.Find ("BottomWall").GetComponent<BoxCollider2D> ();
+		tipTransform = transform.GetChild (0);
 		stabs2Retreat = 6;
 		descendSpeed = .75f;
 		attackSpeed = 1.5f;
 		resetSpeed = 1f;
-		boundaryHeight = -2f;
 		jaiCorrection = new Vector3 (0f,-.3f,0f);
-		homeHeight = Constants.tentacleHomeSpot.y + Constants.tentacleTipOffset.y;
-		deathHeight = homeHeight - 1.2f;
+		homeSpot = new Vector2 (0f,-.75f - Constants.worldDimensions.y);
+		resetHeight = .5f + homeSpot.y;
+		deathHeight = .25f + homeSpot.y;
 		rigbod = GetComponent<Rigidbody2D> ();
 		tentaCollider = GetComponent<Collider2D> ();
 		getHurtScript = GetComponent<GetHurt> ();
 		basketBody = GameObject.Find ("BalloonBasket").GetComponent<Rigidbody2D> ();
 		basketScript = GameObject.Find ("BalloonBasket").GetComponent<Basket> ();
-		timeEffectsScript = GameObject.Find ("Dummy").GetComponent<TimeEffects> ();
+		worldEffectsScript = GameObject.Find ("WorldBounds").GetComponent<WorldEffects> ();
 		joyfulStickScript = GameObject.Find ("StickHole").GetComponent<Joyfulstick> ();
 		screenShakeScript = GameObject.Find ("mainCam").GetComponent<ScreenShake> ();
-		jaiTransform = GameObject.Find ("Jai").transform;
-		jaiTransform.GetComponent<Jai> ().tentaclesScript = this;
+		basketTransform = GameObject.Find ("Basket").transform;
+		GameObject.Find ("Jai").GetComponent<Jai> ().tentaclesScript = this;
 	}
 
-	void FaceTowardYou(){
-		if ((jaiTransform.position.x - transform.position.x)>0){
-			transform.localScale = Constants.Pixel625(true);
-		}
-		else{
-			transform.localScale = Constants.Pixel625(false);
-		}
-	}
-
-	void FaceAwayFromYou(){
-		if ((jaiTransform.position.x - transform.position.x)<0){
-			transform.localScale = Constants.Pixel625(true);
-		}
-		else{
-			transform.localScale = Constants.Pixel625(false);
-		}
+	void FaceTowardYou(bool toward){
+		transform.Face4ward (toward ? (basketTransform.position.x - transform.position.x) > 0 : (basketTransform.position.x - transform.position.x) < 0);
 	}
 
 	public IEnumerator GoForTheKill(){ 
@@ -80,8 +71,8 @@ public class Tentacles : MonoBehaviour {
 		attacking = true;
 		resetting = false;
 		while (!holding && attacking && !resetting){
-			rigbod.velocity = (jaiTransform.position + jaiCorrection - (transform.position + Constants.tentacleTipOffset)).normalized * attackSpeed;
-			FaceTowardYou();
+			rigbod.velocity = (basketTransform.position - tipTransform.position).normalized * attackSpeed;
+			FaceTowardYou(true);
 			yield return null;
 		}
 		attacking = false;
@@ -92,9 +83,9 @@ public class Tentacles : MonoBehaviour {
 		resetting = true;
 		attacking = false;
 		while (!attacking && resetting){
-			rigbod.velocity = (Constants.tentacleHomeSpot - (transform.position + Constants.tentacleTipOffset)).normalized * resetSpeed;
-			FaceTowardYou();
-			if ((transform.position.y + Constants.tentacleTipOffset.y)<homeHeight){
+			rigbod.velocity = ((Vector3)homeSpot - tipTransform.position).normalized * resetSpeed;
+			FaceTowardYou(true);
+			if (tipTransform.position.y<resetHeight){
 				resetting = false;
 				rigbod.velocity = Vector2.zero;
 			}
@@ -119,7 +110,7 @@ public class Tentacles : MonoBehaviour {
 		hurt = false;
 		attacking = false;
 		joyfulStickScript.beingHeld = true;
-		timeEffectsScript.SlowTime (0.4f, 0.5f);
+		worldEffectsScript.SlowTime (0.4f, 0.5f);
 		StartCoroutine ( screenShakeScript.CameraShake ());
 		StartCoroutine (PullBackTheKill());
 		yield return null;
@@ -135,16 +126,18 @@ public class Tentacles : MonoBehaviour {
 			attacking = false;
 			StartCoroutine (RetreatToDefeat());
 			joyfulStickScript.beingHeld = false;
+			joyfulStickScript.basketBody.AddForce(Vector2.down * 5f);
 		}
 		yield return null;
 	}
 
 	public IEnumerator PullBackTheKill(){
 		stabsTaken = 0;
+		bottomOfTheWorldCollider.enabled = false;
 		while (holding){
 			rigbod.velocity = Vector2.down * descendSpeed;
 			basketBody.velocity = Vector2.down * descendSpeed;
-			if ((transform.position.y + Constants.tentacleTipOffset.y)<deathHeight){ //kill him
+			if (tipTransform.position.y<deathHeight){ //kill him
 				StartCoroutine (StripTheBalloons());
 				basketBody.velocity = Vector2.zero;
 				holding = false;
@@ -155,15 +148,16 @@ public class Tentacles : MonoBehaviour {
 			}
 			yield return null;
 		}
+		bottomOfTheWorldCollider.enabled = true;
 		yield return null;
 	}
 
 	public IEnumerator RetreatToDefeat(){
 		stabsTaken = 0;
 		while (resetting){
-			rigbod.velocity = (Constants.tentacleHomeSpot - (transform.position + Constants.tentacleTipOffset)).normalized * resetSpeed;
-			FaceAwayFromYou();
-			if ((transform.position.y + Constants.tentacleTipOffset.y)<deathHeight){
+			rigbod.velocity = ((Vector3)homeSpot - tipTransform.position).normalized * resetSpeed;
+			FaceTowardYou(false);
+			if (tipTransform.position.y<deathHeight){
 				holding = false;
 				resetting = false;
 				attacking = false;
@@ -195,7 +189,10 @@ public class Tentacles : MonoBehaviour {
 	}
 
 	void OnDestroy(){
-		if (tentaclesSensorScript){
+		if (bottomOfTheWorldCollider!=null){
+			bottomOfTheWorldCollider.enabled = true;
+		}
+		if (tentaclesSensorScript!=null){
 			Destroy (tentaclesSensorScript.gameObject);
 		}
 	}

@@ -54,31 +54,13 @@ public class Duck : MonoBehaviour {
 		if (bouncing)
 		{
 			VelocityBouncer ();
-			AnimateBouncing();
+			transform.Face4ward(rigbod.velocity.x<0);
 		}
 		else{
 			StayInFormation();
-			AnimateInFormation ();
+			transform.FaceFoward(rigbod.velocity.x<0);
 		}
 
-	}
-
-	void AnimateBouncing(){
-		if (rigbod.velocity.x>0){
-			transform.localScale = Constants.Pixel625(false);
-		}
-		else {
-			transform.localScale = Constants.Pixel625(true);
-		}
-	}
-
-	void AnimateInFormation(){
-		if (rigbod.velocity.x>0){
-			transform.localScale = Constants.Pixel1(false);
-		}
-		else {
-			transform.localScale = Constants.Pixel1(true);
-		}
 	}
 
 	void StayInFormation(){
@@ -95,19 +77,17 @@ public class Duck : MonoBehaviour {
 	}
 
 	void VelocityBouncer(){
-		if (transform.position.y>5){
+		if (transform.position.y>Constants.worldDimensions.y){
 			rigbod.velocity = new Vector2 (rigbod.velocity.x, -moveDir.y);
 		}
-		else if (transform.position.y<-5f){
+		else if (transform.position.y<-Constants.worldDimensions.y){
 			rigbod.velocity = new Vector2 (rigbod.velocity.x, moveDir.y);
 		}
-		else if (transform.position.x>8.8f){
+		else if (transform.position.x>Constants.worldDimensions.x){
 			rigbod.velocity = new Vector2 (-moveDir.x, rigbod.velocity.y);
-			transform.localScale = Constants.Pixel625(true);
 		}
-		else if (transform.position.x<-8.8f){
+		else if (transform.position.x<-Constants.worldDimensions.x){
 			rigbod.velocity = new Vector2 (moveDir.x, rigbod.velocity.y);
-			transform.localScale = Constants.Pixel625(false);
 		}
 	}
 }

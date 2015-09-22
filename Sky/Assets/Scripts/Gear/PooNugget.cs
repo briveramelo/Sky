@@ -28,7 +28,7 @@ public class PooNugget : MonoBehaviour {
 	}
 
 	public IEnumerator PooSplatter(){
-		GameObject pooSplat = Instantiate (Resources.Load (Constants.pooSplatPrefab), Vector3.zero, Quaternion.identity) as GameObject;
+		GameObject pooSplat = Instantiate (Resources.Load (Constants.pooSplatPrefabs[1])/*Random.insideUnitCircle.x > 0 ? 0 :1])*/, Vector3.zero, Quaternion.identity) as GameObject;
 		pooSplat.GetComponent<PooSlide>().gullScript = seagullScript;
 		nuggetSprite.enabled = false;
 		if (seagullScript){

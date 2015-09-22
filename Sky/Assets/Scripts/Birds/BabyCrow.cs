@@ -8,7 +8,7 @@ public class BabyCrow : MonoBehaviour {
 
 	public Animator babyCrowAnimator;
 	public Rigidbody2D rigbod;
-	public Transform basketTransform;
+	public Transform jaiTransform;
 
 	public Vector3[] shifty; 
 
@@ -21,7 +21,6 @@ public class BabyCrow : MonoBehaviour {
 	public float zeroDistance;
 	public float currentSpeed;
 	public float minSpeed;
-	public float switchTime;
 	public float moveSpeed;
 
 	public int shifts;
@@ -31,6 +30,7 @@ public class BabyCrow : MonoBehaviour {
 	public bool switching;
 	public bool shifting;
 	public bool shiftingSequence;
+	public bool faceDir;
 
 	// Use this for initialization
 	void Awake () {
@@ -38,22 +38,20 @@ public class BabyCrow : MonoBehaviour {
 		rigbod = GetComponent<Rigidbody2D> ();
 		babyCrowAnimator = GetComponent<Animator> ();
 		moveSpeed = 2f;
-		switchTime = 0.25f;
-		triggerShiftDistance = 0.05f;
-		basketTransform = GameObject.Find ("Jai").transform;
+		triggerShiftDistance = 0.1f;
+		jaiTransform = GameObject.Find ("Jai").transform;
 		shifty = new Vector3[]{
-			new Vector3 (-1.0f, 0.7f, 0f) * 2f,
-			new Vector3 (1.3f , 0.7f, 0f) * 2f,
-			new Vector3 (0.1f,  -1f,0f) * 2f
+			new Vector3 (-.8f, 0.4f, 0f),
+			new Vector3 (.8f, 0.4f, 0f),
+			new Vector3 (-0.05f,  -1f,0f)
 		};
 		i = 0;
 		maxShifts = 5;
 		speedDistance = .3f;
 		zeroDistance = 0.05f;
-		minSpeed = 0.55f;
+		minSpeed = 0.7f;
 		shifts = 0;
 		shiftingSequence = true;
-		shifting = true;
 		crowString = "Prefabs/Birds/Murder";
 		switching = false;
 		StartCoroutine (FlyFree ());
@@ -71,21 +69,24 @@ public class BabyCrow : MonoBehaviour {
 		else{
 			FlyAway();
 		}
+		if (!shifting){
+			transform.Face4ward(rigbod.velocity.x>0);
+		}
 		CorrectSpeed ();
-		FaceCorrectly ();
 		rigbod.velocity = moveFullDir.normalized * currentSpeed;
 	}
 
 	void ApproachShifts(){
-		moveFullDir = (basketTransform.position + shifty [i] - transform.position);
+		moveFullDir = (jaiTransform.position + shifty [i] - transform.position);
 		if (moveFullDir.magnitude<triggerShiftDistance){
 			StartCoroutine (ShiftSpots());
 		}
 	}
 
 	public IEnumerator ShiftSpots(){
-		if (shifting){
-			shifting = false;
+		if (!shifting){
+			shifting = true;
+			StartCoroutine (SwitchDirections());
 			babyCrowAnimator.SetInteger("AnimState",1);
 			yield return new WaitForSeconds (2f);
 			i++;
@@ -93,7 +94,10 @@ public class BabyCrow : MonoBehaviour {
 			if (i>2){
 				i=0;
 			}
-			shifting = true;
+			shifting = false;
+			while (switching){
+				yield return null;
+			}
 			babyCrowAnimator.SetInteger("AnimState",0);
 			if (shifts>maxShifts){
 				shiftingSequence = false;
@@ -103,7 +107,7 @@ public class BabyCrow : MonoBehaviour {
 	}
 
 	void FlyAway(){
-		moveFullDir = (Vector3.right * 9f - transform.position);
+		moveFullDir = (Vector3.right * Constants.worldDimensions.x * 1.2f - transform.position);
 		if (moveFullDir.magnitude<triggerShiftDistance){
 			getHurtScript.summonCrows = false;
 			Destroy(gameObject);
@@ -125,23 +129,15 @@ public class BabyCrow : MonoBehaviour {
 		}
 	}
 
-	void FaceCorrectly(){
-		if (!switching){
-			if (rigbod.velocity.x>0){
-				StartCoroutine ( SwitchDirections());
-				transform.localScale = Constants.Pixel625(true);
-			}
-			else{
-				StartCoroutine ( SwitchDirections());
-				transform.localScale = Constants.Pixel625(false);
-			}
-		}
-	}
-
 	public IEnumerator SwitchDirections(){
-		switching = true;
-		yield return new WaitForSeconds (switchTime);
-		switching = false;
+		if (shifting){
+			switching = true;
+			faceDir = !faceDir;
+			transform.Face4ward(faceDir);
+			yield return new WaitForSeconds (Random.Range(0.33f,.75f));
+			switching = false;
+			StartCoroutine (SwitchDirections());
+		}
 	}
 
 }

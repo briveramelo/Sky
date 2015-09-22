@@ -6,7 +6,7 @@ public class Basket : MonoBehaviour {
 	
 	public Balloon[] balloonScripts;
 	public ScreenShake screenShakeScript;
-	public TimeEffects timeEffectsScript;
+	public WorldEffects worldEffectsScript;
 	public Joyfulstick joyfulstickScript;
 
 	public CircleCollider2D[] balloonColliders;
@@ -22,7 +22,6 @@ public class Basket : MonoBehaviour {
 
 	public Vector3[] relativeBalloonPositions;
 	
-	public float[] distanceAway;
 	public float dropForce;
 
 	public int balloonCount;
@@ -37,9 +36,8 @@ public class Basket : MonoBehaviour {
 	void Awake () {
 		dropForce = 100f;
 		balloonCount = 3;
-		distanceAway = new float[3];
 		screenShakeScript = GameObject.Find ("mainCam").GetComponent<ScreenShake> ();
-		timeEffectsScript = GameObject.Find ("Dummy").GetComponent<TimeEffects> ();
+		worldEffectsScript = GameObject.Find ("WorldBounds").GetComponent<WorldEffects> ();
 		joyfulstickScript = GameObject.Find ("StickHole").GetComponent<Joyfulstick> ();
 		popNoise = GetComponent<AudioSource> ();
 		rigbod = GetComponent<Rigidbody2D> ();
@@ -94,7 +92,7 @@ public class Basket : MonoBehaviour {
 			StartCoroutine (PopBalloon(balloonNumber));
 			StartCoroutine (Invincibility());
 			StartCoroutine (CheckForEndTimes());
-			StartCoroutine (timeEffectsScript.SlowTime(.5f,.75f));
+			StartCoroutine (worldEffectsScript.SlowTime(.5f,.75f));
 			StartCoroutine (screenShakeScript.CameraShake());
 		}
 		yield return null;

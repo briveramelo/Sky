@@ -8,7 +8,6 @@ public class Joyfulstick : MonoBehaviour {
 	public Spear spearScript;
 	public Collider2D basketCollider;
 	public Collider2D worldBoundsCollider;
-	public CameraMasking cameraMaskingScript;
 
 	public Rigidbody2D basketBody;
 
@@ -21,7 +20,6 @@ public class Joyfulstick : MonoBehaviour {
 	public Vector2 startingTouchPoint;
 	public Vector2 releaseTouchPoint;
 	public Vector2 attackDir;
-	public Vector2 correctionPixels;
 	public Vector2 velVector;
 
 	public float distFromStick; //distance your finger is from the joystick
@@ -31,10 +29,7 @@ public class Joyfulstick : MonoBehaviour {
 	public float maxBalloonSpeed;
 	public float joystickMaxMoveDistance; //maximum distance you can move the joystick
 	public float joystickMaxStartDist;
-	public float correctionPixelFactor;
 	public float speed;
-	public float maxVectorSpeed;
-
 
 	public int joystickFinger;
 	public int spearFinger;
@@ -43,46 +38,33 @@ public class Joyfulstick : MonoBehaviour {
 	public bool beingHeld;
 
 	void Awake () {
+		transform.position = new Vector3 (-Constants.worldDimensions.x * (2f/3f),-Constants.worldDimensions.y * (2f/5f),0f);
 		basketBody = GameObject.Find ("BalloonBasket").GetComponent<Rigidbody2D>();
 		controlStickSprite = GameObject.Find ("ControlStick").GetComponent<SpriteRenderer>();
 		basketCollider = GameObject.Find ("Basket").GetComponent<BoxCollider2D> ();
 		worldBoundsCollider = GameObject.Find ("WorldBounds").GetComponent<EdgeCollider2D> ();
 		jaiScript = GameObject.Find ("Jai").GetComponent<Jai> ();
-		cameraMaskingScript = GameObject.Find ("Mask Camera").GetComponent<CameraMasking> ();
-		maxBalloonSpeed = 3f;
-		maxVectorSpeed = Mathf.Sqrt (maxBalloonSpeed);
+		maxBalloonSpeed = 1.5f;
 
 		startingJoystickSpot = transform.position;
-		joystickMaxMoveDistance = 1.1f;
-		joystickMaxStartDist = 2.3f;
-		distToThrow = .1f;
+		joystickMaxMoveDistance = .75f;
+		joystickMaxStartDist = 1.25f;
+		distToThrow = .03f;
 		joystickFinger = -1;
 		spearFinger = -2;
 		moveForce = 20f;
-		correctionPixels = new Vector2 (Screen.width/2,(-3*Screen.height/2));
-		correctionPixelFactor = 10f / Screen.height;
 	}
 
 	Vector2 ConvertFingerPosition(Vector2 fingerIn){
-		return (fingerIn + correctionPixels) * correctionPixelFactor;
+		return (fingerIn + Constants.correctionPixels) * Constants.correctionPixelFactor;
 	}
 
 	void DoPhysics(){
-		if (Mathf.Sign (velVector.x) != Mathf.Sign (moveDir.x)){
+		if (Mathf.Abs (velVector.x)<maxBalloonSpeed || Mathf.Sign (velVector.x) != Mathf.Sign (moveDir.x)){
 			basketBody.AddForce (Vector2.right * moveDir.x * moveForce);
 		}
-		else {
-			if (Mathf.Abs (speed)<maxBalloonSpeed){
-				basketBody.AddForce (Vector2.right * moveDir.x * moveForce);
-			}
-		}
-		if (Mathf.Sign (velVector.y) != Mathf.Sign (moveDir.y)){
+		if (Mathf.Abs (velVector.y)<maxBalloonSpeed || Mathf.Sign (velVector.y) != Mathf.Sign (moveDir.y)){
 			basketBody.AddForce (Vector2.up * moveDir.y * moveForce);
-		}
-		else {
-			if (Mathf.Abs (speed)<maxBalloonSpeed){
-				basketBody.AddForce (Vector2.up * moveDir.y * moveForce);
-			}
 		}
 	}
 
@@ -91,6 +73,7 @@ public class Joyfulstick : MonoBehaviour {
 		Physics2D.IgnoreCollision (basketCollider, worldBoundsCollider, (basketBody.velocity.y > 0||beingHeld));
 		velVector = basketBody.velocity;
 		speed = velVector.magnitude;
+		startingJoystickSpot = transform.position;
 		if (Input.touchCount>0){
 			foreach (Touch finger in Input.touches){
 				//rawFinger = finger.position;
@@ -110,7 +93,7 @@ public class Joyfulstick : MonoBehaviour {
 							}
 						}
 					}
-					else if (finger.phase == TouchPhase.Moved){ //while your finger is moving on the screen (joystick only)
+					else if (finger.phase == TouchPhase.Moved || finger.phase == TouchPhase.Stationary){ //while your finger is on the screen (joystick only)
 						if (finger.fingerId == joystickFinger){ //move the joystick
 							moveDir = Vector2.ClampMagnitude(ConvertFingerPosition(finger.position) - startingJoystickSpot,joystickMaxMoveDistance);
 							controlStickSprite.transform.position = startingJoystickSpot + moveDir;
@@ -143,7 +126,7 @@ public class Joyfulstick : MonoBehaviour {
 			}
 		}
 		else{
-			touchSpot = Vector2.up * 20f;
+			touchSpot = Vector2.up * Constants.worldDimensions.y * 10f;
 		}
 	}
 }

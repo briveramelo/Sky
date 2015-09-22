@@ -3,9 +3,11 @@ using System.Collections;
 
 public class PooSlide : MonoBehaviour {
 
+	public GameObject maskCamera;
 	public Seagull gullScript;
 	public Joyfulstick joyfulstickScript;
 	public MaskCamera maskCameraScript;
+	public Camera maskCameraCamera;
 	public Rigidbody2D rigbod;
 	public float slideSpeed;
 	public bool sliding;
@@ -14,20 +16,26 @@ public class PooSlide : MonoBehaviour {
 		rigbod = GetComponent<Rigidbody2D> ();
 		joyfulstickScript = GameObject.Find ("StickHole").GetComponent<Joyfulstick> ();
 		joyfulstickScript.pooOnYou++;
-		maskCameraScript = GameObject.Find ("Mask Camera").GetComponent<MaskCamera> ();
+		maskCamera = Instantiate (Resources.Load ("Prefabs/World/MaskCamera"), Vector3.zero, Quaternion.identity) as GameObject;
+		maskCameraCamera = maskCamera.GetComponent<Camera> ();
+		//maskCameraCamera.targetTexture = Resources.Load ("Materials/PooSplat1_RenderTexture", typeof(RenderTexture)) as RenderTexture;
+
+		maskCameraScript = maskCamera.GetComponent<MaskCamera> ();
 		maskCameraScript.pooSliderTransform = transform;
 		maskCameraScript.startDifference = transform.position;
 		maskCameraScript.firstFrame = true;
 		//StartCoroutine (maskCameraScript.ResetMask (GetComponent<SpriteRenderer>()));
-		slideSpeed = .385f;
+		slideSpeed = .39f;
 		sliding = true;
 		StartCoroutine (SlideDown ());
 		Destroy (gameObject,60f);
-		foreach (PooSlide pooSlideScript in FindObjectsOfType<PooSlide>()){
-			if (pooSlideScript && pooSlideScript!=this){
-				Destroy(pooSlideScript.gameObject);
-			}
-		}
+		Destroy (maskCamera,60f);
+//		foreach (PooSlide pooSlideScript in FindObjectsOfType<PooSlide>()){
+//			if (pooSlideScript!=null && pooSlideScript!=this){
+//				//Destroy(pooSlideScript.gameObject);
+//			}
+//		}
+		//Destroy (GetComponent<Animator> (),1f);
 	}
 
 	public IEnumerator SlideDown(){

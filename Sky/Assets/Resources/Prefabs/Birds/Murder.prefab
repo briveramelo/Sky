@@ -162,7 +162,7 @@ Transform:
   m_GameObject: {fileID: 171932}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: .0713324547, y: 8.98219681, z: 0}
-  m_LocalScale: {x: 6.25, y: 6.25, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 422362}
   m_RootOrder: 5
@@ -174,7 +174,7 @@ Transform:
   m_GameObject: {fileID: 156364}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: .0713324547, y: 8.98219681, z: 0}
-  m_LocalScale: {x: 6.25, y: 6.25, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 422362}
   m_RootOrder: 3
@@ -186,7 +186,7 @@ Transform:
   m_GameObject: {fileID: 120016}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: .0713324547, y: 8.98219681, z: 0}
-  m_LocalScale: {x: 6.25, y: 6.25, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 422362}
   m_RootOrder: 1
@@ -216,7 +216,7 @@ Transform:
   m_GameObject: {fileID: 169272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: .0713324547, y: 8.98219681, z: 0}
-  m_LocalScale: {x: 6.25, y: 6.25, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 422362}
   m_RootOrder: 2
@@ -228,7 +228,7 @@ Transform:
   m_GameObject: {fileID: 130932}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: .0713324547, y: 8.98219681, z: 0}
-  m_LocalScale: {x: 6.25, y: 6.25, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 422362}
   m_RootOrder: 4
@@ -240,7 +240,7 @@ Transform:
   m_GameObject: {fileID: 163772}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: .0713324547, y: 8.98219681, z: 0}
-  m_LocalScale: {x: 6.25, y: 6.25, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 422362}
   m_RootOrder: 0
@@ -540,7 +540,6 @@ MonoBehaviour:
   crowAnimator: {fileID: 0}
   startPosition: {x: 0, y: 0, z: 0}
   targetPosition: {x: 0, y: 0, z: 0}
-  extraTargetHeight: {x: 0, y: 0, z: 0}
   moveDir: {x: 0, y: 0}
   moveSpeed: 0
   turnDistance: 0
@@ -577,7 +576,7 @@ MonoBehaviour:
   pixelPerfectCamera: {fileID: 0}
   fitType: 0
   parallaxLayer: 0
-  pixelScale: 1
+  pixelScale: 4
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
@@ -608,18 +607,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guts: {fileID: 0}
   basketScript: {fileID: 0}
-  summonTheCrowsScript: {fileID: 0}
+  worldEffectsScript: {fileID: 0}
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
-  wavesScript: {fileID: 0}
-  gutSplosions: []
-  gutSplosionParentString: 
-  thisGutSplosion: 
+  tentaclesScript: {fileID: 0}
+  spearColliders: []
+  birdCollider: {fileID: 0}
+  hitPoint: {x: 0, y: 0}
   health: 0
-  gutValue: 0
+  killGutValue: 0
+  damageGutValue: 0
   birdType: 0
   summonCrows: 0
-  invincible: 0
   spawnBalloon: 0
 --- !u!114 &11432032
 MonoBehaviour:
@@ -633,7 +632,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crowScripts: []
-  crowPositions: []
   switchTime: 0
   crowsToGo: 
   i: 0
@@ -641,6 +639,7 @@ MonoBehaviour:
   maxCycles: 0
   numGone: 0
   killerIsAlive: 0
+  triggerNext: 0
 --- !u!114 &11436714
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -654,18 +653,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guts: {fileID: 0}
   basketScript: {fileID: 0}
-  summonTheCrowsScript: {fileID: 0}
+  worldEffectsScript: {fileID: 0}
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
-  wavesScript: {fileID: 0}
-  gutSplosions: []
-  gutSplosionParentString: 
-  thisGutSplosion: 
+  tentaclesScript: {fileID: 0}
+  spearColliders: []
+  birdCollider: {fileID: 0}
+  hitPoint: {x: 0, y: 0}
   health: 0
-  gutValue: 0
+  killGutValue: 0
+  damageGutValue: 0
   birdType: 0
   summonCrows: 0
-  invincible: 0
   spawnBalloon: 0
 --- !u!114 &11438332
 MonoBehaviour:
@@ -680,18 +679,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guts: {fileID: 0}
   basketScript: {fileID: 0}
-  summonTheCrowsScript: {fileID: 0}
+  worldEffectsScript: {fileID: 0}
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
-  wavesScript: {fileID: 0}
-  gutSplosions: []
-  gutSplosionParentString: 
-  thisGutSplosion: 
+  tentaclesScript: {fileID: 0}
+  spearColliders: []
+  birdCollider: {fileID: 0}
+  hitPoint: {x: 0, y: 0}
   health: 0
-  gutValue: 0
+  killGutValue: 0
+  damageGutValue: 0
   birdType: 0
   summonCrows: 0
-  invincible: 0
   spawnBalloon: 0
 --- !u!114 &11439092
 MonoBehaviour:
@@ -713,7 +712,6 @@ MonoBehaviour:
   crowAnimator: {fileID: 0}
   startPosition: {x: 0, y: 0, z: 0}
   targetPosition: {x: 0, y: 0, z: 0}
-  extraTargetHeight: {x: 0, y: 0, z: 0}
   moveDir: {x: 0, y: 0}
   moveSpeed: 0
   turnDistance: 0
@@ -750,7 +748,7 @@ MonoBehaviour:
   pixelPerfectCamera: {fileID: 0}
   fitType: 0
   parallaxLayer: 0
-  pixelScale: 1
+  pixelScale: 4
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
@@ -767,18 +765,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guts: {fileID: 0}
   basketScript: {fileID: 0}
-  summonTheCrowsScript: {fileID: 0}
+  worldEffectsScript: {fileID: 0}
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
-  wavesScript: {fileID: 0}
-  gutSplosions: []
-  gutSplosionParentString: 
-  thisGutSplosion: 
+  tentaclesScript: {fileID: 0}
+  spearColliders: []
+  birdCollider: {fileID: 0}
+  hitPoint: {x: 0, y: 0}
   health: 0
-  gutValue: 0
+  killGutValue: 0
+  damageGutValue: 0
   birdType: 0
   summonCrows: 0
-  invincible: 0
   spawnBalloon: 0
 --- !u!114 &11444624
 MonoBehaviour:
@@ -793,18 +791,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guts: {fileID: 0}
   basketScript: {fileID: 0}
-  summonTheCrowsScript: {fileID: 0}
+  worldEffectsScript: {fileID: 0}
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
-  wavesScript: {fileID: 0}
-  gutSplosions: []
-  gutSplosionParentString: 
-  thisGutSplosion: 
+  tentaclesScript: {fileID: 0}
+  spearColliders: []
+  birdCollider: {fileID: 0}
+  hitPoint: {x: 0, y: 0}
   health: 0
-  gutValue: 0
+  killGutValue: 0
+  damageGutValue: 0
   birdType: 0
   summonCrows: 0
-  invincible: 0
   spawnBalloon: 0
 --- !u!114 &11449416
 MonoBehaviour:
@@ -826,7 +824,6 @@ MonoBehaviour:
   crowAnimator: {fileID: 0}
   startPosition: {x: 0, y: 0, z: 0}
   targetPosition: {x: 0, y: 0, z: 0}
-  extraTargetHeight: {x: 0, y: 0, z: 0}
   moveDir: {x: 0, y: 0}
   moveSpeed: 0
   turnDistance: 0
@@ -877,7 +874,7 @@ MonoBehaviour:
   pixelPerfectCamera: {fileID: 0}
   fitType: 0
   parallaxLayer: 0
-  pixelScale: 1
+  pixelScale: 4
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
@@ -894,18 +891,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guts: {fileID: 0}
   basketScript: {fileID: 0}
-  summonTheCrowsScript: {fileID: 0}
+  worldEffectsScript: {fileID: 0}
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
-  wavesScript: {fileID: 0}
-  gutSplosions: []
-  gutSplosionParentString: 
-  thisGutSplosion: 
+  tentaclesScript: {fileID: 0}
+  spearColliders: []
+  birdCollider: {fileID: 0}
+  hitPoint: {x: 0, y: 0}
   health: 0
-  gutValue: 0
+  killGutValue: 0
+  damageGutValue: 0
   birdType: 0
   summonCrows: 0
-  invincible: 0
   spawnBalloon: 0
 --- !u!114 &11463286
 MonoBehaviour:
@@ -921,7 +918,7 @@ MonoBehaviour:
   pixelPerfectCamera: {fileID: 0}
   fitType: 0
   parallaxLayer: 0
-  pixelScale: 1
+  pixelScale: 4
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
@@ -945,7 +942,6 @@ MonoBehaviour:
   crowAnimator: {fileID: 0}
   startPosition: {x: 0, y: 0, z: 0}
   targetPosition: {x: 0, y: 0, z: 0}
-  extraTargetHeight: {x: 0, y: 0, z: 0}
   moveDir: {x: 0, y: 0}
   moveSpeed: 0
   turnDistance: 0
@@ -988,7 +984,6 @@ MonoBehaviour:
   crowAnimator: {fileID: 0}
   startPosition: {x: 0, y: 0, z: 0}
   targetPosition: {x: 0, y: 0, z: 0}
-  extraTargetHeight: {x: 0, y: 0, z: 0}
   moveDir: {x: 0, y: 0}
   moveSpeed: 0
   turnDistance: 0
@@ -1025,7 +1020,7 @@ MonoBehaviour:
   pixelPerfectCamera: {fileID: 0}
   fitType: 0
   parallaxLayer: 0
-  pixelScale: 1
+  pixelScale: 4
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
@@ -1077,7 +1072,6 @@ MonoBehaviour:
   crowAnimator: {fileID: 0}
   startPosition: {x: 0, y: 0, z: 0}
   targetPosition: {x: 0, y: 0, z: 0}
-  extraTargetHeight: {x: 0, y: 0, z: 0}
   moveDir: {x: 0, y: 0}
   moveSpeed: 0
   turnDistance: 0
@@ -1128,7 +1122,7 @@ MonoBehaviour:
   pixelPerfectCamera: {fileID: 0}
   fitType: 0
   parallaxLayer: 0
-  pixelScale: 1
+  pixelScale: 4
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
@@ -1311,11 +1305,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: m_LocalScale.x
-      value: 6.25
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalScale.y
-      value: 6.25
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pixelScale
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

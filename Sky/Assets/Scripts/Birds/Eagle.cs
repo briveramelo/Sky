@@ -15,32 +15,27 @@ public class Eagle : MonoBehaviour {
 
 	public Vector2[] startPos;
 	public Vector2[] moveDir;
-	
-	public int attacks;
 
 	public float moveSpeed;
 	public float attackSpeed;
-	public float xWorldBounds;
 	public float xSpace;
 
 
 	// Use this for initialization
 	void Awake () {
 		pixelRotationScript = GetComponent<PixelRotation> ();
-		moveSpeed = 6.5f;
-		attackSpeed = 11f;
-		attacks = 3;
-		xWorldBounds = 8.9f;
-		xSpace = 9f;
+		moveSpeed = 5f;
+		attackSpeed = 9f;
+		xSpace = Constants.worldDimensions.x * 1.3f;
 		rigbod = GetComponent<Rigidbody2D> ();
 		jaiTransform = GameObject.Find ("Jai").transform;
 		startPos = new Vector2[]{
-			new Vector2(-9.5f,-5.8f),
-			new Vector2(9.5f,-5.8f)
+			new Vector2(-Constants.worldDimensions.x,-Constants.worldDimensions.y) * 1.2f,
+			new Vector2(Constants.worldDimensions.x,-Constants.worldDimensions.y) * 1.2f
 		};
 		moveDir = new Vector2[]{
-			new Vector2(1120,650).normalized * moveSpeed,
-			new Vector2(-1120,650).normalized * moveSpeed,
+			new Vector2(Constants.screenDimensions.x,Constants.screenDimensions.y).normalized * moveSpeed,
+			new Vector2(-Constants.screenDimensions.x,Constants.screenDimensions.y).normalized * moveSpeed,
 		};
 		eagleSprite = GetComponent<SpriteRenderer> ();
 		eagleSprite.enabled = false;
@@ -56,7 +51,7 @@ public class Eagle : MonoBehaviour {
 	public IEnumerator UpRight(){
 		transform.position = startPos [0];
 		rigbod.velocity = moveDir [0];
-		transform.localScale = Constants.Pixel625(true);
+		transform.Face4ward(true);
 		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle (moveDir [0],moveDir[0].x);
 		yield return new WaitForSeconds(4f);
 		StartCoroutine (UpLeft ());
@@ -65,7 +60,7 @@ public class Eagle : MonoBehaviour {
 	public IEnumerator UpLeft(){
 		transform.position = startPos [1];
 		rigbod.velocity = moveDir [1];
-		transform.localScale = Constants.Pixel625(false);
+		transform.Face4ward(false);
 		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle (moveDir [1],moveDir[1].x);
 		yield return new WaitForSeconds(6f);
 		rigbod.velocity = Vector2.zero;
@@ -73,20 +68,14 @@ public class Eagle : MonoBehaviour {
 	}
 
 	public IEnumerator Strike(){
-		while (Mathf.Abs(xSpace)>xWorldBounds){
-			xSpace = jaiTransform.position.x + Random.Range (-30, 31) * .1f;
+		while (Mathf.Abs(xSpace)>Constants.worldDimensions.x){
+			xSpace = jaiTransform.position.x + Random.Range (-Constants.worldDimensions.x, Constants.worldDimensions.x) * .15f;
 		}
 
-		transform.position = new Vector3 (xSpace, 6f, 0f);
+		transform.position = new Vector3 (xSpace, Constants.worldDimensions.y * 1.2f, 0f);
 		attackDir = (jaiTransform.position - transform.position + Constants.balloonOffset).normalized;
 		rigbod.velocity = attackDir * attackSpeed;
-		if (attackDir.x>0){
-			transform.localScale = Constants.Pixel625(true);
-
-		}
-		else{
-			transform.localScale = Constants.Pixel625(false);
-		}
+		transform.Face4ward(attackDir.x>0);
 		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle (attackDir,attackDir.x);
 
 		StartCoroutine (InitiateAttack(5f));

@@ -19,7 +19,7 @@ public class Jai : MonoBehaviour {
 	public bool stabbing;
 
 	void Awake(){
-		throwForce = 1750f;
+		throwForce = 1400f;
 		jaiAnimator = GetComponent<Animator> ();
 	}
 
@@ -46,7 +46,7 @@ public class Jai : MonoBehaviour {
 			StartCoroutine (spearScript.FlyFree(throwDir, throwForce, highLow));
 
 			jaiAnimator.SetInteger("AnimState",animInt);
-			yield return new WaitForSeconds (Constants.timeToThrow);
+			yield return new WaitForSeconds (Constants.timeToThrowSpear);
 			throwing = false;
 			jaiAnimator.SetInteger("AnimState",0);
 			throws++;
@@ -59,7 +59,7 @@ public class Jai : MonoBehaviour {
 			stabbing = true;
 			//jaiAnimator.SetInteger("AnimState",5);
 			StartCoroutine (tentaclesScript.TakeStabs()); //stab the tentacle!
-			yield return new WaitForSeconds (Constants.timeToStab);
+			yield return new WaitForSeconds (Constants.timeToStabSpear);
 			stabbing = false;
 			//jaiAnimator.SetInteger("AnimState",0);
 		}

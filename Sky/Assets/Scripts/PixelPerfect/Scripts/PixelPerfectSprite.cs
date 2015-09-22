@@ -16,21 +16,35 @@ public class PixelPerfectSprite : PixelPerfectObject {
 	
 	override protected float GetTransformScaleFactor() {
 		float parallaxScale;
+		float scaleFactor;
 		if (pixelPerfectCamera!=null && !pixelPerfectCamera.normalCamera.orthographic) {
 			parallaxScale=pixelPerfectCamera.GetParallaxLayerScale(parallaxLayer);
 		} else {
 			parallaxScale=1;
 		}
-		return spriteRenderer.sprite.pixelsPerUnit*PixelPerfect.worldPixelSize*pixelScale*parallaxScale;
+		if (spriteRenderer){
+			scaleFactor = spriteRenderer.sprite.pixelsPerUnit*PixelPerfect.worldPixelSize*pixelScale*parallaxScale;
+		}
+		else{
+			scaleFactor = 100f*PixelPerfect.worldPixelSize*pixelScale*parallaxScale;
+		}
+		return scaleFactor;
 	}
 	
 	override protected Vector2 GetPivotToCenter() {
-		Vector2 normalizedPivot=new Vector2(spriteRenderer.sprite.rect.width*0.5f-spriteRenderer.sprite.pivot.x, spriteRenderer.sprite.rect.height*0.5f-spriteRenderer.sprite.pivot.y);
+		Vector2 normalizedPivot = Vector2.zero;
+		if (spriteRenderer){
+			normalizedPivot =new Vector2(spriteRenderer.sprite.rect.width*0.5f-spriteRenderer.sprite.pivot.x, spriteRenderer.sprite.rect.height*0.5f-spriteRenderer.sprite.pivot.y);
+		}
 		return (new Vector2(normalizedPivot.x, normalizedPivot.y))*pixelScale*PixelPerfect.worldPixelSize;
 	}
 	
 	override protected Vector2 GetCenterToOrigin() {
-		return (new Vector2(-(float)spriteRenderer.sprite.rect.width*0.5f, (float)spriteRenderer.sprite.rect.height*0.5f))*pixelScale*PixelPerfect.worldPixelSize;
+		Vector2 normalPivot = Vector2.zero;
+		if (spriteRenderer){
+			normalPivot = new Vector2(-(float)spriteRenderer.sprite.rect.width*0.5f, (float)spriteRenderer.sprite.rect.height*0.5f)*pixelScale*PixelPerfect.worldPixelSize;
+		}
+		return normalPivot;
 	}
 }
 

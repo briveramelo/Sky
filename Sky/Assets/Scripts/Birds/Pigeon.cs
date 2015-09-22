@@ -16,7 +16,7 @@ public class Pigeon : MonoBehaviour {
 		rigidbod = GetComponent<Rigidbody2D> ();
 		
 		rigidbod.velocity = Vector2.right * moveSpeed;
-		transform.localScale = Constants.Pixel625(false);
+		transform.Face4ward(false);
 	}
 
 

@@ -17,6 +17,7 @@ public class Murder : MonoBehaviour {
 
 	public bool killerIsAlive;
 	public bool triggerNext;
+	public bool killerIsAttacking;
 
 	// Use this for initialization
 	void Awake () {
@@ -32,8 +33,8 @@ public class Murder : MonoBehaviour {
 		int j = 0;
 		foreach (Crow crowScript in crowScripts){
 			crowScript.crowNumber = j;
-			crowScript.transform.position = Spawn.crowPositions[j];
-			crowScript.startPosition = Spawn.crowPositions[j];
+			crowScript.transform.position = Constants.crowPositions[j];
+			crowScript.startPosition = Constants.crowPositions[j];
 			j++;
 		}
 
@@ -44,7 +45,7 @@ public class Murder : MonoBehaviour {
 		killerIsAlive = true;
 		i = Random.Range (0,6);
 		cycles = 0;
-		maxCycles = 3;
+		maxCycles = 300;
 		StartCoroutine(ChooseNextCrow (i));
 	}
 
@@ -53,7 +54,7 @@ public class Murder : MonoBehaviour {
 		crowScripts [crowToGo].swooping = true;
 		crowScripts [crowToGo].crowCollider.enabled = true;
 		numGone = 6-crowsToGo.Length;
-		if (numGone==2 && killerIsAlive){
+		if (numGone == 2 && killerIsAttacking){
 			crowScripts[crowsToGo[Random.Range(0,crowsToGo.Length)]].isKiller = true;
 			//put on the right sprite here
 		}
@@ -81,12 +82,7 @@ public class Murder : MonoBehaviour {
 		crowsToGo = new int[6];
 		int j=0;
 		foreach (Crow crowScript in crowScripts){
-			if (crowScript){
-				crowsToGo[j] = j;
-			}
-			else{
-				crowsToGo[j] = -1;
-			}
+			crowsToGo[j] = crowScript != null ? j : -1;
 			j++;
 		}
 		crowsToGo = crowsToGo.Where(number => number!=-1).ToArray();
@@ -94,10 +90,10 @@ public class Murder : MonoBehaviour {
 			Destroy(gameObject);
 		}
 		cycles++;
-
+		killerIsAttacking = ((cycles==3 || (cycles>3 && Random.Range(0f,1f)>0.6f)) && killerIsAlive) ? true : false; 
 		yield return new WaitForSeconds (3f);
-		i = crowsToGo[Random.Range (0,crowsToGo.Length)];
-		if (cycles<maxCycles){
+		if (cycles<maxCycles && crowsToGo.Length>0){
+			i = crowsToGo[Random.Range (0,crowsToGo.Length)];
 			StartCoroutine (ChooseNextCrow(i));
 		}
 		else{

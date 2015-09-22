@@ -23,7 +23,6 @@ public class Pelican : MonoBehaviour {
 	public float outputAngle;
 	public float inputAngle;
 	public float maxDistance;
-	public float resetDistance;
 
 	public int ticker;
 
@@ -38,21 +37,20 @@ public class Pelican : MonoBehaviour {
 		pelicanCollider = GetComponent<Collider2D> ();
 		pelicanAnimator = GetComponent<Animator> ();
 		setPositions = new Vector3[]{
-			new Vector3(0f,-5.5f,0f),
-			new Vector3(3f,.5f,0f),
-			new Vector3(-3,.5f,0f),
-			new Vector3(0f,3f,0f)
+			new Vector3(0f,-3.5f,0f),
+			new Vector3(1.75f,.25f,0f),
+			new Vector3(-1.75f,.25f,0f),
+			new Vector3(0f,1.25f,0f)
 		};
 		distanceThreshold = 0.2f;
 		moveSpeeds = new float[]{
-			2.5f, 4f, 4f, 4f, 9f
+			2.5f, 3f, 3f, 3f, 9f
 		};
 		curveAngles = new float[]{
 			20f, 30f, 30f, 5f
 		}; //negative means clockwise, positive means counter-clockwise
 		spotsHit = new bool[4];
 		clockwiseSteps = new bool[4];
-		resetDistance = 4.5f;
 		ticker = 0;
 		StartCoroutine(SwoopAround());
 	}
@@ -146,7 +144,7 @@ public class Pelican : MonoBehaviour {
 	//plunge to certain balloon popping glory
 	public IEnumerator DiveBomb(){
 		rigbod.velocity = Vector2.down * moveSpeeds [4];
-		while (transform.position.y>-6f){
+		while (transform.position.y>-Constants.worldDimensions.y-1f){
 			yield return null;
 		}
 		//pelicanAnimator.SetInteger("AnimState",0);
@@ -154,7 +152,7 @@ public class Pelican : MonoBehaviour {
 		pelicanCollider.enabled = false;
 		yield return new WaitForSeconds (2f);
 		StartCoroutine (SwoopAround ());
-		while (transform.position.y<-5f){
+		while (transform.position.y<-Constants.worldDimensions.y){
 			yield return null;
 		}
 		pelicanCollider.enabled = true;

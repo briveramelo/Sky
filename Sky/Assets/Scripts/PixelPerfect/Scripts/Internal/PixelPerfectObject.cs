@@ -25,13 +25,18 @@ public class PixelPerfectObject : MonoBehaviour {
 			if (pixelPerfectCamera!=null) {
 				if (fitType==PixelPerfectFitType.Retro) {
 					return pixelScale*pixelPerfectCamera.GetParallaxLayerScale(parallaxLayer);
-				} else {
+					//return 1f*pixelPerfectCamera.GetParallaxLayerScale(parallaxLayer);
+				}
+				else {
 					return pixelPerfectCamera.GetParallaxLayerScale(parallaxLayer)/pixelPerfectCamera.cameraZoom;
 				}
-			} else {
+			} 
+			else {
 				if (fitType==PixelPerfectFitType.Retro) {
 					return pixelScale;
-				} else {
+					//return 1f;
+				}
+				else {
 					return 1f/PixelPerfect.mainCamera.cameraZoom;
 				}
 			}

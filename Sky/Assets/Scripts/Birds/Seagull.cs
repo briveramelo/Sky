@@ -46,7 +46,7 @@ public class Seagull : MonoBehaviour {
 		rigbod = GetComponent<Rigidbody2D> ();
 		jaiTransform = GameObject.Find ("Jai").transform;
 		minMoveSpeed = 1.5f;
-		moveSpeedHeight = 7f;
+		moveSpeedHeight = 4f;
 		nextDistanceHeight = .3f;
 		minNextDistance = 0.2f;
 		minBoostDistance = 0.6f;
@@ -57,8 +57,8 @@ public class Seagull : MonoBehaviour {
 		nextDistance = 0.2f;
 		minPoopTimeDelay = 4f;
 		poopForce = 70f;
-		pooDistanceRange = new Vector2 (2.25f,2.75f);
-		swoopFocus = 4f;
+		pooDistanceRange = new Vector2 (1f,1.5f);
+		swoopFocus = 2.5f;
 		StartCoroutine (GetIntoPlace ());
 		StartCoroutine (Poop ());
 	}

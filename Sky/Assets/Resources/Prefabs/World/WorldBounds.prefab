@@ -43,8 +43,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 408030}
   - 68: {fileID: 6814216}
-  - 114: {fileID: 11449554}
-  - 114: {fileID: 11497560}
+  - 114: {fileID: 11478162}
   m_Layer: 0
   m_Name: WorldBounds
   m_TagString: Untagged
@@ -160,9 +159,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 1
-  m_Offset: {x: -9.25, y: 0}
+  m_Offset: {x: -2.83999991, y: 0}
   serializedVersion: 2
-  m_Size: {x: 1, y: 10}
+  m_Size: {x: .25, y: 4}
 --- !u!61 &6143208
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -173,9 +172,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 1
-  m_Offset: {x: 9.25, y: 0}
+  m_Offset: {x: 2.83999991, y: 0}
   serializedVersion: 2
-  m_Size: {x: 1, y: 10}
+  m_Size: {x: .25, y: 4}
 --- !u!61 &6147620
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -186,9 +185,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 1
-  m_Offset: {x: 0, y: 5.5}
+  m_Offset: {x: 0, y: 1.60000002}
   serializedVersion: 2
-  m_Size: {x: 20, y: 1}
+  m_Size: {x: 7, y: .25}
 --- !u!61 &6175486
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -199,9 +198,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 1
-  m_Offset: {x: 0, y: -5.5}
+  m_Offset: {x: 0, y: -1.60000002}
   serializedVersion: 2
-  m_Size: {x: 20, y: 1}
+  m_Size: {x: 6, y: .25}
 --- !u!68 &6814216
 EdgeCollider2D:
   m_ObjectHideFlags: 1
@@ -219,7 +218,7 @@ EdgeCollider2D:
   - {x: -9.97878647, y: -4.92130613}
   - {x: 9.99315166, y: -4.97160673}
   - {x: 9.99665642, y: 4.94517899}
---- !u!114 &11449554
+--- !u!114 &11478162
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -227,24 +226,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 156416}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 892e4c63f5d60430280c1f58fbaafeb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  crowString: 
---- !u!114 &11497560
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 156416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec5b7b2b5c44f49ccb7f559539cef9c5, type: 3}
+  m_Script: {fileID: 11500000, guid: d8428dc6dab624f3ab95a0f8fe60f5cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bird: {fileID: 0}
   birdNames: []
-  birdType: 7
+  birdType: 0
   spawnBirds: 0
 --- !u!249 &24919712
 AreaEffector2D:
@@ -257,7 +244,7 @@ AreaEffector2D:
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
-    m_Bits: 4293017544
+    m_Bits: 139264
   m_UseGlobalAngle: 0
   m_ForceAngle: 270
   m_ForceMagnitude: 6
@@ -276,7 +263,7 @@ AreaEffector2D:
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
-    m_Bits: 4293017544
+    m_Bits: 139264
   m_UseGlobalAngle: 0
   m_ForceAngle: 90
   m_ForceMagnitude: 6
@@ -295,7 +282,7 @@ AreaEffector2D:
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
-    m_Bits: 4293017544
+    m_Bits: 139264
   m_UseGlobalAngle: 0
   m_ForceAngle: 180
   m_ForceMagnitude: 6
@@ -314,7 +301,7 @@ AreaEffector2D:
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
-    m_Bits: 4293017544
+    m_Bits: 139264
   m_UseGlobalAngle: 0
   m_ForceAngle: 0
   m_ForceMagnitude: 6

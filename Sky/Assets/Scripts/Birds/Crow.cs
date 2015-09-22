@@ -54,10 +54,10 @@ public class Crow : MonoBehaviour {
 		crowCollider.enabled = false;
 		basketScript = GameObject.Find ("BalloonBasket").GetComponent<Basket>();
 		murderScript = transform.parent.gameObject.GetComponent<Murder>();
-		moveSpeed = 7f;
-		turnDistance = 4.5f;
-		commitDistance = 5f; 
-		triggerDistance = 6f;
+		moveSpeed = 5f;
+		turnDistance = 2.5f;
+		commitDistance = 4f; 
+		triggerDistance = 4.5f;
 		resetDistance = 20f;//needs to be greater than commitDistance
 		RandomizeRedirection ();
 		targetTransform = GameObject.Find ("Jai").transform;
@@ -117,17 +117,8 @@ public class Crow : MonoBehaviour {
 
 			rigbod.velocity = (moveDir).normalized * moveSpeed;
 			pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle(rigbod.velocity,rigbod.velocity.x);
-			AnimateIt();
+			transform.Face4ward(rigbod.velocity.x>0);
 			lastDistance = Vector3.Distance(targetTransform.position + Constants.balloonOffset,transform.position);
-		}
-	}
-
-	void AnimateIt(){
-		if (rigbod.velocity.x<0){
-			transform.localScale = Constants.Pixel625(false);
-		}
-		else{
-			transform.localScale = Constants.Pixel625(true);
 		}
 	}
 

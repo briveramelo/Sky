@@ -161,7 +161,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 163294}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 494420}
@@ -173,7 +173,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 171052}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 494420}
@@ -185,7 +185,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 154288}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 494420}
@@ -197,7 +197,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 134128}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 494420}
@@ -209,7 +209,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131656}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 494420}
@@ -221,7 +221,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 164970}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 494420}
@@ -233,8 +233,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199352}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: 0, z: 0}
-  m_LocalScale: {x: -6.25, y: 6.25, z: 1}
+  m_LocalPosition: {x: 3.83999991, y: -.159999996, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children:
   - {fileID: 452770}
   - {fileID: 457654}
@@ -580,7 +580,7 @@ MonoBehaviour:
   pixelPerfectCamera: {fileID: 0}
   fitType: 0
   parallaxLayer: 0
-  pixelScale: 1
+  pixelScale: 4
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
@@ -656,14 +656,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guts: {fileID: 0}
   basketScript: {fileID: 0}
-  summonTheCrowsScript: {fileID: 0}
+  worldEffectsScript: {fileID: 0}
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
-  wavesScript: {fileID: 0}
-  timeEffectsScript: {fileID: 0}
+  tentaclesScript: {fileID: 0}
   spearColliders: []
   birdCollider: {fileID: 0}
-  gutSplosionParentString: 
   hitPoint: {x: 0, y: 0}
   health: 0
   killGutValue: 0
@@ -801,14 +799,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guts: {fileID: 0}
   basketScript: {fileID: 0}
-  summonTheCrowsScript: {fileID: 0}
+  worldEffectsScript: {fileID: 0}
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
-  wavesScript: {fileID: 0}
-  timeEffectsScript: {fileID: 0}
+  tentaclesScript: {fileID: 0}
   spearColliders: []
   birdCollider: {fileID: 0}
-  gutSplosionParentString: 
   hitPoint: {x: 0, y: 0}
   health: 0
   killGutValue: 0
@@ -870,14 +866,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guts: {fileID: 0}
   basketScript: {fileID: 0}
-  summonTheCrowsScript: {fileID: 0}
+  worldEffectsScript: {fileID: 0}
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
-  wavesScript: {fileID: 0}
-  timeEffectsScript: {fileID: 0}
+  tentaclesScript: {fileID: 0}
   spearColliders: []
   birdCollider: {fileID: 0}
-  gutSplosionParentString: 
   hitPoint: {x: 0, y: 0}
   health: 0
   killGutValue: 0
@@ -898,14 +892,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guts: {fileID: 0}
   basketScript: {fileID: 0}
-  summonTheCrowsScript: {fileID: 0}
+  worldEffectsScript: {fileID: 0}
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
-  wavesScript: {fileID: 0}
-  timeEffectsScript: {fileID: 0}
+  tentaclesScript: {fileID: 0}
   spearColliders: []
   birdCollider: {fileID: 0}
-  gutSplosionParentString: 
   hitPoint: {x: 0, y: 0}
   health: 0
   killGutValue: 0
@@ -926,14 +918,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guts: {fileID: 0}
   basketScript: {fileID: 0}
-  summonTheCrowsScript: {fileID: 0}
+  worldEffectsScript: {fileID: 0}
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
-  wavesScript: {fileID: 0}
-  timeEffectsScript: {fileID: 0}
+  tentaclesScript: {fileID: 0}
   spearColliders: []
   birdCollider: {fileID: 0}
-  gutSplosionParentString: 
   hitPoint: {x: 0, y: 0}
   health: 0
   killGutValue: 0
@@ -954,14 +944,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guts: {fileID: 0}
   basketScript: {fileID: 0}
-  summonTheCrowsScript: {fileID: 0}
+  worldEffectsScript: {fileID: 0}
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
-  wavesScript: {fileID: 0}
-  timeEffectsScript: {fileID: 0}
+  tentaclesScript: {fileID: 0}
   spearColliders: []
   birdCollider: {fileID: 0}
-  gutSplosionParentString: 
   hitPoint: {x: 0, y: 0}
   health: 0
   killGutValue: 0
@@ -982,14 +970,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guts: {fileID: 0}
   basketScript: {fileID: 0}
-  summonTheCrowsScript: {fileID: 0}
+  worldEffectsScript: {fileID: 0}
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
-  wavesScript: {fileID: 0}
-  timeEffectsScript: {fileID: 0}
+  tentaclesScript: {fileID: 0}
   spearColliders: []
   birdCollider: {fileID: 0}
-  gutSplosionParentString: 
   hitPoint: {x: 0, y: 0}
   health: 0
   killGutValue: 0
@@ -1239,6 +1225,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_IsKinematic
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.x
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

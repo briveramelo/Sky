@@ -44,6 +44,7 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
+  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -109,10 +110,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e483e0f7eea34e1398a02cd215cb855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gutSplode: {fileID: 0}
-  gutSplosions: []
-  numberOfGuts: 
-  gutTotal: 0
+  guts: []
+  gutIndices: 
+  gutValue: 0
+  subGutValue: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

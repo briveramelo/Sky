@@ -6,10 +6,9 @@ public class GetHurt : MonoBehaviour {
 
 	public GameObject guts;
 	public Basket basketScript;
-	public SummonTheCrows summonTheCrowsScript;
+	public WorldEffects worldEffectsScript;
 	public DuckLeader duckLeaderScript;
 	public Duck duckScript;
-	public TimeEffects timeEffectsScript;
 	public Tentacles tentaclesScript;
 
 	public CircleCollider2D[] spearColliders;
@@ -28,8 +27,7 @@ public class GetHurt : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		health = 1;
-		summonTheCrowsScript = GameObject.Find ("WorldBounds").GetComponent<SummonTheCrows> ();
-		timeEffectsScript = GameObject.Find ("Dummy").GetComponent<TimeEffects> ();
+		worldEffectsScript = GameObject.Find ("WorldBounds").GetComponent<WorldEffects> ();
 		duckLeaderScript = GetComponent<DuckLeader> ();
 		duckScript = GetComponent<Duck> ();
 		birdCollider = GetComponent<Collider2D> ();
@@ -106,7 +104,7 @@ public class GetHurt : MonoBehaviour {
 		}
 
 		if (birdType == Constants.tentacles && !hurtHealth){
-			spawnSpot = transform.position + Constants.tentacleTipOffset;
+			spawnSpot = transform.GetChild(0).position;
 			gutDirection = new Vector3 (Mathf.Abs (Random.insideUnitCircle.x), Mathf.Abs (Random.insideUnitCircle.y),0f).normalized;
 		}
 		else if (birdType == Constants.tentacles && hurtHealth){
@@ -126,9 +124,9 @@ public class GetHurt : MonoBehaviour {
 		}
 		else{
 			StartCoroutine (guts.GetComponent<GutSplosion> ().GenerateGuts (killGutValue, gutDirection));
-			StartCoroutine (timeEffectsScript.SlowTime(.1f,.5f));
+			StartCoroutine (worldEffectsScript.SlowTime(.1f,.5f));
 			if (summonCrows){
-				StartCoroutine (summonTheCrowsScript.Murder());
+				StartCoroutine (worldEffectsScript.Murder());
 			}
 			else if (spawnBalloon){
 				StartCoroutine (Spawn.NewBalloon());

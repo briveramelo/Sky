@@ -45,7 +45,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\EraseDemo\MaskCamera.cs" />
      <Compile Include="Assets\Scripts\Birds\Albatross.cs" />
      <Compile Include="Assets\Scripts\Birds\BabyCrow.cs" />
      <Compile Include="Assets\Scripts\Birds\Bat.cs" />
@@ -80,19 +79,16 @@
      <Compile Include="Assets\Scripts\PixelPerfect\Scripts\Internal\PixelPerfectObject.cs" />
      <Compile Include="Assets\Scripts\PixelPerfect\Scripts\PixelPerfectCamera.cs" />
      <Compile Include="Assets\Scripts\PixelPerfect\Scripts\PixelPerfectSprite.cs" />
-     <Compile Include="Assets\Scripts\World\CameraMasking.cs" />
+     <Compile Include="Assets\Scripts\World\MaskCamera.cs" />
      <Compile Include="Assets\Scripts\World\ScreenShake.cs" />
-     <Compile Include="Assets\Scripts\World\SpawnBirds.cs" />
-     <Compile Include="Assets\Scripts\World\SummonTheCrows.cs" />
      <Compile Include="Assets\Scripts\World\TeleportSideToSide.cs" />
-     <Compile Include="Assets\Scripts\World\TimeEffects.cs" />
+     <Compile Include="Assets\Scripts\World\WorldEffects.cs" />
      <None Include="Assets\Scripts\PixelPerfect\Scripts\Internal\Resources\PixelPerfectShader.shader" />
-     <None Include="Assets\Resources\Prefabs\Effects\MaskConstruction.shader" />
+     <None Include="Assets\Resources\Shaders\MaskConstruction.shader" />
      <None Include="Assets\Scripts\PixelPerfect\README.txt" />
-     <None Include="Assets\EraseDemo\Masked.shader" />
+     <None Include="Assets\Resources\Shaders\Masked.shader" />
      <None Include="Assets\Scripts\PixelArtRotation\Documentation\Documentation.txt" />
-     <None Include="Assets\EraseDemo\MaskConstruction.shader" />
-     <None Include="Assets\Resources\Prefabs\Effects\TextureMasking.shader" />
+     <None Include="Assets\Resources\Shaders\TextureMasking.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

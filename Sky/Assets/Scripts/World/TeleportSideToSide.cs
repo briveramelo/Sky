@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GenericFunctions;
 
 public class TeleportSideToSide : MonoBehaviour {
 
 	public Collider2D buddyCollider;
 	
 	public Vector3 destination;
-
+	
 	// Use this for initialization
-	void Start () {
-
+	void Awake () {
 		if (name.Contains("Right")){
 			buddyCollider = GameObject.Find ("Teleport_LeftSide").GetComponent<BoxCollider2D>();
 		}
@@ -24,7 +24,7 @@ public class TeleportSideToSide : MonoBehaviour {
 			StartCoroutine (TemporaryTeleport(col));
 		}
 	}
-
+	
 	public IEnumerator TemporaryTeleport(Collider2D col){
 		col.gameObject.transform.position = destination + Vector3.up * col.gameObject.transform.position.y;
 		Physics2D.IgnoreCollision (col, buddyCollider, true);

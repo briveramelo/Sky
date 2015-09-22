@@ -14,6 +14,7 @@ public class Balloon : MonoBehaviour {
 
 	public int balloonNumber;
 	public float moveSpeed;
+	public float popTime;
 
 	public bool popping;
 	public bool moving;
@@ -25,6 +26,7 @@ public class Balloon : MonoBehaviour {
 		balloonAnimator = GetComponent<Animator> ();
 		popNoise = GetComponent<AudioSource> ();
 		moveSpeed = 0.75f;
+		popTime = 20f;
 		popping = false;
 		if (name.Contains("PinkBalloon")){
 			balloonNumber = 0;
@@ -38,14 +40,18 @@ public class Balloon : MonoBehaviour {
 		if (!transform.parent){
 			gameObject.layer = Constants.balloonFloatingLayer;
 			moving = true;
-			transform.localScale = Constants.Pixel625(true);
+			transform.Face4ward(true);
 			StartCoroutine (MoveUp ());
 		}
 	}
 
 	public IEnumerator MoveUp(){
+		float startTime = Time.realtimeSinceStartup;
 		while (moving){
 			transform.position += Vector3.up * moveSpeed * Time.deltaTime;
+			if (Time.realtimeSinceStartup-startTime>popTime){
+				Destroy (gameObject);
+			}
 			yield return null;
 		}
 		yield return null;

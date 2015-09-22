@@ -12,10 +12,10 @@ public class BirdOfParadise : MonoBehaviour {
 	
 	// Use this for initialization
 	void Awake () {
-		moveSpeed = 4f;
+		moveSpeed = 3f;
 		rigidbod = GetComponent<Rigidbody2D> ();
 		
 		rigidbod.velocity = Vector2.right * moveSpeed;
-		transform.localScale = Constants.Pixel625(false);
+		transform.Face4ward(false);
 	}
 }

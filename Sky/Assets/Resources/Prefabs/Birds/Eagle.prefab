@@ -30,8 +30,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 175384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.109375, y: -.234375, z: 0}
-  m_LocalScale: {x: 6.25, y: 6.25, z: 1}
+  m_LocalPosition: {x: 2.88000011, y: -1.3599999, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -108,14 +108,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guts: {fileID: 0}
   basketScript: {fileID: 0}
-  summonTheCrowsScript: {fileID: 0}
+  worldEffectsScript: {fileID: 0}
   duckLeaderScript: {fileID: 0}
   duckScript: {fileID: 0}
-  wavesScript: {fileID: 0}
-  timeEffectsScript: {fileID: 0}
+  tentaclesScript: {fileID: 0}
   spearColliders: []
   birdCollider: {fileID: 0}
-  gutSplosionParentString: 
   hitPoint: {x: 0, y: 0}
   health: 0
   killGutValue: 0
@@ -137,7 +135,7 @@ MonoBehaviour:
   pixelPerfectCamera: {fileID: 0}
   fitType: 0
   parallaxLayer: 0
-  pixelScale: 1
+  pixelScale: 4
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
@@ -159,10 +157,8 @@ MonoBehaviour:
   attackDir: {x: 0, y: 0, z: 0}
   startPos: []
   moveDir: []
-  attacks: 0
   moveSpeed: 0
   attackSpeed: 0
-  xWorldBounds: 0
   xSpace: 0
 --- !u!212 &21261556
 SpriteRenderer:
@@ -199,11 +195,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: m_LocalScale.x
-      value: 6.25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalScale.y
-      value: 6.25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Mass
@@ -212,6 +208,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_IsKinematic
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pixelScale
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
