@@ -12,6 +12,7 @@ GameObject:
   - 50: {fileID: 5074680}
   - 114: {fileID: 11412696}
   - 114: {fileID: 11483494}
+  - 95: {fileID: 9530726}
   m_Layer: 0
   m_Name: PooSplat1
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170286}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -4.63999987, y: .360000134, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
@@ -47,6 +48,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!95 &9530726
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170286}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ff2a2e984cbd34c9498ebd636a5e81d0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11412696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -76,12 +94,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba88d237668ca44f5a0ec772fcf49fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maskCamera: {fileID: 0}
+  worldEffectsScript: {fileID: 0}
   gullScript: {fileID: 0}
   joyfulstickScript: {fileID: 0}
   maskCameraScript: {fileID: 0}
+  pooAnimator: {fileID: 0}
+  maskCameraCamera: {fileID: 0}
   rigbod: {fileID: 0}
   slideSpeed: 0
+  targetPooInt: 0
   sliding: 0
+  animating: 0
 --- !u!212 &21221082
 SpriteRenderer:
   m_ObjectHideFlags: 1

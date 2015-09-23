@@ -11,6 +11,7 @@ public class WorldEffects : MonoBehaviour {
 	
 	[Range(0,12)]
 	public int birdType;
+	public int targetPooInt;
 	public bool spawnBirds;
 	
 	// Use this for initialization

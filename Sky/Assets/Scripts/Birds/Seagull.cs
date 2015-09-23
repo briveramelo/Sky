@@ -4,6 +4,8 @@ using GenericFunctions;
 
 public class Seagull : MonoBehaviour {
 
+	public Joyfulstick joyfulstickScript;
+
 	public Transform jaiTransform;
 
 	public Rigidbody2D rigbod;
@@ -32,6 +34,7 @@ public class Seagull : MonoBehaviour {
 	public float minNextDistance;
 	public float minBoostDistance;
 	public float speedBoostFactor;
+	public float lastTimePooped;
 
 	public bool swooping;
 	public bool settingUp;
@@ -45,6 +48,7 @@ public class Seagull : MonoBehaviour {
 		settingUp = true;
 		rigbod = GetComponent<Rigidbody2D> ();
 		jaiTransform = GameObject.Find ("Jai").transform;
+		joyfulstickScript = GameObject.Find ("StickHole").GetComponent<Joyfulstick> ();
 		minMoveSpeed = 1.5f;
 		moveSpeedHeight = 4f;
 		nextDistanceHeight = .3f;
@@ -126,11 +130,20 @@ public class Seagull : MonoBehaviour {
 			}
 			xDist = Mathf.Abs (transform.position.x-jaiTransform.position.x);
 			if (xDist>pooDistanceRange[0] && xDist<pooDistanceRange[1] && Mathf.Sign(rigbod.velocity.x)==Mathf.Sign(-transform.position.x+jaiTransform.position.x)){
-				if (!directHit){
+				Seagull[] seagullScripts = FindObjectsOfType<Seagull>();
+				float actualLastPoopTime = 30f;
+				foreach (Seagull seagullScript in seagullScripts){
+					float lastGuysPooTime = Time.realtimeSinceStartup-seagullScript.lastTimePooped;
+					if (lastGuysPooTime<actualLastPoopTime){
+						actualLastPoopTime = lastGuysPooTime;
+					}
+				}
+				if (joyfulstickScript.pooOnYou<3 && !directHit && actualLastPoopTime>minPoopTimeDelay){
 					GameObject pooNugget = Instantiate (Resources.Load (Constants.pooNuggetPrefab),transform.position,Quaternion.identity) as GameObject;
 					pooNugget.GetComponent<Rigidbody2D>().velocity = rigbod.velocity;
 					pooNugget.GetComponent<PooNugget>().seagullScript = this;
 					pooped = true;
+					lastTimePooped = Time.realtimeSinceStartup;
 				}
 			}
 			yield return null;

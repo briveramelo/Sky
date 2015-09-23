@@ -14,7 +14,7 @@ GameObject:
   - 212: {fileID: 21287770}
   - 95: {fileID: 9509946}
   m_Layer: 0
-  m_Name: PooSplat7
+  m_Name: PooSplat10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87,7 +87,6 @@ MonoBehaviour:
   slideSpeed: 0
   targetPooInt: 0
   sliding: 0
-  animating: 0
 --- !u!114 &11497886
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -116,7 +115,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: 17ebeb71f5bad4a1dbf0d3ba18ac1f5a, type: 2}
+  - {fileID: 2100000, guid: 9b4b14defb68547cb86449208210b0d7, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -138,7 +137,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9b4b14defb68547cb86449208210b0d7, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 116444}

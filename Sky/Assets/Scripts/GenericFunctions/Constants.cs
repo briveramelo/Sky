@@ -45,7 +45,26 @@ namespace GenericFunctions{
 		};
 		public static string[] pooSplatPrefabs = new string[]{
 			"Prefabs/Effects/PooSplat1",
-			"Prefabs/Effects/PooSplat7"
+			"Prefabs/Effects/PooSplat7",
+			"Prefabs/Effects/PooSplat8",
+			"Prefabs/Effects/PooSplat9",
+			"Prefabs/Effects/PooSplat10",
+		};
+
+		public static string[]pooSplatLastSprites = new string[]{
+			"Sprites/Effects/PooSplat1",
+			"Sprites/Effects/PooSplat7_END",
+			"Sprites/Effects/PooSplat1",
+			"Sprites/Effects/PooSplat7_END",
+			"Sprites/Effects/PooSplat1"
+		};
+
+		public static string[] pooSplatRenderTextures = new string[]{
+			"Materials/PooSplat1_RenderTexture",
+			"Materials/PooSplat7_RenderTexture",
+			"Materials/PooSplat8_RenderTexture",
+			"Materials/PooSplat9_RenderTexture",
+			"Materials/PooSplat10_RenderTexture"
 		};
 
 		public static void FaceFoward(this Transform trans,bool forward){
@@ -115,7 +134,7 @@ namespace GenericFunctions{
 
 		public static Vector3 stockSpearPosition = new Vector3 (0.14f, 0.12f, 0f);
 		public static Vector3 balloonOffset = new Vector3 (0f, 1.6f, 0f);
-		public static Vector3 seagullOffset = balloonOffset + Vector3.up * .75f;
+		public static Vector3 seagullOffset = balloonOffset + Vector3.up * 1.25f;
 		public static float time2Destroy = 2f;
 
 		public static int[] NegativeOnes(int numberOfNegativeOnes){

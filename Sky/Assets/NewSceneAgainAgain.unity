@@ -136,6 +136,10 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: 2.98023224e-08
       objectReference: {fileID: 0}
+    - target: {fileID: 21265062, guid: ba0f847008f6943a1a638c5e5fd73257, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ba0f847008f6943a1a638c5e5fd73257, type: 2}
   m_IsPrefabParent: 0
@@ -196,7 +200,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11478162, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
       propertyPath: birdType
-      value: 11
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 11478162, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
       propertyPath: spawnBirds
