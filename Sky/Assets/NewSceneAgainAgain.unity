@@ -180,46 +180,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 408030, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
       propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6147620, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
-      propertyPath: m_Offset.y
-      value: 3.20000005
-      objectReference: {fileID: 0}
-    - target: {fileID: 6147620, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
-      propertyPath: m_Size.y
-      value: .5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6147620, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
-      propertyPath: m_Size.x
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 6814216, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478162, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
-      propertyPath: birdType
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11478162, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
       propertyPath: spawnBirds
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175486, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
-      propertyPath: m_UsedByEffector
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175486, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 24928954, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
-      propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 6814216, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
+    - {fileID: 13209800, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1198724836
@@ -498,24 +466,3 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8e92a5baac07648318f533c44b7a174d, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &2033465241 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 156416, guid: 6e060d715e6284354893b97cdb9f474f, type: 2}
-  m_PrefabInternal: {fileID: 1184327619}
---- !u!68 &2033465242
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2033465241}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  m_Points:
-  - {x: -5.66619682, y: 3.18662667}
-  - {x: -5.69078588, y: -3.20030785}
-  - {x: 6.4842, y: -3.83718681}
-  - {x: 5.69818878, y: 3.19467878}
-  - {x: -5.68012428, y: 3.20272088}

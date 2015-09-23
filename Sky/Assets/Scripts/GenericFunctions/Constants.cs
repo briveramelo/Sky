@@ -23,14 +23,13 @@ namespace GenericFunctions{
 			"Prefabs/Birds/DuckLeader",		//2
 			"Prefabs/Birds/Albatross",		//3
 			"Prefabs/Birds/BabyCrow",		//4
-			"Prefabs/Birds/Murder",			//5
-			"Prefabs/Birds/Seagull",		//6
-			"Prefabs/Birds/TentacleSensor",	//7
-			"Prefabs/Birds/Pelican",		//8
-			"Prefabs/Birds/Bat_white",		//9
-			"Prefabs/Birds/Bat_dark",		//10
-			"Prefabs/Birds/Eagle",			//11
-			"Prefabs/Birds/BirdOfParadise"	//12
+			"Prefabs/Birds/Seagull",		//5
+			"Prefabs/Birds/TentacleSensor",	//6
+			"Prefabs/Birds/Pelican",		//7
+			"Prefabs/Birds/Bat_white",		//8
+			"Prefabs/Birds/Bat_dark",		//9
+			"Prefabs/Birds/Eagle",			//10
+			"Prefabs/Birds/BirdOfParadise"	//11
 		};
 
 		public static string[] gutSplosionPrefabs = new string[]{

@@ -42,8 +42,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 408030}
-  - 68: {fileID: 6814216}
   - 114: {fileID: 11478162}
+  - 68: {fileID: 6887844}
+  - 114: {fileID: 11441432}
+  - 132: {fileID: 13209800}
   m_Layer: 0
   m_Name: WorldBounds
   m_TagString: Untagged
@@ -185,9 +187,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 1
-  m_Offset: {x: 0, y: 1.60000002}
+  m_Offset: {x: 0, y: 3.20000005}
   serializedVersion: 2
-  m_Size: {x: 7, y: .25}
+  m_Size: {x: 12, y: .5}
 --- !u!61 &6175486
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -201,7 +203,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: -1.60000002}
   serializedVersion: 2
   m_Size: {x: 6, y: .25}
---- !u!68 &6814216
+--- !u!68 &6887844
 EdgeCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -213,11 +215,28 @@ EdgeCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   m_Points:
-  - {x: 9.90223217, y: 5.00006628}
-  - {x: -10.0033484, y: 4.9712925}
-  - {x: -9.97878647, y: -4.92130613}
-  - {x: 9.99315166, y: -4.97160673}
-  - {x: 9.99665642, y: 4.94517899}
+  - {x: -5.66619682, y: 3.18662667}
+  - {x: -5.69078588, y: -3.20030785}
+  - {x: 6.4842, y: -3.83718681}
+  - {x: 5.69818878, y: 3.19467878}
+  - {x: -5.68012428, y: 3.20272088}
+--- !u!114 &11441432
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 156416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a3831cbdb16d4ffcadbfe1380f618b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  birdKillCount: 0
+  playerName: 
+  allTimerecord: 0
+  champ: 
+  prompting: 0
+  gt: {fileID: 0}
 --- !u!114 &11478162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -230,9 +249,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bird: {fileID: 0}
+  worldBoundsForcePushers: []
+  worldEdgeCollider: {fileID: 0}
   birdNames: []
-  birdType: 0
-  spawnBirds: 0
+  birdType: 6
+  targetPooInt: 0
+  spawnBirds: 1
+--- !u!132 &13209800
+GUIText:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 156416}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Text: 
+  m_Anchor: 0
+  m_Alignment: 0
+  m_PixelOffset: {x: 0, y: 0}
+  m_LineSpacing: 1
+  m_TabSize: 4
+  m_Font: {fileID: 0}
+  m_Material: {fileID: 0}
+  m_FontSize: 0
+  m_FontStyle: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_PixelCorrect: 1
+  m_RichText: 1
 --- !u!249 &24919712
 AreaEffector2D:
   serializedVersion: 2

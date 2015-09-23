@@ -147,4 +147,8 @@ public class GetHurt : MonoBehaviour {
 		}
 		yield return null;
 	}
+
+	void OnDestroy(){
+		SaveLoadData.dataStorage.birdKillCount++;
+	}
 }

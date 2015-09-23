@@ -141,7 +141,16 @@ public class Basket : MonoBehaviour {
 			rigbod.gravityScale = 1;
 			basketColliders[0].enabled = false;
 			basketColliders[1].enabled = false;
-			StartCoroutine (Spawn.EndGame());
+			yield return new WaitForSeconds (2.5f);
+			foreach (Rigidbody2D rigger in FindObjectsOfType<Rigidbody2D>()){
+				rigger.isKinematic = true;
+			}
+			StartCoroutine (SaveLoadData.dataStorage.PromptSave ());
+//			while (SaveLoadData.dataStorage.prompting){
+//				yield return null;
+//			}
+			yield return new WaitForSeconds (1f);
+			UnityEditor.EditorApplication.isPlaying = false;
 		}
 		yield return null;
 	}

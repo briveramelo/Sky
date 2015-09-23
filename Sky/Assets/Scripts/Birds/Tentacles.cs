@@ -133,6 +133,8 @@ public class Tentacles : MonoBehaviour {
 
 	public IEnumerator PullBackTheKill(){
 		stabsTaken = 0;
+		rigbod.velocity = Vector2.zero;
+		basketBody.velocity = Vector2.zero;
 		bottomOfTheWorldCollider.enabled = false;
 		while (holding){
 			rigbod.velocity = Vector2.down * descendSpeed;

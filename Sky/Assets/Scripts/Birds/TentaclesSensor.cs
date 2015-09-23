@@ -15,6 +15,7 @@ public class TentaclesSensor : MonoBehaviour {
 		tentacleSensorBoxCollider = GetComponent<BoxCollider2D> ();
 		tentacleSensorBoxCollider.size = new Vector2 (Constants.worldDimensions.x * 2f, Constants.worldDimensions.y * .9375f);
 		tentacleSensorBoxCollider.offset = new Vector2 (0f, -Constants.worldDimensions.y);
+		transform.position = Vector3.zero;
 	}
 	
 	void OnTriggerStay2D(Collider2D enter){
