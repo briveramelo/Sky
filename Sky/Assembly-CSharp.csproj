@@ -84,6 +84,7 @@
      <Compile Include="Assets\Scripts\World\SaveLoadData.cs" />
      <Compile Include="Assets\Scripts\World\ScreenShake.cs" />
      <Compile Include="Assets\Scripts\World\TeleportSideToSide.cs" />
+     <Compile Include="Assets\Scripts\World\WaveManager.cs" />
      <Compile Include="Assets\Scripts\World\WorldEffects.cs" />
      <None Include="Assets\Scripts\PixelPerfect\Scripts\Internal\Resources\PixelPerfectShader.shader" />
      <None Include="Assets\Resources\Shaders\MaskConstruction.shader" />

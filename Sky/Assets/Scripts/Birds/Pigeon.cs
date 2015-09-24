@@ -5,9 +5,7 @@ using GenericFunctions;
 public class Pigeon : MonoBehaviour {
 
 	public Rigidbody2D rigidbod;
-
-	public Vector2[] duckMoveDirections;
-
+	
 	public float moveSpeed;
 
 	// Use this for initialization

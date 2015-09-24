@@ -23,24 +23,37 @@ namespace GenericFunctions{
 			"Prefabs/Birds/DuckLeader",		//2
 			"Prefabs/Birds/Albatross",		//3
 			"Prefabs/Birds/BabyCrow",		//4
-			"Prefabs/Birds/Seagull",		//5
-			"Prefabs/Birds/TentacleSensor",	//6
-			"Prefabs/Birds/Pelican",		//7
-			"Prefabs/Birds/Bat_white",		//8
-			"Prefabs/Birds/Bat_dark",		//9
+			"Prefabs/Birds/Murder",			//5
+			"Prefabs/Birds/Seagull",		//6
+			"Prefabs/Birds/TentacleSensor",	//7
+			"Prefabs/Birds/Pelican",		//8
+			"Prefabs/Birds/Bat_white",		//9
 			"Prefabs/Birds/Eagle",			//10
 			"Prefabs/Birds/BirdOfParadise"	//11
 		};
 
+		public static int pigeon = 0;
+		public static int duck = 1;
+		public static int duckLeader = 2;
+		public static int albatross = 3;
+		public static int babyCrow = 4;
+		public static int crow = 5;
+		public static int seagull = 6;
+		public static int tentacles = 7;
+		public static int pelican = 8;
+		public static int bat = 9;
+		public static int eagle = 10;
+		public static int birdOfParadise = 11;
+
 		public static string[] gutSplosionPrefabs = new string[]{
 			"Prefabs/Effects/GutSplosion1a", //small birds  //0
 			"Prefabs/Effects/GutSplosion2a", //medium birds //1
-			"Prefabs/Effects/GutSplosion2b",				 //1
-			"Prefabs/Effects/GutSplosion2c",				 //2
-			"Prefabs/Effects/GutSplosion2d",				 //3
-			"Prefabs/Effects/GutSplosion2e",				 //4
-			"Prefabs/Effects/GutSplosion3a", //big birds	 //5
-			"Prefabs/Effects/GutSplosion3b",				 //6
+			"Prefabs/Effects/GutSplosion2b",				 //2
+			"Prefabs/Effects/GutSplosion2c",				 //3
+			"Prefabs/Effects/GutSplosion2d",				 //4
+			"Prefabs/Effects/GutSplosion2e",				 //5
+			"Prefabs/Effects/GutSplosion3a", //big birds	 //6
+			"Prefabs/Effects/GutSplosion3b",				 //7
 		};
 		public static string[] pooSplatPrefabs = new string[]{
 			"Prefabs/Effects/PooSplat1",
@@ -109,19 +122,6 @@ namespace GenericFunctions{
 
 		public static int totalPooSpots = 250;
 
-		public static int pigeon = 0;
-		public static int duck = 1;
-		public static int duckLeader = 2;
-		public static int albatross = 3;
-		public static int babyCrow = 4;
-		public static int crow = 5;
-		public static int seagull = 6;
-		public static int tentacles = 7;
-		public static int pelican = 8;
-		public static int bat = 9;
-		public static int eagle = 10;
-		public static int birdOfParadise = 11;
-
 		public static Vector3[] crowPositions  = new Vector3[]{
 			new Vector3(0f  								,  worldDimensions.y * 1.4f , 0f),
 			new Vector3(worldDimensions.x * 1.08f ,  worldDimensions.y * 1.2f , 0f),
@@ -130,6 +130,10 @@ namespace GenericFunctions{
 			new Vector3(-worldDimensions.x * 1.08f, -worldDimensions.y * 1.2f , 0f),
 			new Vector3(-worldDimensions.x * 1.08f,  worldDimensions.y * 1.2f , 0f),
 		};
+
+		public static Vector3 RandomSpawnPoint(float minX, float maxX, float minY, float maxY){
+			return new Vector3 (Random.Range (minX, maxX) * worldDimensions.x, Random.Range (minY, maxY) * worldDimensions.y,0f);
+		}
 
 		public static Vector3 stockSpearPosition = new Vector3 (0.14f, 0.12f, 0f);
 		public static Vector3 balloonOffset = new Vector3 (0f, 1.6f, 0f);

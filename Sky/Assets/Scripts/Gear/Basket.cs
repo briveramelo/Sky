@@ -99,6 +99,7 @@ public class Basket : MonoBehaviour {
 	}
 
 	public IEnumerator PopBalloon(int i){
+		Handheld.Vibrate ();
 		popNoise.Play ();
 		balloonAnimators[i].SetInteger("AnimState",1);
 		if (!joyfulstickScript.beingHeld){
@@ -182,7 +183,7 @@ public class Basket : MonoBehaviour {
 			balloonScripts[balloonNumber].balloonNumber = balloonNumber;
 
 			balloons[balloonNumber].transform.SetParent(transform);
-			balloons[balloonNumber].transform.localScale = Vector3.one;
+			balloons[balloonNumber].transform.Face4ward(true);
 			balloons[balloonNumber].transform.position = jaiTransform.position + relativeBalloonPositions[balloonNumber];
 			popped[balloonNumber] = false;
 			balloonCount++;

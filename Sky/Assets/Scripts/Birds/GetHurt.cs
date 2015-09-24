@@ -6,6 +6,7 @@ public class GetHurt : MonoBehaviour {
 
 	public GameObject guts;
 	public Basket basketScript;
+	public WaveManager waveManagerScript;
 	public WorldEffects worldEffectsScript;
 	public DuckLeader duckLeaderScript;
 	public Duck duckScript;
@@ -28,6 +29,7 @@ public class GetHurt : MonoBehaviour {
 	void Awake () {
 		health = 1;
 		worldEffectsScript = GameObject.Find ("WorldBounds").GetComponent<WorldEffects> ();
+		waveManagerScript = GameObject.Find ("WorldBounds").GetComponent<WaveManager> ();
 		duckLeaderScript = GetComponent<DuckLeader> ();
 		duckScript = GetComponent<Duck> ();
 		birdCollider = GetComponent<Collider2D> ();
@@ -93,6 +95,9 @@ public class GetHurt : MonoBehaviour {
 		}
 		spearColliders = new CircleCollider2D[health];
 		basketScript = GameObject.Find ("BalloonBasket").GetComponent<Basket> ();
+
+
+		Birth (birdType);
 	}
 	
 	public IEnumerator TakeDamage(Vector2 gutDirection, CircleCollider2D spearCollider, bool hurtHealth){
@@ -149,6 +154,30 @@ public class GetHurt : MonoBehaviour {
 	}
 
 	void OnDestroy(){
-		SaveLoadData.dataStorage.birdKillCount++;
+		Death (birdType);
+	}
+
+	void Birth(int birdType){
+		waveManagerScript.currentWaveAllSpawnCount[birdType]++;
+		waveManagerScript.allSpawnCount[birdType]++;
+		waveManagerScript.currentWaveSpawnCount++;
+		waveManagerScript.spawnCount++;
+
+		waveManagerScript.currentWaveAllAliveCount [birdType]++;
+		waveManagerScript.allAliveCount [birdType]++;
+		waveManagerScript.currentWaveAliveCount++;
+		waveManagerScript.aliveCount++;
+	}
+	
+	void Death(int birdType){
+		waveManagerScript.currentWaveAllKillCount [birdType]++;
+		waveManagerScript.allKillCount[birdType]++;
+		waveManagerScript.currentWaveKillCount++;
+		waveManagerScript.killCount++;
+		
+		waveManagerScript.currentWaveAllAliveCount [birdType]--;
+		waveManagerScript.allAliveCount[birdType]--;
+		waveManagerScript.currentWaveAliveCount--;
+		waveManagerScript.aliveCount--;
 	}
 }
