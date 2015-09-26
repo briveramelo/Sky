@@ -96,8 +96,14 @@ public class GetHurt : MonoBehaviour {
 		spearColliders = new CircleCollider2D[health];
 		basketScript = GameObject.Find ("BalloonBasket").GetComponent<Basket> ();
 
-
+		InvokeRepeating ("CheckSpot", 2f,2f);
 		Birth (birdType);
+	}
+
+	void CheckSpot(){
+		if (Vector3.Distance(transform.position,Vector3.zero)>30f){
+			Destroy(gameObject);
+		}
 	}
 	
 	public IEnumerator TakeDamage(Vector2 gutDirection, CircleCollider2D spearCollider, bool hurtHealth){
