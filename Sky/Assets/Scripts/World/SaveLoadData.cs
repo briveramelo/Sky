@@ -13,6 +13,8 @@ public class SaveLoadData : MonoBehaviour {
 	public WaveManager waveManager;
 
 	public string playerName;
+	public int points;
+	public int[] allPoints;
 	public int birdKillCount;
 	public int[] allBirdsKillCount;
 	public int waveNumber;
@@ -28,6 +30,8 @@ public class SaveLoadData : MonoBehaviour {
 	public NameScore[] topScores;
 	public string champ;
 	//savenumber
+	public int mostPoints;
+	public int allMostPoints;
 	public int mostKills;
 	public int[] allMostKills;
 	public int highestWave;
@@ -50,15 +54,19 @@ public class SaveLoadData : MonoBehaviour {
 		Load ();
 
 		if (highScores.ToArray().Length>0){
-			highScores.Sort();
-			topScores = highScores.ToArray();
-
-			champ = topScores [topScores.Length - 1].playerName;
-			mostKills = topScores [topScores.Length - 1].birdKillCount;
-			allMostKills = topScores [topScores.Length - 1].allBirdsKillCount;
-			highestWave = topScores [topScores.Length - 1].waveNumber;
-			saveNumber = topScores [topScores.Length - 1].saveNumber;
+			DisplayChampStats();
 		}
+	}
+
+	void DisplayChampStats(){
+		highScores.Sort();
+		topScores = highScores.ToArray();
+		
+		champ = topScores [topScores.Length - 1].playerName;
+		mostPoints = topScores [topScores.Length - 1].points;
+		mostKills = topScores [topScores.Length - 1].birdKillCount;
+		allMostKills = topScores [topScores.Length - 1].allBirdsKillCount;
+		highestWave = topScores [topScores.Length - 1].waveNumber;
 	}
 
 	public void Save(){
@@ -85,13 +93,14 @@ public class SaveLoadData : MonoBehaviour {
 	}
 
 	public IEnumerator PromptSave(){
-		saveNumber++;
-
+		points = waveManager.points;
+		allPoints = waveManager.allPoints;
 		birdKillCount = waveManager.killCount;
 		allBirdsKillCount = waveManager.allKillCount;
 		waveNumber = waveManager.waveNumber;
+		saveNumber++;
 
-		highScores.Add( new NameScore(playerName, birdKillCount, allBirdsKillCount, waveNumber, saveNumber));
+		highScores.Add( new NameScore(playerName, points, allPoints, birdKillCount, allBirdsKillCount, waveNumber, saveNumber));
 		Save();
 		yield return null;
 	}

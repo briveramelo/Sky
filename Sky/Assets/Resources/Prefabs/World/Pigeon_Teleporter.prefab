@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 402228}
   - 114: {fileID: 11403586}
   - 61: {fileID: 6150156}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: Teleport_LeftSide_Pigeon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +25,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 452116}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: Pigeon_Teleporter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - 4: {fileID: 439748}
   - 114: {fileID: 11482812}
   - 61: {fileID: 6187204}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: Teleport_RightSide_Pigeon
   m_TagString: Untagged
   m_Icon: {fileID: 0}

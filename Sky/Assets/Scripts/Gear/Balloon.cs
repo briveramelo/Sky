@@ -26,7 +26,7 @@ public class Balloon : MonoBehaviour {
 		balloonAnimator = GetComponent<Animator> ();
 		popNoise = GetComponent<AudioSource> ();
 		moveSpeed = 0.75f;
-		popTime = 20f;
+		popTime = 30f;
 		popping = false;
 		if (name.Contains("PinkBalloon")){
 			balloonNumber = 0;
@@ -75,5 +75,9 @@ public class Balloon : MonoBehaviour {
 				StartCoroutine (basketScript.BeginPopping(balloonNumber));
 			}
 		}
+	}
+
+	void OnDestroy(){
+		StopAllCoroutines ();
 	}
 }

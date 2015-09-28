@@ -131,8 +131,32 @@ namespace GenericFunctions{
 			new Vector3(-worldDimensions.x * 1.08f,  worldDimensions.y * 1.2f , 0f),
 		};
 
+		/// <summary> side is +/- 1 and y position is between -1 <-> +1
+		/// <para>Multiplies these input numbers by worldDimensions</para>
+		/// </summary>
+		public static Vector3 RandomSpawnHeight(int side, float minY, float maxY){
+			return new Vector3 (side * worldDimensions.x, Random.Range (minY, maxY) * worldDimensions.y,0f);
+		}
+
+		/// <summary> x and y position ranges are between -1 <-> +1
+		/// <para>Multiplies these input numbers by worldDimensions</para>
+		/// </summary>
 		public static Vector3 RandomSpawnPoint(float minX, float maxX, float minY, float maxY){
 			return new Vector3 (Random.Range (minX, maxX) * worldDimensions.x, Random.Range (minY, maxY) * worldDimensions.y,0f);
+		}
+
+		/// <summary> Choose a side (+/- 1) and y position (-1 <-> +1)
+		/// <para>Multiplies these input numbers by worldDimensions</para>
+		/// </summary>
+		public static Vector3 FixedSpawnHeight (int side, float y){
+			return new Vector3 (side * worldDimensions.x, y * worldDimensions.y,0f);
+		}
+
+		/// <summary> Choose an x position (-1 <-> +1) and y position (-1 <-> +1)
+		/// <para>Multiplies these input numbers by worldDimensions</para>
+		/// </summary>
+		public static Vector3 FixedSpawnPoint(float x, float y){
+			return new Vector3 (x * worldDimensions.x, y * worldDimensions.y,0f);
 		}
 
 		public static Vector3 stockSpearPosition = new Vector3 (0.14f, 0.12f, 0f);

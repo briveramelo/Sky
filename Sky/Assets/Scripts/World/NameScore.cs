@@ -7,29 +7,27 @@ public class NameScore : IComparable<NameScore> {
 
 	public int saveNumber;
 	public string playerName;
+	public int points;
+	public int[] allPoints;
 	public int birdKillCount;
 	public int[] allBirdsKillCount;
 	public int waveNumber;
 
-	public NameScore (string newName, int currentBirdKillCount, int[] currentAllBirdsKillCount, int newWaveNumber, int newSaveNumber){
+	public NameScore (string newName, int currentPoints, int[] currentAllPoints, int currentBirdKillCount, int[] currentAllBirdsKillCount, int newWaveNumber, int newSaveNumber){
 		playerName = newName;
+		points = currentPoints;
+		allPoints = currentAllPoints;
 		birdKillCount = currentBirdKillCount;
 		allBirdsKillCount = currentAllBirdsKillCount;
 		saveNumber = newSaveNumber;
 		waveNumber = newWaveNumber;
 	}
 
-	public int CompareTo(NameScore other/*,bool score*/){
+	//for sorting in an organized/prioritized fashion (sort by score currently)
+	public int CompareTo(NameScore other){
 		if (other==null){
 			return 1;
 		}
-
-//		if (score){
-			return birdKillCount - other.birdKillCount;
-//		}
-
-//		return saveNumber - other.saveNumber;
+		return points - other.points;
 	}
-	
-
 }

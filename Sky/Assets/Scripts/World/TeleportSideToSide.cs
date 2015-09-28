@@ -34,7 +34,7 @@ public class TeleportSideToSide : MonoBehaviour {
 			}
 		}
 		if (duckLeaders){
-			if (col.gameObject.GetComponent<DuckLeader>()){//teleport pigeons across sides
+			if (col.gameObject.GetComponent<DuckLeader>()){//teleport duck squads across sides
 				StartCoroutine (TemporaryTeleport(col));
 			}
 		}

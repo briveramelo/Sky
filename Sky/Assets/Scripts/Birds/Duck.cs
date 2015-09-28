@@ -44,23 +44,16 @@ public class Duck : MonoBehaviour {
 			chooseDir [1]
 		};
 		moveDir = chooseDir [0] * moveSpeed;
-		if (!transform.parent){
-			formationNumber = Random.Range(0,4);
-			StartCoroutine(Scatter());
-		}
 	}
 
 	void Update(){
 		if (bouncing)
 		{
 			VelocityBouncer ();
-			transform.Face4ward(rigbod.velocity.x<0);
 		}
 		else{
 			StayInFormation();
-			transform.FaceFoward(rigbod.velocity.x<0);
 		}
-
 	}
 
 	void StayInFormation(){
@@ -89,5 +82,6 @@ public class Duck : MonoBehaviour {
 		else if (transform.position.x<-Constants.worldDimensions.x){
 			rigbod.velocity = new Vector2 (moveDir.x, rigbod.velocity.y);
 		}
+		transform.Face4ward(rigbod.velocity.x<0);
 	}
 }

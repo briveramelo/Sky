@@ -17,6 +17,7 @@ public class DuckLeader : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		separationDistance = .9f;
+
 		duckScripts = new Duck[]{
 			transform.GetChild(0).GetComponent<Duck>(),
 			transform.GetChild(1).GetComponent<Duck>(),
@@ -25,10 +26,27 @@ public class DuckLeader : MonoBehaviour {
 			transform.GetChild(4).GetComponent<Duck>(),
 			transform.GetChild(5).GetComponent<Duck>(),
 		};
-
-		Vector3 topSide = ConvertAnglesAndVectors.ConvertAngleToVector3 (150);
-		Vector3 bottomSide = ConvertAnglesAndVectors.ConvertAngleToVector3 (210);
-
+		rigbod = GetComponent<Rigidbody2D> ();
+		moveSpeed = 2.5f;
+		StartCoroutine ( FanTheV ());
+	}
+	
+	public void SetPositions(bool goLeft){
+		Vector3 topSide;
+		Vector3 bottomSide;
+		Vector3 direction;
+		if (goLeft){
+			topSide = ConvertAnglesAndVectors.ConvertAngleToVector3 (30);
+			bottomSide = ConvertAnglesAndVectors.ConvertAngleToVector3 (-30);
+			direction = Vector3.left;
+		}
+		else{
+			topSide = ConvertAnglesAndVectors.ConvertAngleToVector3 (150);
+			bottomSide = ConvertAnglesAndVectors.ConvertAngleToVector3 (210);
+			direction = Vector3.right;
+		}
+		transform.Face4ward(goLeft);
+		rigbod.velocity = direction * moveSpeed;
 		setPositions = new Vector3[]
 		{
 			topSide,
@@ -38,26 +56,18 @@ public class DuckLeader : MonoBehaviour {
 			topSide * 3f,
 			bottomSide * 3f
 		};
+		
 		formations = new bool[6];
 		int i = 0;
 		foreach (Duck duck in duckScripts){
 			duck.formationNumber = i;
-			duck.transform.position = transform.position - Vector3.right * separationDistance * i;
+			//duck.transform.position = transform.position + direction * separationDistance * Mathf.CeilToInt(i/2f + 1f);
 			duck.duckLeaderScript = this;
 			setPositions[i] *= separationDistance;
 			formations[i] = true;
 			i++;
 		}
-		//Invoke ("Empower",.1f);
-		rigbod = GetComponent<Rigidbody2D> ();
-		moveSpeed = 2.5f;
-		rigbod.velocity = Vector2.right * moveSpeed;
-		StartCoroutine (FanTheV ());
 	}
-
-	/*void OnDestroy(){
-		transform.DetachChildren ();
-	}*/
 
 	public IEnumerator FanTheV(){
 		foreach (Duck duck in duckScripts){

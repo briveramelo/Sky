@@ -18,6 +18,10 @@ public class GetHurt : MonoBehaviour {
 	public Vector2 hitPoint;
 
 	public int health;
+	public int killPointValue;
+	public int damagePointValue;
+	public float killPointMultiplier;
+
 	public int killGutValue;
 	public int damageGutValue;
 	public int birdType;
@@ -38,66 +42,106 @@ public class GetHurt : MonoBehaviour {
 		if (GetComponent<Pigeon>()){
 			birdType = Constants.pigeon;
 			killGutValue = 3;
+
+			killPointValue = 1;
 		}
+
 		else if (GetComponent<Duck> ()) {
 			birdType = Constants.duck;
 			killGutValue = 4;
+
+			killPointValue = 3; //1 if in formation- it's corrected down below :D
 		} 
+
 		else if (GetComponent<DuckLeader>()){
 			birdType = Constants.duckLeader;
 			killGutValue = 7;
+
+			killPointValue = 2;
 		}
+
 		else if (GetComponent<Albatross>()){
 			birdType = Constants.albatross;
 			health = 7;
 			damageGutValue = 4;
 			killGutValue = 20;
+
+			damagePointValue = 1;
+			killPointValue = 4;
 		}
+
 		else if (GetComponent<BabyCrow> ()) {
 			birdType = Constants.babyCrow;
 			killGutValue = 2;
+
+			killPointValue = 0;
 			summonCrows = true;
 		}
+
 		else if (GetComponent<Crow>()){
 			birdType = Constants.crow;
 			killGutValue = 5;
+
+			killPointValue = 2;
 		}
+
 		else if (GetComponent<Seagull>()){
 			birdType = Constants.seagull;
 			killGutValue = 4;
+
+			killPointMultiplier = 2; //specialty (multiplier for onscreen point values)
 		}
+
 		else if (GetComponent<Tentacles>()){
 			birdType = Constants.tentacles;
 			health = 25;
 			damageGutValue = 4;
 			killGutValue = 80;
+
+			damagePointValue= 1;
+			killPointValue = 10;
+			killPointMultiplier = 1.5f;
 		}
+
 		else if (GetComponent<Pelican>()){
 			birdType = Constants.pelican;
 			health = 3;
 			damageGutValue = 4;
 			killGutValue = 15;
+
+			damagePointValue = 2;
+			killPointValue = 3;
 		}
+
 		else if (GetComponent<Bat>()){
 			birdType = Constants.bat;
 			killGutValue = 3;
+
+			killPointValue = 1;
 		}
+
 		else if (GetComponent<Eagle>()){
 			birdType = Constants.eagle;
 			health = 5;
 			damageGutValue = 4;
 			killGutValue = 80;
+
+			damagePointValue = 3;
+			killPointValue = 20;
 		}
+
 		else if (GetComponent<BirdOfParadise>()){
 			birdType = Constants.birdOfParadise;
 			killGutValue = 40;
+
+			killPointValue = 10;
 			spawnBalloon = true;
 		}
 		spearColliders = new CircleCollider2D[health];
 		basketScript = GameObject.Find ("BalloonBasket").GetComponent<Basket> ();
 
 		InvokeRepeating ("CheckSpot", 2f,2f);
-		Birth (birdType);
+		waveManagerScript.StartCoroutine (waveManagerScript.Birth (birdType));
 	}
 
 	void CheckSpot(){
@@ -132,6 +176,7 @@ public class GetHurt : MonoBehaviour {
 
 		if (health>0){
 			StartCoroutine (guts.GetComponent<GutSplosion> ().GenerateGuts (damageGutValue, gutDirection));
+			StartCoroutine (waveManagerScript.AddPoints (birdType,damagePointValue,0));
 		}
 		else{
 			StartCoroutine (guts.GetComponent<GutSplosion> ().GenerateGuts (killGutValue, gutDirection));
@@ -147,6 +192,7 @@ public class GetHurt : MonoBehaviour {
 			}
 			else if (duckScript){
 				if (duckScript.duckLeaderScript){
+					killPointValue = 1;
 					StartCoroutine(duckScript.duckLeaderScript.ReShuffle(duckScript.formationNumber));
 				}
 			}
@@ -154,36 +200,17 @@ public class GetHurt : MonoBehaviour {
 				StartCoroutine(tentaclesScript.StopThemAll());
 				StartCoroutine(tentaclesScript.tentaclesSensorScript.StopThem());
 			}
+			StartCoroutine (waveManagerScript.AddPoints (birdType,killPointValue,killPointMultiplier));
 			Destroy(gameObject);
 		}
 		yield return null;
 	}
 
 	void OnDestroy(){
-		Death (birdType);
+		if (waveManagerScript){
+			waveManagerScript.StartCoroutine (waveManagerScript.Death (birdType));
+		}
 	}
 
-	void Birth(int birdType){
-		waveManagerScript.currentWaveAllSpawnCount[birdType]++;
-		waveManagerScript.allSpawnCount[birdType]++;
-		waveManagerScript.currentWaveSpawnCount++;
-		waveManagerScript.spawnCount++;
 
-		waveManagerScript.currentWaveAllAliveCount [birdType]++;
-		waveManagerScript.allAliveCount [birdType]++;
-		waveManagerScript.currentWaveAliveCount++;
-		waveManagerScript.aliveCount++;
-	}
-	
-	void Death(int birdType){
-		waveManagerScript.currentWaveAllKillCount [birdType]++;
-		waveManagerScript.allKillCount[birdType]++;
-		waveManagerScript.currentWaveKillCount++;
-		waveManagerScript.killCount++;
-		
-		waveManagerScript.currentWaveAllAliveCount [birdType]--;
-		waveManagerScript.allAliveCount[birdType]--;
-		waveManagerScript.currentWaveAliveCount--;
-		waveManagerScript.aliveCount--;
-	}
 }
