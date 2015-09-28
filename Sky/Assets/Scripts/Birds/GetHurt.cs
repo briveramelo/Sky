@@ -201,6 +201,7 @@ public class GetHurt : MonoBehaviour {
 				StartCoroutine(tentaclesScript.tentaclesSensorScript.StopThem());
 			}
 			StartCoroutine (waveManagerScript.AddPoints (birdType,killPointValue,killPointMultiplier));
+			StartCoroutine (waveManagerScript.Kill (birdType));
 			Destroy(gameObject);
 		}
 		yield return null;
@@ -211,6 +212,4 @@ public class GetHurt : MonoBehaviour {
 			waveManagerScript.StartCoroutine (waveManagerScript.Death (birdType));
 		}
 	}
-
-
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 
 namespace GenericFunctions{
+
 	public static class Constants{
 
 		public static string tentaclePrefab = "Prefabs/Birds/Tentacles";

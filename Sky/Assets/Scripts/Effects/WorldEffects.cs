@@ -31,13 +31,6 @@ public class WorldEffects : MonoBehaviour {
 		worldEdgeCollider = GetComponent<EdgeCollider2D> ();
 		worldEdgeCollider.points = Constants.worldEdgePoints;
 	}
-	
-	void Update(){
-		if (spawnBirds){
-			spawnBirds = false;
-			StartCoroutine(SpawnNextBird(birdType));
-		}
-	}
 
 	public IEnumerator Murder(){
 		GameObject crows = Instantiate (Resources.Load (Constants.murderPrefab), Vector3.zero, Quaternion.identity) as GameObject;
@@ -56,6 +49,15 @@ public class WorldEffects : MonoBehaviour {
 			yield return null;
 		}
 		Time.timeScale = 1f;
+	}
+
+
+
+	void Update(){
+		if (spawnBirds){
+			spawnBirds = false;
+			StartCoroutine(SpawnNextBird(birdType));
+		}
 	}
 
 	public IEnumerator SpawnNextBird(int birdTypeInput){
