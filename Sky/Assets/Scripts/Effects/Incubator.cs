@@ -29,6 +29,10 @@ public class Incubator : MonoBehaviour {
 
 	[SerializeField] private GameObject[] birds; public GameObject[] Birds{get{return birds;}}
 
+	void Awake(){
+		Instance = this;
+	}
+
 	#region Live Spawning
 	void Update(){
 		if (Pigeon){
