@@ -13,7 +13,6 @@ GameObject:
   - 114: {fileID: 11465960}
   - 50: {fileID: 5091728}
   - 114: {fileID: 11407028}
-  - 114: {fileID: 11476726}
   - 58: {fileID: 5862866}
   m_Layer: 16
   m_Name: BabyCrow
@@ -29,7 +28,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 173176}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.31999993, y: 1.19999993, z: 0}
+  m_LocalPosition: {x: -0.15999998, y: -4.4799995, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
@@ -41,6 +40,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 173176}
+  m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
@@ -57,12 +57,13 @@ CircleCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 173176}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: .0399999991
+  m_Radius: 0.04
 --- !u!95 &9531916
 Animator:
   serializedVersion: 3
@@ -91,26 +92,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15e2f0b81b40a44fb966df019426eb3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  getHurtScript: {fileID: 0}
-  babyCrowAnimator: {fileID: 0}
-  rigbod: {fileID: 0}
-  basketTransform: {fileID: 0}
-  shifty: []
-  moveFullDir: {x: 0, y: 0}
-  crowString: 
-  triggerShiftDistance: 0
-  speedDistance: 0
-  zeroDistance: 0
-  currentSpeed: 0
-  minSpeed: 0
-  switchTime: 0
-  moveSpeed: 0
-  shifts: 0
-  maxShifts: 0
-  i: 0
-  switching: 0
-  shifting: 0
-  shiftingSequence: 0
+  rigbod: {fileID: 5091728}
+  birdCollider: {fileID: 5862866}
+  gutSplosionParent: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
+  babyCrowAnimator: {fileID: 9531916}
 --- !u!114 &11465960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -129,32 +114,6 @@ MonoBehaviour:
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
---- !u!114 &11476726
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 173176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 884c3137713c84e6581bda55ae91e923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guts: {fileID: 0}
-  basketScript: {fileID: 0}
-  worldEffectsScript: {fileID: 0}
-  duckLeaderScript: {fileID: 0}
-  duckScript: {fileID: 0}
-  tentaclesScript: {fileID: 0}
-  spearColliders: []
-  birdCollider: {fileID: 0}
-  hitPoint: {x: 0, y: 0}
-  health: 0
-  killGutValue: 0
-  damageGutValue: 0
-  birdType: 0
-  summonCrows: 0
-  spawnBalloon: 0
 --- !u!212 &21282088
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -173,14 +132,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 42d917a7ec6aa4fc29b535c39da85338, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

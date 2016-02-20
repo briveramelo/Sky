@@ -8,13 +8,13 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 494260}
+  - 114: {fileID: 11499996}
   - 212: {fileID: 21283994}
   - 114: {fileID: 11447040}
   - 95: {fileID: 9529916}
   - 58: {fileID: 5889792}
-  - 114: {fileID: 11499996}
   - 82: {fileID: 8271904}
-  m_Layer: 17
+  m_Layer: 18
   m_Name: GreyBalloon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,7 +31,7 @@ GameObject:
   - 4: {fileID: 443860}
   - 212: {fileID: 21286576}
   - 114: {fileID: 11430360}
-  m_Layer: 17
+  m_Layer: 0
   m_Name: Rope2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160852}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .00499999523, y: -.279999971, z: 0}
+  m_LocalPosition: {x: 0.004999995, y: -0.27999997, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 494260}
@@ -57,7 +57,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 152996}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.0400004387, y: 1.40999997, z: 0}
+  m_LocalPosition: {x: 5.2583103, y: 0.3053143, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children:
   - {fileID: 443860}
@@ -70,12 +70,13 @@ CircleCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 152996}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: .00499999989, y: .00999999978}
+  m_Offset: {x: 0.005, y: 0.01}
   serializedVersion: 2
-  m_Radius: .0549999997
+  m_Radius: 0.055
 --- !u!82 &8271904
 AudioSource:
   m_ObjectHideFlags: 1
@@ -116,6 +117,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   panLevelCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -126,6 +128,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -136,6 +139,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -146,6 +150,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!95 &9529916
 Animator:
   serializedVersion: 3
@@ -210,15 +215,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00927edb37f87459c8277d579c70178f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basketScript: {fileID: 0}
-  balloonCollider: {fileID: 0}
-  balloonAnimator: {fileID: 0}
-  popNoise: {fileID: 0}
-  balloonNumber: 0
-  moveSpeed: 0
-  popTime: 0
-  popping: 0
-  moving: 0
+  rope: {fileID: 160852}
+  balloonCollider: {fileID: 5889792}
+  balloonAnimator: {fileID: 9529916}
+  popNoise: {fileID: 8271904}
 --- !u!212 &21283994
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -237,14 +237,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 21d2f649d3b764c4f8f6714151ca94ff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!212 &21286576
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -263,14 +267,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300002, guid: 0d37051ff115f4988a66029694837209, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

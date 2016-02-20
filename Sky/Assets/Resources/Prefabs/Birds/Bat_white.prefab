@@ -13,7 +13,6 @@ GameObject:
   - 114: {fileID: 11495038}
   - 58: {fileID: 5804168}
   - 50: {fileID: 5023904}
-  - 114: {fileID: 11409880}
   - 114: {fileID: 11477976}
   m_Layer: 16
   m_Name: Bat_white
@@ -29,7 +28,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 166612}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .359999985, y: .840000033, z: 0}
+  m_LocalPosition: {x: -0.56, y: -4.8, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
@@ -41,6 +40,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 166612}
+  m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
@@ -57,12 +57,13 @@ CircleCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 166612}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: .0500000007
+  m_Radius: 0.05
 --- !u!95 &9581288
 Animator:
   serializedVersion: 3
@@ -80,32 +81,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11409880
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 166612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 884c3137713c84e6581bda55ae91e923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guts: {fileID: 0}
-  basketScript: {fileID: 0}
-  worldEffectsScript: {fileID: 0}
-  duckLeaderScript: {fileID: 0}
-  duckScript: {fileID: 0}
-  tentaclesScript: {fileID: 0}
-  spearColliders: []
-  birdCollider: {fileID: 0}
-  hitPoint: {x: 0, y: 0}
-  health: 0
-  killGutValue: 0
-  damageGutValue: 0
-  birdType: 0
-  summonCrows: 0
-  spawnBalloon: 0
 --- !u!114 &11477976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -117,37 +92,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53917c2de6ae43e9b39ad90095b2794, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigbod: {fileID: 0}
-  jaiTransform: {fileID: 0}
-  vel: 0
-  orbAng: 0
-  targetAng: 0
-  dist2Spot: 0
-  distanceDelta: 0
-  curvature: 0
-  orbitSpeed: 0
-  orbitXDistances: []
-  orbitYDistances: []
-  stepDistance: 0
-  angleStep: 0
-  angleTilt: 0
-  speedPhaseShift: 0
-  erraticDistance: 0
-  targets: []
-  batPos: {x: 0, y: 0, z: 0}
-  orbVec: {x: 0, y: 0, z: 0}
-  targetSpot: {x: 0, y: 0, z: 0}
-  crossDir: {x: 0, y: 0, z: 0}
-  moveDir: {x: 0, y: 0}
-  batXLayer: 0
-  batYLayer: 0
-  frameDelay: 0
-  windowLength: 0
-  i: 0
-  used: 0
-  startingOff: 0
-  clockwise: 0
-  orbiting: 0
+  rigbod: {fileID: 5023904}
+  birdCollider: {fileID: 5804168}
+  gutSplosionParent: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
 --- !u!114 &11495038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -184,14 +131,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300002, guid: 52ae7c7e3aa3d48bf8582b5197f96c78, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -9,7 +9,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 470794}
   - 212: {fileID: 21214048}
-  - 114: {fileID: 11478314}
   - 114: {fileID: 11431128}
   - 58: {fileID: 5825972}
   - 114: {fileID: 11415724}
@@ -29,7 +28,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 191540}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.44000006, y: -2.07999992, z: 0}
+  m_LocalPosition: {x: 0.39999998, y: -3.7599998, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
@@ -41,6 +40,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 191540}
+  m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
@@ -57,12 +57,13 @@ CircleCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 191540}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: .0500000007
+  m_Radius: 0.05
 --- !u!95 &9528590
 Animator:
   serializedVersion: 3
@@ -91,36 +92,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 675112bbc26ce4545bf070f0690fada4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jaiTransform: {fileID: 0}
-  rigbod: {fileID: 0}
-  targetPosition: {x: 0, y: 0, z: 0}
-  orbVec: {x: 0, y: 0, z: 0}
-  pooDistanceRange: {x: 0, y: 0}
-  currentSpeed: 0
-  minMoveSpeed: 0
-  moveSpeedHeight: 0
-  placeSpeed: 0
-  swoopSpread: 0
-  swoopHeight: 0
-  swoopFocus: 0
-  orbAng: 0
-  targetAng: 0
-  minPoopTimeDelay: 0
-  poopForce: 0
-  xDist: 0
-  xDistLast: 0
-  angleStep: 0
-  nextDistance: 0
-  nextDistanceHeight: 0
-  minNextDistance: 0
-  minBoostDistance: 0
-  speedBoostFactor: 0
-  swooping: 0
-  settingUp: 0
-  clockwise: 0
-  pooped: 0
+  rigbod: {fileID: 5042534}
+  birdCollider: {fileID: 5825972}
+  gutSplosionParent: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
+  pooNugget: {fileID: 173546, guid: 2df066c266e314c3b8ff5a68565a8ddb, type: 2}
   directHit: 0
-  tempPause: 0
 --- !u!114 &11431128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -139,32 +115,6 @@ MonoBehaviour:
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
---- !u!114 &11478314
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 191540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 884c3137713c84e6581bda55ae91e923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guts: {fileID: 0}
-  basketScript: {fileID: 0}
-  worldEffectsScript: {fileID: 0}
-  duckLeaderScript: {fileID: 0}
-  duckScript: {fileID: 0}
-  tentaclesScript: {fileID: 0}
-  spearColliders: []
-  birdCollider: {fileID: 0}
-  hitPoint: {x: 0, y: 0}
-  health: 0
-  killGutValue: 0
-  damageGutValue: 0
-  birdType: 0
-  summonCrows: 0
-  spawnBalloon: 0
 --- !u!212 &21214048
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -183,14 +133,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8e750a4b14483459891d4d426963672b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

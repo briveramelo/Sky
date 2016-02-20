@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using GenericFunctions;
-
+/*
 public class Wave2_V1 : WaveManager {
 
 	public Wave3_V1 wave3;
@@ -79,3 +79,4 @@ public class Wave2_V1 : WaveManager {
 		StartCoroutine (wave3.Wave3 ());
 	}
 }
+*/

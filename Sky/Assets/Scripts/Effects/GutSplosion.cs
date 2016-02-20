@@ -5,35 +5,18 @@ using GenericFunctions;
 
 public class GutSplosion : MonoBehaviour {
 
-	public GameObject[] guts;
-	
-	public int[] gutIndices;
-	public int gutValue;
-	public int subGutValue;
+	[SerializeField] private GameObject[] gutSplosions;
+	private int[] gutIndices;
 
 	void Awake(){
 		gutIndices = Constants.NegativeOnes(100);
 		Destroy(gameObject,Constants.time2Destroy);
 	}
 
-	public int ConvertGutValueToIndex(int subGutterValue){
-		int gutIndex = 0;
-		switch (subGutterValue){
-		case 1:
-			gutIndex = 0;
-			break;
-		case 2:
-			gutIndex = Random.Range(1,5);
-			break;
-		case 3:
-			gutIndex = Random.Range(5,7);
-			break;
-		}
-		return gutIndex;
-	}
-
-	public IEnumerator GenerateGuts(int totalGutValue, Vector2 gutDirection){
+	public void GenerateGuts(int totalGutValue, Vector2 gutDirection){
 		int j = 0;
+		int gutValue = 0;
+		int subGutValue = 0;
 		while (gutValue<totalGutValue){
 			subGutValue = Mathf.Clamp(Random.Range(1,4),1,totalGutValue-gutValue);
 			gutIndices[j] = ConvertGutValueToIndex(subGutValue);
@@ -41,15 +24,22 @@ public class GutSplosion : MonoBehaviour {
 			j++;
 		}
 		gutIndices = gutIndices.Where (number => number != -1).ToArray ();
-		guts = new GameObject[gutIndices.Length];
-		j = 0;
 		foreach (int i in gutIndices){
-			guts[j] = Instantiate (Resources.Load(Constants.gutSplosionPrefabs[i]),new Vector3 (Random.insideUnitCircle.x,Random.insideUnitCircle.y,0f) * .2f + transform.position,Quaternion.identity) as GameObject;
-			guts[j].GetComponent<Rigidbody2D>().velocity = new Vector2 (Random.Range(gutDirection.x * .1f,gutDirection.x * .4f),Random.Range(3f,8f));
-			guts[j].transform.parent = transform;
-			j++;
+			GameObject gut = Instantiate (gutSplosions[i],new Vector2 (Random.insideUnitCircle.x,Random.insideUnitCircle.y) * .2f + (Vector2)transform.position,Quaternion.identity) as GameObject;
+			gut.GetComponent<Rigidbody2D>().velocity = new Vector2 (Random.Range(gutDirection.x * .1f,gutDirection.x * .4f),Random.Range(3f,8f));
+			gut.transform.parent = transform;
 		}
+	}
 
-		yield return null;
+	int ConvertGutValueToIndex(int subGutValue){
+		switch (subGutValue){
+		case 1:
+			return 0;
+		case 2:
+			return Random.Range(1,5);
+		case 3:
+			return Random.Range(5,7);
+		}
+		return 0;
 	}
 }

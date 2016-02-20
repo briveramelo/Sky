@@ -2,200 +2,150 @@
 using System.Collections;
 using GenericFunctions;
 
-public class Tentacles : MonoBehaviour {
+public class Tentacles : Bird, ISensorToTentacle, IStabbable {
 
-	public Transform tipTransform;
-	public BoxCollider2D bottomOfTheWorldCollider;
-	public CircleCollider2D dummyCollider;
-	public Joyfulstick joyfulStickScript;
-	public Basket basketScript;
-	public Collider2D tentaCollider;
-	public GetHurt getHurtScript;
-	public ScreenShake screenShakeScript;
-	public TentaclesSensor tentaclesSensorScript;
-	public WorldEffects worldEffectsScript;
+	public static IStabbable StabbableTentacle;
+	private ISensorToTentacle me; //just because I wanted to use ResetPosition locally with less mess...
 
-	public Transform basketTransform;
+	[SerializeField] private Transform tipTransform;
+	[SerializeField] private Collider2D tentaCollider;
+	[SerializeField] private TentaclesSensor ts; private ITentacleToSensor tentacleToSensor;
 
-	public Rigidbody2D basketBody;
-	public Rigidbody2D rigbod;
-
-	public Vector3 jaiCorrection;
-
-	public Vector2 homeSpot;
+	private Vector2 homeSpot = new Vector2 (0f,-.75f - Constants.worldDimensions.y);
 	
-	public float descendSpeed;
-	public float attackSpeed;
-	public float resetSpeed;
-	public float deathHeight;
-	public float resetHeight;
+	private float descendSpeed = 1f;
+	private float attackSpeed = 1.5f;
+	private float resetSpeed = 1f;
+	private float defeatedHeight;
+	private float resetHeight;
 
-	public int stabsTaken;
-	public int stabs2Retreat;
+	private int stabsTaken;
+	private int stabs2Retreat = 5;
 
-	public bool holding;
-	public bool resetting;
-	public bool hurt;
-	public bool attacking;
-	public bool killedHim;
+	private bool tentaclesDisabled;
 
 	void Awake(){
-		bottomOfTheWorldCollider = GameObject.Find ("BottomWall").GetComponent<BoxCollider2D> ();
-		tipTransform = transform.GetChild (0);
-		stabs2Retreat = 6;
-		descendSpeed = .75f;
-		attackSpeed = 1.5f;
-		resetSpeed = 1f;
-		jaiCorrection = new Vector3 (0f,-.3f,0f);
-		homeSpot = new Vector2 (0f,-.75f - Constants.worldDimensions.y);
+		StabbableTentacle = (IStabbable)this;
+		me = (ISensorToTentacle)this;
+		tentacleToSensor = (ITentacleToSensor)ts;
+
+		birdStats = new BirdStats(BirdType.Tentacles);
+
 		resetHeight = .5f + homeSpot.y;
-		deathHeight = .25f + homeSpot.y;
-		rigbod = GetComponent<Rigidbody2D> ();
-		tentaCollider = GetComponent<Collider2D> ();
-		getHurtScript = GetComponent<GetHurt> ();
-		basketBody = GameObject.Find ("BalloonBasket").GetComponent<Rigidbody2D> ();
-		basketScript = GameObject.Find ("BalloonBasket").GetComponent<Basket> ();
-		worldEffectsScript = GameObject.Find ("WorldBounds").GetComponent<WorldEffects> ();
-		joyfulStickScript = GameObject.Find ("StickHole").GetComponent<Joyfulstick> ();
-		screenShakeScript = GameObject.Find ("mainCam").GetComponent<ScreenShake> ();
-		basketTransform = GameObject.Find ("Basket").transform;
-		GameObject.Find ("Jai").GetComponent<Jai> ().tentaclesScript = this;
+		defeatedHeight = .25f + homeSpot.y;
 	}
 
 	void FaceTowardYou(bool toward){
-		transform.Face4ward (toward ? (basketTransform.position.x - transform.position.x) > 0 : (basketTransform.position.x - transform.position.x) < 0);
+		transform.Face4ward (toward ? (Constants.basketTransform.position.x - transform.position.x) > 0 : (Constants.basketTransform.position.x - transform.position.x) < 0);
 	}
 
-	public IEnumerator GoForTheKill(){ 
+	#region ISensorToTentacle
+	IEnumerator ISensorToTentacle.GoForTheKill(){ 
 		tentaCollider.enabled = true;
-		attacking = true;
-		resetting = false;
-		while (!holding && attacking && !resetting){
-			rigbod.velocity = (basketTransform.position - tipTransform.position).normalized * attackSpeed;
+		while (tentacleToSensor.JaiInRange && !Jai.JaiLegs.BeingHeld){
+			rigbod.velocity = (Constants.basketTransform.position - tipTransform.position).normalized * attackSpeed;
 			FaceTowardYou(true);
 			yield return null;
 		}
-		attacking = false;
-		yield return null;
 	}
 
-	public IEnumerator ResetPosition(){
-		resetting = true;
-		attacking = false;
-		while (!attacking && resetting){
+	IEnumerator ISensorToTentacle.ResetPosition(bool defeated){
+		float finishHeight = defeated ? resetHeight: defeatedHeight;
+
+		while (tipTransform.position.y>finishHeight && (defeated ? true : !tentacleToSensor.JaiInRange)){
 			rigbod.velocity = ((Vector3)homeSpot - tipTransform.position).normalized * resetSpeed;
-			FaceTowardYou(true);
-			if (tipTransform.position.y<resetHeight){
-				resetting = false;
-				rigbod.velocity = Vector2.zero;
-			}
+			FaceTowardYou(!defeated);
 			yield return null;
 		}
-		resetting = false;
+		if (defeated) tentaCollider.enabled = false;
+		rigbod.velocity = Vector2.zero;
+		tentacleToSensor.ToggleSensor(true);
 		yield return null;
 	}
+	#endregion
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (attacking && col.gameObject.layer == Constants.jaiLayer){
-			StartCoroutine (SnatchAndGrab());
+		if (col.gameObject.layer == Constants.jaiLayer && !Jai.JaiLegs.BeingHeld && !tentaclesDisabled){
+			StartCoroutine (PullDownTheKill());
 		}
 	}
 
-	//prevent him from moving, throwing spears
-	//only allow him to stab
-	//start the descent
-	public IEnumerator SnatchAndGrab(){
-		holding = true;
-		resetting = false;
-		hurt = false;
-		attacking = false;
-		joyfulStickScript.beingHeld = true;
-		worldEffectsScript.SlowTime (0.4f, 0.5f);
-		StartCoroutine ( screenShakeScript.CameraShake ());
-		StartCoroutine (PullBackTheKill());
-		yield return null;
-	}
-
-	public IEnumerator TakeStabs(){
-		stabsTaken++;
-		StartCoroutine (getHurtScript.TakeDamage(Vector2.zero,dummyCollider,false));
-		if (stabsTaken>stabs2Retreat){
-			holding = false;
-			resetting = true;
-			hurt = true;
-			attacking = false;
-			StartCoroutine (RetreatToDefeat());
-			joyfulStickScript.beingHeld = false;
-			joyfulStickScript.basketBody.AddForce(Vector2.down * 5f);
-		}
-		yield return null;
-	}
-
-	public IEnumerator PullBackTheKill(){
+	IEnumerator PullDownTheKill(){
 		stabsTaken = 0;
-		rigbod.velocity = Vector2.zero;
-		basketBody.velocity = Vector2.zero;
-		bottomOfTheWorldCollider.enabled = false;
-		while (holding){
+		Jai.JaiLegs.BeingHeld = true;
+		Basket.TentacleToBasket.AttachToTentacles(transform);
+
+		GameClock.Instance.SlowTime (0.4f, 0.5f);
+		GameCamera.Instance.ShakeTheCamera();
+		Constants.bottomOfTheWorldCollider.enabled = false;
+
+		while (tipTransform.position.y>defeatedHeight && stabsTaken<stabs2Retreat){
 			rigbod.velocity = Vector2.down * descendSpeed;
-			basketBody.velocity = Vector2.down * descendSpeed;
-			if (tipTransform.position.y<deathHeight){ //kill him
-				StartCoroutine (StripTheBalloons());
-				basketBody.velocity = Vector2.zero;
-				holding = false;
-				resetting = false;
-				hurt = false;
-				attacking = false;
-				killedHim = true;
-			}
 			yield return null;
 		}
-		bottomOfTheWorldCollider.enabled = true;
-		yield return null;
-	}
-
-	public IEnumerator RetreatToDefeat(){
-		stabsTaken = 0;
-		while (resetting){
-			rigbod.velocity = ((Vector3)homeSpot - tipTransform.position).normalized * resetSpeed;
-			FaceTowardYou(false);
-			if (tipTransform.position.y<deathHeight){
-				holding = false;
-				resetting = false;
-				attacking = false;
-				rigbod.velocity = Vector2.zero;
-				tentaCollider.enabled = false;
-			}
-			yield return null;
+		if (stabsTaken<stabs2Retreat){
+			Basket.TentacleToBasket.LoseAllBalloons();
 		}
-		yield return new WaitForSeconds (3f);
-		hurt = false;
+
+		Constants.bottomOfTheWorldCollider.enabled = true;
 	}
 
-	public IEnumerator StripTheBalloons(){
-		foreach (Balloon balloonScript in basketScript.balloonScripts){ //float the balloons
-			if (balloonScript){
-				balloonScript.transform.parent = null;
-				balloonScript.moving = true;
-				StartCoroutine (balloonScript.MoveUp());
-			}
+	#region IStabbable
+	void IStabbable.GetStabbed(){
+		stabsTaken++;
+		TakeDamage(Vector2.zero,tentaCollider);
+		if (stabsTaken>=stabs2Retreat){
+			tentacleToSensor.ToggleSensor(false);
+			StartCoroutine ( DisableTentacles());
+			StartCoroutine ( me.ResetPosition(true));
+			Jai.JaiLegs.BeingHeld = false;
+			Basket.TentacleToBasket.DetachFromTentacles();
+			Basket.TentacleToBasket.KnockDown(5f);
 		}
-		basketScript.balloonCount = 0;
-		StartCoroutine (basketScript.CheckForEndTimes());
-		yield return null;
+	}
+	#endregion
+
+	IEnumerator DisableTentacles(){
+		tentaclesDisabled = true;
+		yield return new WaitForSeconds (1.5f);
+		tentaclesDisabled = false;
 	}
 
-	public IEnumerator StopThemAll(){
-		StopAllCoroutines ();
-		yield return null;
-	}
-
-	void OnDestroy(){
-		if (bottomOfTheWorldCollider!=null){
-			bottomOfTheWorldCollider.enabled = true;
+	#region TakeDamage
+	public override void TakeDamage(Vector2 gutDirection, Collider2D spearCollider){
+		Vector2 gutSpawnSpot = transform.position;
+		bool holding = gutDirection.x==0;
+		if (!holding){
+			birdStats.Health--;
 		}
-		if (tentaclesSensorScript!=null){
-			Destroy (tentaclesSensorScript.gameObject);
+
+		if (holding){
+			gutSpawnSpot = tipTransform.position;
+			gutDirection = new Vector2 (-Mathf.Sign(transform.localScale.x) * Random.value, Random.value).normalized;
+		}
+		else{
+			gutSpawnSpot = birdCollider.bounds.ClosestPoint(spearCollider.transform.position);
+		}
+		GutSplosion gutSplosion = (Instantiate (gutSplosionParent, gutSpawnSpot, Quaternion.identity) as GameObject).GetComponent<GutSplosion>();
+
+		if (birdStats.Health>0){
+			gutSplosion.GenerateGuts (birdStats.DamageGutValue, gutDirection);
+		}
+		else{
+			gutSplosion.GenerateGuts (birdStats.KillGutValue, gutDirection);
+			GameClock.Instance.SlowTime(.1f,.5f);
+			PayTheIronPrice();
+			TrackPoints();
+			Destroy(transform.parent.gameObject);
+		}
+	}
+	#endregion
+
+	protected override void OnDestroy(){
+		base.OnDestroy();
+		StopAllCoroutines();
+		if (Constants.bottomOfTheWorldCollider!=null){
+			Constants.bottomOfTheWorldCollider.enabled = true;
 		}
 	}
 }

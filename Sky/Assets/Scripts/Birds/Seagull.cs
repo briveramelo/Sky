@@ -2,158 +2,118 @@
 using System.Collections;
 using GenericFunctions;
 
-public class Seagull : MonoBehaviour {
+public class Seagull : Bird {
 
-	public Joyfulstick joyfulstickScript;
+	[SerializeField] private GameObject pooNugget;
 
-	public Transform jaiTransform;
+	private Vector2 targetPosition;
+	private Vector2 orbVec;
 
-	public Rigidbody2D rigbod;
+	private Vector2 pooDistanceRange = new Vector2 (1f,1.5f);
 
-	public Vector3 targetPosition;
-	public Vector3 orbVec;
+	private float minMoveSpeed = 1.5f;
+	private float moveSpeedHeight = 4f;
+	private float swoopFocus = 2.5f;
+	private float verticalOffset = 1.2f;
+	private float swoopSpread;
+	private float swoopHeight;
+	private float orbAng;
+	private float nextDistance;
+	private float nextDistanceHeight;
+	private float minNextDistance = 0.2f;
+	private float lastTimePooped;
 
-	public Vector2 pooDistanceRange;
-
-	public float currentSpeed;
-	public float minMoveSpeed;
-	public float moveSpeedHeight;
-	public float placeSpeed;
-	public float swoopSpread;
-	public float swoopHeight;
-	public float swoopFocus;
-	public float orbAng;
-	public float targetAng;
-	public float minPoopTimeDelay;
-	public float poopForce;
-	public float xDist;
-	public float xDistLast;
-	public float angleStep;
-	public float nextDistance;
-	public float nextDistanceHeight;
-	public float minNextDistance;
-	public float minBoostDistance;
-	public float speedBoostFactor;
-	public float lastTimePooped;
-
-	public bool swooping;
-	public bool settingUp;
-	public bool clockwise;
-	public bool pooped;
-	public bool directHit;
-	public bool tempPause;
-
-	// Use this for initialization
 	void Awake () {
-		settingUp = true;
-		rigbod = GetComponent<Rigidbody2D> ();
-		jaiTransform = GameObject.Find ("Jai").transform;
-		joyfulstickScript = GameObject.Find ("StickHole").GetComponent<Joyfulstick> ();
-		minMoveSpeed = 1.5f;
-		moveSpeedHeight = 4f;
+		birdStats = new BirdStats(BirdType.Seagull);
+
 		nextDistanceHeight = .3f;
-		minNextDistance = 0.2f;
-		minBoostDistance = 0.6f;
-		speedBoostFactor = 1f;
-		currentSpeed = minMoveSpeed;
-		placeSpeed = 3f;
-		angleStep = 4f;
+
 		nextDistance = 0.2f;
-		minPoopTimeDelay = 4f;
-		poopForce = 70f;
-		pooDistanceRange = new Vector2 (1f,1.5f);
-		swoopFocus = 2.5f;
 		StartCoroutine (GetIntoPlace ());
 		StartCoroutine (Poop ());
 	}
 
-	void FindStartTarget(){
-		orbAng = ConvertAnglesAndVectors.ConvertVector3Angle (transform.position - (jaiTransform.position + Constants.seagullOffset));
-		swoopSpread = swoopFocus * Mathf.Cos(Mathf.Deg2Rad * orbAng) / (Mathf.Sin(Mathf.Deg2Rad * orbAng) *  Mathf.Sin(Mathf.Deg2Rad * orbAng) + 1f);
-		swoopHeight = swoopSpread * Mathf.Sin(Mathf.Deg2Rad * orbAng) /2f;
-		nextDistance = RaisedCos(minNextDistance,nextDistanceHeight,orbAng);
-		orbVec = new Vector3 (swoopSpread,swoopHeight,0f);
-	}
-
-	public IEnumerator GetIntoPlace(){
+	IEnumerator GetIntoPlace(){
+		float placeSpeed = 3f;
 		FindStartTarget ();
-		while (settingUp){
-			targetPosition = orbVec + jaiTransform.position + Constants.seagullOffset;
-			rigbod.velocity = (targetPosition-transform.position).normalized * placeSpeed;
+		while (true){
+			targetPosition = orbVec + (Vector2)Constants.balloonCenter.position + Vector2.up*verticalOffset;
+			rigbod.velocity = (targetPosition-(Vector2)transform.position).normalized * placeSpeed;
 			if (Vector2.Distance(targetPosition,transform.position)<nextDistance){
-				settingUp = false;
-				swooping = true;
 				StartCoroutine (SwoopOverhead());
+				break;
 			}
 			yield return null;
 		}
 		yield return null;
+	}
+
+	void FindStartTarget(){
+		orbAng = ConvertAnglesAndVectors.ConvertVector3Angle (transform.position - (Constants.balloonCenter.position + Vector3.up*verticalOffset));
+		swoopSpread = swoopFocus * Mathf.Cos(Mathf.Deg2Rad * orbAng) / (Mathf.Sin(Mathf.Deg2Rad * orbAng) *  Mathf.Sin(Mathf.Deg2Rad * orbAng) + 1f);
+		swoopHeight = swoopSpread * Mathf.Sin(Mathf.Deg2Rad * orbAng) /2f;
+		nextDistance = RaisedCos(minNextDistance,nextDistanceHeight,orbAng);
+		orbVec = new Vector2 (swoopSpread,swoopHeight);
 	}
 
 	float RaisedCos(float minSpeed, float height, float ang){
 		return height / 2f * Mathf.Cos (2f * Mathf.Deg2Rad * (ang + 90f)) + (minSpeed + height / 2f);
 	}
 
-	public IEnumerator SwoopOverhead(){
-		while (swooping){
+	IEnumerator SwoopOverhead(){
+		float currentSpeed = minMoveSpeed;
+		float targetAng = 0;
+		float angleStep = 4f;
+		float minBoostDistance = 0.6f;
+		float speedBoostFactor = 1f;
+		bool clockwise = Random.value>0.5f;
+		while (true){
 			float distanceAway = Vector2.Distance(targetPosition,transform.position);
 			if (distanceAway<nextDistance){
-				if (clockwise){
-					targetAng = orbAng+90f;
-				}
-				else{
-					targetAng = orbAng-90f;
-				}
+				targetAng = clockwise ? orbAng+90f : orbAng-90f;
 				orbAng = Mathf.LerpAngle(orbAng,targetAng,Time.deltaTime*angleStep);
 				swoopSpread = swoopFocus * Mathf.Cos(Mathf.Deg2Rad * orbAng) / (Mathf.Sin(Mathf.Deg2Rad * orbAng) *  Mathf.Sin(Mathf.Deg2Rad * orbAng) + 1f);
 				swoopHeight = swoopSpread * Mathf.Sin(Mathf.Deg2Rad * orbAng) /2f;
 				currentSpeed = RaisedCos(minMoveSpeed,moveSpeedHeight,orbAng);
 				nextDistance = RaisedCos(minNextDistance,nextDistanceHeight,orbAng);
-				orbVec = new Vector3 (swoopSpread,swoopHeight,0f);
-				targetPosition = orbVec + jaiTransform.position + Constants.seagullOffset;
+				orbVec = new Vector2 (swoopSpread,swoopHeight);
+				targetPosition = orbVec + (Vector2)Constants.balloonCenter.position + Vector2.up * verticalOffset;
 			}
 			else if (distanceAway>minBoostDistance){
 				currentSpeed += distanceAway * speedBoostFactor;
 			}
-			rigbod.velocity = (targetPosition-transform.position).normalized * currentSpeed;
+			rigbod.velocity = (targetPosition-(Vector2)transform.position).normalized * currentSpeed;
 			yield return null;
 		}
-		yield return null;
 	}
 
-	public IEnumerator Poop(){
+	IEnumerator Poop(){
+		float minPoopTimeDelay = 4f;
 		yield return new WaitForSeconds (minPoopTimeDelay);
-		while (!pooped){
-			if (tempPause){
-				tempPause = false;
-				yield return new WaitForSeconds (minPoopTimeDelay);
-			}
-			xDist = Mathf.Abs (transform.position.x-jaiTransform.position.x);
-			if (xDist>pooDistanceRange[0] && xDist<pooDistanceRange[1] && Mathf.Sign(rigbod.velocity.x)==Mathf.Sign(-transform.position.x+jaiTransform.position.x)){
-				Seagull[] seagullScripts = FindObjectsOfType<Seagull>();
+		while (true){
+			float xDist = Mathf.Abs (transform.position.x-Constants.jaiTransform.position.x);
+			if (xDist>pooDistanceRange[0] && xDist<pooDistanceRange[1] && Mathf.Sign(rigbod.velocity.x)==Mathf.Sign(-transform.position.x+Constants.jaiTransform.position.x)){
 				float actualLastPoopTime = 30f;
-				foreach (Seagull seagullScript in seagullScripts){
+				foreach (Seagull seagullScript in FindObjectsOfType<Seagull>()){
 					float lastGuysPooTime = Time.realtimeSinceStartup-seagullScript.lastTimePooped;
 					if (lastGuysPooTime<actualLastPoopTime){
 						actualLastPoopTime = lastGuysPooTime;
 					}
 				}
-				if (joyfulstickScript.pooOnYou<3 && !directHit && actualLastPoopTime>minPoopTimeDelay){
-					GameObject pooNugget = Instantiate (Resources.Load (Constants.pooNuggetPrefab),transform.position,Quaternion.identity) as GameObject;
-					pooNugget.GetComponent<Rigidbody2D>().velocity = rigbod.velocity;
-					pooNugget.GetComponent<PooNugget>().seagullScript = this;
-					pooped = true;
+				if (Constants.poosOnJaisFace<3 && actualLastPoopTime>minPoopTimeDelay){
+					(Instantiate (pooNugget,transform.position,Quaternion.identity) as GameObject).GetComponent<PooNugget>().InitializePooNugget(rigbod.velocity);
 					lastTimePooped = Time.realtimeSinceStartup;
+					break;
 				}
 			}
 			yield return null;
 		}
-		pooped = false;
 		StartCoroutine (Poop ());
 		yield return null;
 	}
 
-	void OnDestroy(){
+	protected override void OnDestroy(){
+		base.OnDestroy();
 		StopAllCoroutines();
 	}
 }

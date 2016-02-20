@@ -2,6 +2,7 @@
 using System.Collections;
 using GenericFunctions;
 
+/*
 public class Wave3_V2 : WaveManager {
 
 	//PIGEONS AND DUCKS
@@ -86,3 +87,4 @@ public class Wave3_V2 : WaveManager {
 		yield return StartCoroutine (WaitUntilAliveOnScreen (0));
 	}
 }
+*/

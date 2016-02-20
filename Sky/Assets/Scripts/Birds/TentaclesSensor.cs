@@ -2,40 +2,36 @@
 using System.Collections;
 using GenericFunctions;
 
-public class TentaclesSensor : MonoBehaviour {
+public class TentaclesSensor : MonoBehaviour, ITentacleToSensor {
 
-	public GameObject tentacles;
-	public Tentacles tentaclesScript;
-	public BoxCollider2D tentacleSensorBoxCollider;
-	
+	[SerializeField] private Tentacles tentaclesScript; private ISensorToTentacle sensorToTentacle;
+	[SerializeField] private Collider2D sensor;
+	private bool jaiInRange; public bool JaiInRange{get{return jaiInRange;}}
+
 	void Awake () {
-		tentacles = Instantiate (Resources.Load (Constants.tentaclePrefab), new Vector3 (0f,-0.5f - Constants.worldDimensions.y,0f), Quaternion.identity) as GameObject;
-		tentaclesScript = tentacles.GetComponent<Tentacles> ();
-		tentaclesScript.tentaclesSensorScript = this;
-		tentacleSensorBoxCollider = GetComponent<BoxCollider2D> ();
-		tentacleSensorBoxCollider.size = new Vector2 (Constants.worldDimensions.x * 2f, Constants.worldDimensions.y * .9375f);
-		tentacleSensorBoxCollider.offset = new Vector2 (0f, -Constants.worldDimensions.y);
+		sensorToTentacle = (ISensorToTentacle)tentaclesScript;
 		transform.position = Vector3.zero;
 	}
-	
-	void OnTriggerStay2D(Collider2D enter){
-		if (!tentaclesScript.holding && !tentaclesScript.attacking && !tentaclesScript.hurt){
-			if (enter.gameObject.layer==Constants.basketLayer){ //rise against the basket
-				StartCoroutine (tentaclesScript.GoForTheKill());
+		
+	void OnTriggerEnter2D(Collider2D enterer){
+		if (enterer.gameObject.layer==Constants.basketLayer){ //rise against the basket
+			if (!enterer.isTrigger){
+				jaiInRange = true;
+				StartCoroutine (sensorToTentacle.GoForTheKill());
 			}
 		}
 	}
 
-	void OnTriggerExit2D(Collider2D exit){
-		if (tentaclesScript.attacking){
-			if (exit.gameObject.layer==Constants.basketLayer){ //return to the depths
-				StartCoroutine (tentaclesScript.ResetPosition());
+	void OnTriggerExit2D(Collider2D exiter){
+		if (exiter.gameObject.layer==Constants.basketLayer){ //return to the depths
+			if (!exiter.isTrigger){
+				jaiInRange = false;
+				StartCoroutine (sensorToTentacle.ResetPosition(false));
 			}
 		}
 	}
 
-	public IEnumerator StopThem(){
-		StopAllCoroutines ();
-		yield return null;
+	void ITentacleToSensor.ToggleSensor(bool active){
+		sensor.enabled = active;
 	}
 }

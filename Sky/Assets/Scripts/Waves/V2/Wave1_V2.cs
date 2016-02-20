@@ -2,6 +2,7 @@
 using System.Collections;
 using GenericFunctions;
 
+/*
 public class Wave1_V2 : WaveManager {
 
 	public Wave2_V2 wave2;
@@ -82,3 +83,4 @@ public class Wave1_V2 : WaveManager {
 	}
 
 }
+*/

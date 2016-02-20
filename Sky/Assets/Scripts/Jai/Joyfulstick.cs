@@ -2,57 +2,111 @@ using UnityEngine;
 using System.Collections;
 using GenericFunctions;
 
-public class Joyfulstick : MonoBehaviour {
-	
-	public Jai jaiScript;
-	public Spear spearScript;
-	public Collider2D basketCollider;
-	public Collider2D worldBoundsCollider;
+public class Joyfulstick : MonoBehaviour, ITouchable {
 
-	public Rigidbody2D basketBody;
+	public static ITouchable Instance;
 
-	public SpriteRenderer controlStickSprite;
+	[SerializeField] private Transform controlStickTransform;
 
-	public Vector2 startingJoystickSpot; //position of the joystick on screen
-	public Vector2 touchSpot;
-	public Vector2 moveDir;
-	public Vector2 rawFinger;
-	public Vector2 startingTouchPoint;
-	public Vector2 releaseTouchPoint;
-	public Vector2 attackDir;
-	public Vector2 velVector;
+	private Collider2D basketCollider;
+	private Rigidbody2D basketBody;
 
-	public float distFromStick; //distance your finger is from the joystick
-	public float distToThrow;
-	public float releaseDist;
-	public float moveForce;
-	public float maxBalloonSpeed;
-	public float joystickMaxMoveDistance; //maximum distance you can move the joystick
-	public float joystickMaxStartDist;
-	public float speed;
+	private Vector2 startingJoystickSpot; //position of the joystick on screen
+	private Vector2 touchSpot; 
+	#region ITouchable
+	Vector2 ITouchable.TouchSpot{get{return touchSpot;}}
+	#endregion
+	private Vector2 moveDir;
+	private Vector2 rawFinger;
+	private Vector2 startingTouchPoint;
+	private Vector2 releaseTouchPoint;
+	private Vector2 attackDir;
+	private Vector2 velVector;
 
-	public int joystickFinger;
-	public int spearFinger;
-	public int pooOnYou;
+	private float distFromStick; //distance your finger is from the joystick
+	private float maxBalloonSpeed = 1.5f;
+	private float distToThrow = .03f;
+	private float moveForce = 20f;
+	private float joystickMaxMoveDistance = .75f; //maximum distance you can move the joystick
+	private float joystickMaxStartDist = 1.25f;
+	private float releaseDist;
 
-	public bool beingHeld;
+	private int joystickFinger;
+	private int spearFinger;
 
 	void Awake () {
-		transform.position = new Vector3 (-Constants.worldDimensions.x * (2f/3f),-Constants.worldDimensions.y * (2f/5f),0f);
-		basketBody = GameObject.Find ("BalloonBasket").GetComponent<Rigidbody2D>();
-		controlStickSprite = GameObject.Find ("ControlStick").GetComponent<SpriteRenderer>();
-		basketCollider = GameObject.Find ("Basket").GetComponent<BoxCollider2D> ();
-		worldBoundsCollider = GameObject.Find ("WorldBounds").GetComponent<EdgeCollider2D> ();
-		jaiScript = GameObject.Find ("Jai").GetComponent<Jai> ();
-		maxBalloonSpeed = 1.5f;
+		Instance = this;
 
+		basketBody = GameObject.Find("BalloonBasket").GetComponent<Rigidbody2D>();
+		GameObject basket = GameObject.Find("Basket");
+		basketCollider = basket.GetComponent<Collider2D>();
+
+		transform.position = new Vector2 (-Constants.worldDimensions.x * (2f/3f),-Constants.worldDimensions.y * (2f/5f));
 		startingJoystickSpot = transform.position;
-		joystickMaxMoveDistance = .75f;
-		joystickMaxStartDist = 1.25f;
-		distToThrow = .03f;
 		joystickFinger = -1;
 		spearFinger = -2;
-		moveForce = 20f;
+	}
+
+	void Update () {
+		Physics2D.IgnoreCollision (basketCollider, Constants.worldBoundsCollider, (basketBody.velocity.y > 0||Jai.JaiLegs.BeingHeld));
+		velVector = basketBody.velocity;
+		startingJoystickSpot = transform.position;
+		if (Input.touchCount>0){
+			foreach (Touch finger in Input.touches){
+				//rawFinger = finger.position;
+				touchSpot = ConvertFingerPosition(finger.position);
+				if(!Jai.JaiLegs.BeingHeld){
+					if (finger.phase == TouchPhase.Began){
+						distFromStick = Vector2.Distance(ConvertFingerPosition(finger.position),startingJoystickSpot);
+						if (distFromStick<joystickMaxStartDist){
+							joystickFinger = finger.fingerId;
+							moveDir = Vector2.ClampMagnitude(ConvertFingerPosition(finger.position) - startingJoystickSpot,joystickMaxMoveDistance);
+							controlStickTransform.transform.position = startingJoystickSpot + moveDir;
+						}
+						else{
+							if (Input.touchCount<3){
+								startingTouchPoint = ConvertFingerPosition(finger.position);
+								spearFinger = finger.fingerId;
+							}
+						}
+					}
+					else if (finger.phase == TouchPhase.Moved || finger.phase == TouchPhase.Stationary){ //while your finger is on the screen (joystick only)
+						if (finger.fingerId == joystickFinger){ //move the joystick
+							moveDir = Vector2.ClampMagnitude(ConvertFingerPosition(finger.position) - startingJoystickSpot,joystickMaxMoveDistance);
+							controlStickTransform.transform.position = startingJoystickSpot + moveDir;
+							DoPhysics();
+						}
+					}
+					else if (finger.phase == TouchPhase.Ended){ //when your finger comes off the screen
+						if (finger.fingerId == joystickFinger){ //release the joystick
+							controlStickTransform.transform.position = transform.position;
+							joystickFinger = -1;
+						}
+						else if (finger.fingerId == spearFinger ){ //use the spear
+							spearFinger = -2;
+							releaseTouchPoint = ConvertFingerPosition(finger.position);
+							attackDir = releaseTouchPoint - startingTouchPoint;
+							releaseDist = Vector2.Distance (releaseTouchPoint,startingTouchPoint);
+							if (!Jai.JaiArms.Throwing){
+								if ( releaseDist > distToThrow){ //throw the spear
+									StartCoroutine(Jai.JaiController.ThrowSpear(attackDir.normalized));
+								}
+							}
+						}
+					}
+				}
+				else{
+					if (finger.phase == TouchPhase.Began){
+						if (!Jai.JaiArms.Stabbing){
+							StartCoroutine (Jai.JaiController.StabTheBeast());
+						}
+					}
+				}
+			}
+		}
+		else{
+			touchSpot = Vector2.up * Constants.worldDimensions.y * 10f;
+		}
 	}
 
 	Vector2 ConvertFingerPosition(Vector2 fingerIn){
@@ -68,65 +122,4 @@ public class Joyfulstick : MonoBehaviour {
 		}
 	}
 
-	// Update is called once per frame
-	void Update () {
-		Physics2D.IgnoreCollision (basketCollider, worldBoundsCollider, (basketBody.velocity.y > 0||beingHeld));
-		velVector = basketBody.velocity;
-		speed = velVector.magnitude;
-		startingJoystickSpot = transform.position;
-		if (Input.touchCount>0){
-			foreach (Touch finger in Input.touches){
-				//rawFinger = finger.position;
-				touchSpot = ConvertFingerPosition(finger.position);
-				if(!beingHeld){
-					if (finger.phase == TouchPhase.Began){
-						distFromStick = Vector2.Distance(ConvertFingerPosition(finger.position),startingJoystickSpot);
-						if (distFromStick<joystickMaxStartDist){
-							joystickFinger = finger.fingerId;
-							moveDir = Vector2.ClampMagnitude(ConvertFingerPosition(finger.position) - startingJoystickSpot,joystickMaxMoveDistance);
-							controlStickSprite.transform.position = startingJoystickSpot + moveDir;
-						}
-						else{
-							if (Input.touchCount<3){
-								startingTouchPoint = ConvertFingerPosition(finger.position);
-								spearFinger = finger.fingerId;
-							}
-						}
-					}
-					else if (finger.phase == TouchPhase.Moved || finger.phase == TouchPhase.Stationary){ //while your finger is on the screen (joystick only)
-						if (finger.fingerId == joystickFinger){ //move the joystick
-							moveDir = Vector2.ClampMagnitude(ConvertFingerPosition(finger.position) - startingJoystickSpot,joystickMaxMoveDistance);
-							controlStickSprite.transform.position = startingJoystickSpot + moveDir;
-							DoPhysics();
-						}
-					}
-					else if (finger.phase == TouchPhase.Ended){ //when your finger comes off the screen
-						if (finger.fingerId == joystickFinger){ //release the joystick
-							controlStickSprite.transform.position = transform.position;
-							joystickFinger = -1;
-						}
-						else if (finger.fingerId == spearFinger ){ //use the spear
-							spearFinger = -2;
-							releaseTouchPoint = ConvertFingerPosition(finger.position);
-							attackDir = releaseTouchPoint - startingTouchPoint;
-							releaseDist = Vector2.Distance (releaseTouchPoint,startingTouchPoint);
-							if (!spearScript.throwing){
-								if ( releaseDist > distToThrow){ //throw the spear
-									StartCoroutine(jaiScript.ThrowSpear(attackDir.normalized));
-								}
-							}
-						}
-					}
-				}
-				else{
-					if (finger.phase == TouchPhase.Began){
-						StartCoroutine (jaiScript.StabTheBeast());
-					}
-				}
-			}
-		}
-		else{
-			touchSpot = Vector2.up * Constants.worldDimensions.y * 10f;
-		}
-	}
 }

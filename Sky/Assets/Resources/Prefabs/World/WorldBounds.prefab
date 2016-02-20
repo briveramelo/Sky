@@ -43,9 +43,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 408030}
   - 114: {fileID: 11478162}
-  - 68: {fileID: 6887844}
   - 114: {fileID: 11441432}
   - 114: {fileID: 11474728}
+  - 114: {fileID: 11453282}
   m_Layer: 0
   m_Name: WorldBounds
   m_TagString: Untagged
@@ -158,12 +158,13 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 179164}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 1
-  m_Offset: {x: -2.83999991, y: 0}
+  m_Offset: {x: -5.71, y: 0}
   serializedVersion: 2
-  m_Size: {x: .25, y: 4}
+  m_Size: {x: 0.52, y: 6.9}
 --- !u!61 &6143208
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -171,12 +172,13 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 155188}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 1
-  m_Offset: {x: 2.83999991, y: 0}
+  m_Offset: {x: 5.69, y: 0}
   serializedVersion: 2
-  m_Size: {x: .25, y: 4}
+  m_Size: {x: 0.55, y: 6.79}
 --- !u!61 &6147620
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -184,12 +186,13 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126436}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 1
-  m_Offset: {x: 0, y: 3.20000005}
+  m_Offset: {x: 0, y: 3.2}
   serializedVersion: 2
-  m_Size: {x: 12, y: .5}
+  m_Size: {x: 12, y: 0.5}
 --- !u!61 &6175486
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -197,29 +200,13 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 191306}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 1
-  m_Offset: {x: 0, y: -1.60000002}
+  m_Offset: {x: 0, y: -3.21}
   serializedVersion: 2
-  m_Size: {x: 6, y: .25}
---- !u!68 &6887844
-EdgeCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 156416}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  m_Points:
-  - {x: -5.66619682, y: 3.18662667}
-  - {x: -5.69078588, y: -3.20030785}
-  - {x: 6.4842, y: -3.83718681}
-  - {x: 5.69818878, y: 3.19467878}
-  - {x: -5.68012428, y: 3.20272088}
+  m_Size: {x: 12.04, y: 0.79}
 --- !u!114 &11441432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -231,14 +218,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a3831cbdb16d4ffcadbfe1380f618b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  birdKillCount: 0
-  playerName: 
-  highScores: []
-  allTimeRecord: 0
-  champ: 
-  topScores: []
-  saved: 0
-  loaded: 0
+--- !u!114 &11453282
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 156416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e657b0988d224357bfdd88dac03f8b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldBoundsForcePushers:
+  - {fileID: 6147620}
+  - {fileID: 6143208}
+  - {fileID: 6175486}
+  - {fileID: 6138280}
 --- !u!114 &11474728
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -258,16 +253,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 156416}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8428dc6dab624f3ab95a0f8fe60f5cd, type: 3}
+  m_Script: {fileID: 11500000, guid: 206818a7923014c1380c377e11b61b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bird: {fileID: 0}
-  worldBoundsForcePushers: []
-  worldEdgeCollider: {fileID: 0}
-  birdNames: []
-  birdType: 6
-  targetPooInt: 0
-  spawnBirds: 0
+  Pigeon: 0
+  Duck: 0
+  DuckLeader: 0
+  Albatross: 0
+  BabyCrow: 0
+  Murder: 0
+  Seagull: 0
+  Tentacles: 0
+  Pelican: 0
+  Bat: 0
+  Eagle: 0
+  BirdOfParadise: 0
+  birds:
+  - {fileID: 176178, guid: 1f5cfa2f484ef444ca3b4f4a5b00e7f4, type: 2}
+  - {fileID: 121926, guid: a0823131fbf68471eb77571bea2cfa96, type: 2}
+  - {fileID: 199352, guid: 16dda3956083a494ca2b7dcfbcb88730, type: 2}
+  - {fileID: 140138, guid: c8a4ce405247d4d1baab38de36086969, type: 2}
+  - {fileID: 173176, guid: 8a44cdc2104624eaa94cee8eeafe4cfb, type: 2}
+  - {fileID: 152284, guid: fbae02674830c4d98b0964f3075cc17f, type: 2}
+  - {fileID: 191540, guid: cd4056db3a7b748a49824ab3a8f3ef87, type: 2}
+  - {fileID: 136588, guid: b2d924430ecf742f8a8455291b231b25, type: 2}
+  - {fileID: 153434, guid: bb183bccd63d54eaba8756e9baecc2ea, type: 2}
+  - {fileID: 166612, guid: 9ea679bf2282b455ea1af34a50a8e0c7, type: 2}
+  - {fileID: 175384, guid: 6fac294ad61874da699aad66017bb75d, type: 2}
+  - {fileID: 156092, guid: 9919c17745d5e44b09e49882610b405e, type: 2}
 --- !u!249 &24919712
 AreaEffector2D:
   serializedVersion: 2

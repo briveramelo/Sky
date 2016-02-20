@@ -2,53 +2,41 @@
 using System.Collections;
 using GenericFunctions;
 
-public class DuckLeader : MonoBehaviour {
+public class DuckLeader : Bird {
 
-	public Duck[] duckScripts;
+	[SerializeField] private Duck[] duckScripts;
 
-	public Rigidbody2D rigbod;
+	private Vector2[] setPositions; public Vector2[] SetPositions {get{return setPositions;}}
+	private bool[] formations;
 
-	public Vector3[] setPositions;
-	public bool[] formations;
-
-	public float moveSpeed;
-	public float separationDistance;
+	private float moveSpeed = 2.5f;
+	private float separationDistance = 0.9f;
 
 	// Use this for initialization
 	void Awake () {
-		separationDistance = .9f;
+		birdStats = new BirdStats(BirdType.DuckLeader);
 
-		duckScripts = new Duck[]{
-			transform.GetChild(0).GetComponent<Duck>(),
-			transform.GetChild(1).GetComponent<Duck>(),
-			transform.GetChild(2).GetComponent<Duck>(),
-			transform.GetChild(3).GetComponent<Duck>(),
-			transform.GetChild(4).GetComponent<Duck>(),
-			transform.GetChild(5).GetComponent<Duck>(),
-		};
-		rigbod = GetComponent<Rigidbody2D> ();
-		moveSpeed = 2.5f;
-		StartCoroutine ( FanTheV ());
+		SetFormation (transform.position.x > 0);
+		FanTheV ();
 	}
 	
-	public void SetPositions(bool goLeft){
+	public void SetFormation(bool goLeft){
 		Vector3 topSide;
 		Vector3 bottomSide;
 		Vector3 direction;
 		if (goLeft){
-			topSide = ConvertAnglesAndVectors.ConvertAngleToVector3 (30);
-			bottomSide = ConvertAnglesAndVectors.ConvertAngleToVector3 (-30);
-			direction = Vector3.left;
+			topSide = ConvertAnglesAndVectors.ConvertAngleToVector2 (30);
+			bottomSide = ConvertAnglesAndVectors.ConvertAngleToVector2 (-30);
+			direction = Vector2.left;
 		}
 		else{
-			topSide = ConvertAnglesAndVectors.ConvertAngleToVector3 (150);
-			bottomSide = ConvertAnglesAndVectors.ConvertAngleToVector3 (210);
-			direction = Vector3.right;
+			topSide = ConvertAnglesAndVectors.ConvertAngleToVector2 (150);
+			bottomSide = ConvertAnglesAndVectors.ConvertAngleToVector2 (210);
+			direction = Vector2.right;
 		}
 		transform.Face4ward(goLeft);
 		rigbod.velocity = direction * moveSpeed;
-		setPositions = new Vector3[]
-		{
+		setPositions = new Vector2[]{
 			topSide,
 			bottomSide,
 			topSide * 2f,
@@ -58,27 +46,23 @@ public class DuckLeader : MonoBehaviour {
 		};
 		
 		formations = new bool[6];
-		int i = 0;
-		foreach (Duck duck in duckScripts){
-			duck.formationNumber = i;
-			//duck.transform.position = transform.position + direction * separationDistance * Mathf.CeilToInt(i/2f + 1f);
-			duck.duckLeaderScript = this;
+		for (int i=0; i<duckScripts.Length; i++){
+			duckScripts[i].FormationNumber = i;
+			duckScripts[i].DuckLeaderScript = this;
 			setPositions[i] *= separationDistance;
 			formations[i] = true;
-			i++;
 		}
 	}
 
-	public IEnumerator FanTheV(){
+	void FanTheV(){
 		foreach (Duck duck in duckScripts){
 			if (duck){
-				duck.bouncing = false;
+				duck.Bouncing = false;
 			}
 		}
-		yield return null;
 	}
 
-	public IEnumerator ReShuffle(int formToFill){
+	public void ReShuffle(int formToFill){
 		switch (formToFill){
 		case 0:
 			if (formations[2]){
@@ -137,14 +121,13 @@ public class DuckLeader : MonoBehaviour {
 			KillOff(formToFill);
 			break;
 		}
-		yield return null;
 	}
 
 	/// <summary>Flying V formation- takes a dead duck's formation number (int)formToFill
 	/// <para> and gives it to the duck of your choice (int)formMovingUp </para>
 	/// </summary>
 	void Shuffle(int formToFill, int formMovingUp){
-		duckScripts[formMovingUp].formationNumber = formToFill;
+		duckScripts[formMovingUp].FormationNumber = formToFill;
 		duckScripts[formToFill] = duckScripts[formMovingUp];
 		duckScripts[formMovingUp] = null;
 		formations [formToFill] = true;
@@ -156,13 +139,16 @@ public class DuckLeader : MonoBehaviour {
 		formations [formNumb] = false;
 	}
 
-	public IEnumerator BreakTheV(){
+	public void BreakTheV(){
 		transform.DetachChildren ();
 		foreach (Duck duck in duckScripts){
 			if (duck){
-				StartCoroutine(duck.Scatter());
+				duck.Scatter();
 			}
 		}
-		yield return null;
+	}
+
+	protected override void PayTheIronPrice (){
+		BreakTheV();
 	}
 }

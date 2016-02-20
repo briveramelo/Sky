@@ -13,7 +13,6 @@ GameObject:
   - 114: {fileID: 11455434}
   - 50: {fileID: 5013130}
   - 114: {fileID: 11484646}
-  - 114: {fileID: 11480714}
   - 61: {fileID: 6183854}
   m_Layer: 16
   m_Name: Duck2 (1)
@@ -35,7 +34,6 @@ GameObject:
   - 114: {fileID: 11422976}
   - 50: {fileID: 5030112}
   - 114: {fileID: 11438546}
-  - 114: {fileID: 11480506}
   - 61: {fileID: 6189800}
   m_Layer: 16
   m_Name: Duck2
@@ -57,7 +55,6 @@ GameObject:
   - 114: {fileID: 11462088}
   - 50: {fileID: 5025746}
   - 114: {fileID: 11482846}
-  - 114: {fileID: 11464516}
   - 61: {fileID: 6141638}
   m_Layer: 16
   m_Name: Duck2 (2)
@@ -79,7 +76,6 @@ GameObject:
   - 114: {fileID: 11436062}
   - 50: {fileID: 5017912}
   - 114: {fileID: 11455206}
-  - 114: {fileID: 11461316}
   - 61: {fileID: 6182596}
   m_Layer: 16
   m_Name: Duck2 (5)
@@ -101,7 +97,6 @@ GameObject:
   - 114: {fileID: 11444948}
   - 50: {fileID: 5030544}
   - 114: {fileID: 11408406}
-  - 114: {fileID: 11433888}
   - 61: {fileID: 6128474}
   m_Layer: 16
   m_Name: Duck2 (3)
@@ -123,7 +118,6 @@ GameObject:
   - 114: {fileID: 11433390}
   - 50: {fileID: 5086104}
   - 114: {fileID: 11462136}
-  - 114: {fileID: 11475466}
   - 61: {fileID: 6120180}
   m_Layer: 16
   m_Name: Duck2 (4)
@@ -144,7 +138,6 @@ GameObject:
   - 114: {fileID: 11407638}
   - 95: {fileID: 9572248}
   - 58: {fileID: 5859988}
-  - 114: {fileID: 11462302}
   - 114: {fileID: 11454456}
   - 50: {fileID: 5083870}
   m_Layer: 16
@@ -161,7 +154,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 163294}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.000000007450581, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 494420}
@@ -173,7 +166,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 171052}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.000000007450581, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 494420}
@@ -185,7 +178,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 154288}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.000000007450581, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 494420}
@@ -197,7 +190,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 134128}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.000000007450581, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 494420}
@@ -209,7 +202,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131656}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.000000007450581, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 494420}
@@ -221,7 +214,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 164970}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.000000007450581, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 494420}
@@ -233,7 +226,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199352}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.83999991, y: -.159999996, z: 0}
+  m_LocalPosition: {x: 0.35999998, y: -0.67999995, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children:
   - {fileID: 452770}
@@ -251,9 +244,10 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131656}
+  m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: .0500000007
+  m_AngularDrag: 0.05
   m_GravityScale: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -267,9 +261,10 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 163294}
+  m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: .0500000007
+  m_AngularDrag: 0.05
   m_GravityScale: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -283,9 +278,10 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 154288}
+  m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: .0500000007
+  m_AngularDrag: 0.05
   m_GravityScale: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -299,9 +295,10 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 134128}
+  m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: .0500000007
+  m_AngularDrag: 0.05
   m_GravityScale: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -315,9 +312,10 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 164970}
+  m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: .0500000007
+  m_AngularDrag: 0.05
   m_GravityScale: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -331,6 +329,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199352}
+  m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
@@ -347,9 +346,10 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 171052}
+  m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: .0500000007
+  m_AngularDrag: 0.05
   m_GravityScale: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -363,12 +363,13 @@ CircleCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199352}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: .0599999987
+  m_Radius: 0.06
 --- !u!61 &6120180
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -376,12 +377,13 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 171052}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: .0199999996}
+  m_Offset: {x: 0, y: 0.02}
   serializedVersion: 2
-  m_Size: {x: .219999999, y: .0599999987}
+  m_Size: {x: 0.22, y: 0.06}
 --- !u!61 &6128474
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -389,12 +391,13 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 164970}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: .0199999996}
+  m_Offset: {x: 0, y: 0.02}
   serializedVersion: 2
-  m_Size: {x: .219999999, y: .0599999987}
+  m_Size: {x: 0.22, y: 0.06}
 --- !u!61 &6141638
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -402,12 +405,13 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 154288}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: .0199999996}
+  m_Offset: {x: 0, y: 0.02}
   serializedVersion: 2
-  m_Size: {x: .219999999, y: .0599999987}
+  m_Size: {x: 0.22, y: 0.06}
 --- !u!61 &6182596
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -415,12 +419,13 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 163294}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: .0199999996}
+  m_Offset: {x: 0, y: 0.02}
   serializedVersion: 2
-  m_Size: {x: .219999999, y: .0599999987}
+  m_Size: {x: 0.22, y: 0.06}
 --- !u!61 &6183854
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -428,12 +433,13 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131656}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: .0199999996}
+  m_Offset: {x: 0, y: 0.02}
   serializedVersion: 2
-  m_Size: {x: .219999999, y: .0599999987}
+  m_Size: {x: 0.22, y: 0.06}
 --- !u!61 &6189800
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -441,12 +447,13 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 134128}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: .0199999996}
+  m_Offset: {x: 0, y: 0.02}
   serializedVersion: 2
-  m_Size: {x: .219999999, y: .0599999987}
+  m_Size: {x: 0.22, y: 0.06}
 --- !u!95 &9501546
 Animator:
   serializedVersion: 3
@@ -595,18 +602,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f061d6ff1cc794296a229a8432680d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigbod: {fileID: 0}
-  duckLeaderScript: {fileID: 0}
-  targetSpot: {x: 0, y: 0, z: 0}
-  chooseDir: []
-  scatterDir: []
-  moveDir: {x: 0, y: 0}
-  moveSpeed: 0
-  maxTransition: 0
-  transitionSpeed: 0
-  distanceToSpot: 0
-  formationNumber: 0
-  bouncing: 0
+  rigbod: {fileID: 5030544}
+  birdCollider: {fileID: 6128474}
+  gutSplosionParent: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
+  duckLeaderScript: {fileID: 11454456}
 --- !u!114 &11422976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -643,32 +642,6 @@ MonoBehaviour:
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
---- !u!114 &11433888
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 164970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 884c3137713c84e6581bda55ae91e923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guts: {fileID: 0}
-  basketScript: {fileID: 0}
-  worldEffectsScript: {fileID: 0}
-  duckLeaderScript: {fileID: 0}
-  duckScript: {fileID: 0}
-  tentaclesScript: {fileID: 0}
-  spearColliders: []
-  birdCollider: {fileID: 0}
-  hitPoint: {x: 0, y: 0}
-  health: 0
-  killGutValue: 0
-  damageGutValue: 0
-  birdType: 0
-  summonCrows: 0
-  spawnBalloon: 0
 --- !u!114 &11436062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -698,18 +671,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f061d6ff1cc794296a229a8432680d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigbod: {fileID: 0}
-  duckLeaderScript: {fileID: 0}
-  targetSpot: {x: 0, y: 0, z: 0}
-  chooseDir: []
-  scatterDir: []
-  moveDir: {x: 0, y: 0}
-  moveSpeed: 0
-  maxTransition: 0
-  transitionSpeed: 0
-  distanceToSpot: 0
-  formationNumber: 0
-  bouncing: 0
+  rigbod: {fileID: 5030112}
+  birdCollider: {fileID: 6189800}
+  gutSplosionParent: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
+  duckLeaderScript: {fileID: 11454456}
 --- !u!114 &11444948
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -739,12 +704,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f43a49c362294dbc9edefb79cb00588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duckScripts: []
-  rigbod: {fileID: 0}
-  setPositions: []
-  formations: 
-  moveSpeed: 0
-  separationDistance: 0
+  rigbod: {fileID: 5083870}
+  birdCollider: {fileID: 5859988}
+  gutSplosionParent: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
+  duckScripts:
+  - {fileID: 11438546}
+  - {fileID: 11484646}
+  - {fileID: 11482846}
+  - {fileID: 11408406}
+  - {fileID: 11462136}
+  - {fileID: 11455206}
 --- !u!114 &11455206
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -756,18 +725,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f061d6ff1cc794296a229a8432680d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigbod: {fileID: 0}
-  duckLeaderScript: {fileID: 0}
-  targetSpot: {x: 0, y: 0, z: 0}
-  chooseDir: []
-  scatterDir: []
-  moveDir: {x: 0, y: 0}
-  moveSpeed: 0
-  maxTransition: 0
-  transitionSpeed: 0
-  distanceToSpot: 0
-  formationNumber: 0
-  bouncing: 0
+  rigbod: {fileID: 5017912}
+  birdCollider: {fileID: 6182596}
+  gutSplosionParent: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
+  duckLeaderScript: {fileID: 11454456}
 --- !u!114 &11455434
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -786,32 +747,6 @@ MonoBehaviour:
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
---- !u!114 &11461316
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 163294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 884c3137713c84e6581bda55ae91e923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guts: {fileID: 0}
-  basketScript: {fileID: 0}
-  worldEffectsScript: {fileID: 0}
-  duckLeaderScript: {fileID: 0}
-  duckScript: {fileID: 0}
-  tentaclesScript: {fileID: 0}
-  spearColliders: []
-  birdCollider: {fileID: 0}
-  hitPoint: {x: 0, y: 0}
-  health: 0
-  killGutValue: 0
-  damageGutValue: 0
-  birdType: 0
-  summonCrows: 0
-  spawnBalloon: 0
 --- !u!114 &11462088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -841,148 +776,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f061d6ff1cc794296a229a8432680d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigbod: {fileID: 0}
-  duckLeaderScript: {fileID: 0}
-  targetSpot: {x: 0, y: 0, z: 0}
-  chooseDir: []
-  scatterDir: []
-  moveDir: {x: 0, y: 0}
-  moveSpeed: 0
-  maxTransition: 0
-  transitionSpeed: 0
-  distanceToSpot: 0
-  formationNumber: 0
-  bouncing: 0
---- !u!114 &11462302
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 199352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 884c3137713c84e6581bda55ae91e923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guts: {fileID: 0}
-  basketScript: {fileID: 0}
-  worldEffectsScript: {fileID: 0}
-  duckLeaderScript: {fileID: 0}
-  duckScript: {fileID: 0}
-  tentaclesScript: {fileID: 0}
-  spearColliders: []
-  birdCollider: {fileID: 0}
-  hitPoint: {x: 0, y: 0}
-  health: 0
-  killGutValue: 0
-  damageGutValue: 0
-  birdType: 0
-  summonCrows: 0
-  spawnBalloon: 0
---- !u!114 &11464516
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 154288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 884c3137713c84e6581bda55ae91e923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guts: {fileID: 0}
-  basketScript: {fileID: 0}
-  worldEffectsScript: {fileID: 0}
-  duckLeaderScript: {fileID: 0}
-  duckScript: {fileID: 0}
-  tentaclesScript: {fileID: 0}
-  spearColliders: []
-  birdCollider: {fileID: 0}
-  hitPoint: {x: 0, y: 0}
-  health: 0
-  killGutValue: 0
-  damageGutValue: 0
-  birdType: 0
-  summonCrows: 0
-  spawnBalloon: 0
---- !u!114 &11475466
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 171052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 884c3137713c84e6581bda55ae91e923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guts: {fileID: 0}
-  basketScript: {fileID: 0}
-  worldEffectsScript: {fileID: 0}
-  duckLeaderScript: {fileID: 0}
-  duckScript: {fileID: 0}
-  tentaclesScript: {fileID: 0}
-  spearColliders: []
-  birdCollider: {fileID: 0}
-  hitPoint: {x: 0, y: 0}
-  health: 0
-  killGutValue: 0
-  damageGutValue: 0
-  birdType: 0
-  summonCrows: 0
-  spawnBalloon: 0
---- !u!114 &11480506
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 134128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 884c3137713c84e6581bda55ae91e923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guts: {fileID: 0}
-  basketScript: {fileID: 0}
-  worldEffectsScript: {fileID: 0}
-  duckLeaderScript: {fileID: 0}
-  duckScript: {fileID: 0}
-  tentaclesScript: {fileID: 0}
-  spearColliders: []
-  birdCollider: {fileID: 0}
-  hitPoint: {x: 0, y: 0}
-  health: 0
-  killGutValue: 0
-  damageGutValue: 0
-  birdType: 0
-  summonCrows: 0
-  spawnBalloon: 0
---- !u!114 &11480714
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 131656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 884c3137713c84e6581bda55ae91e923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guts: {fileID: 0}
-  basketScript: {fileID: 0}
-  worldEffectsScript: {fileID: 0}
-  duckLeaderScript: {fileID: 0}
-  duckScript: {fileID: 0}
-  tentaclesScript: {fileID: 0}
-  spearColliders: []
-  birdCollider: {fileID: 0}
-  hitPoint: {x: 0, y: 0}
-  health: 0
-  killGutValue: 0
-  damageGutValue: 0
-  birdType: 0
-  summonCrows: 0
-  spawnBalloon: 0
+  rigbod: {fileID: 5086104}
+  birdCollider: {fileID: 6120180}
+  gutSplosionParent: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
+  duckLeaderScript: {fileID: 11454456}
 --- !u!114 &11482846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -994,18 +791,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f061d6ff1cc794296a229a8432680d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigbod: {fileID: 0}
-  duckLeaderScript: {fileID: 0}
-  targetSpot: {x: 0, y: 0, z: 0}
-  chooseDir: []
-  scatterDir: []
-  moveDir: {x: 0, y: 0}
-  moveSpeed: 0
-  maxTransition: 0
-  transitionSpeed: 0
-  distanceToSpot: 0
-  formationNumber: 0
-  bouncing: 0
+  rigbod: {fileID: 5025746}
+  birdCollider: {fileID: 6141638}
+  gutSplosionParent: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
+  duckLeaderScript: {fileID: 11454456}
 --- !u!114 &11484646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1017,18 +806,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f061d6ff1cc794296a229a8432680d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigbod: {fileID: 0}
-  duckLeaderScript: {fileID: 0}
-  targetSpot: {x: 0, y: 0, z: 0}
-  chooseDir: []
-  scatterDir: []
-  moveDir: {x: 0, y: 0}
-  moveSpeed: 0
-  maxTransition: 0
-  transitionSpeed: 0
-  distanceToSpot: 0
-  formationNumber: 0
-  bouncing: 0
+  rigbod: {fileID: 5013130}
+  birdCollider: {fileID: 6183854}
+  gutSplosionParent: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
+  duckLeaderScript: {fileID: 11454456}
 --- !u!212 &21215386
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -1047,14 +828,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d976dfb231b9b4173821dbdc53716adb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!212 &21217330
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -1073,14 +858,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d976dfb231b9b4173821dbdc53716adb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!212 &21244766
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -1099,14 +888,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d976dfb231b9b4173821dbdc53716adb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!212 &21247216
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -1125,14 +918,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d976dfb231b9b4173821dbdc53716adb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!212 &21250732
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -1151,14 +948,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8e750a4b14483459891d4d426963672b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!212 &21283578
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -1177,14 +978,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d976dfb231b9b4173821dbdc53716adb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!212 &21287974
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -1203,14 +1008,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d976dfb231b9b4173821dbdc53716adb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

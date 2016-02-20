@@ -2,6 +2,7 @@
 using System.Collections;
 using GenericFunctions;
 
+/*
 public class Wave3_V1 : WaveManager {
 	
 
@@ -87,3 +88,4 @@ public class Wave3_V1 : WaveManager {
 		yield return StartCoroutine (WaitUntilAliveOnScreen (0));
 	}
 }
+*/

@@ -1,138 +1,94 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using GenericFunctions;
 
-public class Pelican : MonoBehaviour {
+public class Pelican : Bird {
 
-	public Rigidbody2D rigbod;
-	public Animator pelicanAnimator;
-	public Collider2D pelicanCollider;
+	[SerializeField] private Animator pelicanAnimator;
+	[SerializeField] private Collider2D pelicanCollider;
 
-	public Transform jaiTransform;
+	private Vector2[] setPositions = new Vector2[]{
+		new Vector2 (0f, -.8f),
+		new Vector2 (.3f, .1f),
+		new Vector2 (-.3f, .1f),
+		new Vector2 (0f, .5f)
+	};
 
-	public Vector3[] setPositions;
-	public Vector3 targetPosition;
-
-	public Vector2 moveDir;
+	private Vector2 targetPosition;
+	private Vector2 moveDir;
 	
-	public float[] moveSpeeds;
-	public float[] curveAngles;
-	public float distanceThreshold;
-	public float distanceToTarget;
-	public float angleDelta;
-	public float outputAngle;
-	public float inputAngle;
-	public float maxDistance;
+	private float[] moveSpeeds = new float[]{
+		2.5f, 3f, 3f, 3f, 9f
+	};
+	private float[] curveAngles = new float[]{
+		20f, 30f, 30f, 5f
+	};
 
-	public int ticker;
+	private float distanceThreshold = 0.2f;
+	private float angleDelta;
 
-	public bool[] spotsHit;
-	public bool[] clockwiseSteps;
-	public bool goLeft;
+	private enum PP{  //pelican positions
+		Below =0, Right =1, Left =2, Above=3, End=4
+	}
+	private Dictionary<PP, Vector2> pelPosts; //pelican positions
+	private PP pelPost;
+	private PP PelPost {
+		get{return pelPost;}
+		set{pelPost = value;
+			switch (pelPost){
+			case PP.Right:
+				if (goLeft){
+					pelPost = PP.Left;
+				}
+				break;
+			case PP.Left:
+				if (goLeft){
+					pelPost = PP.Left;
+				}
+				break;
+			case PP.Above: 
+				pelPost = PP.Above;
+				break;
+			case PP.End:
+				rigbod.velocity = Vector2.zero;
+				break;
+			}
+		}
+	}
+
+	private bool[] spotsHit = new bool[4];
+	private bool[] clockwiseSteps = new bool[4];
+	private bool goLeft;
 
 	// Use this for initialization
 	void Awake () {
-		jaiTransform = GameObject.Find ("Jai").transform;
-		rigbod = GetComponent<Rigidbody2D> ();
-		pelicanCollider = GetComponent<Collider2D> ();
-		pelicanAnimator = GetComponent<Animator> ();
-		setPositions = new Vector3[]{
-			new Vector3(0f,-3.5f,0f),
-			new Vector3(1.75f,.25f,0f),
-			new Vector3(-1.75f,.25f,0f),
-			new Vector3(0f,1.25f,0f)
-		};
-		distanceThreshold = 0.2f;
-		moveSpeeds = new float[]{
-			2.5f, 3f, 3f, 3f, 9f
-		};
-		curveAngles = new float[]{
-			20f, 30f, 30f, 5f
-		}; //negative means clockwise, positive means counter-clockwise
-		spotsHit = new bool[4];
-		clockwiseSteps = new bool[4];
-		ticker = 0;
+		birdStats = new BirdStats(BirdType.Pelican);
+
+		pelPosts = new Dictionary<PP, Vector2>();
+		for (int i=0; i<setPositions.Length; i++){
+			setPositions[i] = new Vector2 (setPositions[i].x * Constants.worldDimensions.x, setPositions[i].y * Constants.worldDimensions.y);
+			pelPosts.Add((PP)i, setPositions[i]);
+		}
 		StartCoroutine(SwoopAround());
 	}
 
-	//bring in that nice curve to his flight pattern
-	Vector2 CurveItIn(Vector2 inputVector, Vector3 targetSpot, float maxAngleDelta, bool clockwise){
-		inputAngle = ConvertAnglesAndVectors.ConvertVector2FloatAngle (inputVector);
-		if (distanceToTarget>maxDistance){
-			maxDistance = distanceToTarget;
-		}
-		angleDelta = maxAngleDelta;
-		if (!clockwise){
-			angleDelta = -angleDelta;
-		}
-
-		outputAngle = inputAngle + angleDelta;
-		return ConvertAnglesAndVectors.ConvertAngleToVector2 (outputAngle).normalized;
-	}
-
-	//set his flight pattern from the getgo
-	void NextSteps(){
-		goLeft = false;
-		if ((targetPosition.x>transform.position.x && targetPosition.y<transform.position.y)){//it's downright
-			clockwiseSteps = new bool[]{false,false,false,false};
-		}
-		else if (targetPosition.x>transform.position.x && targetPosition.y>transform.position.y){ //it's upright
-			clockwiseSteps = new bool[]{true,false,false,false};
-		}
-		else if ((targetPosition.x<transform.position.x && targetPosition.y<transform.position.y)){ //it's downleft
-			clockwiseSteps = new bool[]{true,true,true,true};
-			goLeft = true;
-		}
-		else { //it's upleft
-			clockwiseSteps = new bool[]{false,true,true,true};
-			goLeft = true;
-		}
-	}
-
-	//determine if he should move on to the next checkpoint / inflection point in his curved flight
-	void CheckToMoveOn(){
-		if (ticker == 0 || ticker == 3){
-			if (Mathf.Abs (transform.position.x-targetPosition.x)<distanceThreshold){
-				spotsHit[ticker] = true;
-			}
-		}
-		else if (ticker == 1 || ticker == 2){
-			if (transform.position.y>targetPosition.y-.1f){
-				spotsHit[ticker] = true;
-			}
-		}
-	}
-
-	//move from one checkpoint to another
-	public IEnumerator SwoopAround(){
-		ticker = 0;
+	//Move from one checkpoint to another
+	IEnumerator SwoopAround(){
+		PelPost = 0;
 		spotsHit = new bool[4];
-		targetPosition = jaiTransform.position + Constants.balloonOffset + setPositions [ticker];
-		NextSteps();
-		while (ticker<4){	
-			maxDistance = Vector3.Distance(transform.position,targetPosition);
-			targetPosition = jaiTransform.position + Constants.balloonOffset + setPositions [ticker];
-			while (!spotsHit[ticker]) {
-				targetPosition = jaiTransform.position + Constants.balloonOffset + setPositions [ticker];
-				distanceToTarget = Vector3.Distance(transform.position,targetPosition);
-				moveDir = CurveItIn((targetPosition - transform.position).normalized, targetPosition, curveAngles[ticker],clockwiseSteps[ticker]);
+		targetPosition = (Vector2)Constants.balloonCenter.position + pelPosts[PelPost];
+		DetermineFlightPattern();
+		while ((int)PelPost<setPositions.Length){	
+			targetPosition = (Vector2)Constants.balloonCenter.position + pelPosts[PelPost];
+			while (!spotsHit[(int)PelPost]) {
+				targetPosition = (Vector2)Constants.balloonCenter.position + pelPosts[PelPost];
+				moveDir = CurveItIn();
 				CheckToMoveOn();
-				rigbod.velocity = moveDir * moveSpeeds[ticker];
+				rigbod.velocity = moveDir * moveSpeeds[(int)PelPost];
 				yield return null;
 			}
-			ticker++;
-			//decide whether to go left or go right based on that NextSteps function (ticker = 1 means right, ticker = 2 means left)
-			if (ticker == 1){
-				if (goLeft){
-					ticker = 2;
-				}
-			}
-			else if (ticker == 2){
-				ticker = 3;
-			}
-			else if (ticker == 4){
-				rigbod.velocity = Vector2.zero;
-			}
+			PelPost++;
 			yield return null;
 		}
 		yield return new WaitForSeconds (0.3f);
@@ -141,8 +97,58 @@ public class Pelican : MonoBehaviour {
 		StartCoroutine (DiveBomb ());
 	}
 
-	//plunge to certain balloon popping glory
-	public IEnumerator DiveBomb(){
+	//set his flight pattern from the getgo
+	void DetermineFlightPattern(){
+		goLeft = false;
+		if (targetPosition.x>transform.position.x){
+			if (targetPosition.y<transform.position.y){
+				clockwiseSteps = new bool[]{false,false,false,false}; 	//downright
+			}
+			else{
+				clockwiseSteps = new bool[]{true,false,false,false}; 	//upright
+			}
+		}
+		else{
+			if (targetPosition.y<transform.position.y){
+				clockwiseSteps = new bool[]{true,true,true,true}; 		//downleft
+				goLeft = true;
+			}
+			else{
+				clockwiseSteps = new bool[]{false,true,true,true};		//upleft
+				goLeft = true;
+			}
+		}
+	}
+
+	//bring in that nice curve to his flight pattern
+	Vector2 CurveItIn(){
+		Vector2 initialMoveDir = (targetPosition - (Vector2)transform.position).normalized;
+		float inputAngle = ConvertAnglesAndVectors.ConvertVector2FloatAngle (initialMoveDir);
+		angleDelta = curveAngles[(int)PelPost];
+		if (!clockwiseSteps[(int)PelPost]){
+			angleDelta = -angleDelta;
+		}
+
+		float outputAngle = inputAngle + angleDelta;
+		return ConvertAnglesAndVectors.ConvertAngleToVector2 (outputAngle).normalized;
+	}
+		
+	//determine if he should move on to the next checkpoint in his flight
+	void CheckToMoveOn(){
+		if (PelPost == PP.Below || PelPost == PP.Above){
+			if (Mathf.Abs (transform.position.x-targetPosition.x)<distanceThreshold){
+				spotsHit[(int)PelPost] = true;
+			}
+		}
+		else if (PelPost == PP.Left || PelPost == PP.Right){
+			if (transform.position.y>targetPosition.y-.1f){
+				spotsHit[(int)PelPost] = true;
+			}
+		}
+	}
+
+	//plunge to (un)certain balloon-popping glory
+	IEnumerator DiveBomb(){
 		rigbod.velocity = Vector2.down * moveSpeeds [4];
 		while (transform.position.y>-Constants.worldDimensions.y-1f){
 			yield return null;
@@ -158,5 +164,4 @@ public class Pelican : MonoBehaviour {
 		pelicanCollider.enabled = true;
 		yield return null;
 	}
-
 }

@@ -9,7 +9,8 @@ public class WaveManager : MonoBehaviour{
 	//THAT WAVE SCRIPTS CAN REFERENCE FOR THEIR BIDDING
 	//ALSO, THE SAVE LOAD DATA SCRIPT
 
-	public static Transform balloonTransform;
+	public static WaveManager Instance;
+
 	public static int waveNumber;
 	public static float wavePauseTime;
 	public static float standardPauseTime;
@@ -43,18 +44,20 @@ public class WaveManager : MonoBehaviour{
 	public static int currentWavePoints;
 	public static int points;
 
+	private int birdTypeCount;
 	
-	void Awake(){
-		allKillCount = new int[Constants.birdNamePrefabs.Length];
-		allAliveCount = new int[Constants.birdNamePrefabs.Length];
-		allSpawnCount = new int[Constants.birdNamePrefabs.Length];
-		allPoints = new int[Constants.birdNamePrefabs.Length];
-		currentWaveAllKillCount = new int[Constants.birdNamePrefabs.Length];
-		currentWaveAllAliveCount = new int[Constants.birdNamePrefabs.Length];
-		currentWaveAllSpawnCount = new int[Constants.birdNamePrefabs.Length];
-		currentWaveAllPoints = new int[Constants.birdNamePrefabs.Length];
+	void Start(){
+		Instance = this;
+		birdTypeCount = Incubator.Instance.Birds.Length;
+		allKillCount = new int[birdTypeCount];
+		allAliveCount = new int[birdTypeCount];
+		allSpawnCount = new int[birdTypeCount];
+		allPoints = new int[birdTypeCount];
+		currentWaveAllKillCount = new int[birdTypeCount];
+		currentWaveAllAliveCount = new int[birdTypeCount];
+		currentWaveAllSpawnCount = new int[birdTypeCount];
+		currentWaveAllPoints = new int[birdTypeCount];
 
-		balloonTransform = GameObject.Find ("BalloonSpot").transform;
 		wavePauseTime = 10f;
 		standardPauseTime = 1f;
 		lowHeight = -0.6f;
@@ -66,31 +69,31 @@ public class WaveManager : MonoBehaviour{
 
 	/// <summary> Spawn Birds
 	/// </summary>
-	public IEnumerator SpawnBirds(int birdType, Vector3 spawnPoint,int duckMoveDir =0){ 
+	public void SpawnBirds(int birdType, Vector3 spawnPoint,int duckMoveDir =0){ 
 		int direction = spawnPoint.x<0 ? 1 : -1;
-		GameObject bird = Instantiate (Resources.Load (Constants.birdNamePrefabs [birdType]), spawnPoint, Quaternion.identity) as GameObject;
-		bool goLeft = direction == -1 ? true : false;
+		GameObject bird = Instantiate (Incubator.Instance.Birds[birdType], spawnPoint, Quaternion.identity) as GameObject;
 
-		if (birdType==Constants.pigeon){
+		switch ((BirdType)birdType){
+		case BirdType.Pigeon: 
 			Pigeon pigeonScript = bird.GetComponent<Pigeon> ();
-			pigeonScript.rigidbod.velocity = Vector2.right * direction * pigeonScript.moveSpeed;
+			pigeonScript.SetVelocity(Vector2.right * direction);
 			pigeonScript.transform.Face4ward(direction!=1);
-		}
-		else if (birdType==Constants.duck){
+			break;
+		case BirdType.Duck: 
 			Duck duckScript = bird.GetComponent<Duck> ();
-			duckScript.formationNumber = duckMoveDir;
-			StartCoroutine(duckScript.Scatter());
-		}
-		else if (birdType == Constants.duckLeader){
+			duckScript.FormationNumber = duckMoveDir;
+			duckScript.Scatter();
+			break;
+		case BirdType.DuckLeader: 
 			DuckLeader duckLeaderScript = bird.GetComponent<DuckLeader> ();
-			duckLeaderScript.SetPositions(goLeft);
-		}
-		else if (birdType==Constants.birdOfParadise){ 	//help stupid pigeons, ducks, and birds of paradise decide which direction to go on start 
+			bool goLeft = direction == -1 ? true : false;
+			duckLeaderScript.SetFormation(goLeft);
+			break;
+		case BirdType.BirdOfParadise: 
 			BirdOfParadise birdOfParadiseScript = bird.GetComponent<BirdOfParadise> ();
-			birdOfParadiseScript.rigidbod.velocity = Vector2.right * direction * birdOfParadiseScript.moveSpeed;
-			birdOfParadiseScript.transform.Face4ward(direction!=1);
+			birdOfParadiseScript.SetVelocity(Vector2.right * direction);
+			break;
 		}
-		yield return null;
 	}
 
 	/// <summary> clamps the input between +/- 80% of the world height
@@ -136,9 +139,9 @@ public class WaveManager : MonoBehaviour{
 	}
 
 	public void ResetWaveCounters(){
-		currentWaveAllSpawnCount = new int[Constants.birdNamePrefabs.Length];
-		currentWaveAllAliveCount = new int[Constants.birdNamePrefabs.Length];
-		currentWaveAllKillCount = new int[Constants.birdNamePrefabs.Length];
+		currentWaveAllSpawnCount = new int[birdTypeCount];
+		currentWaveAllAliveCount = new int[birdTypeCount];
+		currentWaveAllKillCount = new int[birdTypeCount];
 
 		currentWaveSpawnCount = 0;
 		currentWaveAliveCount = 0;
@@ -252,7 +255,7 @@ public class WaveManager : MonoBehaviour{
 		for (int birdCount =0; birdCount<quantity; birdCount++){
 			yield return StartCoroutine (WaitUntilSpawn (birdType, birdCount, startingQuantity));
 			yield return StartCoroutine (WaitUntilAliveOnScreen (birdToWatch, maxAlive));
-			StartCoroutine (SpawnBirds (birdType, Constants.FixedSpawnHeight(side,yPosition),side));
+			SpawnBirds (birdType, Constants.FixedSpawnHeight(side,yPosition),side);
 			yield return StartCoroutine (WaitUntilTimeRange(tMin, tMax));
 		}
 		yield return null;
@@ -267,7 +270,7 @@ public class WaveManager : MonoBehaviour{
 		for (int birdCount =0; birdCount<quantity; birdCount++){
 			yield return StartCoroutine (WaitUntilSpawn (birdType, birdCount, startingQuantity));
 			yield return StartCoroutine (WaitUntilAliveOnScreen (maxAlive));
-			StartCoroutine (SpawnBirds (birdType, Constants.FixedSpawnHeight(side,yPosition),side));
+			SpawnBirds (birdType, Constants.FixedSpawnHeight(side,yPosition),side);
 			yield return StartCoroutine (WaitUntilTimeRange(tMin, tMax));
 		}
 		yield return null;
@@ -282,7 +285,7 @@ public class WaveManager : MonoBehaviour{
 		for (int birdCount =0; birdCount<quantity; birdCount++){
 			yield return StartCoroutine (WaitUntilSpawn (birdType, birdCount, startingQuantity));
 			yield return StartCoroutine (WaitUntilAliveOnScreen (birdToWatch, maxAlive));
-			StartCoroutine (SpawnBirds (birdType, Constants.RandomSpawnHeight(side, yMin, yMax),side));
+			SpawnBirds (birdType, Constants.RandomSpawnHeight(side, yMin, yMax),side);
 			yield return StartCoroutine (WaitUntilTimeRange(tMin, tMax));
 		}
 		yield return null;
@@ -297,7 +300,7 @@ public class WaveManager : MonoBehaviour{
 		for (int birdCount =0; birdCount<quantity; birdCount++){
 			yield return StartCoroutine (WaitUntilSpawn (birdType, birdCount, startingQuantity));
 			yield return StartCoroutine (WaitUntilAliveOnScreen (maxAlive));
-			StartCoroutine (SpawnBirds (birdType, Constants.RandomSpawnHeight(side, yMin, yMax),side));
+			SpawnBirds (birdType, Constants.RandomSpawnHeight(side, yMin, yMax),side);
 			yield return StartCoroutine (WaitUntilTimeRange(tMin, tMax));
 		}
 		yield return null;
@@ -314,7 +317,7 @@ public class WaveManager : MonoBehaviour{
 			sideAndDirection = RandomDuckSideAndDirection (RandomSide()==1);
 			yield return StartCoroutine (WaitUntilSpawn (birdType, birdCount, startingQuantity));
 			yield return StartCoroutine (WaitUntilAliveOnScreen (birdToWatch, maxAlive));
-			StartCoroutine (SpawnBirds (birdType, Constants.FixedSpawnHeight(sideAndDirection[0], yPosition),sideAndDirection[1]));
+			SpawnBirds (birdType, Constants.FixedSpawnHeight(sideAndDirection[0], yPosition),sideAndDirection[1]);
 			yield return StartCoroutine (WaitUntilTimeRange(tMin, tMax));
 		}
 		yield return null;
@@ -331,7 +334,7 @@ public class WaveManager : MonoBehaviour{
 			sideAndDirection = RandomDuckSideAndDirection (RandomSide()==1);
 			yield return StartCoroutine (WaitUntilSpawn (birdType, birdCount, startingQuantity));
 			yield return StartCoroutine (WaitUntilAliveOnScreen (maxAlive));
-			StartCoroutine (SpawnBirds (birdType, Constants.FixedSpawnHeight(sideAndDirection[0], yPosition),sideAndDirection[1]));
+			SpawnBirds (birdType, Constants.FixedSpawnHeight(sideAndDirection[0], yPosition),sideAndDirection[1]);
 			yield return StartCoroutine (WaitUntilTimeRange(tMin, tMax));
 		}
 		yield return null;
@@ -348,7 +351,7 @@ public class WaveManager : MonoBehaviour{
 			sideAndDirection = RandomDuckSideAndDirection (RandomSide()==1);
 			yield return StartCoroutine (WaitUntilSpawn (birdType, birdCount, startingQuantity));
 			yield return StartCoroutine (WaitUntilAliveOnScreen (birdToWatch, maxAlive));
-			StartCoroutine (SpawnBirds (birdType, Constants.RandomSpawnHeight(sideAndDirection[0], yMin, yMax),sideAndDirection[1]));
+			SpawnBirds (birdType, Constants.RandomSpawnHeight(sideAndDirection[0], yMin, yMax),sideAndDirection[1]);
 			yield return StartCoroutine (WaitUntilTimeRange(tMin, tMax));
 		}
 		yield return null;
@@ -365,13 +368,13 @@ public class WaveManager : MonoBehaviour{
 			sideAndDirection = RandomDuckSideAndDirection (RandomSide()==1);
 			yield return StartCoroutine (WaitUntilSpawn (birdType, birdCount, startingQuantity));
 			yield return StartCoroutine (WaitUntilAliveOnScreen (maxAlive));
-			StartCoroutine (SpawnBirds (birdType, Constants.RandomSpawnHeight(sideAndDirection[0], yMin, yMax),sideAndDirection[1]));
+			SpawnBirds (birdType, Constants.RandomSpawnHeight(sideAndDirection[0], yMin, yMax),sideAndDirection[1]);
 			yield return StartCoroutine (WaitUntilTimeRange(tMin, tMax));
 		}
 		yield return null;
 	}
 
-	public IEnumerator Birth(int birdType){
+	public void Birth(int birdType){
 		currentWaveAllSpawnCount[birdType]++;
 		allSpawnCount[birdType]++;
 		currentWaveSpawnCount++;
@@ -381,39 +384,33 @@ public class WaveManager : MonoBehaviour{
 		allAliveCount [birdType]++;
 		currentWaveAliveCount++;
 		aliveCount++;
-		yield return null;
 	}
-	
-	public IEnumerator Death(int birdType){
+
+	public void Death(int birdType){
 		currentWaveAllAliveCount [birdType]--;
 		allAliveCount[birdType]--;
 		currentWaveAliveCount--;
 		aliveCount--;
-		yield return null;
 	}
 
-	public IEnumerator Kill(int birdType){
+	public void Kill(int birdType){
 		currentWaveAllKillCount [birdType]++;
 		allKillCount[birdType]++;
 		currentWaveKillCount++;
 		killCount++;
-		yield return null;
 	}
 
-	public IEnumerator AddPoints(int birdType, int thesePoints, float pointMultiplier){
+	public void AddPoints(int birdType, int thesePoints, float pointMultiplier){
 		//special case for killing birds of point multipliers
 		int totalFromMultiplier = 0;
-		if (birdType == Constants.seagull || birdType == Constants.tentacles){ 
-			foreach (GetHurt getHurtScript in FindObjectsOfType<GetHurt>()){
-				totalFromMultiplier += Mathf.CeilToInt((getHurtScript.damagePointValue * getHurtScript.health + getHurtScript.killPointValue) * pointMultiplier);
+		if (birdType == (int)BirdType.Seagull || birdType == (int)BirdType.Tentacles){ 
+			foreach (Bird bird in FindObjectsOfType<Bird>()){
+				totalFromMultiplier += Mathf.CeilToInt(bird.MyBirdStats.RemainingPoints * pointMultiplier);
 			}
 		}
-
 		currentWaveAllPoints [birdType] += thesePoints + totalFromMultiplier;
 		allPoints[birdType] += thesePoints + totalFromMultiplier;
 		currentWavePoints += thesePoints + totalFromMultiplier;
 		points += thesePoints + totalFromMultiplier;
-		yield return null;
 	}
 }
-

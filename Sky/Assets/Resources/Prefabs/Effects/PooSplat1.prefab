@@ -27,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170286}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.63999987, y: .360000134, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
@@ -39,6 +39,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170286}
+  m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
@@ -95,17 +96,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maskCamera: {fileID: 0}
-  worldEffectsScript: {fileID: 0}
-  gullScript: {fileID: 0}
-  joyfulstickScript: {fileID: 0}
-  maskCameraScript: {fileID: 0}
-  pooAnimator: {fileID: 0}
-  maskCameraCamera: {fileID: 0}
-  rigbod: {fileID: 0}
-  slideSpeed: 0
-  targetPooInt: 0
-  sliding: 0
-  animating: 0
+  rigbod: {fileID: 5074680}
+  mySpriteRenderer: {fileID: 21221082}
+  pooAnimator: {fileID: 9530726}
+  lastPooSprites:
+  - {fileID: 21300000, guid: 7259a09e810a6460b805377d386c0f82, type: 3}
+  - {fileID: 21300000, guid: d7ed63ed2beaa44d5aa2c5c35d40eef8, type: 3}
 --- !u!212 &21221082
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -124,14 +120,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 7259a09e810a6460b805377d386c0f82, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -2,6 +2,8 @@
 using System.Collections;
 using GenericFunctions;
 
+/*
+
 public class Wave1_V1 : WaveManager {
 
 	public Wave2_V1 wave2;
@@ -81,3 +83,4 @@ public class Wave1_V1 : WaveManager {
 		StartCoroutine (wave2.Wave2 ());
 	}
 }
+*/
