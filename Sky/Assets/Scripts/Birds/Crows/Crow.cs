@@ -12,9 +12,10 @@ public class Crow : Bird, IMurderToCrow {
 	[SerializeField] private PixelRotation pixelRotationScript;
 	[SerializeField] private Animator crowAnimator;
 
-	void Awake(){
+	protected override void Awake(){
 		birdStats = new BirdStats(BirdType.Crow);
 		murderInterface = (ICrowToMurder)murder;
+		base.Awake();
 	}
 
 	private enum CrowStates{

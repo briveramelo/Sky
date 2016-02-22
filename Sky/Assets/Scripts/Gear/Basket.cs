@@ -19,7 +19,6 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 	
 	private float dropForce = 100f;
 
-	// Use this for initialization
 	void Awake () {
 		Instance = this;
 		BalloonToBasket = (IBalloonToBasket)this;

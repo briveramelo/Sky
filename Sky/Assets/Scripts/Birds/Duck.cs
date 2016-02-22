@@ -6,15 +6,15 @@ public class Duck : Bird, ILeaderToDuck {
 
 	[SerializeField] private DuckLeader duckLeaderScript; private IDuckToLeader duckToLeader;
 
-	private Vector2[] chooseDir = new Vector2[]{
+	private Vector2[] scatterDir = new Vector2[]{
 		new Vector2 (1,1).normalized,
 		new Vector2 (-1,1).normalized,
 		new Vector2 (1,-1).normalized,
-		new Vector2 (-1,-1).normalized
+		new Vector2 (-1,-1).normalized,
+		new Vector2 (1,1).normalized,
+		new Vector2 (-1,1).normalized
 	};
-
-	private Vector2[] scatterDir;
-
+		
 	private Vector2 moveDir;
 	
 	private float moveSpeed = 2.5f;
@@ -24,24 +24,17 @@ public class Duck : Bird, ILeaderToDuck {
 
 	private bool bouncing;
 
-	void Start () {
+	protected override void Awake () {
 		birdStats = new BirdStats(BirdType.Duck);
 		duckToLeader = (IDuckToLeader)duckLeaderScript;
 
-		scatterDir = new Vector2[]{
-			chooseDir [0],
-			chooseDir [1],
-			chooseDir [2],
-			chooseDir [3],
-			chooseDir [0],
-			chooseDir [1]
-		};
-		moveDir = chooseDir [0] * moveSpeed;
+		moveDir = scatterDir [0] * moveSpeed;
 		if (!transform.parent) {
 			bouncing = true;
-			rigbod.velocity = chooseDir[0] * moveSpeed;
+			rigbod.velocity = scatterDir[0] * moveSpeed;
 			birdStats.KillPointValue = 3;
 		}
+		base.Awake();
 	}
 
 	void Update(){

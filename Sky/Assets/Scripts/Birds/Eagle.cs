@@ -15,7 +15,7 @@ public class Eagle : Bird {
 	};
 	private Vector2[] moveDir;
 		
-	void Awake () {
+	protected override void Awake () {
 		birdStats = new BirdStats(BirdType.Eagle);
 
 		moveDir = new Vector2[]{
@@ -23,6 +23,7 @@ public class Eagle : Bird {
 			new Vector2(-Constants.screenDimensions.x,Constants.screenDimensions.y).normalized,
 		};
 		StartCoroutine (InitiateAttack (1f));
+		base.Awake();
 	}
 
 	IEnumerator InitiateAttack(float waitTime){

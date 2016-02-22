@@ -9,6 +9,10 @@ public abstract class Bird : MonoBehaviour, IHurtable {
 	[SerializeField] protected Collider2D birdCollider;
 	[SerializeField] protected GameObject gutSplosionParent;
 
+	protected virtual void Awake(){
+		WaveEngine.ScoreBoard.TallyBirth(MyBirdStats.MyBirdType);
+	}
+
 	public virtual void TakeDamage(Vector2 gutDirection, Collider2D spearCollider){
 		birdStats.Health--;
 		Vector2 gutSpawnSpot = transform.position;
@@ -31,17 +35,17 @@ public abstract class Bird : MonoBehaviour, IHurtable {
 
 	protected void TrackPoints(){
 		if (birdStats.Health>0){
-			WaveManager.Instance.AddPoints ((int)birdStats.MyBirdType,birdStats.DamagePointValue,0);
+			WaveEngine.ScoreBoard.TallyPoints (birdStats.MyBirdType,birdStats.DamagePointValue,0);
 		}
 		else{
-			WaveManager.Instance.AddPoints ((int)birdStats.MyBirdType,birdStats.KillPointValue,birdStats.KillPointMultiplier);
-			WaveManager.Instance.Kill ((int)birdStats.MyBirdType);
+			WaveEngine.ScoreBoard.TallyPoints (birdStats.MyBirdType,birdStats.KillPointValue,birdStats.KillPointMultiplier);
+			WaveEngine.ScoreBoard.TallyKill (birdStats.MyBirdType);
 		}
 	}
 
 	protected virtual void OnDestroy(){
-		if (WaveManager.Instance){
-			WaveManager.Instance.Death ((int)birdStats.MyBirdType);
+		if (WaveEngine.Instance){
+			WaveEngine.ScoreBoard.TallyDeath (birdStats.MyBirdType);
 		}
 	}
 }

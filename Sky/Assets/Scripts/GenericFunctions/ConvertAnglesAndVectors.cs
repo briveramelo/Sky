@@ -6,14 +6,14 @@ namespace GenericFunctions
 	public static class ConvertAnglesAndVectors{
 
 		/// <summary>Takes an (float)angle and
-		/// <para> transforms it into a (Vector2)vector </para>
+		///  transforms it into a (Vector2)vector 
 		/// </summary>
 		public static Vector2 ConvertAngleToVector2(float inputAngle){
 			return new Vector2(Mathf.Cos (Mathf.Deg2Rad * inputAngle),Mathf.Sin (Mathf.Deg2Rad * inputAngle));
 		}
 
 		/// <summary>Takes an (float)angle and
-		/// <para> transforms it into a (Vector3)vector </para>
+		///  transforms it into a (Vector3)vector 
 		/// </summary>
 		public static Vector3 ConvertAngleToVector3(int inputAngle){
 			return new Vector3(Mathf.Cos (Mathf.Deg2Rad * inputAngle),Mathf.Sin (Mathf.Deg2Rad * inputAngle),0f);
@@ -36,7 +36,7 @@ namespace GenericFunctions
 		}
 
 		/// <summary>Uses x,y of a (Vector3)vector and
-		/// <para> transforms it into a (float)angle </para>
+		///  transforms it into a (float)angle 
 		/// </summary>
 		public static int ConvertVector3Angle(Vector3 inputVector){
 			return Mathf.RoundToInt (Mathf.Atan2 (inputVector.y, inputVector.x) * Mathf.Rad2Deg);

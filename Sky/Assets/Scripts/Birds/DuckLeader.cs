@@ -11,11 +11,12 @@ public class DuckLeader : Bird, IDuckToLeader {
 	private Vector2[] setPositions;
 	private float moveSpeed = 2.5f;
 
-	void Awake () {
+	protected override void Awake () {
 		birdStats = new BirdStats(BirdType.DuckLeader);
 		leaderToDucks = new List<ILeaderToDuck>((ILeaderToDuck[])duckScripts);
 		SetFormation (transform.position.x > 0);
 		FanTheV ();
+		base.Awake();
 	}
 	
 	public void SetFormation(bool goLeft){

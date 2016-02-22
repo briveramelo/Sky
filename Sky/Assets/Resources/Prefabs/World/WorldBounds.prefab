@@ -47,6 +47,9 @@ GameObject:
   - 114: {fileID: 11474728}
   - 114: {fileID: 11453282}
   - 114: {fileID: 11498852}
+  - 114: {fileID: 11412400}
+  - 114: {fileID: 11408590}
+  - 114: {fileID: 11464016}
   m_Layer: 0
   m_Name: WorldBounds
   m_TagString: Untagged
@@ -208,6 +211,30 @@ BoxCollider2D:
   m_Offset: {x: 0, y: -3.21}
   serializedVersion: 2
   m_Size: {x: 12.04, y: 0.79}
+--- !u!114 &11408590
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 156416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dec905af7bbcd4c0984c88c57e218aef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wave3: {fileID: 11464016}
+--- !u!114 &11412400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 156416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: add83d628bc274394946a3857781055a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wave2: {fileID: 11408590}
 --- !u!114 &11441432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -235,6 +262,17 @@ MonoBehaviour:
   - {fileID: 6143208}
   - {fileID: 6175486}
   - {fileID: 6138280}
+--- !u!114 &11464016
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 156416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e994d4b0f0dcb4a3c9552a8727018ad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11474728
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -243,7 +281,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 156416}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2806a825ed174cf0b4825fa23acb807, type: 3}
+  m_Script: {fileID: 11500000, guid: 09b9433c5a0974710992cf7e0256ad1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11478162

@@ -24,7 +24,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable {
 
 	private bool tentaclesDisabled;
 
-	void Awake(){
+	protected override void Awake(){
 		StabbableTentacle = (IStabbable)this;
 		me = (ISensorToTentacle)this;
 		tentacleToSensor = (ITentacleToSensor)ts;
@@ -33,6 +33,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable {
 
 		resetHeight = .5f + homeSpot.y;
 		defeatedHeight = .25f + homeSpot.y;
+		base.Awake();
 	}
 
 	void FaceTowardYou(bool toward){

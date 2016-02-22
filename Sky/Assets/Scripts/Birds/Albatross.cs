@@ -6,8 +6,9 @@ public class Albatross : Bird {
 
 	private float moveSpeed = .71f;
 
-	void Awake(){
+	protected override void Awake(){
 		birdStats = new BirdStats(BirdType.Albatross);
+		base.Awake();
 	}
 
 	void Update () {

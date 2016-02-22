@@ -5,9 +5,10 @@ public abstract class LinearBird : Bird{
 
 	protected float moveSpeed;
 
-	protected virtual void Awake () {
+	protected override void Awake () {
 		rigbod.velocity = Vector2.right * moveSpeed;
 		transform.Face4ward(false);
+		base.Awake();
 	}
 
 	public void SetVelocity(Vector2 desiredDirection){

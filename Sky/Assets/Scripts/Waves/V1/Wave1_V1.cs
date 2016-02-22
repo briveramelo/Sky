@@ -2,19 +2,17 @@
 using System.Collections;
 using GenericFunctions;
 
-/*
+public class Wave1_V1 : WaveEngine {
 
-public class Wave1_V1 : WaveManager {
-
-	public Wave2_V1 wave2;
+	[SerializeField] private Wave2_V1 wave2; private IWave1to2 Wave2;
 
 	void Awake(){
-		wave2 = GetComponent<Wave2_V1> ();
-		StartCoroutine (Wave1 ());
+		Wave2 = (IWave1to2)wave2;
+		StartCoroutine (RunWave1 ());
 	}
 
 	//PIGEONS
-	public IEnumerator Wave1(){
+	IEnumerator RunWave1(){
 		waveNumber = 1;
 		ResetWaveCounters ();
 		
@@ -22,65 +20,64 @@ public class Wave1_V1 : WaveManager {
 		
 		// 1 LOW
 		yield return new WaitForSeconds(wavePauseTime);
-		yield return StartCoroutine (SpawnBirds (Constants.pigeon, Constants.FixedSpawnHeight(1,lowHeight)));
-		
+		SpawnBirds (BirdType.Pigeon, Constants.FixedSpawnHeight(1,lowHeight));
+
 		// 3 LOW
 		yield return StartCoroutine (WaitUntilAliveOnScreen (0));
 		yield return StartCoroutine (WaitUntilTimeRange ());
-		yield return StartCoroutine (MassProduce_FixedSide_FixedHeight_1Bird (Constants.pigeon, 3, 3, Constants.pigeon, 1, lowHeight, 1f, 1f));
-		
+		yield return StartCoroutine (MassProduce_FixedSide_FixedHeight_1Bird (BirdType.Pigeon, 3, 3, BirdType.Pigeon, 1, lowHeight, 1f, 1f));
+
 		// 1 MID
 		yield return StartCoroutine (WaitUntilAliveOnScreen (0));
 		yield return StartCoroutine (WaitUntilTimeRange ());
-		yield return StartCoroutine (SpawnBirds (Constants.pigeon, Constants.FixedSpawnHeight(1,medHeight)));
+		SpawnBirds (BirdType.Pigeon, Constants.FixedSpawnHeight(1,medHeight));
 		
 		// 3 MID
 		yield return StartCoroutine (WaitUntilAliveOnScreen (0));
 		yield return StartCoroutine (WaitUntilTimeRange ());
-		yield return StartCoroutine (MassProduce_FixedSide_FixedHeight_1Bird (Constants.pigeon, 3, 3, Constants.pigeon, 1, medHeight, 1f, 1f));
+		yield return StartCoroutine (MassProduce_FixedSide_FixedHeight_1Bird (BirdType.Pigeon, 3, 3, BirdType.Pigeon, 1, medHeight, 1f, 1f));
 		
 		// 1 HIGH
 		yield return StartCoroutine (WaitUntilAliveOnScreen (0));
 		yield return StartCoroutine (WaitUntilTimeRange ());
-		yield return StartCoroutine (SpawnBirds (Constants.pigeon, Constants.FixedSpawnHeight(1,highHeight)));
+		SpawnBirds (BirdType.Pigeon, Constants.FixedSpawnHeight(1,highHeight));
 		
 		// 3 HIGH
 		yield return StartCoroutine (WaitUntilAliveOnScreen (0));
 		yield return StartCoroutine (WaitUntilTimeRange ());
-		yield return StartCoroutine (MassProduce_FixedSide_FixedHeight_1Bird (Constants.pigeon, 3, 3, Constants.pigeon, 1, highHeight, 1f, 1f));
+		yield return StartCoroutine (MassProduce_FixedSide_FixedHeight_1Bird (BirdType.Pigeon, 3, 3, BirdType.Pigeon, 1, highHeight, 1f, 1f));
 		
 		//1 each LOW-MED (2x1)
 		yield return StartCoroutine (WaitUntilAliveOnScreen (0));
 		yield return StartCoroutine (WaitUntilTimeRange ());
-		StartCoroutine (SpawnBirds (Constants.pigeon, Constants.FixedSpawnHeight(1,lowHeight)));
-		yield return StartCoroutine (SpawnBirds (Constants.pigeon, Constants.FixedSpawnHeight(1,medHeight)));
+		SpawnBirds (BirdType.Pigeon, Constants.FixedSpawnHeight(1,lowHeight));
+		SpawnBirds (BirdType.Pigeon, Constants.FixedSpawnHeight(1,medHeight));
 		
 		//3 each LOW-MED (2x3)
 		yield return StartCoroutine (WaitUntilAliveOnScreen (0));
 		yield return StartCoroutine (WaitUntilTimeRange ());
-		StartCoroutine (MassProduce_FixedSide_FixedHeight_1Bird (Constants.pigeon, 3, 3, Constants.pigeon, 1, lowHeight, 1f, 1f));
-		yield return StartCoroutine (MassProduce_FixedSide_FixedHeight_1Bird (Constants.pigeon, 3, 6, Constants.pigeon, 1, medHeight, 1f, 1f));
+		StartCoroutine (MassProduce_FixedSide_FixedHeight_1Bird (BirdType.Pigeon, 3, 3, BirdType.Pigeon, 1, lowHeight, 1f, 1f));
+		yield return StartCoroutine (MassProduce_FixedSide_FixedHeight_1Bird (BirdType.Pigeon, 3, 6, BirdType.Pigeon, 1, medHeight, 1f, 1f));
 		
 		//1 each LOW-HIGH (2x1)
 		yield return StartCoroutine (WaitUntilAliveOnScreen (0));
 		yield return StartCoroutine (WaitUntilTimeRange ());
-		StartCoroutine (SpawnBirds (Constants.pigeon, Constants.FixedSpawnHeight(1,lowHeight)));
-		yield return StartCoroutine (SpawnBirds (Constants.pigeon, Constants.FixedSpawnHeight(1,highHeight)));
+		SpawnBirds (BirdType.Pigeon, Constants.FixedSpawnHeight(1,lowHeight));
+		SpawnBirds (BirdType.Pigeon, Constants.FixedSpawnHeight(1,highHeight));
 		
 		//3 each LOW-HIGH (2x)
 		yield return StartCoroutine (WaitUntilAliveOnScreen (0));
 		yield return StartCoroutine (WaitUntilTimeRange ());
-		StartCoroutine (MassProduce_FixedSide_FixedHeight_1Bird (Constants.pigeon, 3, 3, Constants.pigeon, 1, lowHeight, 1f, 1f));
-		yield return StartCoroutine (MassProduce_FixedSide_FixedHeight_1Bird (Constants.pigeon, 3, 6, Constants.pigeon, 1, highHeight, 1f, 1f));
+		StartCoroutine (MassProduce_FixedSide_FixedHeight_1Bird (BirdType.Pigeon, 3, 3, BirdType.Pigeon, 1, lowHeight, 1f, 1f));
+		yield return StartCoroutine (MassProduce_FixedSide_FixedHeight_1Bird (BirdType.Pigeon, 3, 6, BirdType.Pigeon, 1, highHeight, 1f, 1f));
 		
 		
 		//REWARD
 		//PAUSE until life tally total drops to 0
 		yield return StartCoroutine (WaitUntilAliveOnScreen (0));
 		yield return new WaitForSeconds(2f);
-		yield return StartCoroutine (SpawnBirds (Constants.birdOfParadise, Constants.FixedSpawnHeight(1,lowHeight)));
+		SpawnBirds (BirdType.BirdOfParadise, Constants.FixedSpawnHeight(1,lowHeight));
 		yield return StartCoroutine (WaitUntilAliveOnScreen (0));
-		StartCoroutine (wave2.Wave2 ());
+		StartCoroutine (Wave2.RunWave2 ());
 	}
 }
-*/

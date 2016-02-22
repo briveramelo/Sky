@@ -61,8 +61,7 @@ public class Pelican : Bird {
 	private bool[] clockwiseSteps = new bool[4];
 	private bool goLeft;
 
-	// Use this for initialization
-	void Awake () {
+	protected override void Awake () {
 		birdStats = new BirdStats(BirdType.Pelican);
 
 		pelPosts = new Dictionary<PP, Vector2>();
@@ -71,6 +70,7 @@ public class Pelican : Bird {
 			pelPosts.Add((PP)i, setPositions[i]);
 		}
 		StartCoroutine(SwoopAround());
+		base.Awake();
 	}
 
 	//Move from one checkpoint to another

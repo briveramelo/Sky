@@ -23,7 +23,7 @@ public class Seagull : Bird {
 	private float minNextDistance = 0.2f;
 	private float lastTimePooped;
 
-	void Awake () {
+	protected override void Awake () {
 		birdStats = new BirdStats(BirdType.Seagull);
 
 		nextDistanceHeight = .3f;
@@ -31,6 +31,7 @@ public class Seagull : Bird {
 		nextDistance = 0.2f;
 		StartCoroutine (GetIntoPlace ());
 		StartCoroutine (Poop ());
+		base.Awake();
 	}
 
 	IEnumerator GetIntoPlace(){

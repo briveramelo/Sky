@@ -2,51 +2,54 @@
 using System.Collections;
 using GenericFunctions;
 
-public class WaveManager : MonoBehaviour{
+public class WaveEngine : MonoBehaviour, ITallyable{
 
 	//SINGLETON SCRIPT
 	//CONTAINS STATIC VARIABLES AND FUNCTIONS
 	//THAT WAVE SCRIPTS + SAVELOAD CAN REFERENCE FOR THEIR BIDDING
 
-	public static WaveManager Instance;
+	public static ITallyable ScoreBoard;
+	public static WaveEngine Instance;
 
-	private int waveNumber;
-	private float wavePauseTime;
-	private float standardPauseTime;
-	private float lowHeight;
-	private float medHeight;
-	private float highHeight;
-	private float standardTimeMin;
-	private float standardTimeMax;
+	protected int waveNumber;
+	protected float wavePauseTime;
+	protected float standardPauseTime;
+	protected float lowHeight;
+	protected float medHeight;
+	protected float highHeight;
+	protected float standardTimeMin;
+	protected float standardTimeMax;
 
 	//spawn
-	private int[] currentWaveAllSpawnCount;
-	private int[] allSpawnCount;
-	private int currentWaveSpawnCount;
-	private int spawnCount;
+	protected static int[] currentWaveAllSpawnCount;
+	protected static int[] allSpawnCount;
+	protected static int currentWaveSpawnCount;
+	protected static int spawnCount;
 
 	//alive
-	private int[] currentWaveAllAliveCount;
-	private int[] allAliveCount;
-	private int currentWaveAliveCount;
-	private int aliveCount;
+	protected static int[] currentWaveAllAliveCount;
+	protected static int[] allAliveCount;
+	protected static int currentWaveAliveCount;
+	protected static int aliveCount;
 
 	//killed
-	private int[] currentWaveAllKillCount;
-	private int[] allKillCount;
-	private int currentWaveKillCount;
-	private int killCount;
+	protected static int[] currentWaveAllKillCount;
+	protected static int[] allKillCount;
+	protected static int currentWaveKillCount;
+	protected static int killCount;
 
 	//pooints!
-	private int[] currentWaveAllPoints;
-	private int[] allPoints;
-	private int currentWavePoints;
-	private int points;
+	protected static int[] currentWaveAllPoints;
+	protected static int[] allPoints;
+	protected static int currentWavePoints;
+	protected static int points;
 
-	private int birdTypeCount;
+	protected static int birdTypeCount;
 	
 	void Start(){
+		ScoreBoard = this;
 		Instance = this;
+
 		birdTypeCount = Incubator.Instance.Birds.Length;
 		allKillCount = new int[birdTypeCount];
 		allAliveCount = new int[birdTypeCount];
@@ -68,11 +71,11 @@ public class WaveManager : MonoBehaviour{
 
 	/// <summary> Spawn Birds
 	/// </summary>
-	protected void SpawnBirds(int birdType, Vector3 spawnPoint,int duckMoveDir =0){ 
+	protected void SpawnBirds(BirdType birdType, Vector2 spawnPoint,int duckMoveDir =0){ 
 		int direction = spawnPoint.x<0 ? 1 : -1;
-		Bird bird = (Instantiate (Incubator.Instance.Birds[birdType], spawnPoint, Quaternion.identity) as GameObject).GetComponent<Bird>();
+		Bird bird = (Instantiate (Incubator.Instance.Birds[(int)birdType], spawnPoint, Quaternion.identity) as GameObject).GetComponent<Bird>();
 
-		switch ((BirdType)birdType){
+		switch (birdType){
 		case BirdType.Pigeon: 
 			Pigeon pigeonScript = (Pigeon)bird;
 			pigeonScript.SetVelocity(Vector2.right * direction);
@@ -101,8 +104,8 @@ public class WaveManager : MonoBehaviour{
 		return Mathf.Clamp (y, -Constants.worldDimensions.y * .8f, Constants.worldDimensions.y * .8f);
 	}
 
-	/// <summary> determines which direction a duck should go 
-	/// <para>based on its starting position</para>
+	/// <summary> Determines which direction a duck should go 
+	/// based on its starting position
 	/// </summary>
 	protected int[] RandomDuckSideAndDirection(bool top){
 		int xSpot = (int)Mathf.Sign(Random.insideUnitCircle.x);
@@ -155,8 +158,8 @@ public class WaveManager : MonoBehaviour{
 
 	/// <summary> Wait until at most "maxAlive" "birdTypes" remain alive on screen
 	/// </summary>
-	protected IEnumerator WaitUntilAliveOnScreen(int birdType, int maxAlive){
-		while (currentWaveAllAliveCount[birdType] > maxAlive){
+	protected IEnumerator WaitUntilAliveOnScreen(BirdType birdType, int maxAlive){
+		while (currentWaveAllAliveCount[(int)birdType] > maxAlive){
 			yield return null;
 		}
 		yield return null;
@@ -172,22 +175,22 @@ public class WaveManager : MonoBehaviour{
 	}
 
 	/// <summary> Wait until at least "deathToll" birds have died in this wave since calling this.
-	/// <para>Typically used internal to the "Mass Produce" Function Family to prevent resetting </para>
-	/// <para>the starting quantity </para>
+	/// Typically used internal to the "Mass Produce" Function Family to prevent resetting 
+	/// the starting quantity 
 	/// </summary>
-	protected IEnumerator WaitUntilDead(int birdType, int deathToll, int startingQuantity){
-		while ((currentWaveAllKillCount[birdType] - startingQuantity) < deathToll){
+	protected IEnumerator WaitUntilDead(BirdType birdType, int deathToll, int startingQuantity){
+		while ((currentWaveAllKillCount[(int)birdType] - startingQuantity) < deathToll){
 			yield return null;
 		}
 		yield return null;
 	}
 
 	/// <summary> Wait until at least "deathToll" birds have died
-	/// <para> since calling this function</para>
+	///  since calling this function
 	/// </summary>
-	protected IEnumerator WaitUntilDead(int birdType, int deathToll){
-		int startingQuantity = currentWaveAllKillCount [birdType];
-		while ((currentWaveAllKillCount[birdType] - startingQuantity) < deathToll){
+	protected IEnumerator WaitUntilDead(BirdType birdType, int deathToll){
+		int startingQuantity = currentWaveAllKillCount [(int)birdType];
+		while ((currentWaveAllKillCount[(int)birdType] - startingQuantity) < deathToll){
 			yield return null;
 		}
 		yield return null;
@@ -203,11 +206,11 @@ public class WaveManager : MonoBehaviour{
 	}
 
 	/// <summary> Wait until at least "minSpawned" "birdTypes" are born
-	/// <para>Typically used in the "Mass Produce" Function Family to prevent resetting </para>
-	/// <para>the starting quantity </para>
+	/// Typically used in the "Mass Produce" Function Family to prevent resetting 
+	/// the starting quantity 
 	/// </summary>
-	protected IEnumerator WaitUntilSpawn(int birdType, int minSpawned, int startingQuantity){
-		while ((currentWaveAllSpawnCount[birdType]-startingQuantity)<minSpawned){
+	protected IEnumerator WaitUntilSpawn(BirdType birdType, int minSpawned, int startingQuantity){
+		while ((currentWaveAllSpawnCount[(int)birdType]-startingQuantity)<minSpawned){
 			yield return null;
 		}
 		yield return null;
@@ -215,9 +218,9 @@ public class WaveManager : MonoBehaviour{
 
 	/// <summary> Wait until at least "minSpawned" "birdTypes" are born
 	/// </summary>
-	protected IEnumerator WaitUntilSpawn(int birdType, int minSpawned){
-		int startingQuantity = currentWaveAllSpawnCount [birdType];
-		while ((currentWaveAllSpawnCount[birdType]-startingQuantity)<minSpawned){
+	protected IEnumerator WaitUntilSpawn(BirdType birdType, int minSpawned){
+		int startingQuantity = currentWaveAllSpawnCount [(int)birdType];
+		while ((currentWaveAllSpawnCount[(int)birdType]-startingQuantity)<minSpawned){
 			yield return null;
 		}
 		yield return null;
@@ -246,11 +249,11 @@ public class WaveManager : MonoBehaviour{
 	}
 
 	/// <summary> Produce some "quantity" of "birdType" birds on the left (-1) or right(+1) side at height "yPosition" (-1 <-> +1)
-	/// <para>Waits for its older brother to be born, checking the startingQuantity of older brethren</para>
-	/// <para>Waits until at most "maxAlive" "birdToWatch" birds remain alive on screen, typically same as birdType</para>
+	/// Waits for its older brother to be born, checking the startingQuantity of older brethren
+	/// Waits until at most "maxAlive" "birdToWatch" birds remain alive on screen, typically same as birdType
 	/// </summary>
-	protected IEnumerator MassProduce_FixedSide_FixedHeight_1Bird(int birdType, int quantity, int maxAlive, int birdToWatch, int side, float yPosition, float tMin = 1f, float tMax = 2f){
-		int startingQuantity = currentWaveAllSpawnCount [birdType];
+	protected IEnumerator MassProduce_FixedSide_FixedHeight_1Bird(BirdType birdType, int quantity, int maxAlive, BirdType birdToWatch, int side, float yPosition, float tMin = 1f, float tMax = 2f){
+		int startingQuantity = currentWaveAllSpawnCount [(int)birdType];
 		for (int birdCount =0; birdCount<quantity; birdCount++){
 			yield return StartCoroutine (WaitUntilSpawn (birdType, birdCount, startingQuantity));
 			yield return StartCoroutine (WaitUntilAliveOnScreen (birdToWatch, maxAlive));
@@ -261,10 +264,10 @@ public class WaveManager : MonoBehaviour{
 	}
 
 	/// <summary> Produce some "quantity" of "birdType" birds on the left (-1) or right(+1) side at height "yPosition" (-1 <-> +1)
-	/// <para>Waits for its older brother to be born, checking the startingQuantity of older brethren</para>
-	/// <para>Waits until at most "maxAlive" total birds remain alive on screen</para>
+	/// Waits for its older brother to be born, checking the startingQuantity of older brethren
+	/// Waits until at most "maxAlive" total birds remain alive on screen
 	/// </summary>
-	protected IEnumerator MassProduce_FixedSide_FixedHeight_AllBirds(int birdType, int quantity, int maxAlive, int side, float yPosition, float tMin =1f, float tMax =2f){
+	protected IEnumerator MassProduce_FixedSide_FixedHeight_AllBirds(BirdType birdType, int quantity, int maxAlive, int side, float yPosition, float tMin =1f, float tMax =2f){
 		int startingQuantity = currentWaveSpawnCount;
 		for (int birdCount =0; birdCount<quantity; birdCount++){
 			yield return StartCoroutine (WaitUntilSpawn (birdType, birdCount, startingQuantity));
@@ -276,10 +279,10 @@ public class WaveManager : MonoBehaviour{
 	}
 
 	/// <summary> Produce some "quantity" of "birdType" birds on the left (-1) or right(+1) side at random height between yMin - yMax (+/-1)
-	/// <para>Waits for its older brother to be born, checking the startingQuantity of older brethren</para>
-	/// <para>Waits until at most "maxAlive" "birdToWatch" birds remain alive on screen, typically same as birdType</para>
+	/// Waits for its older brother to be born, checking the startingQuantity of older brethren
+	/// Waits until at most "maxAlive" "birdToWatch" birds remain alive on screen, typically same as birdType
 	/// </summary>
-	protected IEnumerator MassProduce_FixedSide_RandomHeight_1Bird(int birdType, int quantity, int maxAlive, int side, int birdToWatch, float yMin, float yMax, float tMin =1f, float tMax =2f){
+	protected IEnumerator MassProduce_FixedSide_RandomHeight_1Bird(BirdType birdType, int quantity, int maxAlive, int side, BirdType birdToWatch, float yMin, float yMax, float tMin =1f, float tMax =2f){
 		int startingQuantity = currentWaveSpawnCount;
 		for (int birdCount =0; birdCount<quantity; birdCount++){
 			yield return StartCoroutine (WaitUntilSpawn (birdType, birdCount, startingQuantity));
@@ -291,10 +294,10 @@ public class WaveManager : MonoBehaviour{
 	}
 
 	/// <summary> Produce some "quantity" of "birdType" birds on the left (-1) or right(+1) side at random height between yMin - yMax (+/-1)
-	/// <para>Waits for its older brother to be born, checking the startingQuantity of older brethren</para>
-	/// <para>Waits until at most "maxAlive" total birds remain alive on screen</para>
+	/// Waits for its older brother to be born, checking the startingQuantity of older brethren
+	/// Waits until at most "maxAlive" total birds remain alive on screen
 	/// </summary>
-	protected IEnumerator MassProduce_FixedSide_RandomHeight_AllBird(int birdType, int quantity, int maxAlive, int side, float yMin, float yMax, float tMin =1f, float tMax =2f){
+	protected IEnumerator MassProduce_FixedSide_RandomHeight_AllBird(BirdType birdType, int quantity, int maxAlive, int side, float yMin, float yMax, float tMin =1f, float tMax =2f){
 		int startingQuantity = currentWaveSpawnCount;
 		for (int birdCount =0; birdCount<quantity; birdCount++){
 			yield return StartCoroutine (WaitUntilSpawn (birdType, birdCount, startingQuantity));
@@ -306,10 +309,10 @@ public class WaveManager : MonoBehaviour{
 	}
 
 	/// <summary> Produce some "quantity" of "birdType" birds on a random side at height "yPosition" (-1 <-> +1)
-	/// <para>Waits for its older brother to be born, checking the startingQuantity of older brethren</para>
-	/// <para>Waits until at most "maxAlive" "birdToWatch" birds remain alive on screen</para>
+	/// Waits for its older brother to be born, checking the startingQuantity of older brethren
+	/// Waits until at most "maxAlive" "birdToWatch" birds remain alive on screen
 	/// </summary>
-	protected IEnumerator MassProduce_RandomSide_FixedHeight_1Bird(int birdType, int quantity, int maxAlive, int birdToWatch, float yPosition, float tMin =1f, float tMax =2f){
+	protected IEnumerator MassProduce_RandomSide_FixedHeight_1Bird(BirdType birdType, int quantity, int maxAlive, BirdType birdToWatch, float yPosition, float tMin =1f, float tMax =2f){
 		int[] sideAndDirection;
 		int startingQuantity = currentWaveSpawnCount;
 		for (int birdCount =0; birdCount<quantity; birdCount++){
@@ -323,10 +326,10 @@ public class WaveManager : MonoBehaviour{
 	}
 
 	/// <summary> Produce some "quantity" of "birdType" birds on a random side at height "yPosition" (-1 <-> +1)
-	/// <para>Waits for its older brother to be born, checking the startingQuantity of older brethren</para>
-	/// <para>Waits until at most "maxAlive" total birds remain alive on screen</para>
+	/// Waits for its older brother to be born, checking the startingQuantity of older brethren
+	/// Waits until at most "maxAlive" total birds remain alive on screen
 	/// </summary>
-	protected IEnumerator MassProduce_RandomSide_FixedHeight_AllBird(int birdType, int quantity, int maxAlive, float yPosition, float tMin = 1f, float tMax = 2f){
+	protected IEnumerator MassProduce_RandomSide_FixedHeight_AllBird(BirdType birdType, int quantity, int maxAlive, float yPosition, float tMin = 1f, float tMax = 2f){
 		int[] sideAndDirection;
 		int startingQuantity = currentWaveSpawnCount;
 		for (int birdCount =0; birdCount<quantity; birdCount++){
@@ -340,10 +343,10 @@ public class WaveManager : MonoBehaviour{
 	}
 
 	/// <summary> Produce some "quantity" of "birdType" birds on a random side at random height between yMin - yMax (+/-1)
-	/// <para>Waits for its older brother to be born, checking the startingQuantity of older brethren</para>
-	/// <para>Waits until at most "maxAlive" total birds remain alive on screen</para>
+	/// Waits for its older brother to be born, checking the startingQuantity of older brethren
+	/// Waits until at most "maxAlive" total birds remain alive on screen
 	/// </summary>
-	protected IEnumerator MassProduce_RandomSide_RandomHeight_1Bird(int birdType, int quantity, int maxAlive, int birdToWatch, float yMin, float yMax, float tMin = 1f, float tMax = 2f){
+	protected IEnumerator MassProduce_RandomSide_RandomHeight_1Bird(BirdType birdType, int quantity, int maxAlive, BirdType birdToWatch, float yMin, float yMax, float tMin = 1f, float tMax = 2f){
 		int[] sideAndDirection;
 		int startingQuantity = currentWaveSpawnCount;
 		for (int birdCount =0; birdCount<quantity; birdCount++){
@@ -357,10 +360,10 @@ public class WaveManager : MonoBehaviour{
 	}
 
 	/// <summary> Produce some "quantity" of "birdType" birds on a random side at random height between yMin - yMax (+/-1)
-	/// <para>Waits for its older brother to be born, checking the startingQuantity of older brethren</para>
-	/// <para>Waits until at most "maxAlive" total birds remain alive on screen</para>
+	/// Waits for its older brother to be born, checking the startingQuantity of older brethren
+	/// Waits until at most "maxAlive" total birds remain alive on screen
 	/// </summary>
-	protected IEnumerator MassProduce_RandomSide_RandomHeight_AllBirds(int birdType, int quantity, int maxAlive, float yMin, float yMax, float tMin =1f, float tMax =2f){
+	protected IEnumerator MassProduce_RandomSide_RandomHeight_AllBirds(BirdType birdType, int quantity, int maxAlive, float yMin, float yMax, float tMin =1f, float tMax =2f){
 		int[] sideAndDirection;
 		int startingQuantity = currentWaveSpawnCount;
 		for (int birdCount =0; birdCount<quantity; birdCount++){
@@ -373,43 +376,46 @@ public class WaveManager : MonoBehaviour{
 		yield return null;
 	}
 
-	public void Birth(int birdType){
-		currentWaveAllSpawnCount[birdType]++;
-		allSpawnCount[birdType]++;
+
+	#region ITallyable
+	void ITallyable.TallyBirth(BirdType birdType){
+		currentWaveAllSpawnCount[(int)birdType]++;
+		allSpawnCount[(int)birdType]++;
 		currentWaveSpawnCount++;
 		spawnCount++;
 		
-		currentWaveAllAliveCount [birdType]++;
-		allAliveCount [birdType]++;
+		currentWaveAllAliveCount [(int)birdType]++;
+		allAliveCount [(int)birdType]++;
 		currentWaveAliveCount++;
 		aliveCount++;
 	}
 
-	public void Death(int birdType){
-		currentWaveAllAliveCount [birdType]--;
-		allAliveCount[birdType]--;
+	void ITallyable.TallyDeath(BirdType birdType){
+		currentWaveAllAliveCount [(int)birdType]--;
+		allAliveCount[(int)birdType]--;
 		currentWaveAliveCount--;
 		aliveCount--;
 	}
 
-	public void Kill(int birdType){
-		currentWaveAllKillCount [birdType]++;
-		allKillCount[birdType]++;
+	void ITallyable.TallyKill(BirdType birdType){
+		currentWaveAllKillCount [(int)birdType]++;
+		allKillCount[(int)birdType]++;
 		currentWaveKillCount++;
 		killCount++;
 	}
 
-	public void AddPoints(int birdType, int thesePoints, float pointMultiplier){
+	void ITallyable.TallyPoints(BirdType birdType, int thesePoints, float pointMultiplier){
 		//special case for killing birds of point multipliers
 		int totalFromMultiplier = 0;
-		if (birdType == (int)BirdType.Seagull || birdType == (int)BirdType.Tentacles){ 
+		if (birdType == BirdType.Seagull || birdType == BirdType.Tentacles){ 
 			foreach (Bird bird in FindObjectsOfType<Bird>()){
 				totalFromMultiplier += Mathf.CeilToInt(bird.MyBirdStats.RemainingPoints * pointMultiplier);
 			}
 		}
-		currentWaveAllPoints [birdType] += thesePoints + totalFromMultiplier;
-		allPoints[birdType] += thesePoints + totalFromMultiplier;
+		currentWaveAllPoints [(int)birdType] += thesePoints + totalFromMultiplier;
+		allPoints[(int)birdType] += thesePoints + totalFromMultiplier;
 		currentWavePoints += thesePoints + totalFromMultiplier;
 		points += thesePoints + totalFromMultiplier;
 	}
+	#endregion
 }

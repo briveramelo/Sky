@@ -51,28 +51,28 @@ namespace GenericFunctions{
 		public static int totalPooSpots = 250;
 
 		/// <summary> side is +/- 1 and y position is between -1 <-> +1
-		/// <para>Multiplies these input numbers by worldDimensions</para>
+		/// Multiplies these input numbers by worldDimensions
 		/// </summary>
 		public static Vector2 RandomSpawnHeight(int side, float minY, float maxY){
 			return new Vector2 (side * worldDimensions.x, Random.Range (minY, maxY) * worldDimensions.y);
 		}
 
 		/// <summary> x and y position ranges are between -1 <-> +1
-		/// <para>Multiplies these input numbers by worldDimensions</para>
+		/// Multiplies these input numbers by worldDimensions
 		/// </summary>
 		public static Vector2 RandomSpawnPoint(float minX, float maxX, float minY, float maxY){
 			return new Vector2 (Random.Range (minX, maxX) * worldDimensions.x, Random.Range (minY, maxY) * worldDimensions.y);
 		}
 
 		/// <summary> Choose a side (+/- 1) and y position (-1 <-> +1)
-		/// <para>Multiplies these input numbers by worldDimensions</para>
+		/// Multiplies these input numbers by worldDimensions
 		/// </summary>
 		public static Vector2 FixedSpawnHeight (int side, float y){
 			return new Vector2 (side * worldDimensions.x, y * worldDimensions.y);
 		}
 
 		/// <summary> Choose an x position (-1 <-> +1) and y position (-1 <-> +1)
-		/// <para>Multiplies these input numbers by worldDimensions</para>
+		/// Multiplies these input numbers by worldDimensions
 		/// </summary>
 		public static Vector2 FixedSpawnPoint(float x, float y){
 			return new Vector2 (x * worldDimensions.x, y * worldDimensions.y);

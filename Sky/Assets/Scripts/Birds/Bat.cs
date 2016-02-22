@@ -38,10 +38,11 @@ public class Bat : Bird {
 	private bool clockwise;
 	#endregion
 
-	void Awake () {
+	protected override void Awake () {
 		birdStats = new BirdStats(BirdType.Bat);
 		targetPositions = new Vector2[positionWindowLength];
 		StartCoroutine (Approach ());
+		base.Awake();
 	}
 
 	// Flap straight towards the first point on the elliptical perimeter
