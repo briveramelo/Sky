@@ -46,6 +46,7 @@ GameObject:
   - 114: {fileID: 11441432}
   - 114: {fileID: 11474728}
   - 114: {fileID: 11453282}
+  - 114: {fileID: 11498852}
   m_Layer: 0
   m_Name: WorldBounds
   m_TagString: Untagged
@@ -281,6 +282,17 @@ MonoBehaviour:
   - {fileID: 166612, guid: 9ea679bf2282b455ea1af34a50a8e0c7, type: 2}
   - {fileID: 175384, guid: 6fac294ad61874da699aad66017bb75d, type: 2}
   - {fileID: 156092, guid: 9919c17745d5e44b09e49882610b405e, type: 2}
+--- !u!114 &11498852
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 156416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffd5a565c05c54f5b93d5fd6ec50d4fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!249 &24919712
 AreaEffector2D:
   serializedVersion: 2

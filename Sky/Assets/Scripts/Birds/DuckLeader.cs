@@ -1,39 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using GenericFunctions;
 
-public class DuckLeader : Bird {
+public class DuckLeader : Bird, IDuckToLeader {
 
-	[SerializeField] private Duck[] duckScripts;
+	[SerializeField] private Duck[] duckScripts; private List<ILeaderToDuck> leaderToDucks;
 
-	private Vector2[] setPositions; public Vector2[] SetPositions {get{return setPositions;}}
-	private bool[] formations;
-
+	private Vector2[] setPositions;
 	private float moveSpeed = 2.5f;
-	private float separationDistance = 0.9f;
 
-	// Use this for initialization
 	void Awake () {
 		birdStats = new BirdStats(BirdType.DuckLeader);
-
+		leaderToDucks = new List<ILeaderToDuck>((ILeaderToDuck[])duckScripts);
 		SetFormation (transform.position.x > 0);
 		FanTheV ();
 	}
 	
 	public void SetFormation(bool goLeft){
-		Vector3 topSide;
-		Vector3 bottomSide;
-		Vector3 direction;
-		if (goLeft){
-			topSide = ConvertAnglesAndVectors.ConvertAngleToVector2 (30);
-			bottomSide = ConvertAnglesAndVectors.ConvertAngleToVector2 (-30);
-			direction = Vector2.left;
-		}
-		else{
-			topSide = ConvertAnglesAndVectors.ConvertAngleToVector2 (150);
-			bottomSide = ConvertAnglesAndVectors.ConvertAngleToVector2 (210);
-			direction = Vector2.right;
-		}
+		Vector3 topSide = ConvertAnglesAndVectors.ConvertAngleToVector2 (goLeft ? 30 : 150);
+		Vector3 bottomSide = ConvertAnglesAndVectors.ConvertAngleToVector2 (goLeft ? -30 : 210);
+		Vector2 direction = new Vector2 (goLeft ? -1 : 1, 0);
 		transform.Face4ward(goLeft);
 		rigbod.velocity = direction * moveSpeed;
 		setPositions = new Vector2[]{
@@ -44,108 +32,49 @@ public class DuckLeader : Bird {
 			topSide * 3f,
 			bottomSide * 3f
 		};
-		
-		formations = new bool[6];
-		for (int i=0; i<duckScripts.Length; i++){
-			duckScripts[i].FormationNumber = i;
-			duckScripts[i].DuckLeaderScript = this;
+
+		float separationDistance = 0.9f;
+		for (int i=0; i<leaderToDucks.Count; i++){
+			leaderToDucks[i].FormationNumber = i;
 			setPositions[i] *= separationDistance;
-			formations[i] = true;
 		}
 	}
 
 	void FanTheV(){
-		foreach (Duck duck in duckScripts){
-			if (duck){
-				duck.Bouncing = false;
+		leaderToDucks.ForEach (duck => duck.Bouncing = false);
+	}
+
+	#region IDuckToLeader
+	Vector2[] IDuckToLeader.SetPositions {get{return setPositions;}}
+	void IDuckToLeader.ReShuffle(ILeaderToDuck deadDuck){
+		int deadFormNum = deadDuck.FormationNumber;
+		int odds=0;	int evens=0;
+
+		for (int i=0; i<leaderToDucks.Count; i++){
+			evens += leaderToDucks[i].FormationNumber % 2 ==0 ? 1:0;
+			odds += leaderToDucks[i].FormationNumber % 2 !=0 ? 1:0;
+
+			if (leaderToDucks[i].FormationNumber>deadFormNum && leaderToDucks[i].FormationNumber % 2 == deadFormNum % 2){
+				leaderToDucks[i].FormationNumber -= 2;
 			}
 		}
-	}
 
-	public void ReShuffle(int formToFill){
-		switch (formToFill){
-		case 0:
-			if (formations[2]){
-				Shuffle (formToFill,2);
-				if (formations[4]){
-					Shuffle(2,4);
-				}
-				else if (formations[5]){
-					Shuffle (2,5);
-				}
-			}
-			else if (formations[3]){
-				Shuffle (formToFill,3);
-				if (formations[5]){
-					Shuffle (3,5);
-				}
-			}
-			break;
-		case 1:
-			if (formations[3]){
-				Shuffle (formToFill,3);
-				if (formations[5]){
-					Shuffle(3,5);
-				}
-				else if (formations[4]){
-					Shuffle (3,4);
-				}
-			}
-			else if (formations[2]){
-				Shuffle (formToFill,2);
-				if (formations[4]){
-					Shuffle (2,4);
-				}
-			}
-			break;
-		case 2:
-			if (formations[4]){
-				Shuffle (formToFill,4);
-			}
-			else if(formations[5]){
-				Shuffle (formToFill,5);
-			}
-			break;
-		case 3:
-			if (formations[5]){
-				Shuffle (formToFill,5);
-			}
-			else if(formations[4]){
-				Shuffle (formToFill,4);
-			}			
-			break;
-		case 4:
-			KillOff(formToFill);
-			break;
-		case 5:
-			KillOff(formToFill);
-			break;
+		if (odds<evens && deadFormNum % 2 != 0){
+			int highestEven = (evens-1)*2;
+			leaderToDucks.Find(duck => duck.FormationNumber==highestEven).FormationNumber -= 1;
 		}
-	}
+		else if (evens<odds && deadFormNum % 2 == 0){
+			int highestOdd = odds*2-1;
+			leaderToDucks.Find(duck => duck.FormationNumber==highestOdd).FormationNumber -= 3;
+		}
 
-	/// <summary>Flying V formation- takes a dead duck's formation number (int)formToFill
-	/// <para> and gives it to the duck of your choice (int)formMovingUp </para>
-	/// </summary>
-	void Shuffle(int formToFill, int formMovingUp){
-		duckScripts[formMovingUp].FormationNumber = formToFill;
-		duckScripts[formToFill] = duckScripts[formMovingUp];
-		duckScripts[formMovingUp] = null;
-		formations [formToFill] = true;
-		formations [formMovingUp] = false;
+		leaderToDucks.Remove(deadDuck);
 	}
+	#endregion
 
-	void KillOff(int formNumb){
-		duckScripts[formNumb] = null;
-		formations [formNumb] = false;
-	}
-
-	public void BreakTheV(){
+	void BreakTheV(){
 		transform.DetachChildren ();
-		foreach (Duck duck in duckScripts){
-			if (duck){
-				duck.Scatter();
-			}
-		}
+		leaderToDucks.ForEach(duck => duck.Scatter());
 	}
 
 	protected override void PayTheIronPrice (){

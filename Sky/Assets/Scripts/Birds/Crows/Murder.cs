@@ -26,7 +26,7 @@ public class Murder : MonoBehaviour, ICrowToMurder {
 	void Awake () {
 		crowsAlive = new List<IMurderToCrow>();
 		for (int j=0; j<crows.Length; j++){
-			crowsAlive.Add(crows[j].GetComponent<IMurderToCrow>());
+			crowsAlive.Add((IMurderToCrow)crows[j]);
 			crowsAlive[j].InitializeCrow(j, crowPositions[j]);
 		}
 		crowsToSwoop = new List<IMurderToCrow>(crowsAlive);

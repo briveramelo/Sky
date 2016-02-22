@@ -82,9 +82,11 @@
      <Compile Include="Assets\Scripts\Interfaces\IBasketToBalloon.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IControllable.cs" />
      <Compile Include="Assets\Scripts\Interfaces\ICrowToMurder.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IDuckToLeader.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IHideable.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IHoldable.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IHurtable.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\ILeaderToDuck.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IMurderToCrow.cs" />
      <Compile Include="Assets\Scripts\Interfaces\ISensorToTentacle.cs" />
      <Compile Include="Assets\Scripts\Interfaces\ISpawnable.cs" />

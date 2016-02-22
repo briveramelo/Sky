@@ -3,8 +3,7 @@ using System.Collections;
 using GenericFunctions;
 using System;
 
-public class Balloon : MonoBehaviour, IBasketToBalloon
- {
+public class Balloon : MonoBehaviour, IBasketToBalloon{
 
 	[SerializeField] private GameObject rope;
 	[SerializeField] private CircleCollider2D balloonCollider;

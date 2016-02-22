@@ -2,11 +2,9 @@
 using System.Collections;
 using GenericFunctions;
 
-public class Duck : Bird {
+public class Duck : Bird, ILeaderToDuck {
 
-	private DuckLeader duckLeaderScript; public DuckLeader DuckLeaderScript{get{return duckLeaderScript;}set{duckLeaderScript = value;}}
-
-	private Vector3 targetSpot;
+	[SerializeField] private DuckLeader duckLeaderScript; private IDuckToLeader duckToLeader;
 
 	private Vector2[] chooseDir = new Vector2[]{
 		new Vector2 (1,1).normalized,
@@ -21,15 +19,15 @@ public class Duck : Bird {
 	
 	private float moveSpeed = 2.5f;
 	private float maxTransition = 4f;
-	private float transitionSpeed;
-	private float distanceToSpot;
 
-	private int formationNumber; public int FormationNumber {get{return formationNumber;}set{formationNumber = value;}}
+	private int formationNumber;
 
-	private bool bouncing; public bool Bouncing {set{bouncing = value;}}
+	private bool bouncing;
 
 	void Start () {
 		birdStats = new BirdStats(BirdType.Duck);
+		duckToLeader = (IDuckToLeader)duckLeaderScript;
+
 		scatterDir = new Vector2[]{
 			chooseDir [0],
 			chooseDir [1],
@@ -72,21 +70,25 @@ public class Duck : Bird {
 	}
 
 	void StayInFormation(){
-		targetSpot = (Vector3)duckLeaderScript.SetPositions [formationNumber] + duckLeaderScript.transform.position;
-		distanceToSpot = Vector3.Distance (targetSpot, transform.position);
-		transitionSpeed = Mathf.Clamp (4*Mathf.Pow (10,distanceToSpot), moveSpeed + 0.5f, maxTransition);
+		Vector3 targetSpot = (Vector3)duckToLeader.SetPositions [formationNumber] + duckLeaderScript.transform.position;
+		float distanceToSpot = Vector3.Distance (targetSpot, transform.position);
+		float transitionSpeed = Mathf.Clamp (4*Mathf.Pow (10,distanceToSpot), moveSpeed + 0.5f, maxTransition);
 		transform.position = Vector3.MoveTowards (transform.position, targetSpot, transitionSpeed * Time.deltaTime);
 	}
 
-	public void Scatter(){
+	#region ILeaderToDuck
+	int ILeaderToDuck.FormationNumber {get{return formationNumber;}set{formationNumber = value;}}
+	bool ILeaderToDuck.Bouncing {set{bouncing = value;}}
+	void ILeaderToDuck.Scatter(){
 		rigbod.velocity = scatterDir[formationNumber] * moveSpeed;
 		birdStats.KillPointValue = 3;
 		bouncing = true;
 	}
+	#endregion
 
 	protected override void PayTheIronPrice (){
 		if (duckLeaderScript){
-			duckLeaderScript.ReShuffle(formationNumber);
+			duckToLeader.ReShuffle(this);
 		}
 	}
 }
