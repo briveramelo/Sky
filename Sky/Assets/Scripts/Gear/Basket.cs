@@ -23,7 +23,6 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 		Instance = this;
 		BalloonToBasket = (IBalloonToBasket)this;
 		TentacleToBasket = (ITentacleToBasket)this;
-
 		Constants.balloonCenter = balloonCenter;
 		basketToBalloons = new List<IBasketToBalloon>();
 		for (int i=0; i<balloonScripts.Count; i++){

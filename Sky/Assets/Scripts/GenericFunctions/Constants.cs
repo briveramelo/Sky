@@ -35,18 +35,18 @@ namespace GenericFunctions{
 		public static Vector2 correctionPixels = new Vector2 (Screen.width/2,(-3*Screen.height/2));
 		public static float correctionPixelFactor = worldDimensions.y * 2 / Screen.height;
 
-		public static int defaultLater = 0;
-		public static int basketLayer = 13;
-		public static int spearLayer = 14;
-		public static int joystickLayer = 15;
-		public static int birdLayer = 16;
-		public static int balloonLayer = 17;
-		public static int balloonFloatingLayer = 18;
-		public static int tentacleLayer = 19;
-		public static int jaiLayer = 20;
-		public static int pooFingerLayer = 21;
-		public static int pooSmearLayer = 22;
-		public static int faceLayer = 23;
+		public const int defaultLater = 0;
+		public const int basketLayer = 13;
+		public const int spearLayer = 14;
+		public const int joystickLayer = 15;
+		public const int birdLayer = 16;
+		public const int balloonLayer = 17;
+		public const int balloonFloatingLayer = 18;
+		public const int tentacleLayer = 19;
+		public const int jaiLayer = 20;
+		public const int pooFingerLayer = 21;
+		public const int pooSmearLayer = 22;
+		public const int faceLayer = 23;
 
 		public static int totalPooSpots = 250;
 

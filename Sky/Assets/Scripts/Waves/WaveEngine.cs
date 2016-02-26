@@ -235,16 +235,10 @@ public class WaveEngine : MonoBehaviour, ITallyable{
 		}
 		yield return null;
 	}
-
-	/// <summary> Wait between 1-2 seconds
-	/// </summary>
-	protected IEnumerator WaitUntilTimeRange(){
-		yield return new WaitForSeconds(Random.Range (1f, 2f));
-	}
-
+		
 	/// <summary> Wait between minTime and maxTime seconds
 	/// </summary>
-	protected IEnumerator WaitUntilTimeRange(float minTime, float maxTime){
+	protected IEnumerator WaitUntilTimeRange(float minTime=1f, float maxTime=2f){
 		yield return new WaitForSeconds(Random.Range(minTime,maxTime));
 	}
 

@@ -6,14 +6,14 @@ using GenericFunctions;
 
 public class DuckLeader : Bird, IDuckToLeader {
 
-	[SerializeField] private Duck[] duckScripts; private List<ILeaderToDuck> leaderToDucks;
+	[SerializeField] private Duck[] duckScripts; private List<ILeaderToDuck> ducks;
 
 	private Vector2[] setPositions;
 	private float moveSpeed = 2.5f;
 
 	protected override void Awake () {
 		birdStats = new BirdStats(BirdType.DuckLeader);
-		leaderToDucks = new List<ILeaderToDuck>((ILeaderToDuck[])duckScripts);
+		ducks = new List<ILeaderToDuck>((ILeaderToDuck[])duckScripts);
 		SetFormation (transform.position.x > 0);
 		FanTheV ();
 		base.Awake();
@@ -35,14 +35,14 @@ public class DuckLeader : Bird, IDuckToLeader {
 		};
 
 		float separationDistance = 0.9f;
-		for (int i=0; i<leaderToDucks.Count; i++){
-			leaderToDucks[i].FormationNumber = i;
+		for (int i=0; i<ducks.Count; i++){
+			ducks[i].FormationNumber = i;
 			setPositions[i] *= separationDistance;
 		}
 	}
 
 	void FanTheV(){
-		leaderToDucks.ForEach (duck => duck.Bouncing = false);
+		ducks.ForEach (duck => duck.Bouncing = false);
 	}
 
 	#region IDuckToLeader
@@ -51,31 +51,31 @@ public class DuckLeader : Bird, IDuckToLeader {
 		int deadFormNum = deadDuck.FormationNumber;
 		int odds=0;	int evens=0;
 
-		for (int i=0; i<leaderToDucks.Count; i++){
-			evens += leaderToDucks[i].FormationNumber % 2 ==0 ? 1:0;
-			odds += leaderToDucks[i].FormationNumber % 2 !=0 ? 1:0;
+		for (int i=0; i<ducks.Count; i++){
+			evens += ducks[i].FormationNumber % 2 ==0 ? 1:0;
+			odds += ducks[i].FormationNumber % 2 !=0 ? 1:0;
 
-			if (leaderToDucks[i].FormationNumber>deadFormNum && leaderToDucks[i].FormationNumber % 2 == deadFormNum % 2){
-				leaderToDucks[i].FormationNumber -= 2;
+			if (ducks[i].FormationNumber>deadFormNum && ducks[i].FormationNumber % 2 == deadFormNum % 2){
+				ducks[i].FormationNumber -= 2;
 			}
 		}
 
 		if (odds<evens && deadFormNum % 2 != 0){
 			int highestEven = (evens-1)*2;
-			leaderToDucks.Find(duck => duck.FormationNumber==highestEven).FormationNumber -= 1;
+			ducks.Find(duck => duck.FormationNumber==highestEven).FormationNumber -= 1;
 		}
 		else if (evens<odds && deadFormNum % 2 == 0){
 			int highestOdd = odds*2-1;
-			leaderToDucks.Find(duck => duck.FormationNumber==highestOdd).FormationNumber -= 3;
+			ducks.Find(duck => duck.FormationNumber==highestOdd).FormationNumber -= 3;
 		}
 
-		leaderToDucks.Remove(deadDuck);
+		ducks.Remove(deadDuck);
 	}
 	#endregion
 
 	void BreakTheV(){
 		transform.DetachChildren ();
-		leaderToDucks.ForEach(duck => duck.Scatter());
+		ducks.ForEach(duck => duck.Scatter());
 	}
 
 	protected override void PayTheIronPrice (){
