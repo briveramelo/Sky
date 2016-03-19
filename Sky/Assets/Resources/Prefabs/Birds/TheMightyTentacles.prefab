@@ -98,7 +98,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 122662}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.03999999, y: -4.24, z: 0}
+  m_LocalPosition: {x: -0.08783364, y: -4.226223, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children:
   - {fileID: 434578}
@@ -111,7 +111,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 136588}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.6478336, y: -3.5337768, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 464294}
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigbod: {fileID: 5020316}
   birdCollider: {fileID: 6182394}
-  gutSplosionParent: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
+  guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
   tipTransform: {fileID: 434578}
   tentaCollider: {fileID: 6182394}
   ts: {fileID: 11495782}

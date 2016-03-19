@@ -10,5 +10,6 @@
 	Pelican = 8,
 	Bat = 9,
 	Eagle = 10,
-	BirdOfParadise = 11
+	BirdOfParadise = 11,
+	All=12
 }

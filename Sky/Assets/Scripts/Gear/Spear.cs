@@ -3,9 +3,26 @@ using System.Collections;
 using PixelArtRotation;
 using GenericFunctions;
 
+public interface IThrowable {
+	IEnumerator FlyFree(Vector2 throwDir, float throwForce, int lowOrHighThrow);
+}
+
+public class SpearItems{
+	public SpearItems(Collider2D spearCollider, Vector2 spearVelocity, int birdsHit){
+		this.spearCollider = spearCollider;
+		this.spearVelocity = spearVelocity;
+		this.birdsHit = birdsHit;
+	}
+	public SpearItems(){}
+	Collider2D spearCollider; public Collider2D SpearCollider{get{return spearCollider;}}
+	Vector2 spearVelocity; public Vector2 SpearVelocity{get{return spearVelocity;}}
+	int birdsHit; public int BirdsHit {get{return birdsHit;}}
+}
+
 public class Spear : MonoBehaviour, IThrowable {
 
-	public static IThrowable Instance;
+	private static int totalSpearCount;
+	private int mySpearNumber;
 
 	[SerializeField] private PixelRotation pixelRotationScript; //allows for pixel perfect sprite rotations
 	[SerializeField] private PixelPerfectSprite pixelPerfectSpriteScript;
@@ -13,7 +30,11 @@ public class Spear : MonoBehaviour, IThrowable {
 	[SerializeField] private Transform spearTipParentTransform;
 	[SerializeField] private Transform spearTipTransform;
 	[SerializeField] private CircleCollider2D spearTipCollider;
-	
+
+	private SpearItems myItems;
+
+	private int birdsHit;
+
 	private Rigidbody2D rigbod; //the spear's rigidbody, created only upon throwing
 
 	private Vector2[] throwAdjustmentVector = new Vector2[]{ 
@@ -26,8 +47,8 @@ public class Spear : MonoBehaviour, IThrowable {
 	private int theSetAngle; //angle the spear releases as determined by the finger swipe direction
 
 	void Start () {
-		Instance = this;
-
+		mySpearNumber=totalSpearCount;
+		totalSpearCount++;
 		SetSpearAngle(Vector2.up);
 		transform.parent = Constants.jaiTransform.parent;
 	}
@@ -44,7 +65,6 @@ public class Spear : MonoBehaviour, IThrowable {
 		rigbod = gameObject.AddComponent<Rigidbody2D> ();
 		rigbod.AddForce (throwDir * throwForce);
 		StartCoroutine (TiltAround());
-		yield return null;
 	}
 	#endregion
 
@@ -63,21 +83,25 @@ public class Spear : MonoBehaviour, IThrowable {
 		}
 	}
 
+	//physics checks for bird/tentacle layers only
 	void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.layer == Constants.birdLayer || col.gameObject.layer == Constants.tentacleLayer) { //if it hits a bird
-			DeliverDamage(col);
-		}
+		DeliverDamage(col);
 	}
 
 	void DeliverDamage(Collider2D col){
-		Vector2 gutVel = rigbod.velocity;
-		IHurtable hurtInterface = col.GetComponent<IHurtable> ();
+		birdsHit++;
+		myItems = new SpearItems(spearTipCollider, rigbod.velocity, birdsHit);
+		ScoreSheet.Streaker.ReportHit(mySpearNumber);
 
+		IHurtable hurtInterface = col.GetComponent<IHurtable> ();
+		hurtInterface.GetHurt(myItems);
+
+		Bird bird = col.GetComponent<Bird>();
 		//Deliver damage and redirect the spear as a bounce
-		hurtInterface.TakeDamage(gutVel,spearTipCollider);
-		rigbod.velocity = hurtInterface.MyBirdStats.Health>0 ? 
-			Vector2.Reflect(gutVel,(transform.position-col.bounds.ClosestPoint (transform.position)).normalized) * 0.2f :
-			gutVel * .8f;
+		rigbod.velocity = bird.MyBirdStats.Health>0 ? 
+			Vector2.Reflect(myItems.SpearVelocity,(transform.position-col.bounds.ClosestPoint (transform.position))) * 0.2f :
+			myItems.SpearVelocity * .8f;
+
 		Physics2D.IgnoreCollision(spearTipCollider, col);
 	}
 

@@ -4,81 +4,92 @@ using System.Collections.Generic;
 using System.Linq;
 using GenericFunctions;
 
+public interface IDuckToLeader {
+	void OrganizeDucks(ILeaderToDuck deadDuck);
+	Transform[] FormationTransforms{get;}
+}
+// The DuckLeader communicates with Ducks through this interface
+
 public class DuckLeader : Bird, IDuckToLeader {
+	// The DuckLeader ensures all ducks follow as closely behind in an evenly distributed Flying V Formation
+	// The DuckLeader will fly linearly across the screen
 
 	[SerializeField] private Duck[] duckScripts; private List<ILeaderToDuck> ducks;
-
-	private Vector2[] setPositions;
-	private float moveSpeed = 2.5f;
+	[SerializeField] private Transform[] formationTransforms;
 
 	protected override void Awake () {
 		birdStats = new BirdStats(BirdType.DuckLeader);
 		ducks = new List<ILeaderToDuck>((ILeaderToDuck[])duckScripts);
-		SetFormation (transform.position.x > 0);
-		FanTheV ();
+		bool goLeft = transform.position.x > 0;
+		transform.FaceForward(goLeft);
+		rigbod.velocity = new Vector2 (goLeft ? -1 : 1, 0) * 2.5f;
+		SetDuckFormation (goLeft);
 		base.Awake();
 	}
-	
-	public void SetFormation(bool goLeft){
-		Vector3 topSide = ConvertAnglesAndVectors.ConvertAngleToVector2 (goLeft ? 30 : 150);
-		Vector3 bottomSide = ConvertAnglesAndVectors.ConvertAngleToVector2 (goLeft ? -30 : 210);
-		Vector2 direction = new Vector2 (goLeft ? -1 : 1, 0);
-		transform.Face4ward(goLeft);
-		rigbod.velocity = direction * moveSpeed;
-		setPositions = new Vector2[]{
-			topSide,
-			bottomSide,
-			topSide * 2f,
-			bottomSide * 2f,
-			topSide * 3f,
-			bottomSide * 3f
-		};
 
-		float separationDistance = 0.9f;
-		for (int i=0; i<ducks.Count; i++){
-			ducks[i].FormationNumber = i;
-			setPositions[i] *= separationDistance;
+	// Set ducks into the "Flying V" Formation, like so:
+	//	  [4]
+	//	  	[2]
+	//	  	  [0]
+	//  		[leader]  --->
+	// 	  	  [1]
+	//		[3]
+	//	  [5]
+
+	void SetDuckFormation(bool goLeft){
+		Vector2 topSide = ConvertAnglesAndVectors.ConvertAngleToVector2 (goLeft ? 30 : 150);
+		Vector2 bottomSide = ConvertAnglesAndVectors.ConvertAngleToVector2 (goLeft ? -30 : 210);
+
+		float separationDistance = 0.225f;
+		for (int i=0; i<formationTransforms.Length; i++){
+			formationTransforms[i].localPosition = (goLeft ? 1:-1) * (i%2==0 ? topSide : bottomSide) * (Mathf.Floor(i/2)+1) * separationDistance;
+			ducks[i].FormationIndex = i;
 		}
-	}
-
-	void FanTheV(){
-		ducks.ForEach (duck => duck.Bouncing = false);
 	}
 
 	#region IDuckToLeader
-	Vector2[] IDuckToLeader.SetPositions {get{return setPositions;}}
-	void IDuckToLeader.ReShuffle(ILeaderToDuck deadDuck){
-		int deadFormNum = deadDuck.FormationNumber;
-		int odds=0;	int evens=0;
+	Transform[] IDuckToLeader.FormationTransforms {get{return formationTransforms;}}
+
+	// Review the above "Flying V" Formation and the attached video "FlyingV_United" to see this logic in action
+	void IDuckToLeader.OrganizeDucks(ILeaderToDuck deadDuck){
+		int deadNumber = deadDuck.FormationIndex;
+		int topCount=0;
+		int bottomCount=0;
 
 		for (int i=0; i<ducks.Count; i++){
-			evens += ducks[i].FormationNumber % 2 ==0 ? 1:0;
-			odds += ducks[i].FormationNumber % 2 !=0 ? 1:0;
+			topCount += ducks[i].FormationIndex % 2 ==0 ? 1:0; 	//birds on top use even indices
+			bottomCount += ducks[i].FormationIndex % 2 !=0 ? 1:0;	//		bottom use odd indices
 
-			if (ducks[i].FormationNumber>deadFormNum && ducks[i].FormationNumber % 2 == deadFormNum % 2){
-				ducks[i].FormationNumber -= 2;
+			if (ducks[i].FormationIndex>deadNumber && ducks[i].FormationIndex % 2 == deadNumber % 2){
+				ducks[i].FormationIndex -= 2;
 			}
 		}
 
-		if (odds<evens && deadFormNum % 2 != 0){
-			int highestEven = (evens-1)*2;
-			ducks.Find(duck => duck.FormationNumber==highestEven).FormationNumber -= 1;
+		if (topCount<bottomCount && deadNumber % 2 == 0){
+			int highestOdd = bottomCount*2-1;
+			ducks.Find(duck => duck.FormationIndex==highestOdd).FormationIndex -= 3;
 		}
-		else if (evens<odds && deadFormNum % 2 == 0){
-			int highestOdd = odds*2-1;
-			ducks.Find(duck => duck.FormationNumber==highestOdd).FormationNumber -= 3;
+		else if (bottomCount<topCount && deadNumber % 2 != 0){
+			int highestEven = (topCount-1)*2;
+			ducks.Find(duck => duck.FormationIndex==highestEven).FormationIndex -= 1;
 		}
 
 		ducks.Remove(deadDuck);
 	}
 	#endregion
 
+	// Remember that final action some "Bird"s need to perform?
+	// The DuckLeader Breaks the Flying V Formation and tells each Duck to Scatter when he/she dies
+	protected override void DieUniquely (){
+		BreakTheV();
+		base.DieUniquely();
+	}
+
 	void BreakTheV(){
 		transform.DetachChildren ();
 		ducks.ForEach(duck => duck.Scatter());
-	}
-
-	protected override void PayTheIronPrice (){
-		BreakTheV();
+		for (int i=0; i<formationTransforms.Length; i++){
+			Destroy(formationTransforms[i].gameObject);
+		}
 	}
 }

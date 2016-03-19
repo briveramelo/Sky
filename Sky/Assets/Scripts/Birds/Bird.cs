@@ -1,51 +1,48 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public interface IHurtable {
+	void GetHurt(SpearItems spearItems);
+}
+
 public abstract class Bird : MonoBehaviour, IHurtable {
 
 	protected BirdStats birdStats; public BirdStats MyBirdStats{get{return birdStats;}}
 
 	[SerializeField] protected Rigidbody2D rigbod;
 	[SerializeField] protected Collider2D birdCollider;
-	[SerializeField] protected GameObject gutSplosionParent;
+	[SerializeField] protected GameObject guts;
 
 	protected virtual void Awake(){
-		WaveEngine.ScoreBoard.TallyBirth(MyBirdStats.MyBirdType);
+		ScoreSheet.Tallier.TallyBirth(birdStats);
 	}
 
-	public virtual void TakeDamage(Vector2 gutDirection, Collider2D spearCollider){
-		birdStats.Health--;
-		Vector2 gutSpawnSpot = transform.position;
-		GutSplosion gutSplosion = (Instantiate (gutSplosionParent, gutSpawnSpot, Quaternion.identity) as GameObject).GetComponent<GutSplosion>();
-
-		if (birdStats.Health>0){
-			gutSplosion.GenerateGuts (birdStats.DamageGutValue, gutDirection);
-			TrackPoints();
-		}
-		else{
-			gutSplosion.GenerateGuts (birdStats.KillGutValue, gutDirection);
+	void IHurtable.GetHurt(SpearItems spearItems){
+		TakeDamage(spearItems);
+		birdStats.birdPosition = transform.position;
+		birdStats.ModifyForStreak(ScoreSheet.Streaker.GetHitStreak());
+		birdStats.ModifyForCombo(spearItems.BirdsHit);
+		ScoreSheet.Tallier.TallyPoints (birdStats);
+		if (birdStats.Health<=0){
 			GameClock.Instance.SlowTime(.1f,.5f);
-			PayTheIronPrice();
-			TrackPoints();
-			Destroy(gameObject);
+			ScoreSheet.Tallier.TallyKill (birdStats);
+			DieUniquely();
 		}
 	}
 
-	protected virtual void PayTheIronPrice(){}
-
-	protected void TrackPoints(){
-		if (birdStats.Health>0){
-			WaveEngine.ScoreBoard.TallyPoints (birdStats.MyBirdType,birdStats.DamagePointValue,0);
-		}
-		else{
-			WaveEngine.ScoreBoard.TallyPoints (birdStats.MyBirdType,birdStats.KillPointValue,birdStats.KillPointMultiplier);
-			WaveEngine.ScoreBoard.TallyKill (birdStats.MyBirdType);
-		}
+	protected virtual void TakeDamage(SpearItems spearItems){
+		birdStats.Health--;
+		(Instantiate (guts, transform.position, Quaternion.identity) as GameObject).GetComponent<IBleedable>().GenerateGuts(birdStats, spearItems.SpearVelocity);
 	}
 
-	protected virtual void OnDestroy(){
-		if (WaveEngine.Instance){
-			WaveEngine.ScoreBoard.TallyDeath (birdStats.MyBirdType);
+	protected virtual void DieUniquely(){
+		Destroy(gameObject);
+	}
+
+	protected void OnDestroy(){
+		if (ScoreSheet.Instance){
+			ScoreSheet.Tallier.TallyDeath (birdStats);
 		}
+		StopAllCoroutines();
 	}
 }

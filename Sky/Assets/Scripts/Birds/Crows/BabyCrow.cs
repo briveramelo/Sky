@@ -71,11 +71,11 @@ public class BabyCrow : Bird {
 	}
 
 	IEnumerator FlyAway(){
-		dist2Target = Vector2.Distance(Vector3.right * Constants.worldDimensions.x * 1.2f, transform.position);
+		dist2Target = Vector2.Distance(Vector3.right * Constants.WorldDimensions.x * 1.2f, transform.position);
 
 		while (dist2Target > triggerShiftDistance){
-			dist2Target = Vector2.Distance(Vector3.right * Constants.worldDimensions.x * 1.2f, transform.position);
-			moveDir = (Vector3.right * Constants.worldDimensions.x * 1.2f - transform.position).normalized;
+			dist2Target = Vector2.Distance(Vector3.right * Constants.WorldDimensions.x * 1.2f, transform.position);
+			moveDir = (Vector3.right * Constants.WorldDimensions.x * 1.2f - transform.position).normalized;
 			currentSpeed = CorrectSpeed ();
 			rigbod.velocity = moveDir * currentSpeed;
 			yield return null;
@@ -101,13 +101,14 @@ public class BabyCrow : Bird {
 
 	IEnumerator LookBackAndForth(bool faceDir){
 		for (int i=0; i<7; i++){
-			transform.Face4ward(faceDir);
+			transform.FaceForward(faceDir);
 			yield return new WaitForSeconds (Random.Range(0.33f,.75f));
 			faceDir = !faceDir;
 		}
 	}
 		
-	protected override void PayTheIronPrice (){
+	protected override void DieUniquely (){
 		Incubator.Instance.SpawnNextBird(BirdType.Crow);
+		base.DieUniquely();
 	}
 }

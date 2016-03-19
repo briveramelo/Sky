@@ -28,7 +28,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 153434}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.64, y: -4.3199997, z: 0}
+  m_LocalPosition: {x: -1.96, y: -3.32, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigbod: {fileID: 5049218}
   birdCollider: {fileID: 6149256}
-  gutSplosionParent: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
+  guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
   pelicanAnimator: {fileID: 9587476}
   pelicanCollider: {fileID: 6149256}
 --- !u!114 &11440384

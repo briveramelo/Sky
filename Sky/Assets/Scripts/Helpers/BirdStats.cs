@@ -10,9 +10,19 @@ public struct BirdStats {
 	private float killPointMultiplier;	public float KillPointMultiplier{get{return killPointMultiplier;}}
 	private int damageGutValue;			public int DamageGutValue{get{return damageGutValue;}}
 	private int killGutValue;			public int KillGutValue{get{return killGutValue;}}
+	public Vector3 birdPosition;
 
-	public int RemainingPoints{
+	public int TotalPointValue{
 		get{return (health * damagePointValue + killPointValue);}
+	}
+
+	public void ModifyForStreak(int birdStreak){
+		killPointValue += birdStreak-1;
+		damagePointValue += birdStreak-1;
+	}
+	public void ModifyForCombo(int birdsHit){
+		killPointValue *= birdsHit;
+		damagePointValue *= birdsHit;
 	}
 
 	public BirdStats(BirdType birdType){
@@ -24,6 +34,8 @@ public struct BirdStats {
 		killPointMultiplier=0;
 		damageGutValue=1;
 		killGutValue=1;
+
+		birdPosition = Vector3.zero;
 
 		switch(birdType){
 		case BirdType.Pigeon:

@@ -26,7 +26,7 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
   isReadable: 1
   grayScaleToAlpha: 0
@@ -35,7 +35,7 @@ TextureImporter:
   cubemapConvolutionSteps: 8
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: -3
   maxTextureSize: 2048
   textureSettings:
     filterMode: 0
@@ -46,11 +46,12 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
@@ -60,6 +61,7 @@ TextureImporter:
     maxTextureSize: 8192
     textureFormat: 5
     compressionQuality: 50
+    allowsAlphaSplitting: 0
   spriteSheet:
     sprites:
     - name: Eagle_0
@@ -72,6 +74,14 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -7, y: 26}
+        - {x: -10, y: 23}
+        - {x: -22, y: 3}
+        - {x: -22, y: -8}
+        - {x: 22, y: -8}
+        - {x: 22, y: 2}
+        - {x: 9, y: 26}
     - name: Eagle_1
       rect:
         serializedVersion: 2
@@ -82,6 +92,14 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -6, y: 26}
+        - {x: -10, y: 23}
+        - {x: -22, y: 4}
+        - {x: -22, y: -8}
+        - {x: 22, y: -8}
+        - {x: 22, y: 8}
+        - {x: 14, y: 26}
     - name: Eagle_2
       rect:
         serializedVersion: 2
@@ -92,6 +110,15 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -10, y: 12}
+        - {x: -22, y: -2}
+        - {x: -22, y: -7}
+        - {x: -19, y: -8}
+        - {x: 17, y: -8}
+        - {x: 22, y: -7}
+        - {x: 22, y: -1}
+        - {x: 6, y: 12}
     - name: Eagle_3
       rect:
         serializedVersion: 2
@@ -102,6 +129,15 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 21, y: 3}
+        - {x: -22, y: 3}
+        - {x: -22, y: -7}
+        - {x: -13, y: -11}
+        - {x: 7, y: -11}
+        - {x: 20, y: -7}
+        - {x: 22, y: -6}
+        - {x: 22, y: 2}
     - name: Eagle_4
       rect:
         serializedVersion: 2
@@ -112,6 +148,14 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -19, y: 3}
+        - {x: -22, y: -1}
+        - {x: -22, y: -4}
+        - {x: -18, y: -26}
+        - {x: 14, y: -26}
+        - {x: 22, y: -13}
+        - {x: 22, y: 3}
     - name: Eagle_5
       rect:
         serializedVersion: 2
@@ -122,6 +166,13 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -22, y: 6}
+        - {x: -22, y: -18}
+        - {x: -5, y: -18}
+        - {x: 22, y: -9}
+        - {x: 22, y: -1}
+        - {x: 12, y: 6}
     - name: Eagle_6
       rect:
         serializedVersion: 2
@@ -132,6 +183,15 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 9}
+        - {x: -20, y: 6}
+        - {x: -22, y: 2}
+        - {x: -22, y: -5}
+        - {x: -16, y: -8}
+        - {x: 22, y: -8}
+        - {x: 22, y: -1}
+        - {x: 13, y: 9}
     - name: Eagle_7
       rect:
         serializedVersion: 2
@@ -142,6 +202,18 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -22, y: 2}
+        - {x: -22, y: -5}
+        - {x: -18, y: -6}
+        - {x: -13, y: -7}
+        - {x: -5, y: -8}
+        - {x: 22, y: -8}
+        - {x: 22, y: 2}
+        - {x: 19, y: 9}
+        - {x: 17, y: 15}
+        - {x: -9, y: 15}
+        - {x: -15, y: 13}
     - name: Eagle_8
       rect:
         serializedVersion: 2
@@ -152,6 +224,18 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 8, y: 24}
+        - {x: -13, y: 24}
+        - {x: -22, y: 3}
+        - {x: -22, y: -4}
+        - {x: -14, y: -8}
+        - {x: 17, y: -8}
+        - {x: 20, y: -7}
+        - {x: 22, y: -6}
+        - {x: 22, y: 0}
+        - {x: 12, y: 23}
+    outline: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

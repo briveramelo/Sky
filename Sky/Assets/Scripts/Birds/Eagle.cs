@@ -10,8 +10,8 @@ public class Eagle : Bird {
 	private Vector3 attackDir;
 
 	private Vector2[] startPos = new Vector2[]{
-		new Vector2(-Constants.worldDimensions.x,-Constants.worldDimensions.y) * 1.2f,
-		new Vector2(Constants.worldDimensions.x,-Constants.worldDimensions.y) * 1.2f
+		new Vector2(-Constants.WorldDimensions.x,-Constants.WorldDimensions.y) * 1.2f,
+		new Vector2(Constants.WorldDimensions.x,-Constants.WorldDimensions.y) * 1.2f
 	};
 	private Vector2[] moveDir;
 		
@@ -19,8 +19,8 @@ public class Eagle : Bird {
 		birdStats = new BirdStats(BirdType.Eagle);
 
 		moveDir = new Vector2[]{
-			Constants.screenDimensions.normalized,
-			new Vector2(-Constants.screenDimensions.x,Constants.screenDimensions.y).normalized,
+			Constants.ScreenDimensions.normalized,
+			new Vector2(-Constants.ScreenDimensions.x,Constants.ScreenDimensions.y).normalized,
 		};
 		StartCoroutine (InitiateAttack (1f));
 		base.Awake();
@@ -33,7 +33,7 @@ public class Eagle : Bird {
 
 	IEnumerator SweepUp(bool first){
 		float moveSpeed = 5f;
-		transform.Face4ward(first);
+		transform.FaceForward(first);
 		transform.position = startPos [first ? 0 : 1];
 		rigbod.velocity = moveDir [first ? 0 : 1] * moveSpeed;
 		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle (moveDir [first ? 0 : 1]);
@@ -49,22 +49,17 @@ public class Eagle : Bird {
 		
 	void Strike(){
 		float xStartPoint = 20f;
-		while (Mathf.Abs(xStartPoint)>Constants.worldDimensions.x){
-			xStartPoint = Constants.balloonCenter.position.x + Random.Range (-Constants.worldDimensions.x, Constants.worldDimensions.x) * .15f;
+		while (Mathf.Abs(xStartPoint)>Constants.WorldDimensions.x){
+			xStartPoint = Constants.balloonCenter.position.x + Random.Range (-Constants.WorldDimensions.x, Constants.WorldDimensions.x) * .15f;
 		}
 
 		float strikeSpeed = 9f;
-		transform.position = new Vector2 (xStartPoint, Constants.worldDimensions.y * 1.2f);
+		transform.position = new Vector2 (xStartPoint, Constants.WorldDimensions.y * 1.2f);
 		attackDir = (Constants.balloonCenter.position - transform.position).normalized;
 		rigbod.velocity = attackDir * strikeSpeed;
-		transform.Face4ward(attackDir.x>0);
+		transform.FaceForward(attackDir.x>0);
 		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle (attackDir);
 
 		StartCoroutine (InitiateAttack(5f));
-	}
-
-	protected override void OnDestroy(){
-		base.OnDestroy();
-		StopAllCoroutines ();
 	}
 }

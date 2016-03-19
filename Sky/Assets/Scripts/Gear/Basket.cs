@@ -4,6 +4,14 @@ using System.Collections.Generic;
 using GenericFunctions;
 using System.Linq;
 
+public interface ITentacleToBasket {
+	void KnockDown(float downForce);
+	void LoseAllBalloons();
+	void AttachToTentacles(Transform tentaclesTransform);
+	void DetachFromTentacles();
+	Collider2D[] BasketColliders{get;}
+}
+
 public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 
 	public static Basket Instance;

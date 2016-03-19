@@ -64,7 +64,7 @@ public class Bat : Bird {
 
 			moveDir = (targetPositions[targetIndex] - batPos).normalized;
 			rigbod.velocity = moveDir * approachSpeed;
-			transform.Face4ward (transform.position.x > Constants.balloonCenter.position.x);
+			transform.FaceForward (transform.position.x > Constants.balloonCenter.position.x);
 			yield return null;
 		}
 	}
@@ -113,7 +113,7 @@ public class Bat : Bird {
 			float orbitSpeed = approachSpeed / curvature;
 
 			rigbod.velocity = moveDir * orbitSpeed;
-			transform.Face4ward (transform.position.x > Constants.balloonCenter.position.x);
+			transform.FaceForward (transform.position.x > Constants.balloonCenter.position.x);
 			yield return null;
 		}
 	}

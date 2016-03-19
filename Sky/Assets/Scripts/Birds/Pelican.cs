@@ -66,7 +66,7 @@ public class Pelican : Bird {
 
 		pelPosts = new Dictionary<PP, Vector2>();
 		for (int i=0; i<setPositions.Length; i++){
-			setPositions[i] = new Vector2 (setPositions[i].x * Constants.worldDimensions.x, setPositions[i].y * Constants.worldDimensions.y);
+			setPositions[i] = new Vector2 (setPositions[i].x * Constants.WorldDimensions.x, setPositions[i].y * Constants.WorldDimensions.y);
 			pelPosts.Add((PP)i, setPositions[i]);
 		}
 		StartCoroutine(SwoopAround());
@@ -150,7 +150,7 @@ public class Pelican : Bird {
 	//plunge to (un)certain balloon-popping glory
 	IEnumerator DiveBomb(){
 		rigbod.velocity = Vector2.down * moveSpeeds [4];
-		while (transform.position.y>-Constants.worldDimensions.y-1f){
+		while (transform.position.y>-Constants.WorldDimensions.y-1f){
 			yield return null;
 		}
 		//pelicanAnimator.SetInteger("AnimState",0);
@@ -158,7 +158,7 @@ public class Pelican : Bird {
 		pelicanCollider.enabled = false;
 		yield return new WaitForSeconds (2f);
 		StartCoroutine (SwoopAround ());
-		while (transform.position.y<-Constants.worldDimensions.y){
+		while (transform.position.y<-Constants.WorldDimensions.y){
 			yield return null;
 		}
 		pelicanCollider.enabled = true;

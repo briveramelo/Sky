@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using GenericFunctions;
-
+public interface ITouchable {
+	Vector2 TouchSpot{get;}
+}
 public class Joyfulstick : MonoBehaviour, ITouchable {
 
 	public static ITouchable Instance;
@@ -41,7 +43,7 @@ public class Joyfulstick : MonoBehaviour, ITouchable {
 		GameObject basket = GameObject.Find("Basket");
 		basketCollider = basket.GetComponent<Collider2D>();
 
-		transform.position = new Vector2 (-Constants.worldDimensions.x * (2f/3f),-Constants.worldDimensions.y * (2f/5f));
+		transform.position = new Vector2 (-Constants.WorldDimensions.x * (2f/3f),-Constants.WorldDimensions.y * (2f/5f));
 		startingJoystickSpot = transform.position;
 		joystickFinger = -1;
 		spearFinger = -2;
@@ -105,7 +107,7 @@ public class Joyfulstick : MonoBehaviour, ITouchable {
 			}
 		}
 		else{
-			touchSpot = Vector2.up * Constants.worldDimensions.y * 10f;
+			touchSpot = Vector2.up * Constants.WorldDimensions.y * 10f;
 		}
 	}
 

@@ -2,6 +2,11 @@
 using System.Collections;
 using GenericFunctions;
 
+public interface ITentacleToSensor {
+	void ToggleSensor(bool active);
+	bool JaiInRange{get;}
+}
+
 public class TentaclesSensor : MonoBehaviour, ITentacleToSensor {
 
 	[SerializeField] private Tentacles tentaclesScript; private ISensorToTentacle sensorToTentacle;

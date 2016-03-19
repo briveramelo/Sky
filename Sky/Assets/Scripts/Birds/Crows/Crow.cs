@@ -4,6 +4,12 @@ using System.Linq;
 using PixelArtRotation;
 using GenericFunctions;
 
+public interface IMurderToCrow{
+	void InitializeCrow(int crowNum, Vector2 crowPosition);
+	void TakeFlight();
+	bool ReadyToFly{get;}
+}
+
 public class Crow : Bird, IMurderToCrow {
 
 	#region Initialize Variables
@@ -102,7 +108,7 @@ public class Crow : Bird, IMurderToCrow {
 	void Swoop(){
 		rigbod.velocity = moveDir * moveSpeed;
 		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle(rigbod.velocity);
-		transform.Face4ward(rigbod.velocity.x>0);
+		transform.FaceForward(rigbod.velocity.x>0);
 	}
 
 	IEnumerator TriggerReset(){
@@ -118,7 +124,8 @@ public class Crow : Bird, IMurderToCrow {
 	}
 	#endregion
 
-	protected override void PayTheIronPrice(){
+	protected override void DieUniquely(){
 		murderInterface.ReportCrowDown((IMurderToCrow)this);
+		base.DieUniquely();
 	}
 }

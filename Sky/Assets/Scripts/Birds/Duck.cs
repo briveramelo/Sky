@@ -2,9 +2,29 @@
 using System.Collections;
 using GenericFunctions;
 
-public class Duck : Bird, ILeaderToDuck {
+public interface ILeaderToDuck {
+	void Scatter();
+	int FormationIndex{get;set;}
+}
+// The Duck receives communication from the DuckLeader through this interface
 
-	[SerializeField] private DuckLeader duckLeaderScript; private IDuckToLeader duckToLeader;
+public enum DuckDirection{
+	UpRight=0,
+	UpLeft=1,
+	DownRight=2,
+	DownLeft=3
+}
+
+public interface IDirectable{
+	void SetDuckDirection(DuckDirection scatterDirection);
+}
+
+public class Duck : Bird, ILeaderToDuck, IDirectable {
+	// The Duck will follow his/her DuckLeader, until the DuckLeader dies. 
+	// Then, the Duck will aimlessly bounce around the screen until killed
+
+	[SerializeField] private DuckLeader leaderScript; private IDuckToLeader leader;
+	private Transform myFormationTransform;
 
 	private Vector2[] scatterDir = new Vector2[]{
 		new Vector2 (1,1).normalized,
@@ -15,24 +35,24 @@ public class Duck : Bird, ILeaderToDuck {
 		new Vector2 (-1,1).normalized
 	};
 		
-	private Vector2 moveDir;
-	
-	private float moveSpeed = 2.5f;
-	private float maxTransition = 4f;
-
-	private int formationNumber;
-
+	private Vector2 CurrentVelocity{
+		set{rigbod.velocity = value;
+			transform.FaceForward(rigbod.velocity.x<0);
+		}
+	}
+	private const float moveSpeed = 2.5f;
+	private const float maxSpeed = 4f;
+	private int formationIndex;
 	private bool bouncing;
 
 	protected override void Awake () {
 		birdStats = new BirdStats(BirdType.Duck);
-		duckToLeader = (IDuckToLeader)duckLeaderScript;
 
-		moveDir = scatterDir [0] * moveSpeed;
-		if (!transform.parent) {
-			bouncing = true;
-			rigbod.velocity = scatterDir[0] * moveSpeed;
-			birdStats.KillPointValue = 3;
+		if (transform.parent) {
+			leader = (IDuckToLeader)leaderScript;
+		}
+		else{
+			((ILeaderToDuck)this).Scatter();
 		}
 		base.Awake();
 	}
@@ -46,42 +66,54 @@ public class Duck : Bird, ILeaderToDuck {
 		}
 	}
 
+	// This function restricts a duck's movement to the confines of the screen- an omage to DuckHunt
+	// Although it seems that flipping the sign of the duck's x or y velocity when the duck's position exceed the WorldDimensions
+	// would eliminate extra lines of code, this is not the case.
+	// In that scenario, the duck often travels far beyond the WorldDimension, reversing direction and velocity,
+	// only to be trapped flipping its velocity each frame for some time. 
+	// This solution eliminates that concern.
 	void BounceOnTheWalls(){
-		if (transform.position.y>Constants.worldDimensions.y){
-			rigbod.velocity = new Vector2 (rigbod.velocity.x, -moveDir.y);
+		bool overX = transform.position.x> Constants.WorldDimensions.x;
+		bool underX= transform.position.x<-Constants.WorldDimensions.x;
+		bool overY = transform.position.y> Constants.WorldDimensions.y;
+		bool underY= transform.position.y<-Constants.WorldDimensions.y;
+		if (overX || underX || overY || underY){
+			CurrentVelocity = new Vector2 (
+				underX ? 1 : overX ? -1 : Mathf.Sign(rigbod.velocity.x),
+				underY ? 1 : overY ? -1 : Mathf.Sign(rigbod.velocity.y)).normalized * moveSpeed;
 		}
-		else if (transform.position.y<-Constants.worldDimensions.y){
-			rigbod.velocity = new Vector2 (rigbod.velocity.x, moveDir.y);
-		}
-		else if (transform.position.x>Constants.worldDimensions.x){
-			rigbod.velocity = new Vector2 (-moveDir.x, rigbod.velocity.y);
-		}
-		else if (transform.position.x<-Constants.worldDimensions.x){
-			rigbod.velocity = new Vector2 (moveDir.x, rigbod.velocity.y);
-		}
-		transform.Face4ward(rigbod.velocity.x<0);
 	}
 
 	void StayInFormation(){
-		Vector3 targetSpot = (Vector3)duckToLeader.SetPositions [formationNumber] + duckLeaderScript.transform.position;
-		float distanceToSpot = Vector3.Distance (targetSpot, transform.position);
-		float transitionSpeed = Mathf.Clamp (4*Mathf.Pow (10,distanceToSpot), moveSpeed + 0.5f, maxTransition);
-		transform.position = Vector3.MoveTowards (transform.position, targetSpot, transitionSpeed * Time.deltaTime);
+		transform.position = Vector3.MoveTowards(transform.position, myFormationTransform.position, maxSpeed * Time.deltaTime);
 	}
 
-	#region ILeaderToDuck
-	int ILeaderToDuck.FormationNumber {get{return formationNumber;}set{formationNumber = value;}}
-	bool ILeaderToDuck.Bouncing {set{bouncing = value;}}
-	void ILeaderToDuck.Scatter(){
-		rigbod.velocity = scatterDir[formationNumber] * moveSpeed;
-		birdStats.KillPointValue = 3;
-		bouncing = true;
+	#region IDirectable
+	void IDirectable.SetDuckDirection(DuckDirection scatterDirection){
+		CurrentVelocity = scatterDir[(int)scatterDirection] * moveSpeed;
 	}
 	#endregion
 
-	protected override void PayTheIronPrice (){
-		if (duckLeaderScript){
-			duckToLeader.ReShuffle(this);
+	#region ILeaderToDuck
+	void ILeaderToDuck.Scatter(){
+		CurrentVelocity = scatterDir[formationIndex] * moveSpeed;
+		birdStats.KillPointValue = 3;
+		bouncing = true;
+	}
+	int ILeaderToDuck.FormationIndex {
+		get{return formationIndex;}
+		set{formationIndex = value;
+			myFormationTransform = leader.FormationTransforms[formationIndex];
 		}
+	}
+	#endregion
+
+	// Remember that final action some "Bird"s need to perform?
+	// When a Duck with a DuckLeader dies, he/she lets the DuckLeader know to reorganize the Flying V formation
+	protected override void DieUniquely (){
+		if (leaderScript){
+			leader.OrganizeDucks(this);
+		}
+		base.DieUniquely();
 	}
 }

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3b5822bfcb39b4a07b4b9135b577d2b6
-timeCreated: 1441948961
+timeCreated: 1458341338
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -23,7 +23,7 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
@@ -32,7 +32,7 @@ TextureImporter:
   cubemapConvolutionSteps: 8
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: -3
   maxTextureSize: 2048
   textureSettings:
     filterMode: 0
@@ -43,20 +43,22 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings:
   - buildTarget: Standalone
-    maxTextureSize: 8192
+    maxTextureSize: 2048
     textureFormat: -3
     compressionQuality: 50
+    allowsAlphaSplitting: 0
   spriteSheet:
     sprites:
     - name: TanBalloon_0
@@ -66,9 +68,10 @@ TextureImporter:
         y: 2
         width: 24
         height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5208333, y: 0.1785714}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: TanBalloon_1
       rect:
         serializedVersion: 2
@@ -76,9 +79,10 @@ TextureImporter:
         y: 2
         width: 24
         height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5208333, y: 0.1785714}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: TanBalloon_2
       rect:
         serializedVersion: 2
@@ -86,9 +90,10 @@ TextureImporter:
         y: 2
         width: 24
         height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5208333, y: 0.1785714}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: TanBalloon_3
       rect:
         serializedVersion: 2
@@ -96,9 +101,10 @@ TextureImporter:
         y: 2
         width: 24
         height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5208333, y: 0.1785714}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: TanBalloon_4
       rect:
         serializedVersion: 2
@@ -106,9 +112,10 @@ TextureImporter:
         y: 2
         width: 24
         height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5208333, y: 0.1785714}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: TanBalloon_5
       rect:
         serializedVersion: 2
@@ -116,9 +123,11 @@ TextureImporter:
         y: 2
         width: 24
         height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5208333, y: 0.1785714}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

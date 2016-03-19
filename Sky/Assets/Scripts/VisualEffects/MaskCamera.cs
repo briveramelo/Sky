@@ -21,9 +21,9 @@ public class MaskCamera : MonoBehaviour{
     void Update(){
         newHolePosition = null;
 		Vector2 touchSpot = Joyfulstick.Instance.TouchSpot;
-		Rect worldRect = new Rect(-Constants.worldDimensions.x + pooSliderTransform.position.x - startingPoint.x, -Constants.worldDimensions.y + pooSliderTransform.position.y - startingPoint.y, Constants.worldDimensions.x*2f, Constants.worldDimensions.y*2f);
+		Rect worldRect = new Rect(-Constants.WorldDimensions.x + pooSliderTransform.position.x - startingPoint.x, -Constants.WorldDimensions.y + pooSliderTransform.position.y - startingPoint.y, Constants.WorldDimensions.x*2f, Constants.WorldDimensions.y*2f);
 		if (worldRect.Contains(touchSpot)){
-			newHolePosition = new Vector2(Constants.screenDimensions.x * (touchSpot.x - worldRect.xMin) / worldRect.width, Constants.screenDimensions.y * (touchSpot.y - worldRect.yMin) / worldRect.height);
+			newHolePosition = new Vector2(Constants.ScreenDimensions.x * (touchSpot.x - worldRect.xMin) / worldRect.width, Constants.ScreenDimensions.y * (touchSpot.y - worldRect.yMin) / worldRect.height);
 		}
     }
 
@@ -33,7 +33,7 @@ public class MaskCamera : MonoBehaviour{
             GL.Clear(false, true, new Color(0.0f, 0.0f, 0.0f, 0.0f));
 	    }
         if (newHolePosition != null){
-			CutHole(new Vector2(Constants.screenDimensions.x, Constants.screenDimensions.y), newHolePosition.Value);
+			CutHole(new Vector2(Constants.ScreenDimensions.x, Constants.ScreenDimensions.y), newHolePosition.Value);
 		}
 	}
 

@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using GenericFunctions;
 
+public interface ICrowToMurder {
+	void SendNextCrow();
+	void ReportCrowDown(IMurderToCrow crowDown);
+	int Cycle{get;}
+}
+
 public class Murder : MonoBehaviour, ICrowToMurder {
 
 	[SerializeField] private Crow[] crows;
@@ -12,12 +18,12 @@ public class Murder : MonoBehaviour, ICrowToMurder {
 	private ICrowToMurder me;
 
 	private Vector2[] crowPositions  = new Vector2[]{
-		new Vector2(0f  					  			,  Constants.worldDimensions.y * 1.4f),
-		new Vector2(Constants.worldDimensions.x * 1.08f ,  Constants.worldDimensions.y * 1.2f),
-		new Vector2(Constants.worldDimensions.x * 1.08f , -Constants.worldDimensions.y * 1.2f),
-		new Vector2(0f  					  			, -Constants.worldDimensions.y * 1.4f),
-		new Vector2(-Constants.worldDimensions.x * 1.08f, -Constants.worldDimensions.y * 1.2f),
-		new Vector2(-Constants.worldDimensions.x * 1.08f,  Constants.worldDimensions.y * 1.2f)
+		new Vector2(0f  					  			,  Constants.WorldDimensions.y * 1.4f),
+		new Vector2(Constants.WorldDimensions.x * 1.08f ,  Constants.WorldDimensions.y * 1.2f),
+		new Vector2(Constants.WorldDimensions.x * 1.08f , -Constants.WorldDimensions.y * 1.2f),
+		new Vector2(0f  					  			, -Constants.WorldDimensions.y * 1.4f),
+		new Vector2(-Constants.WorldDimensions.x * 1.08f, -Constants.WorldDimensions.y * 1.2f),
+		new Vector2(-Constants.WorldDimensions.x * 1.08f,  Constants.WorldDimensions.y * 1.2f)
 	};
 
 	private int maxCycles = 10;

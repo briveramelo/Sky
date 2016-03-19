@@ -21,19 +21,17 @@ namespace GenericFunctions{
 			}
 		}
 
-		public static void FaceFoward(this Transform trans, bool forward){
-			trans.localScale = forward ? Vector3.one : new Vector3 (-1f, 1f, 1f);
+		public static void FaceForward(this Transform trans, bool forward){
+			trans.localScale = new Vector3 ((forward ? 1:-1) * Mathf.Abs(trans.localScale.x), trans.localScale.y, trans.localScale.z);
 		}
 
-		public static void Face4ward(this Transform trans, bool forward){
-			trans.localScale = forward ? Vector3.one * 4f : new Vector3 (-4f, 4f, 1f);
-		}
-
-		public static Vector2 screenDimensions = new Vector2 (Screen.width, Screen.height);
-		public static Vector2 worldDimensions = screenDimensions /200f;
+		static Vector2 screenDimensions = new Vector2 (Screen.width, Screen.height);
+		public static Vector2 ScreenDimensions{get{return screenDimensions;}}
+		static Vector2 worldDimensions = ScreenDimensions /200f;
+		public static Vector2 WorldDimensions{get{return worldDimensions;}}
 
 		public static Vector2 correctionPixels = new Vector2 (Screen.width/2,(-3*Screen.height/2));
-		public static float correctionPixelFactor = worldDimensions.y * 2 / Screen.height;
+		public static float correctionPixelFactor = WorldDimensions.y * 2 / Screen.height;
 
 		public const int defaultLater = 0;
 		public const int basketLayer = 13;
@@ -48,41 +46,11 @@ namespace GenericFunctions{
 		public const int pooSmearLayer = 22;
 		public const int faceLayer = 23;
 
-		public static int totalPooSpots = 250;
-
-		/// <summary> side is +/- 1 and y position is between -1 <-> +1
-		/// Multiplies these input numbers by worldDimensions
-		/// </summary>
-		public static Vector2 RandomSpawnHeight(int side, float minY, float maxY){
-			return new Vector2 (side * worldDimensions.x, Random.Range (minY, maxY) * worldDimensions.y);
-		}
-
-		/// <summary> x and y position ranges are between -1 <-> +1
-		/// Multiplies these input numbers by worldDimensions
-		/// </summary>
-		public static Vector2 RandomSpawnPoint(float minX, float maxX, float minY, float maxY){
-			return new Vector2 (Random.Range (minX, maxX) * worldDimensions.x, Random.Range (minY, maxY) * worldDimensions.y);
-		}
-
-		/// <summary> Choose a side (+/- 1) and y position (-1 <-> +1)
-		/// Multiplies these input numbers by worldDimensions
-		/// </summary>
-		public static Vector2 FixedSpawnHeight (int side, float y){
-			return new Vector2 (side * worldDimensions.x, y * worldDimensions.y);
-		}
-
-		/// <summary> Choose an x position (-1 <-> +1) and y position (-1 <-> +1)
-		/// Multiplies these input numbers by worldDimensions
-		/// </summary>
-		public static Vector2 FixedSpawnPoint(float x, float y){
-			return new Vector2 (x * worldDimensions.x, y * worldDimensions.y);
-		}
-
 		public static Vector2 stockSpearPosition = new Vector3 (0.14f, 0.12f);
 		public static Vector2 balloonOffset = new Vector2 (0f, 1.6f);
 		public static Vector2 seagullOffset = balloonOffset + Vector2.up * 1.25f;
-		public static float time2Destroy = 2f;
-		public static float time2ThrowSpear = 0.66667f;
+		public const float time2Destroy = 2f;
+		public const float time2ThrowSpear = 0.66667f;
 
 		public static int[] NegativeOnes(int numberOfNegativeOnes){
 			int[] negs = new int[numberOfNegativeOnes];

@@ -28,7 +28,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 173176}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.15999998, y: -4.4799995, z: 0}
+  m_LocalPosition: {x: -1.3599999, y: -0.84, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigbod: {fileID: 5091728}
   birdCollider: {fileID: 5862866}
-  gutSplosionParent: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
+  guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
   babyCrowAnimator: {fileID: 9531916}
 --- !u!114 &11465960
 MonoBehaviour:

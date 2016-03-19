@@ -2,25 +2,36 @@
 using System.Collections;
 using GenericFunctions;
 
-public class Jai : MonoBehaviour, IControllable, ISpawnable, IHoldable, IArms, IHideable {
+public interface IControllable {
+	IEnumerator ThrowSpear(Vector2 throwDir);
+	IEnumerator StabTheBeast();
+}
+public interface ISpawnable {
+	IEnumerator PullOutNewSpear();
+}
+public interface IHoldable  {
+	bool BeingHeld{get;set;}
+}
+public interface IArms {
+	bool Throwing{get;}
+	bool Stabbing{get;}
+}
+
+public class Jai : MonoBehaviour, IControllable, ISpawnable, IHoldable, IArms {
 
 	public static IControllable JaiController;
 	public static ISpawnable SpearGenerator;
 	public static IHoldable JaiLegs;
 	public static IArms JaiArms;
-	public static IHideable ToHide;
 
 	[SerializeField] private Animator jaiAnimator;
-	[SerializeField] private Collider2D myCollider;
 	[SerializeField] GameObject spear;
+	[SerializeField] private Spear mySpear;
+	[SerializeField] private IThrowable mySpearHandle;
 
 	private float throwForce = 1400f; //Force with which Jai throws the spear
-
 	private int throws; //counts number of throws he's done
 
-	#region IHideable
-	Collider2D IHideable.ColliderToHide{get{return myCollider;}}
-	#endregion
 	#region IArms
 	private bool throwing; public bool Throwing{get{return throwing;}}
 	private bool stabbing; public bool Stabbing{get{return stabbing;}}
@@ -48,8 +59,8 @@ public class Jai : MonoBehaviour, IControllable, ISpawnable, IHoldable, IArms, I
 		SpearGenerator = this;
 		JaiArms = this;
 		JaiLegs = this;
-		ToHide = this;
 		Constants.jaiTransform = transform;
+		mySpearHandle = (IThrowable)mySpear;
 	}
 
 	#region IControllable
@@ -63,7 +74,7 @@ public class Jai : MonoBehaviour, IControllable, ISpawnable, IHoldable, IArms, I
 			ThrowState = throwDir.x<=0 ? Throw.UpLeft : Throw.UpRight;
 		}
 
-		StartCoroutine (((IThrowable)(Spear.Instance)).FlyFree(throwDir, throwForce, (int)highLow));
+		StartCoroutine (mySpearHandle.FlyFree(throwDir, throwForce, (int)highLow));
 
 		jaiAnimator.SetInteger("AnimState",(int)ThrowState);
 		yield return new WaitForSeconds (Constants.time2ThrowSpear);
@@ -87,7 +98,7 @@ public class Jai : MonoBehaviour, IControllable, ISpawnable, IHoldable, IArms, I
 	#region ISpawnable
 	IEnumerator ISpawnable.PullOutNewSpear(){
 		yield return new WaitForSeconds (Constants.time2ThrowSpear);
-		Instantiate (spear, transform.position + (Vector3)Constants.stockSpearPosition, Quaternion.identity);
+		mySpearHandle = (Instantiate (spear, transform.position + (Vector3)Constants.stockSpearPosition, Quaternion.identity) as GameObject).GetComponent<IThrowable>();
 	}
 	#endregion
 }

@@ -2,6 +2,15 @@
 using System.Collections;
 using GenericFunctions;
 
+public interface IStabbable {
+	void GetStabbed();
+}
+
+public interface ISensorToTentacle {
+	IEnumerator GoForTheKill();
+	IEnumerator ResetPosition(bool defeated);
+}
+
 public class Tentacles : Bird, ISensorToTentacle, IStabbable {
 
 	public static IStabbable StabbableTentacle;
@@ -11,7 +20,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable {
 	[SerializeField] private Collider2D tentaCollider;
 	[SerializeField] private TentaclesSensor ts; private ITentacleToSensor tentacleToSensor;
 
-	private Vector2 homeSpot = new Vector2 (0f,-.75f - Constants.worldDimensions.y);
+	private Vector2 homeSpot = new Vector2 (0f,-.75f - Constants.WorldDimensions.y);
 	
 	private float descendSpeed = 1f;
 	private float attackSpeed = 1.5f;
@@ -37,7 +46,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable {
 	}
 
 	void FaceTowardYou(bool toward){
-		transform.Face4ward (toward ? (Constants.basketTransform.position.x - transform.position.x) > 0 : (Constants.basketTransform.position.x - transform.position.x) < 0);
+		transform.FaceForward (toward ? (Constants.basketTransform.position.x - transform.position.x) > 0 : (Constants.basketTransform.position.x - transform.position.x) < 0);
 	}
 
 	#region ISensorToTentacle
@@ -94,7 +103,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable {
 	#region IStabbable
 	void IStabbable.GetStabbed(){
 		stabsTaken++;
-		TakeDamage(Vector2.zero,tentaCollider);
+		TakeDamage(new SpearItems());
 		if (stabsTaken>=stabs2Retreat){
 			tentacleToSensor.ToggleSensor(false);
 			StartCoroutine ( DisableTentacles());
@@ -113,40 +122,27 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable {
 	}
 
 	#region TakeDamage
-	public override void TakeDamage(Vector2 gutDirection, Collider2D spearCollider){
-		Vector2 gutSpawnSpot = transform.position;
-		bool holding = gutDirection.x==0;
-		if (!holding){
+	protected override void TakeDamage(SpearItems spearItems){
+		bool holding = spearItems.SpearVelocity.x==0;
+		Vector2 spawnSpot;
+		Vector2 gutVel;
+		if (holding){
+			gutVel = new Vector2 (-Mathf.Sign(transform.localScale.x) * Random.value, Random.value).normalized;
+			spawnSpot = tipTransform.position;
+		}
+		else{
+			gutVel = spearItems.SpearVelocity;
+			spawnSpot = birdCollider.bounds.ClosestPoint(spearItems.SpearCollider.transform.position);
 			birdStats.Health--;
 		}
-
-		if (holding){
-			gutSpawnSpot = tipTransform.position;
-			gutDirection = new Vector2 (-Mathf.Sign(transform.localScale.x) * Random.value, Random.value).normalized;
-		}
-		else{
-			gutSpawnSpot = birdCollider.bounds.ClosestPoint(spearCollider.transform.position);
-		}
-		GutSplosion gutSplosion = (Instantiate (gutSplosionParent, gutSpawnSpot, Quaternion.identity) as GameObject).GetComponent<GutSplosion>();
-
-		if (birdStats.Health>0){
-			gutSplosion.GenerateGuts (birdStats.DamageGutValue, gutDirection);
-		}
-		else{
-			gutSplosion.GenerateGuts (birdStats.KillGutValue, gutDirection);
-			GameClock.Instance.SlowTime(.1f,.5f);
-			PayTheIronPrice();
-			TrackPoints();
-			Destroy(transform.parent.gameObject);
-		}
+		(Instantiate (guts, spawnSpot, Quaternion.identity) as GameObject).GetComponent<IBleedable>().GenerateGuts(birdStats, gutVel);
 	}
 	#endregion
 
-	protected override void OnDestroy(){
-		base.OnDestroy();
-		StopAllCoroutines();
+	protected override void DieUniquely(){
 		if (Constants.bottomOfTheWorldCollider!=null){
 			Constants.bottomOfTheWorldCollider.enabled = true;
 		}
+		Destroy(transform.parent.gameObject);
 	}
 }

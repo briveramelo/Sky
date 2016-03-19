@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{2F5E5810-0537-0EE9-E14A-4F7D02084AE0}</ProjectGuid>
+    <ProjectGuid>{B76A04A6-4202-DE16-6364-115A09ABCFD9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -45,7 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Editor\Murder_Editor.cs" />
+     <Compile Include="Assets\Editor\ReplaceGameObjects.cs" />
      <None Include="Assets\Scripts\PixelPerfect\Scripts\Internal\Resources\PixelPerfectShader.shader" />
      <None Include="Assets\Resources\Shaders\MaskConstruction.shader" />
      <None Include="Assets\Scripts\PixelPerfect\README.txt" />
@@ -79,6 +79,9 @@
  <Reference Include="UnityEditor.Graphs">
  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.Graphs.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions">
+ <HintPath>/Applications/Unity/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.WebGL.Extensions">
  <HintPath>/Applications/Unity/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll</HintPath>
  </Reference>
@@ -91,7 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{99150D47-5A30-3F02-E040-18FDBC9B7D12}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
+      <Project>{DC5700C6-B2E6-291E-384F-63B852578FD4}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

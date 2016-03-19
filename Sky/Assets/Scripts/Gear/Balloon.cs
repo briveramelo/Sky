@@ -6,6 +6,10 @@ using System;
 public class Balloon : MonoBehaviour, IBasketToBalloon{
 
 	[SerializeField] private GameObject rope;
+	[SerializeField] PixelPerfectSprite pixelPerfect;
+	[SerializeField] private SpriteRenderer mySprite;
+	[SerializeField] private Sprite[] balloonSprites;
+	[SerializeField] private RuntimeAnimatorController[] balloonAnimators;
 	[SerializeField] private CircleCollider2D balloonCollider;
 	[SerializeField] private Animator balloonAnimator;
 	[SerializeField] private AudioSource popNoise;
@@ -15,6 +19,9 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 	private float popTime = 30f;
 
 	void Awake () {
+		int randomBalloon = UnityEngine.Random.Range(0,balloonSprites.Length);
+		mySprite.sprite = balloonSprites[randomBalloon];
+		balloonAnimator.runtimeAnimatorController = balloonAnimators[randomBalloon];
 		if (!transform.parent){
 			StartCoroutine (FloatUp());
 		}
@@ -33,6 +40,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 		transform.SetParent(Basket.Instance.transform);
 		gameObject.layer = Constants.balloonLayer;
 		transform.position = (Vector2)Constants.jaiTransform.position + newPosition;
+		pixelPerfect.enabled = false;
 	}
 
 	IEnumerator IBasketToBalloon.BecomeInvincible(){

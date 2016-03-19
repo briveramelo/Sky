@@ -30,7 +30,7 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
@@ -39,7 +39,7 @@ TextureImporter:
   cubemapConvolutionSteps: 8
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: -3
   maxTextureSize: 2048
   textureSettings:
     filterMode: 0
@@ -50,11 +50,12 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
@@ -64,6 +65,7 @@ TextureImporter:
     maxTextureSize: 8192
     textureFormat: -3
     compressionQuality: 50
+    allowsAlphaSplitting: 0
   spriteSheet:
     sprites:
     - name: JaiThrowUpL_0
@@ -76,6 +78,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: JaiThrowUpL_1
       rect:
         serializedVersion: 2
@@ -84,8 +87,9 @@ TextureImporter:
         width: 18
         height: 30
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: JaiThrowUpL_2
       rect:
         serializedVersion: 2
@@ -94,8 +98,9 @@ TextureImporter:
         width: 18
         height: 30
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: JaiThrowUpL_3
       rect:
         serializedVersion: 2
@@ -104,8 +109,9 @@ TextureImporter:
         width: 18
         height: 30
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: JaiThrowUpL_4
       rect:
         serializedVersion: 2
@@ -114,8 +120,9 @@ TextureImporter:
         width: 18
         height: 30
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: JaiThrowUpL_5
       rect:
         serializedVersion: 2
@@ -124,8 +131,9 @@ TextureImporter:
         width: 18
         height: 30
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: JaiThrowUpL_6
       rect:
         serializedVersion: 2
@@ -134,8 +142,9 @@ TextureImporter:
         width: 18
         height: 30
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: JaiThrowUpL_7
       rect:
         serializedVersion: 2
@@ -144,8 +153,9 @@ TextureImporter:
         width: 18
         height: 30
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: JaiThrowUpL_8
       rect:
         serializedVersion: 2
@@ -156,6 +166,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: JaiThrowUpL_9
       rect:
         serializedVersion: 2
@@ -166,6 +177,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: JaiThrowUpL_10
       rect:
         serializedVersion: 2
@@ -176,6 +188,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: JaiThrowUpL_11
       rect:
         serializedVersion: 2
@@ -186,6 +199,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: JaiThrowUpL_12
       rect:
         serializedVersion: 2
@@ -196,6 +210,8 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

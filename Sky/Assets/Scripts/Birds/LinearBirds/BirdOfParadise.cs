@@ -4,7 +4,7 @@ using GenericFunctions;
 
 public class BirdOfParadise : LinearBird {
 
-	[SerializeField] private GameObject[] balloons;
+	[SerializeField] private GameObject balloon;
 
 	protected override void Awake () {
 		moveSpeed = 3f;
@@ -13,9 +13,10 @@ public class BirdOfParadise : LinearBird {
 		base.Awake();
 	}
 
-	protected override void PayTheIronPrice(){
-		float xSpot = Random.Range(-Constants.worldDimensions.x,Constants.worldDimensions.x) * 0.67f;
-		Vector3 spawnSpot = new Vector3 (xSpot,-Constants.worldDimensions.y*1.6f,0f);
-		Instantiate( balloons[Random.Range (0,balloons.Length)],spawnSpot,Quaternion.identity);
+	protected override void DieUniquely(){
+		float xSpot = Random.Range(-Constants.WorldDimensions.x,Constants.WorldDimensions.x) * 0.67f;
+		Vector3 spawnSpot = new Vector3 (xSpot,-Constants.WorldDimensions.y*1.6f,0f);
+		Instantiate( balloon,spawnSpot,Quaternion.identity);
+		base.DieUniquely();
 	}
 }

@@ -88,14 +88,14 @@ public class Incubator : MonoBehaviour {
 	#endregion
 
 	public void SpawnNextBird(BirdType birdType){
-		float xSpot = -Constants.worldDimensions.x;
-		float ySpot = Random.Range (-Constants.worldDimensions.y, Constants.worldDimensions.y) * 0.6f;
+		float xSpot = -Constants.WorldDimensions.x;
+		float ySpot = Random.Range (-Constants.WorldDimensions.y, Constants.WorldDimensions.y) * 0.6f;
 		if (birdType == BirdType.Tentacles || birdType == BirdType.Crow){
 			xSpot = 0f;
 			ySpot = 0f;
 		}
 		else if (birdType == BirdType.Eagle){
-			xSpot= -Constants.worldDimensions.x *5f;
+			xSpot= -Constants.WorldDimensions.x *5f;
 		}
 		Instantiate (birds [(int)birdType], new Vector3(xSpot,ySpot,0f), Quaternion.identity);
 	}

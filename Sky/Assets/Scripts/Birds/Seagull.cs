@@ -112,9 +112,4 @@ public class Seagull : Bird {
 		StartCoroutine (Poop ());
 		yield return null;
 	}
-
-	protected override void OnDestroy(){
-		base.OnDestroy();
-		StopAllCoroutines();
-	}
 }

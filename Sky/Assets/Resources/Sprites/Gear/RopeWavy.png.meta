@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 0d37051ff115f4988a66029694837209
-timeCreated: 1442868963
+timeCreated: 1458268984
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -21,7 +21,7 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
@@ -30,7 +30,7 @@ TextureImporter:
   cubemapConvolutionSteps: 8
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: -3
   maxTextureSize: 2048
   textureSettings:
     filterMode: 0
@@ -46,19 +46,19 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings:
   - buildTarget: Standalone
-    maxTextureSize: 8192
+    maxTextureSize: 2048
     textureFormat: -3
     compressionQuality: 50
     allowsAlphaSplitting: 0
   - buildTarget: iPhone
-    maxTextureSize: 8192
+    maxTextureSize: 2048
     textureFormat: -3
     compressionQuality: 50
     allowsAlphaSplitting: 0
@@ -68,42 +68,47 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 1
+        y: 21
         width: 4
-        height: 40
+        height: 20
       alignment: 9
-      pivot: {x: .375, y: .5}
+      pivot: {x: 0.375, y: 0.95}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: RopeWavy_1
       rect:
         serializedVersion: 2
         x: 6
-        y: 1
+        y: 21
         width: 4
-        height: 40
+        height: 20
       alignment: 9
-      pivot: {x: .375, y: .5}
+      pivot: {x: 0.375, y: 0.95}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: RopeWavy_2
       rect:
         serializedVersion: 2
         x: 11
-        y: 1
+        y: 21
         width: 4
-        height: 40
+        height: 20
       alignment: 9
-      pivot: {x: .375, y: .5}
+      pivot: {x: 0.375, y: 0.95}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: RopeWavy_3
       rect:
         serializedVersion: 2
         x: 16
-        y: 1
+        y: 21
         width: 4
-        height: 40
+        height: 20
       alignment: 9
-      pivot: {x: .375, y: .5}
+      pivot: {x: 0.375, y: 0.95}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
   spritePackingTag: 
   userData: 
   assetBundleName: 
