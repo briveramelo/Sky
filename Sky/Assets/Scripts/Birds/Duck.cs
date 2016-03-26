@@ -97,7 +97,7 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 	#region ILeaderToDuck
 	void ILeaderToDuck.Scatter(){
 		CurrentVelocity = scatterDir[formationIndex] * moveSpeed;
-		birdStats.KillPointValue = 3;
+		birdStats.KillPointValueBase = 3;
 		bouncing = true;
 	}
 	int ILeaderToDuck.FormationIndex {

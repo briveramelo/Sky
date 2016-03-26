@@ -125,7 +125,7 @@ public class Bat : Bird {
 		speedPhaseShift = ellipseTilt * 2f / 3f;
 		xRadiusIndex = Random.Range (0,3);
 		yRadiusIndex = xRadiusIndex == 1 ? 1+(int)Mathf.Sign (Random.insideUnitCircle.x) : 1;
-		clockwise = Random.value > 0.5f;
+		clockwise = Bool.TossCoin();
 		Invoke ("ShuffleOrbitalPhase", Random.Range (2f, 4f));
 	}
 

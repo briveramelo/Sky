@@ -5,7 +5,6 @@ using GenericFunctions;
 public interface IStabbable {
 	void GetStabbed();
 }
-
 public interface ISensorToTentacle {
 	IEnumerator GoForTheKill();
 	IEnumerator ResetPosition(bool defeated);

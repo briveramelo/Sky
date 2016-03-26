@@ -16,6 +16,7 @@ public interface IResetable{
 }
 public interface IReportable{
 	int GetCount(CounterType counter, BirdType birdType);
+	int GetCounts(CounterType counter, params BirdType[] birdTypes);
 }
 public interface IStreakable{
 	void ReportHit(int spearNumber);
@@ -73,18 +74,14 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 	[SerializeField] private ScoreBoard scoreBoard;
 
 	#region BirdCounters
-	class Counter: IComparable<Counter>{
-		public Counter(CounterType counterType, List<Counter> allCounters){
-			this.counterType = counterType;
-			allCounters.Add(this);
-		}
-		public int CompareTo(Counter other){
-			return this.counterType.CompareTo(other.counterType);
-		}
-
+	class Counter{
 		protected CounterType counterType;
 		protected int[] currentCount = new int[Enum.GetNames(typeof(BirdType)).Length];
 		protected int[] cummulativeCount = new int[Enum.GetNames(typeof(BirdType)).Length];
+
+		public Counter(CounterType counterType){
+			this.counterType = counterType;
+		}
 
 		public void SetCount(BirdType birdType, int change) {
 			currentCount[(int)birdType] += change;
@@ -93,8 +90,7 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 			cummulativeCount[(int)BirdType.All] += change;
 		}
 		public int GetCount(BirdType birdType, bool currentWave){
-			int countToReturn = currentWave ? currentCount[(int)birdType] : cummulativeCount[(int)birdType];
-			return countToReturn;
+			return currentWave ? currentCount[(int)birdType] : cummulativeCount[(int)birdType];
 		}
 		public void ResetCurrentCount(){
 			currentCount = new int[Enum.GetNames(typeof(BirdType)).Length];
@@ -102,74 +98,77 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 	}
 
 	class BirdCounter : Counter{
-		public BirdCounter(CounterType counterType, List<Counter> allCounters) : base(counterType, allCounters){}
-		public void SetCount(BirdType birdType, bool increment) {
-			int change = increment ? 1 : -1;
+		public BirdCounter(CounterType counterType) : base(counterType){}
+		public void SetCount(BirdType birdType, bool increase) {
+			int change = increase ? 1 : -1;
 			base.SetCount(birdType, change);
 		}
 	}
+	class PointCounter : Counter{
+		public PointCounter(CounterType counterType) : base(counterType){}
+	}
 
-	static List<Counter> allCounters = new List<Counter>();
-	private BirdCounter birdsSpawned, birdsAlive, birdsKilled;
-	private Counter birdsScored;
+	static Dictionary<CounterType, Counter> allCounters = new Dictionary<CounterType, Counter>();
 	#endregion
-
+	const bool increase = true;
+	const bool decrease = false;
 	void Awake(){
 		Instance = this;
 		Tallier = (ITallyable)this;
 		Resetter = (IResetable)this;
 		Reporter = (IReportable)this;
 		Streaker = (IStreakable)this;
-		birdsSpawned = new BirdCounter(CounterType.Spawned,allCounters);
-		birdsAlive = new BirdCounter(CounterType.Alive,allCounters);
-		birdsScored = new BirdCounter(CounterType.Scored,allCounters);
-		birdsKilled = new BirdCounter(CounterType.Killed,allCounters);
-		allCounters.Sort();
+
+		for (int i=0; i<Enum.GetNames(typeof(CounterType)).Length; i++){
+			if ((CounterType)i==CounterType.Scored){
+				allCounters.Add((CounterType)i, new PointCounter((CounterType)i));
+			}
+			else{
+				allCounters.Add((CounterType)i, new BirdCounter((CounterType)i));
+			}
+		}
 	}
 
 	#region IResetable
 	void IResetable.ResetWaveCounters(){
 		for (int i=0; i<allCounters.Count; i++){
-			allCounters[i].ResetCurrentCount();
+			allCounters[(CounterType)i].ResetCurrentCount();
 		}
 	}
 	#endregion
 
 	#region IReportable
 	int IReportable.GetCount(CounterType counter, BirdType birdType){
-		return allCounters[(int)counter].GetCount(birdType, true);
+		return allCounters[counter].GetCount(birdType, true);
+	}
+	int IReportable.GetCounts(CounterType counter, params BirdType[] birdTypes){
+		int total=0;
+		for (int i=0; i<birdTypes.Length; i++){
+			total+= allCounters[counter].GetCount(birdTypes[i], true);
+		} 
+		return total;
 	}
 	#endregion
 
 	#region ITallyable
 	void ITallyable.TallyBirth(BirdStats birdStats){
-		birdsSpawned.SetCount(birdStats.MyBirdType, true);
-		birdsAlive.SetCount(birdStats.MyBirdType, true);
+		((BirdCounter)(allCounters[CounterType.Spawned])).SetCount(birdStats.MyBirdType, increase);
+		((BirdCounter)(allCounters[CounterType.Alive])).SetCount(birdStats.MyBirdType, increase);
 	}
 
 	void ITallyable.TallyDeath(BirdStats birdStats){
-		birdsAlive.SetCount(birdStats.MyBirdType, false);
+		((BirdCounter)(allCounters[CounterType.Alive])).SetCount(birdStats.MyBirdType, decrease);
 	}
 
 	void ITallyable.TallyKill(BirdStats birdStats){
-		birdsKilled.SetCount(birdStats.MyBirdType, true);
+		((BirdCounter)(allCounters[CounterType.Killed])).SetCount(birdStats.MyBirdType, increase);
 	}
 
 	void ITallyable.TallyPoints(BirdStats birdStats){
-		//special case for killing birds of point multipliers
-		int totalFromMultiplier = 0;
-		if (birdStats.Health<=0){
-			if (birdStats.MyBirdType == BirdType.Seagull || birdStats.MyBirdType == BirdType.Tentacles){ 
-				foreach (Bird bird in FindObjectsOfType<Bird>()){
-					totalFromMultiplier += Mathf.CeilToInt(bird.MyBirdStats.TotalPointValue * birdStats.KillPointMultiplier);
-				}
-			}
-		}
-		int pointsToAdd = totalFromMultiplier + birdStats.Health<=0 ? birdStats.KillPointValue : birdStats.DamagePointValue;
-
-		birdsScored.SetCount (birdStats.MyBirdType, pointsToAdd);
+		int pointsToAdd = birdStats.Health<=0 ? birdStats.KillPointValue : birdStats.DamagePointValue;
+		((PointCounter)(allCounters[CounterType.Scored])).SetCount (birdStats.MyBirdType, pointsToAdd);
 		(Instantiate(points, birdStats.birdPosition, Quaternion.identity) as GameObject).GetComponent<IDisplayable>().DisplayPoints(pointsToAdd);
-		((IDisplayable)scoreBoard).DisplayPoints(birdsScored.GetCount(BirdType.All, false));
+		((IDisplayable)scoreBoard).DisplayPoints(((PointCounter)(allCounters[CounterType.Scored])).GetCount(BirdType.All, false));
 	}
 	#endregion
 }

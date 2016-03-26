@@ -22,6 +22,7 @@ public abstract class Bird : MonoBehaviour, IHurtable {
 		birdStats.birdPosition = transform.position;
 		birdStats.ModifyForStreak(ScoreSheet.Streaker.GetHitStreak());
 		birdStats.ModifyForCombo(spearItems.BirdsHit);
+		birdStats.ModifyForMultiplier();
 		ScoreSheet.Tallier.TallyPoints (birdStats);
 		if (birdStats.Health<=0){
 			GameClock.Instance.SlowTime(.1f,.5f);

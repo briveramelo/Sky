@@ -46,7 +46,6 @@ public class Seagull : Bird {
 			}
 			yield return null;
 		}
-		yield return null;
 	}
 
 	void FindStartTarget(){
@@ -67,7 +66,7 @@ public class Seagull : Bird {
 		float angleStep = 4f;
 		float minBoostDistance = 0.6f;
 		float speedBoostFactor = 1f;
-		bool clockwise = Random.value>0.5f;
+		bool clockwise = Bool.TossCoin();
 		while (true){
 			float distanceAway = Vector2.Distance(targetPosition,transform.position);
 			if (distanceAway<nextDistance){
@@ -110,6 +109,5 @@ public class Seagull : Bird {
 			yield return null;
 		}
 		StartCoroutine (Poop ());
-		yield return null;
 	}
 }

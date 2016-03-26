@@ -3,6 +3,12 @@ using System.Collections;
 
 namespace GenericFunctions{
 
+	public static class Bool{
+		public static bool TossCoin(){
+			return Random.value>0.5f;
+		}
+	}
+
 	public static class Constants{
 
 		public static Transform jaiTransform;

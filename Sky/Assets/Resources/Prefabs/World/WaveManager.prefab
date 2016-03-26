@@ -12,7 +12,6 @@ GameObject:
   - 114: {fileID: 11482402}
   - 114: {fileID: 11482602}
   - 114: {fileID: 11480006}
-  - 114: {fileID: 11447678}
   m_Layer: 0
   m_Name: WaveManager
   m_TagString: Untagged
@@ -47,17 +46,6 @@ MonoBehaviour:
   - {fileID: 11482402}
   - {fileID: 11482602}
   - {fileID: 11480006}
---- !u!114 &11447678
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 182318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d16fac9201ca54cb5ac42e63e3a11e55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11480006
 MonoBehaviour:
   m_ObjectHideFlags: 1

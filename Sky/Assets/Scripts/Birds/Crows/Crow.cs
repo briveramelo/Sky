@@ -92,7 +92,7 @@ public class Crow : Bird, IMurderToCrow {
 
 	IEnumerator TurnAwayFromBalloons(){
 		crowAnimator.SetInteger("AnimState",(int)CrowStates.Gliding);
-		int rotationSpeed = Random.value>0.5f ? 4  : -4;
+		int rotationSpeed = Bool.TossCoin() ? 4  : -4;
 		int angleDelta = 0;
 		int startAngle = ConvertAnglesAndVectors.ConvertVector2IntAngle(rigbod.velocity, false);
 		while (Mathf.Abs(angleDelta)<60){
