@@ -14,7 +14,7 @@ GameObject:
   - 114: {fileID: 11454078}
   - 114: {fileID: 11475130}
   - 50: {fileID: 5009806}
-  m_Layer: 16
+  m_Layer: 10
   m_Name: BirdOfParadise
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,6 +175,10 @@ Prefab:
       propertyPath: balloon
       value: 
       objectReference: {fileID: 125308, guid: 843c1b0a79ab54d09845b45382dae317, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 156092}

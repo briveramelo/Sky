@@ -2,41 +2,33 @@
 using System.Collections;
 using GenericFunctions;
 
-public interface ITentacleToSensor {
+public interface IToggleable {
 	void ToggleSensor(bool active);
+}
+public interface IJaiDetected{
 	bool JaiInRange{get;}
 }
+public class TentaclesSensor : MonoBehaviour, IToggleable, IJaiDetected {
 
-public class TentaclesSensor : MonoBehaviour, ITentacleToSensor {
-
-	[SerializeField] private Tentacles tentaclesScript; private ISensorToTentacle sensorToTentacle;
+	[SerializeField] private Tentacles tentaclesScript; private ISensorToTentacle tentacle;
 	[SerializeField] private Collider2D sensor;
-	private bool jaiInRange; public bool JaiInRange{get{return jaiInRange;}}
+	private bool jaiInRange; bool IJaiDetected.JaiInRange{get{return jaiInRange;}}
 
 	void Awake () {
-		sensorToTentacle = (ISensorToTentacle)tentaclesScript;
-		transform.position = Vector3.zero;
+		tentacle = (ISensorToTentacle)tentaclesScript;
 	}
 		
-	void OnTriggerEnter2D(Collider2D enterer){
-		if (enterer.gameObject.layer==Constants.basketLayer){ //rise against the basket
-			if (!enterer.isTrigger){
-				jaiInRange = true;
-				StartCoroutine (sensorToTentacle.GoForTheKill());
-			}
-		}
+	void OnTriggerEnter2D(){
+		jaiInRange = true;
+		StartCoroutine (tentacle.GoForTheKill());
 	}
 
-	void OnTriggerExit2D(Collider2D exiter){
-		if (exiter.gameObject.layer==Constants.basketLayer){ //return to the depths
-			if (!exiter.isTrigger){
-				jaiInRange = false;
-				StartCoroutine (sensorToTentacle.ResetPosition(false));
-			}
-		}
+	void OnTriggerExit2D(){
+		jaiInRange = false;
+		StartCoroutine (tentacle.ResetPosition(false));
 	}
 
-	void ITentacleToSensor.ToggleSensor(bool active){
+	void IToggleable.ToggleSensor(bool active){
 		sensor.enabled = active;
 	}
 }

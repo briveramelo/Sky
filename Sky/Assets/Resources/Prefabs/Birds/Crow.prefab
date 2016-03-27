@@ -15,7 +15,7 @@ GameObject:
   - 50: {fileID: 5098798}
   - 114: {fileID: 11412386}
   - 58: {fileID: 5830908}
-  m_Layer: 16
+  m_Layer: 10
   m_Name: Crow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,10 +109,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigbod: {fileID: 5098798}
   birdCollider: {fileID: 5830908}
-  gutSplosionParent: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
+  guts: {fileID: 0}
   murder: {fileID: 0}
   pixelRotationScript: {fileID: 11412386}
-  crowCollider: {fileID: 5830908}
   crowAnimator: {fileID: 9503310}
 --- !u!114 &11483936
 MonoBehaviour:
@@ -168,7 +167,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 190058}

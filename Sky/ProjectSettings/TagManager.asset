@@ -15,23 +15,23 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
   - Basket
   - Spear
-  - Joystick
   - Bird
   - Balloon
   - FloatingBalloon
-  - Tentacle
   - Jai
   - Face
+  - Tentacle
+  - TentacleSensor
   - Teleporter
-  - PooNugget
   - WorldBounds
+  - PooNugget
+  - BalloonBounds
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

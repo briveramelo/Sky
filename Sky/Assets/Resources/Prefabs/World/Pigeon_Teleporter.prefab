@@ -10,12 +10,12 @@ GameObject:
   - 4: {fileID: 402228}
   - 114: {fileID: 11403586}
   - 61: {fileID: 6150156}
-  m_Layer: 25
+  m_Layer: 17
   m_Name: Teleport_LeftSide_Pigeon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &194154
 GameObject:
@@ -25,12 +25,12 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 452116}
-  m_Layer: 25
+  m_Layer: 17
   m_Name: Pigeon_Teleporter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &198938
 GameObject:
@@ -42,12 +42,12 @@ GameObject:
   - 4: {fileID: 439748}
   - 114: {fileID: 11482812}
   - 61: {fileID: 6187204}
-  m_Layer: 25
+  m_Layer: 17
   m_Name: Teleport_RightSide_Pigeon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &402228
 Transform:

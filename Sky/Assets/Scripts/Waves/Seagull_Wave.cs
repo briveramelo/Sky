@@ -7,7 +7,7 @@ public class Seagull_Wave : Wave {
 	protected override IEnumerator RunWave(){
 
 		// 1 WAIT 3 SEAGULL
-		if (ScoreSheet.Reporter.GetCount(CounterType.Alive,BirdType.Tentacles)==0) SpawnTentacles();
+		if (ScoreSheet.Reporter.GetCount(CounterType.Alive,false,BirdType.Tentacles)==0) SpawnTentacles();
 		yield return StartCoroutine(Produce1Wait3(SpawnSeagull));
 
 		// 5 PIGEONS

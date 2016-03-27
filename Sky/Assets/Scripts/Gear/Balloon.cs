@@ -3,6 +3,12 @@ using System.Collections;
 using GenericFunctions;
 using System;
 
+public interface IBasketToBalloon {
+	void DetachFromBasket();
+	void AttachToBasket(Vector2 newPosition);
+	IEnumerator BecomeInvincible();
+	int BalloonNumber{get;set;}
+}
 public class Balloon : MonoBehaviour, IBasketToBalloon{
 
 	[SerializeField] private GameObject rope;
@@ -39,6 +45,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 		StopAllCoroutines(); //specifically, stop the balloon from floating up
 		transform.SetParent(Basket.Instance.transform);
 		gameObject.layer = Constants.balloonLayer;
+		rope.layer = Constants.balloonBoundsLayer;
 		transform.position = (Vector2)Constants.jaiTransform.position + newPosition;
 		pixelPerfect.enabled = false;
 	}
@@ -62,7 +69,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.layer == Constants.birdLayer){//bird layer pops free balloon
+		if (balloonCollider.isActiveAndEnabled && col.gameObject.layer == Constants.birdLayer || col.gameObject.layer == Constants.spearLayer){//bird layer pops free balloon
 			Pop();
 		}
 	}
@@ -71,8 +78,9 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 		Handheld.Vibrate ();
 		GameClock.Instance.SlowTime(.5f,.75f);
 		GameCamera.Instance.ShakeTheCamera();
+		StopAllCoroutines(); //specifically, stop the balloon from floating up
 
-		Basket.BalloonToBasket.ReportPoppedBalloon(this);
+		if (gameObject.layer == Constants.balloonLayer) ((IBalloonToBasket)(Basket.Instance)).ReportPoppedBalloon(this);
 		transform.parent = null;
 		balloonCollider.enabled = false;
 		balloonAnimator.SetInteger("AnimState",1);

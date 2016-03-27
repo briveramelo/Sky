@@ -9,15 +9,18 @@ public interface ISensorToTentacle {
 	IEnumerator GoForTheKill();
 	IEnumerator ResetPosition(bool defeated);
 }
+public interface ITipToTentacle{
+	IEnumerator PullDownTheKill();
+}
 
-public class Tentacles : Bird, ISensorToTentacle, IStabbable {
+public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 
 	public static IStabbable StabbableTentacle;
 	private ISensorToTentacle me; //just because I wanted to use ResetPosition locally with less mess...
+	[SerializeField] private TentaclesSensor ts; private IToggleable sensor; private IJaiDetected sensorOnJai;
 
 	[SerializeField] private Transform tipTransform;
-	[SerializeField] private Collider2D tentaCollider;
-	[SerializeField] private TentaclesSensor ts; private ITentacleToSensor tentacleToSensor;
+	[SerializeField] private Collider2D tipCollider;
 
 	private Vector2 homeSpot = new Vector2 (0f,-.75f - Constants.WorldDimensions.y);
 	
@@ -28,14 +31,16 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable {
 	private float resetHeight;
 
 	private int stabsTaken;
-	private int stabs2Retreat = 5;
+	const int stabs2Retreat = 4;
 
 	private bool tentaclesDisabled;
+	private bool holdingJai;
 
 	protected override void Awake(){
 		StabbableTentacle = (IStabbable)this;
 		me = (ISensorToTentacle)this;
-		tentacleToSensor = (ITentacleToSensor)ts;
+		sensor = (IToggleable)ts;
+		sensorOnJai = (IJaiDetected)ts;
 
 		birdStats = new BirdStats(BirdType.Tentacles);
 
@@ -50,9 +55,8 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable {
 
 	#region ISensorToTentacle
 	IEnumerator ISensorToTentacle.GoForTheKill(){ 
-		tentaCollider.enabled = true;
-		while (tentacleToSensor.JaiInRange && !Jai.JaiLegs.BeingHeld){
-			rigbod.velocity = (Constants.basketTransform.position - tipTransform.position).normalized * attackSpeed;
+		while (sensorOnJai.JaiInRange && !holdingJai){
+			rigbod.velocity = (Constants.basketTransform.position -Vector3.one*0.2f- tipTransform.position).normalized * attackSpeed;
 			FaceTowardYou(true);
 			yield return null;
 		}
@@ -61,26 +65,20 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable {
 	IEnumerator ISensorToTentacle.ResetPosition(bool defeated){
 		float finishHeight = defeated ? resetHeight: defeatedHeight;
 
-		while (tipTransform.position.y>finishHeight && (defeated ? true : !tentacleToSensor.JaiInRange)){
+		while (tipTransform.position.y>finishHeight && (defeated ? true : !sensorOnJai.JaiInRange)){
 			rigbod.velocity = ((Vector3)homeSpot - tipTransform.position).normalized * resetSpeed;
 			FaceTowardYou(!defeated);
 			yield return null;
 		}
-		if (defeated) tentaCollider.enabled = false;
 		rigbod.velocity = Vector2.zero;
-		tentacleToSensor.ToggleSensor(true);
-		yield return null;
+		sensor.ToggleSensor(true);
 	}
 	#endregion
 
-	void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.layer == Constants.jaiLayer && !Jai.JaiLegs.BeingHeld && !tentaclesDisabled){
-			StartCoroutine (PullDownTheKill());
-		}
-	}
-
-	IEnumerator PullDownTheKill(){
+	#region ITipToTentacle
+	IEnumerator ITipToTentacle.PullDownTheKill(){
 		stabsTaken = 0;
+		holdingJai = true;
 		Jai.JaiLegs.BeingHeld = true;
 		Basket.TentacleToBasket.AttachToTentacles(transform);
 
@@ -98,16 +96,18 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable {
 
 		Constants.bottomOfTheWorldCollider.enabled = true;
 	}
+	#endregion
 
 	#region IStabbable
 	void IStabbable.GetStabbed(){
 		stabsTaken++;
 		TakeDamage(new SpearItems());
 		if (stabsTaken>=stabs2Retreat){
-			tentacleToSensor.ToggleSensor(false);
+			holdingJai = false;
+			Jai.JaiLegs.BeingHeld = false;
+			sensor.ToggleSensor(false);
 			StartCoroutine ( DisableTentacles());
 			StartCoroutine ( me.ResetPosition(true));
-			Jai.JaiLegs.BeingHeld = false;
 			Basket.TentacleToBasket.DetachFromTentacles();
 			Basket.TentacleToBasket.KnockDown(5f);
 		}
@@ -115,9 +115,9 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable {
 	#endregion
 
 	IEnumerator DisableTentacles(){
-		tentaclesDisabled = true;
+		tipCollider.enabled = false;
 		yield return new WaitForSeconds (1.5f);
-		tentaclesDisabled = false;
+		tipCollider.enabled = true;
 	}
 
 	#region TakeDamage

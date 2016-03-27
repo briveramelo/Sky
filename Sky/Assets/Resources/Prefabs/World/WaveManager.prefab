@@ -12,12 +12,14 @@ GameObject:
   - 114: {fileID: 11482402}
   - 114: {fileID: 11482602}
   - 114: {fileID: 11480006}
+  - 114: {fileID: 11459324}
+  - 114: {fileID: 11410064}
   m_Layer: 0
   m_Name: WaveManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &455918
 Transform:
@@ -31,6 +33,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11410064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21baafa5d82cc41cd8874a051fe651ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11415430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -46,6 +59,19 @@ MonoBehaviour:
   - {fileID: 11482402}
   - {fileID: 11482602}
   - {fileID: 11480006}
+  - {fileID: 11459324}
+  - {fileID: 11410064}
+--- !u!114 &11459324
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f807e071561c427c8813d6fe812930b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11480006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -54,7 +80,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 182318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e994d4b0f0dcb4a3c9552a8727018ad0, type: 3}
+  m_Script: {fileID: 11500000, guid: 098eb6dc28a084c1289f3f373b16fb91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11482402
@@ -65,7 +91,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 182318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: add83d628bc274394946a3857781055a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c709be1832664939a74e2adde704b80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11482602
@@ -76,7 +102,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 182318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dec905af7bbcd4c0984c88c57e218aef, type: 3}
+  m_Script: {fileID: 11500000, guid: 8228be9ff887d43028ae58e302c3074a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &100100000

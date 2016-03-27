@@ -14,7 +14,7 @@ GameObject:
   - 58: {fileID: 5804168}
   - 50: {fileID: 5023904}
   - 114: {fileID: 11477976}
-  m_Layer: 16
+  m_Layer: 10
   m_Name: Bat_white
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 166612}

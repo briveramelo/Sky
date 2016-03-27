@@ -8,7 +8,7 @@ public class Pelican_Wave : Wave {
 
 	protected override IEnumerator RunWave(){
 		// 1 Wait 3 PELICAN
-		if (ScoreSheet.Reporter.GetCount(CounterType.Alive,BirdType.Tentacles)==0) SpawnTentacles();
+		if (ScoreSheet.Reporter.GetCount(CounterType.Alive,false,BirdType.Tentacles)==0) SpawnTentacles();
 		yield return StartCoroutine(Produce1Wait3(SpawnPelican));
 
 		// 4 PIGEONS (Wait 2, + 2)
@@ -23,8 +23,8 @@ public class Pelican_Wave : Wave {
 		yield return StartCoroutine(WaitFor(allDeadExceptTentacles,true));
 
 		// 3 DUCKS (Wait 1, +2), 2 PELICANS (Wait 1, +1)
-		StartCoroutine (ProduceDucks(3));
-		yield return StartCoroutine (MassProduce(SpawnPelican,2));
+		StartCoroutine (MassProduce(SpawnPelican,2));
+		yield return StartCoroutine (ProduceDucks(3));
 		BirdWaiter waitForDucks = new BirdWaiter(CounterType.Alive, false, 1,ProduceDucks(2), BirdType.Duck);
 		BirdWaiter waitForPelicans = new BirdWaiter(CounterType.Alive, false, 1,SpawnPelican, BirdType.Pelican);
 		yield return StartCoroutine(WaitInParallel(waitForDucks, waitForPelicans));
@@ -44,7 +44,7 @@ public class Pelican_Wave : Wave {
 		// 1 PELICAN, 1 SEAGULL, 2 PIGEONS, 1 DUCK
 		StartCoroutine (MassProduce(SpawnPigeon,2));
 		StartCoroutine (ProduceDucks(1));
-		//SpawnSeagullandPelican();
+		SpawnSeagullandPelican();
 		yield return StartCoroutine(WaitFor(allDeadExceptTentacles,true));
 
 		yield return StartCoroutine (base.RunWave());

@@ -8,7 +8,7 @@ public class BirdWaiter{
 	protected CounterType counterType;
 	protected BirdType[] birdTypes;
 	public int numberToWaitFor;
-	protected int movingNumber {get{return ScoreSheet.Reporter.GetCounts(counterType,birdTypes);}}
+	protected int movingNumber {get{return ScoreSheet.Reporter.GetCounts(counterType,true,birdTypes);}}
 	public bool wait{get{return Wait(movingNumber);}}
 	delegate bool BoolDelegate(int mover);
 	BoolDelegate Wait;
@@ -33,7 +33,7 @@ public class BirdWaiter{
 		this.numberToWaitFor = numberToWaitFor;
 		Wait = (int mover)=> mover>this.numberToWaitFor;
 		if (counterType == CounterType.Spawned || counterType == CounterType.Killed){
-			this.numberToWaitFor +=ScoreSheet.Reporter.GetCounts(counterType,birdTypes);
+			this.numberToWaitFor +=ScoreSheet.Reporter.GetCounts(counterType,true, birdTypes);
 			Wait = (int mover)=> mover<this.numberToWaitFor;
 		} 
 	}

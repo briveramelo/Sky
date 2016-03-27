@@ -15,8 +15,8 @@ public interface IResetable{
 	void ResetWaveCounters();
 }
 public interface IReportable{
-	int GetCount(CounterType counter, BirdType birdType);
-	int GetCounts(CounterType counter, params BirdType[] birdTypes);
+	int GetCount(CounterType counter, bool currentWave, BirdType birdType);
+	int GetCounts(CounterType counter, bool currentWave, params BirdType[] birdTypes);
 }
 public interface IStreakable{
 	void ReportHit(int spearNumber);
@@ -138,13 +138,13 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 	#endregion
 
 	#region IReportable
-	int IReportable.GetCount(CounterType counter, BirdType birdType){
-		return allCounters[counter].GetCount(birdType, true);
+	int IReportable.GetCount(CounterType counter, bool currentWave, BirdType birdType){
+		return allCounters[counter].GetCount(birdType, currentWave);
 	}
-	int IReportable.GetCounts(CounterType counter, params BirdType[] birdTypes){
+	int IReportable.GetCounts(CounterType counter, bool currentWave, params BirdType[] birdTypes){
 		int total=0;
 		for (int i=0; i<birdTypes.Length; i++){
-			total+= allCounters[counter].GetCount(birdTypes[i], true);
+			total+= allCounters[counter].GetCount(birdTypes[i], currentWave);
 		} 
 		return total;
 	}
@@ -165,10 +165,11 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 	}
 
 	void ITallyable.TallyPoints(BirdStats birdStats){
-		int pointsToAdd = birdStats.Health<=0 ? birdStats.KillPointValue : birdStats.DamagePointValue;
-		((PointCounter)(allCounters[CounterType.Scored])).SetCount (birdStats.MyBirdType, pointsToAdd);
-		(Instantiate(points, birdStats.birdPosition, Quaternion.identity) as GameObject).GetComponent<IDisplayable>().DisplayPoints(pointsToAdd);
+		((PointCounter)(allCounters[CounterType.Scored])).SetCount (birdStats.MyBirdType, birdStats.PointsToAdd);
+
+		(Instantiate(points, birdStats.BirdPosition, Quaternion.identity) as GameObject).GetComponent<IDisplayable>().DisplayPoints(birdStats.PointsToAdd);
 		((IDisplayable)scoreBoard).DisplayPoints(((PointCounter)(allCounters[CounterType.Scored])).GetCount(BirdType.All, false));
 	}
+
 	#endregion
 }

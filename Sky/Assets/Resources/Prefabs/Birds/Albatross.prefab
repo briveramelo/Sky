@@ -14,7 +14,7 @@ GameObject:
   - 50: {fileID: 5006164}
   - 61: {fileID: 6143880}
   - 114: {fileID: 11478446}
-  m_Layer: 16
+  m_Layer: 10
   m_Name: Albatross
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,6 +165,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_AngularDrag
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

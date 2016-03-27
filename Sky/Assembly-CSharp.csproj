@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\Birds\Seagull.cs" />
      <Compile Include="Assets\Scripts\Birds\Tentacles.cs" />
      <Compile Include="Assets\Scripts\Birds\TentaclesSensor.cs" />
+     <Compile Include="Assets\Scripts\Birds\TentaclesTip.cs" />
      <Compile Include="Assets\Scripts\Gear\Balloon.cs" />
      <Compile Include="Assets\Scripts\Gear\Basket.cs" />
      <Compile Include="Assets\Scripts\Gear\Rope.cs" />
@@ -71,11 +72,11 @@
      <Compile Include="Assets\Scripts\Helpers\BirdStats.cs" />
      <Compile Include="Assets\Scripts\Helpers\BirdTypes.cs" />
      <Compile Include="Assets\Scripts\Helpers\BirdWaiter.cs" />
-     <Compile Include="Assets\Scripts\Interfaces\Balloons\IBalloonToBasket.cs" />
-     <Compile Include="Assets\Scripts\Interfaces\Balloons\IBasketToBalloon.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IBleedable.cs" />
+     <Compile Include="Assets\Scripts\Jai\BasketEngine.cs" />
      <Compile Include="Assets\Scripts\Jai\Jai.cs" />
      <Compile Include="Assets\Scripts\Jai\Joyfulstick.cs" />
+     <Compile Include="Assets\Scripts\Jai\TouchInput.cs" />
      <Compile Include="Assets\Scripts\Memory\NameScore.cs" />
      <Compile Include="Assets\Scripts\Memory\SaveLoadData.cs" />
      <Compile Include="Assets\Scripts\PixelArtRotation\Scripts\Internal\Rotation.cs" />

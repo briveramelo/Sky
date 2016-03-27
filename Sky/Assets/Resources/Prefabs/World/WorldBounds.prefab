@@ -10,12 +10,12 @@ GameObject:
   - 4: {fileID: 443696}
   - 249: {fileID: 24919712}
   - 61: {fileID: 6147620}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: TopWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &155188
 GameObject:
@@ -27,12 +27,12 @@ GameObject:
   - 4: {fileID: 489946}
   - 249: {fileID: 24942058}
   - 61: {fileID: 6143208}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: RightWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &156416
 GameObject:
@@ -43,12 +43,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 408030}
   - 114: {fileID: 11453282}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: WorldBounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &179164
 GameObject:
@@ -60,12 +60,12 @@ GameObject:
   - 4: {fileID: 477370}
   - 249: {fileID: 24972924}
   - 61: {fileID: 6138280}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: LeftWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &191306
 GameObject:
@@ -77,12 +77,12 @@ GameObject:
   - 4: {fileID: 460750}
   - 249: {fileID: 24928954}
   - 61: {fileID: 6175486}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BottomWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &408030
 Transform:
@@ -302,7 +302,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 156416}

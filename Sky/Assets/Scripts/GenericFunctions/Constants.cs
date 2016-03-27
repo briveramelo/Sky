@@ -39,24 +39,25 @@ namespace GenericFunctions{
 		public static Vector2 correctionPixels = new Vector2 (Screen.width/2,(-3*Screen.height/2));
 		public static float correctionPixelFactor = WorldDimensions.y * 2 / Screen.height;
 
-		public const int defaultLater = 0;
-		public const int basketLayer = 13;
-		public const int spearLayer = 14;
-		public const int joystickLayer = 15;
-		public const int birdLayer = 16;
-		public const int balloonLayer = 17;
-		public const int balloonFloatingLayer = 18;
-		public const int tentacleLayer = 19;
-		public const int jaiLayer = 20;
-		public const int pooFingerLayer = 21;
-		public const int pooSmearLayer = 22;
-		public const int faceLayer = 23;
+		public const int basketLayer = 8;
+		public const int spearLayer = 9;
+		public const int birdLayer = 10;
+		public const int balloonLayer = 11;
+		public const int balloonFloatingLayer = 12;
+		public const int jaiLayer = 13;
+		public const int faceLayer = 14;
+		public const int tentacleLayer = 15;
+		public const int tentacleSensorLayer = 16;
+		public const int teleporterLayer = 17;
+		public const int worldBoundsLayer = 18;
+		public const int pooNuggetLayer = 19;
+		public const int balloonBoundsLayer = 20;
 
 		public static Vector2 stockSpearPosition = new Vector3 (0.14f, 0.12f);
 		public static Vector2 balloonOffset = new Vector2 (0f, 1.6f);
 		public static Vector2 seagullOffset = balloonOffset + Vector2.up * 1.25f;
 		public const float time2Destroy = 2f;
-		public const float time2ThrowSpear = 0.66667f;
+		public const float time2ThrowSpear = 0.333333f;
 
 		public static int[] NegativeOnes(int numberOfNegativeOnes){
 			int[] negs = new int[numberOfNegativeOnes];

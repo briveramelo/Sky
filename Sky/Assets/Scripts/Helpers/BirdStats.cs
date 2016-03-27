@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GenericFunctions;
 
 public struct BirdStats {
 	private BirdType myBirdType;		public BirdType MyBirdType{get{return myBirdType;}}
@@ -11,15 +12,26 @@ public struct BirdStats {
 	private int killPointValue;			public int KillPointValue{get{return killPointValue;} set{killPointValue = value;}}
 	private int damagePointValue;		public int DamagePointValue{get{return damagePointValue;}}
 
-
 	private float killPointMultiplier;	public float KillPointMultiplier{get{return 10*killPointMultiplier;}}
 	private int damageGutValue;			public int DamageGutValue{get{return damageGutValue;}}
 	private int killGutValue;			public int KillGutValue{get{return killGutValue;}}
-	public Vector3 birdPosition;
+	private Vector2 birdPosition;
+	public Vector2 BirdPosition{get{return birdPosition;}
+		set{
+			birdPosition = value;
+			if (Mathf.Abs(value.x)>(Constants.WorldDimensions.x)*.9f){
+				birdPosition = new Vector2(Mathf.Sign(birdPosition.x) * Constants.WorldDimensions.x*.9f,birdPosition.y);
+			}
+			if (Mathf.Abs(value.y)>(Constants.WorldDimensions.y)*.9f){
+				birdPosition = new Vector2(birdPosition.x,Mathf.Sign(birdPosition.y) *Constants.WorldDimensions.y * 0.9f);
+			}
+		}
+	}
 
 	public int TotalPointValue{
 		get{return ((health-1) * damagePointValueBase + killPointValueBase);}
 	}
+	public int PointsToAdd{get{return health<=0 ? killPointValue : damagePointValue;}}
 
 	public void ModifyForStreak(int birdStreak){
 		killPointValue = killPointValueBase + birdStreak-1;
