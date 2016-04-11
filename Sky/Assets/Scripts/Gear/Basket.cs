@@ -21,6 +21,7 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 
 	[SerializeField] private Rigidbody2D rigbod;
 	[SerializeField] private Transform balloonCenter;
+	[SerializeField] private Transform basketCenter;
 	[SerializeField] private List<Balloon> balloonScripts; private List<IBasketToBalloon> balloons;
 	[SerializeField] private BoxCollider2D basketCollider;
 
@@ -33,6 +34,7 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 		BalloonToBasket = (IBalloonToBasket)this;
 		TentacleToBasket = (ITentacleToBasket)this;
 		Constants.balloonCenter = balloonCenter;
+		Constants.basketTransform = basketCenter;
 		balloons = new List<IBasketToBalloon>();
 		relativeBalloonPositions = new Vector2[3];
 		for (int i=0; i<balloonScripts.Count; i++){
@@ -41,7 +43,6 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 			relativeBalloonPositions[i] = balloonScripts[i].transform.position - Constants.jaiTransform.position;
 		}
 
-		Constants.basketTransform = transform;
 	}
 
 	#region IBalloonToBasket

@@ -49,7 +49,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 125308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.8999999, y: -2.16, z: 0}
+  m_LocalPosition: {x: 1.06, y: -1.3600001, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children:
   - {fileID: 494026}
@@ -87,7 +87,7 @@ CircleCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 125308}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -276,6 +276,7 @@ MonoBehaviour:
   - {fileID: 9100000, guid: c28186469c6a74be68cca4ae1417b5da, type: 2}
   - {fileID: 9100000, guid: e46fda12a9cd34991b0e8ac5782f7b54, type: 2}
   balloonCollider: {fileID: 5810070}
+  boundsCollider: {fileID: 5854780}
   balloonAnimator: {fileID: 9508006}
   popNoise: {fileID: 8260608}
 --- !u!114 &11498238

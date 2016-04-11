@@ -61,6 +61,7 @@ MonoBehaviour:
   Seagull: 0
   Tentacles: 0
   Pelican: 0
+  Shoebill: 0
   Bat: 0
   Eagle: 0
   BirdOfParadise: 0
@@ -74,6 +75,7 @@ MonoBehaviour:
   - {fileID: 191540, guid: cd4056db3a7b748a49824ab3a8f3ef87, type: 2}
   - {fileID: 136588, guid: b2d924430ecf742f8a8455291b231b25, type: 2}
   - {fileID: 153434, guid: bb183bccd63d54eaba8756e9baecc2ea, type: 2}
+  - {fileID: 148646, guid: fb79abea4bbcf48e0a8d873f07e7807e, type: 2}
   - {fileID: 166612, guid: 9ea679bf2282b455ea1af34a50a8e0c7, type: 2}
   - {fileID: 175384, guid: 6fac294ad61874da699aad66017bb75d, type: 2}
   - {fileID: 156092, guid: 9919c17745d5e44b09e49882610b405e, type: 2}

@@ -1225,6 +1225,7 @@ MonoBehaviour:
   - {fileID: 9100000, guid: c28186469c6a74be68cca4ae1417b5da, type: 2}
   - {fileID: 9100000, guid: e46fda12a9cd34991b0e8ac5782f7b54, type: 2}
   balloonCollider: {fileID: 5822806}
+  boundsCollider: {fileID: 5845714}
   balloonAnimator: {fileID: 9543104}
   popNoise: {fileID: 8267634}
 --- !u!114 &11442804
@@ -1274,6 +1275,7 @@ MonoBehaviour:
   - {fileID: 9100000, guid: c28186469c6a74be68cca4ae1417b5da, type: 2}
   - {fileID: 9100000, guid: e46fda12a9cd34991b0e8ac5782f7b54, type: 2}
   balloonCollider: {fileID: 5809606}
+  boundsCollider: {fileID: 5878826}
   balloonAnimator: {fileID: 9584112}
   popNoise: {fileID: 8224834}
 --- !u!114 &11446756
@@ -1335,6 +1337,7 @@ MonoBehaviour:
   - {fileID: 9100000, guid: c28186469c6a74be68cca4ae1417b5da, type: 2}
   - {fileID: 9100000, guid: e46fda12a9cd34991b0e8ac5782f7b54, type: 2}
   balloonCollider: {fileID: 5888192}
+  boundsCollider: {fileID: 5866876}
   balloonAnimator: {fileID: 9582814}
   popNoise: {fileID: 8224302}
 --- !u!114 &11457648
@@ -1448,6 +1451,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigbod: {fileID: 5013456}
   balloonCenter: {fileID: 400978}
+  basketCenter: {fileID: 490122}
   balloonScripts:
   - {fileID: 11445352}
   - {fileID: 11437610}

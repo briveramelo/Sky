@@ -26,7 +26,7 @@ public class Guts : MonoBehaviour, IBleedable {
 		}
 		gutIndices = gutIndices.Where (number => number != -1).ToArray ();
 		foreach (int gutIndex in gutIndices){
-			GameObject gut = Instantiate (gutSplosions[gutIndex],new Vector2 (Random.insideUnitCircle.x,Random.insideUnitCircle.y) * .2f + (Vector2)transform.position,Quaternion.identity) as GameObject;
+			GameObject gut = Instantiate (gutSplosions[gutIndex],Random.insideUnitCircle.normalized * .2f + (Vector2)transform.position,Quaternion.identity) as GameObject;
 			gut.GetComponent<Rigidbody2D>().velocity = new Vector2 (Random.Range(gutDirection.x * .1f,gutDirection.x * .4f),Random.Range(3f,8f));
 			gut.transform.parent = transform;
 		}

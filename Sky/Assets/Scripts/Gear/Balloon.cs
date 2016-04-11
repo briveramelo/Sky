@@ -17,6 +17,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 	[SerializeField] private Sprite[] balloonSprites;
 	[SerializeField] private RuntimeAnimatorController[] balloonAnimators;
 	[SerializeField] private CircleCollider2D balloonCollider;
+	[SerializeField] private CircleCollider2D boundsCollider;
 	[SerializeField] private Animator balloonAnimator;
 	[SerializeField] private AudioSource popNoise;
 
@@ -29,6 +30,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 		mySprite.sprite = balloonSprites[randomBalloon];
 		balloonAnimator.runtimeAnimatorController = balloonAnimators[randomBalloon];
 		if (!transform.parent){
+			boundsCollider.enabled = false;
 			StartCoroutine (FloatUp());
 		}
 	}
@@ -48,6 +50,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 		rope.layer = Constants.balloonBoundsLayer;
 		transform.position = (Vector2)Constants.jaiTransform.position + newPosition;
 		pixelPerfect.enabled = false;
+		boundsCollider.enabled = true;
 	}
 
 	IEnumerator IBasketToBalloon.BecomeInvincible(){
@@ -83,6 +86,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 		if (gameObject.layer == Constants.balloonLayer) ((IBalloonToBasket)(Basket.Instance)).ReportPoppedBalloon(this);
 		transform.parent = null;
 		balloonCollider.enabled = false;
+		boundsCollider.enabled = false;
 		balloonAnimator.SetInteger("AnimState",1);
 		popNoise.Play ();
 		Destroy (rope);

@@ -6,14 +6,6 @@ public class Incubator : MonoBehaviour {
 
 	public static Incubator Instance;
 
-//	private Vector2[] worldEdgePoints = new Vector2[]{
-//		new Vector2 (-Constants.worldDimensions.x, Constants.worldDimensions.y),
-//		new Vector2 (Constants.worldDimensions.x, Constants.worldDimensions.y),
-//		new Vector2 (Constants.worldDimensions.x, -Constants.worldDimensions.y),
-//		new Vector2 (-Constants.worldDimensions.x, -Constants.worldDimensions.y),
-//		new Vector2 (-Constants.worldDimensions.x, Constants.worldDimensions.y)
-//	};
-
 	[SerializeField] private bool Pigeon;
 	[SerializeField] private bool Duck;
 	[SerializeField] private bool DuckLeader;
@@ -23,6 +15,7 @@ public class Incubator : MonoBehaviour {
 	[SerializeField] private bool Seagull;
 	[SerializeField] private bool Tentacles;
 	[SerializeField] private bool Pelican;
+	[SerializeField] private bool Shoebill;
 	[SerializeField] private bool Bat;
 	[SerializeField] private bool Eagle;
 	[SerializeField] private bool BirdOfParadise;
@@ -70,6 +63,10 @@ public class Incubator : MonoBehaviour {
 		if (Pelican){
 			Pelican = false;
 			SpawnNextBird(BirdType.Pelican);
+		}
+		if (Shoebill){
+			Shoebill = false;
+			SpawnNextBird(BirdType.Shoebill);
 		}
 		if (Bat){
 			Bat = false;

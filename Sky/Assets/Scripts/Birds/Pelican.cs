@@ -50,8 +50,6 @@ public class Pelican : Bird {
 
 	private bool[] spotsHit = new bool[4];
 	private bool[] clockwiseSteps = new bool[4];
-	private bool goLeft;
-	private bool inFlight;
 
 	protected override void Awake () {
 		birdStats = new BirdStats(BirdType.Pelican);
@@ -64,16 +62,7 @@ public class Pelican : Bird {
 		StartCoroutine(SwoopAround());
 		base.Awake();
 	}
-
-	protected override void TakeDamage (SpearItems spearItems){
-		base.TakeDamage (spearItems);
-		Debug.LogError("HIT");
-		if (PelPost==PP.Above){
-			spotsHit = new bool[4];
-			pelPost = goLeft ? PP.Left : PP.Right;
-		}
-	}
-
+		
 	//Move from one checkpoint to another
 	IEnumerator SwoopAround(){
 		PelPost = 0;
@@ -85,11 +74,9 @@ public class Pelican : Bird {
 				CheckToMoveOn();
 				moveDir = CurveItIn();
 				rigbod.velocity = moveDir * moveSpeeds[(int)PelPost];
-				Debug.Log(PelPost);
 				yield return null;
 			}
 			PelPost++;
-			Debug.LogWarning(PelPost);
 			yield return null;
 		}
 		yield return new WaitForSeconds (0.3f);
@@ -101,7 +88,6 @@ public class Pelican : Bird {
 	//set his flight pattern from the getgo
 	void DetermineFlightPattern(){
 		if (targetPosition.x>transform.position.x){
-			goLeft = false;
 			if (targetPosition.y<transform.position.y){
 				clockwiseSteps = new bool[]{false,false,false,false}; 	//downright
 			}
@@ -110,7 +96,6 @@ public class Pelican : Bird {
 			}
 		}
 		else{
-			goLeft = true;
 			if (targetPosition.y<transform.position.y){
 				clockwiseSteps = new bool[]{true,true,true,true}; 		//downleft
 			}

@@ -216,11 +216,7 @@ Prefab:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 11444058, guid: 60554f9710c5649689e1ffa39739f096, type: 2}
-      propertyPath: Tentacles
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11444058, guid: 60554f9710c5649689e1ffa39739f096, type: 2}
-      propertyPath: BirdOfParadise
+      propertyPath: Shoebill
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

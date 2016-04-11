@@ -2,7 +2,7 @@
 using System.Collections;
 using GenericFunctions;
 
-public struct BirdStats {
+public class BirdStats {
 	private BirdType myBirdType;		public BirdType MyBirdType{get{return myBirdType;}}
 	private int health;					public int Health{get{return health;} set{health = value;}}
 
@@ -111,6 +111,11 @@ public struct BirdStats {
 			health = 2;
 			damageGutValue = 4;
 			damagePointValue = 2;
+			break;
+		case BirdType.Shoebill:
+			killGutValue = 6;
+			killPointValue = 3;
+
 			break;
 		case BirdType.Bat:
 			killGutValue = 3;

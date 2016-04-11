@@ -8,8 +8,9 @@
 	Seagull = 6,
 	Tentacles = 7,
 	Pelican = 8,
-	Bat = 9,
-	Eagle = 10,
-	BirdOfParadise = 11,
-	All=12
+	Shoebill = 9,
+	Bat = 10,
+	Eagle = 11,
+	BirdOfParadise = 12,
+	All=13
 }

@@ -7,6 +7,11 @@ namespace GenericFunctions{
 		public static bool TossCoin(){
 			return Random.value>0.5f;
 		}
+		public static IEnumerator Toggle(System.Action<bool> lambda, float time2Wait){
+			lambda(false);
+			yield return new WaitForSeconds(time2Wait);
+			lambda(true);
+		}
 	}
 
 	public static class Constants{
@@ -30,7 +35,7 @@ namespace GenericFunctions{
 		public static void FaceForward(this Transform trans, bool forward){
 			trans.localScale = new Vector3 ((forward ? 1:-1) * Mathf.Abs(trans.localScale.x), trans.localScale.y, trans.localScale.z);
 		}
-
+			
 		static Vector2 screenDimensions = new Vector2 (Screen.width, Screen.height);
 		public static Vector2 ScreenDimensions{get{return screenDimensions;}}
 		static Vector2 worldDimensions = ScreenDimensions /200f;
