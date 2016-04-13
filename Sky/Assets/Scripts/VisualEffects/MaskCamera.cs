@@ -20,7 +20,7 @@ public class MaskCamera : MonoBehaviour{
 
     void Update(){
         newHolePosition = null;
-		Vector2 touchSpot = Joyfulstick.Toucher.TouchSpot;
+		Vector2 touchSpot = InputManager.touchSpot;
 		Rect worldRect = new Rect(-Constants.WorldDimensions.x + pooSliderTransform.position.x - startingPoint.x, -Constants.WorldDimensions.y + pooSliderTransform.position.y - startingPoint.y, Constants.WorldDimensions.x*2f, Constants.WorldDimensions.y*2f);
 		if (worldRect.Contains(touchSpot)){
 			newHolePosition = new Vector2(Constants.ScreenDimensions.x * (touchSpot.x - worldRect.xMin) / worldRect.width, Constants.ScreenDimensions.y * (touchSpot.y - worldRect.yMin) / worldRect.height);

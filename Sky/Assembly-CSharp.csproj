@@ -73,11 +73,10 @@
      <Compile Include="Assets\Scripts\Helpers\BirdStats.cs" />
      <Compile Include="Assets\Scripts\Helpers\BirdTypes.cs" />
      <Compile Include="Assets\Scripts\Helpers\BirdWaiter.cs" />
-     <Compile Include="Assets\Scripts\Interfaces\IBleedable.cs" />
      <Compile Include="Assets\Scripts\Jai\BasketEngine.cs" />
+     <Compile Include="Assets\Scripts\Jai\InputManager.cs" />
      <Compile Include="Assets\Scripts\Jai\Jai.cs" />
      <Compile Include="Assets\Scripts\Jai\Joyfulstick.cs" />
-     <Compile Include="Assets\Scripts\Jai\TouchInput.cs" />
      <Compile Include="Assets\Scripts\Memory\NameScore.cs" />
      <Compile Include="Assets\Scripts\Memory\SaveLoadData.cs" />
      <Compile Include="Assets\Scripts\PixelArtRotation\Scripts\Internal\Rotation.cs" />
@@ -91,6 +90,7 @@
      <Compile Include="Assets\Scripts\Universal\GameCamera.cs" />
      <Compile Include="Assets\Scripts\Universal\GameClock.cs" />
      <Compile Include="Assets\Scripts\Universal\Incubator.cs" />
+     <Compile Include="Assets\Scripts\Universal\Pauser.cs" />
      <Compile Include="Assets\Scripts\Universal\Points\BirdPoints.cs" />
      <Compile Include="Assets\Scripts\Universal\Points\IDisplayable.cs" />
      <Compile Include="Assets\Scripts\Universal\Points\PointDisplay.cs" />
@@ -101,11 +101,15 @@
      <Compile Include="Assets\Scripts\VisualEffects\MaskCamera.cs" />
      <Compile Include="Assets\Scripts\VisualEffects\PooNugget.cs" />
      <Compile Include="Assets\Scripts\VisualEffects\PooSlide.cs" />
+     <Compile Include="Assets\Scripts\Waves\Bat_Wave.cs" />
      <Compile Include="Assets\Scripts\Waves\Duck_Wave.cs" />
+     <Compile Include="Assets\Scripts\Waves\EmotionalIntensity.cs" />
+     <Compile Include="Assets\Scripts\Waves\Endless_Wave.cs" />
      <Compile Include="Assets\Scripts\Waves\Pelican_Wave.cs" />
      <Compile Include="Assets\Scripts\Waves\Pigeon_Wave.cs" />
      <Compile Include="Assets\Scripts\Waves\Pigeuck_Wave.cs" />
      <Compile Include="Assets\Scripts\Waves\Seagull_Wave.cs" />
+     <Compile Include="Assets\Scripts\Waves\Shoebill_Wave.cs" />
      <Compile Include="Assets\Scripts\Waves\Wave.cs" />
      <Compile Include="Assets\Scripts\Waves\WaveManager.cs" />
      <None Include="Assets\Scripts\PixelPerfect\Scripts\Internal\Resources\PixelPerfectShader.shader" />

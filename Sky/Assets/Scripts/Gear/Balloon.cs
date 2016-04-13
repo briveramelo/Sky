@@ -61,10 +61,10 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 	#endregion
 
 	IEnumerator FloatUp(){
-		float startTime = Time.realtimeSinceStartup;
+		float startTime = Time.time;
 		while (true){
 			transform.position += Vector3.up * moveSpeed * Time.deltaTime;
-			if (Time.realtimeSinceStartup-startTime>popTime){
+			if (Time.time-startTime>popTime){
 				Destroy (gameObject);
 			}
 			yield return null;

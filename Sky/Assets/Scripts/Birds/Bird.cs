@@ -2,7 +2,7 @@
 using System.Collections;
 
 public interface IHurtable {
-	void GetHurt(SpearItems spearItems);
+	void GetHurt(ref SpearItems spearItems);
 }
 
 public abstract class Bird : MonoBehaviour, IHurtable {
@@ -17,8 +17,8 @@ public abstract class Bird : MonoBehaviour, IHurtable {
 		ScoreSheet.Tallier.TallyBirth(birdStats);
 	}
 
-	void IHurtable.GetHurt(SpearItems spearItems){
-		TakeDamage(spearItems);
+	void IHurtable.GetHurt(ref SpearItems spearItems){
+		TakeDamage(ref spearItems);
 		birdStats.BirdPosition = transform.position;
 		birdStats.ModifyForStreak(ScoreSheet.Streaker.GetHitStreak());
 		birdStats.ModifyForCombo(spearItems.BirdsHit);
@@ -31,9 +31,9 @@ public abstract class Bird : MonoBehaviour, IHurtable {
 		}
 	}
 
-	protected virtual void TakeDamage(SpearItems spearItems){
+	protected virtual void TakeDamage(ref SpearItems spearItems){
 		birdStats.Health--;
-		(Instantiate (guts, transform.position, Quaternion.identity) as GameObject).GetComponent<IBleedable>().GenerateGuts(birdStats, spearItems.SpearVelocity);
+		(Instantiate (guts, transform.position, Quaternion.identity) as GameObject).GetComponent<IBleedable>().GenerateGuts(ref birdStats, spearItems.SpearVelocity);
 	}
 
 	protected virtual void DieUniquely(){

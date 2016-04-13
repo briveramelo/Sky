@@ -11,15 +11,13 @@ public class GameClock : MonoBehaviour {
 	}
 
 	public void SlowTime(float slowDuration, float timeScale){
-		Time.timeScale = timeScale;
-		StartCoroutine (Wait4RealSeconds (slowDuration));
+		StopAllCoroutines();
+		StartCoroutine (Wait4RealSeconds (slowDuration, timeScale));
 	}
 
-	IEnumerator Wait4RealSeconds(float slowDuration){
-		float startTime = Time.realtimeSinceStartup;
-		while (Time.realtimeSinceStartup - startTime < slowDuration){
-			yield return null;
-		}
+	IEnumerator Wait4RealSeconds(float slowDuration, float timeScale){
+		Time.timeScale = timeScale;
+		yield return new WaitForSeconds(slowDuration);
 		Time.timeScale = 1f;
 	}
 }

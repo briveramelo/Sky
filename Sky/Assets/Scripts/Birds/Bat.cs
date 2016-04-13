@@ -17,11 +17,11 @@ public class Bat : Bird {
 	private Vector2 moveDir;
 	private Vector2 batPos;
 
-	private float[] orbitalRadii = new float[]{1.25f, 1.5f, 1.75f};
+	float[] orbitalRadii = new float[]{1.25f, 1.5f, 1.75f};
 
-	private float approachSpeed = 2.8f;
-	private float orbitDistance = 1.5f;
-	private float stepDistance = 0.4f;
+	const float approachSpeed = 2.8f;
+	const float orbitDistance = 1.5f;
+	const float stepDistance = 0.4f;
 
 	private float dist2Target;
 	private float ellipseTilt;
@@ -29,7 +29,7 @@ public class Bat : Bird {
 	private float ellipseAng;
 	private float curvature;
 
-	private int positionWindowLength = 20;
+	const int positionWindowLength = 20;
 	private int realTimeIndex;
 	private int targetIndex;
 	private int xRadiusIndex;
@@ -79,8 +79,8 @@ public class Bat : Bird {
 	// Overwrite the first few frames of the bat's positional-targetting array with the last few
 	// Set the targetIndex "frameDelay" #frames before the realTime Index
 	// In effect, create a following delay to allow for bat/balloon collision
+	const int frameDelay=2;
 	void ResetTargetPositionWindow(){
-		int frameDelay=3;
 		for (int i = 0; i<frameDelay; i++)
 			targetPositions[i] = targetPositions[positionWindowLength-frameDelay-1+i];
 		

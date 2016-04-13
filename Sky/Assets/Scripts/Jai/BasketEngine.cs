@@ -2,46 +2,26 @@
 using System.Collections;
 using GenericFunctions;
 
-public interface IDisableable{
-	void DisableMovement();
+public interface IBumpable{
+	void Bump(Vector2 bumpDir);
 }
 
-public class BasketEngine : TouchInput, IDisableable {
+public class BasketEngine : MonoBehaviour, IBumpable, IHold {
 
 	[SerializeField] private Rigidbody2D basketBody;
 	const float moveSpeed = 2.7f;
 	bool movingEnabled =true;
 
-	protected override void OnTouchBegin(int fingerID){
-		float distFromStick = Vector2.Distance(touchSpot,startingJoystickSpot);
-		if (distFromStick<joystickMaxStartDist){
-			myFingerID = fingerID;
-		}
-	}
-
-	protected override void OnTouchMovedStationary(int fingerID){
+	void IHold.OnTouchHeld(){
 		if (movingEnabled){
-			if (fingerID == myFingerID){
-				Vector2 moveDir = Vector2.ClampMagnitude(touchSpot - startingJoystickSpot,joystickMaxMoveDistance);
-				basketBody.velocity = moveDir * moveSpeed;
-			}
+			Vector2 moveDir = Vector2.ClampMagnitude(InputManager.touchSpot - Joyfulstick.startingJoystickSpot,Joyfulstick.joystickMaxMoveDistance);
+			basketBody.velocity = moveDir * moveSpeed;
 		}
 	}
 
-	protected override void OnTouchEnd(int fingerID){
-		if (fingerID == myFingerID){
-			myFingerID = -1;
-		}
-	}
-
-	void IDisableable.DisableMovement(){
+	void IBumpable.Bump(Vector2 bumpDir){
 		StopAllCoroutines();
-		StartCoroutine (DisableMovement());
-	}
-
-	IEnumerator DisableMovement(){
-		basketBody.velocity = Random.insideUnitCircle.normalized * 1.5f;
-		yield return StartCoroutine (Bool.Toggle(boolState=>movingEnabled=boolState,.5f));
-		Debug.Log(movingEnabled);
+		basketBody.velocity = bumpDir;
+		StartCoroutine (Bool.Toggle(boolState=>movingEnabled=boolState,.5f));
 	}
 }

@@ -6,7 +6,7 @@ using GenericFunctions;
 public class Eagle : Bird {
 
 	[SerializeField] private PixelRotation pixelRotationScript;
-
+	private ITriggerSpawnable friendSummoner;
 	private Vector3 attackDir;
 
 	private Vector2[] startPos = new Vector2[]{
@@ -17,7 +17,7 @@ public class Eagle : Bird {
 		
 	protected override void Awake () {
 		birdStats = new BirdStats(BirdType.Eagle);
-
+		friendSummoner = FindObjectOfType<Bat_Wave>().GetComponent<ITriggerSpawnable>();
 		moveDir = new Vector2[]{
 			Constants.ScreenDimensions.normalized,
 			new Vector2(-Constants.ScreenDimensions.x,Constants.ScreenDimensions.y).normalized,
@@ -27,6 +27,9 @@ public class Eagle : Bird {
 	}
 
 	IEnumerator InitiateAttack(float waitTime){
+		if (friendSummoner!=null){
+			friendSummoner.TriggerSpawnEvent();
+		}
 		yield return new WaitForSeconds(waitTime);
 		StartCoroutine (SweepUp (true));
 	}

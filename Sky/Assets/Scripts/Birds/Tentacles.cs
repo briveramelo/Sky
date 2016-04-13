@@ -18,9 +18,12 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 	public static IStabbable StabbableTentacle;
 	private ISensorToTentacle me; //just because I wanted to use ResetPosition locally with less mess...
 	[SerializeField] private TentaclesSensor ts; private IToggleable sensor; private IJaiDetected sensorOnJai;
+	IFreezable inputManager;
+	IFreezable jai;
 
 	[SerializeField] private Transform tipTransform;
 	[SerializeField] private Collider2D tipCollider;
+	private SpearItems fakeSpear;
 
 	private Vector2 homeSpot = new Vector2 (0f,-.75f - Constants.WorldDimensions.y);
 	
@@ -41,6 +44,8 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 		me = (ISensorToTentacle)this;
 		sensor = (IToggleable)ts;
 		sensorOnJai = (IJaiDetected)ts;
+		inputManager = FindObjectOfType<InputManager>().GetComponent<IFreezable>();
+		jai = FindObjectOfType<Jai>().GetComponent<IFreezable>();
 
 		birdStats = new BirdStats(BirdType.Tentacles);
 
@@ -79,7 +84,8 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 	IEnumerator ITipToTentacle.PullDownTheKill(){
 		stabsTaken = 0;
 		holdingJai = true;
-		Jai.JaiLegs.BeingHeld = true;
+		inputManager.IsFrozen = true;
+		jai.IsFrozen = false;
 		Basket.TentacleToBasket.AttachToTentacles(transform);
 
 		GameClock.Instance.SlowTime (0.4f, 0.5f);
@@ -101,10 +107,11 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 	#region IStabbable
 	void IStabbable.GetStabbed(){
 		stabsTaken++;
-		TakeDamage(new SpearItems());
+		TakeDamage(ref fakeSpear);
 		if (stabsTaken>=stabs2Retreat){
 			holdingJai = false;
-			Jai.JaiLegs.BeingHeld = false;
+			inputManager.IsFrozen = false;
+			jai.IsFrozen = false;
 			sensor.ToggleSensor(false);
 			StartCoroutine ( DisableTentacles());
 			StartCoroutine ( me.ResetPosition(true));
@@ -121,7 +128,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 	}
 
 	#region TakeDamage
-	protected override void TakeDamage(SpearItems spearItems){
+	protected override void TakeDamage(ref SpearItems spearItems){
 		bool holding = spearItems.SpearVelocity.x==0;
 		Vector2 spawnSpot;
 		Vector2 gutVel;
@@ -134,7 +141,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 			spawnSpot = birdCollider.bounds.ClosestPoint(spearItems.SpearCollider.transform.position);
 			birdStats.Health--;
 		}
-		(Instantiate (guts, spawnSpot, Quaternion.identity) as GameObject).GetComponent<IBleedable>().GenerateGuts(birdStats, gutVel);
+		(Instantiate (guts, spawnSpot, Quaternion.identity) as GameObject).GetComponent<IBleedable>().GenerateGuts(ref birdStats, gutVel);
 	}
 	#endregion
 

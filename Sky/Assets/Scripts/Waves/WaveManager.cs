@@ -9,7 +9,7 @@ public class WaveManager : MonoBehaviour {
 
 	void Awake(){
 		waves = (IWaveRunnable[])allWaves;
-		//StartCoroutine (RunWaves());
+		StartCoroutine (RunWaves());
 	}
 
 	IEnumerator RunWaves(){

@@ -2,35 +2,35 @@ using UnityEngine;
 using System.Collections;
 using GenericFunctions;
 
-public class Joyfulstick : TouchInput {
+public class Joyfulstick : MonoBehaviour, IBegin, IHold, IEnd {
+
+	public readonly static Vector2 startingJoystickSpot = new Vector2 (-Constants.WorldDimensions.x * (2f/3f),-Constants.WorldDimensions.y * (2f/5f));
+	public const float joystickMaxStartDist = 1.25f;
+	public const float joystickMaxMoveDistance = .75f; //maximum distance you can move the joystick
+	private IStickEngineID inputManager;
 
 	[SerializeField] private Transform controlStickTransform;
-
 	void Awake () {
 		transform.position = startingJoystickSpot;
-		myFingerID = -1;
+		inputManager = FindObjectOfType<InputManager>().GetComponent<IStickEngineID>();
 	}
 
-	protected override  void OnTouchBegin(int fingerID){
-		float distFromStick = Vector2.Distance(touchSpot,startingJoystickSpot);
+	void IBegin.OnTouchBegin(int fingerID){
+		float distFromStick = Vector2.Distance(InputManager.touchSpot,startingJoystickSpot);
 		if (distFromStick<joystickMaxStartDist){
-			myFingerID = fingerID;
+			inputManager.SetStickEngineID(fingerID);
 			SetStickPosition();
 		}
 	}
-	protected override  void OnTouchMovedStationary(int fingerID){
-		if (fingerID == myFingerID){
-			SetStickPosition();
-		}
+	void IHold.OnTouchHeld(){
+		SetStickPosition();
 	}
-	protected override  void OnTouchEnd(int fingerID){
-		if (fingerID == myFingerID){
-			controlStickTransform.transform.position = startingJoystickSpot;
-			myFingerID = -1;
-		}
+	void IEnd.OnTouchEnd(){
+		controlStickTransform.transform.position = startingJoystickSpot;
 	}
+
 	void SetStickPosition(){
-		Vector2 moveDir = Vector2.ClampMagnitude(touchSpot - startingJoystickSpot,joystickMaxMoveDistance);
+		Vector2 moveDir = Vector2.ClampMagnitude(InputManager.touchSpot - startingJoystickSpot,joystickMaxMoveDistance);
 		controlStickTransform.transform.position = startingJoystickSpot + moveDir;
 	}
 }

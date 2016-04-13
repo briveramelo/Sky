@@ -7,30 +7,33 @@ public class BabyCrow : Bird {
 	[SerializeField] private Animator babyCrowAnimator;
 
 	private Vector2[] basketOffsets = new Vector2[]{
-		new Vector2 (-.8f, 0.4f),
-		new Vector2 (.8f, 0.4f),
+		new Vector2 (-.8f, 0.1f),
+		new Vector2 (.8f, 0.1f),
 	};
 
 	private Vector2 moveDir;
 	private float dist2Target;
 
-	private float triggerShiftDistance = 0.1f;
-	private float speedDistance = .3f;
-	private float zeroDistance = 0.05f;
-	private float minSpeed = 0.71f;
-	private float moveSpeed = 2f;
-	private float currentSpeed;
+	const float triggerShiftDistance = 0.3f;
+	const float minSpeed = 0.71f;
+	const float moveSpeed = 2f;
 
 	private int currentShift;
 	private int shiftsHit;
-	private int maxShifts = 5;
+	const int maxShifts = 5;
 	private int basketOffsetIndex;
 	private int BasketOffsetIndex{
 		get{return basketOffsetIndex;}
 		set{
 			basketOffsetIndex = value;
-			if (basketOffsetIndex>1)
+			if (basketOffsetIndex>1){
 				basketOffsetIndex =0;
+			}
+		}
+	}
+	float CorrectSpeed{
+		get{
+			return dist2Target<0.4f? Mathf.Lerp(rigbod.velocity.magnitude,0f,Time.deltaTime *2f) : moveSpeed;
 		}
 	}
 	private enum AnimState{
@@ -38,7 +41,7 @@ public class BabyCrow : Bird {
 		Looking=1
 	}
 	bool killedYoung;
-			
+
 	protected override void Awake () {
 		birdStats = new BirdStats(BirdType.BabyCrow);
 		StartCoroutine(ApproachShifts());
@@ -46,11 +49,11 @@ public class BabyCrow : Bird {
 	}
 
 	IEnumerator ApproachShifts(){
+		transform.FaceForward(transform.position.x<Constants.balloonCenter.position.x);
 		while (currentShift<maxShifts){
 			dist2Target = Vector2.Distance(Constants.jaiTransform.position + (Vector3)basketOffsets [BasketOffsetIndex],transform.position);
 			moveDir = (Constants.jaiTransform.position + (Vector3)basketOffsets [BasketOffsetIndex] - transform.position).normalized;
-			currentSpeed = CorrectSpeed ();
-			rigbod.velocity = moveDir * currentSpeed;
+			rigbod.velocity = moveDir * CorrectSpeed;
 
 			if (dist2Target<triggerShiftDistance && shiftsHit == currentShift){
 				StartCoroutine (ShiftSpots());
@@ -76,27 +79,10 @@ public class BabyCrow : Bird {
 		while (dist2Target > triggerShiftDistance){
 			dist2Target = Vector2.Distance(Vector3.right * Constants.WorldDimensions.x * 1.2f, transform.position);
 			moveDir = (Vector3.right * Constants.WorldDimensions.x * 1.2f - transform.position).normalized;
-			currentSpeed = CorrectSpeed ();
-			rigbod.velocity = moveDir * currentSpeed;
+			rigbod.velocity = moveDir * moveSpeed;
 			yield return null;
 		}
 		Destroy(gameObject);
-	}
-
-	float CorrectSpeed(){
-		if (dist2Target<speedDistance){
-			currentSpeed = moveSpeed * dist2Target;
-			if (dist2Target<zeroDistance){
-				return 0;
-			}
-			if (currentSpeed<minSpeed){
-				return minSpeed;
-			}
-			return currentSpeed;
-		}
-		else{
-			return moveSpeed;
-		}
 	}
 
 	IEnumerator LookBackAndForth(bool faceDir){

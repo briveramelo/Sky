@@ -26,8 +26,6 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 	[SerializeField] private BoxCollider2D basketCollider;
 
 	private Vector2[] relativeBalloonPositions;
-	
-	private float dropForce = 100f;
 
 	void Awake () {
 		Instance = this;

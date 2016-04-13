@@ -16,13 +16,13 @@ public class Albatross : Bird {
 		transform.FaceForward(rigbod.velocity.x<0);
 	}
 		
-	protected override void TakeDamage (SpearItems spearItems){
+	protected override void TakeDamage (ref SpearItems spearItems){
 		float hitHeight = birdCollider.bounds.ClosestPoint(spearItems.SpearCollider.transform.position).y;
 		if (spearItems.SpearVelocity.y>0 && hitHeight<transform.position.y){ //kill albatross with a tactical shot to the underbelly
 			birdStats.Health = 0;
 			//super kill!
 			//take a bite out of that soft, vulnerable tummy
 		}
-		base.TakeDamage(spearItems);
+		base.TakeDamage(ref spearItems);
 	}
 }

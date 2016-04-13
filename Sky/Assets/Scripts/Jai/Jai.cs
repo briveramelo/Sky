@@ -2,62 +2,55 @@
 using System.Collections;
 using GenericFunctions;
 
-public interface IHoldable  {
-	bool BeingHeld{get;set;}
-}
-
-public class Jai : TouchInput, IHoldable {
-
-	public static IHoldable JaiLegs;
+public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
 
 	[SerializeField] GameObject spear;
 	[SerializeField] private Animator jaiAnimator;
 	[SerializeField] private Spear mySpear; IThrowable mySpearHandle;
-	
-	private float throwForce = 1400f; //Force with which Jai throws the spear
+	private IJaiID inputManager;
+
+	const float throwForce = 1400f; //Force with which Jai throws the spear
 	const float distToThrow = .03f;
-	private bool throwing, stabbing;
+	bool throwing, stabbing, beingHeld;
+	bool IFreezable.IsFrozen{get{return beingHeld;}set{beingHeld = value;}}
 	private enum Throw{
 		Idle=0,
 		Down=1,
 		Up=2,
 	}
-	Vector2 startingTouchPoint;
-	private bool beingHeld; public bool BeingHeld{get{return beingHeld;}set{beingHeld = value;}}
+	Vector2 startingTouchPoint; Tentacles tent;
 
 	void Awake(){
-		JaiLegs = this;
 		Constants.jaiTransform = transform;
+		inputManager = FindObjectOfType<InputManager>().GetComponent<IJaiID>();
 		mySpearHandle = (IThrowable)mySpear;
 	}
 
-	protected override void OnTouchBegin(int fingerID){
-		float distFromStick = Vector2.Distance(touchSpot,startingJoystickSpot);
-		if (distFromStick>joystickMaxStartDist){
-			if (Input.touchCount<3){
-				startingTouchPoint = touchSpot;
-				myFingerID = fingerID;
+	void IBegin.OnTouchBegin(int fingerID){
+		if (!beingHeld){
+			float distFromStick = Vector2.Distance(InputManager.touchSpot,Joyfulstick.startingJoystickSpot);
+			float distFromPause = Vector2.Distance(InputManager.touchSpot,Pauser.pauseSpot);
+			if (distFromStick>Joyfulstick.joystickMaxStartDist && distFromPause > Pauser.pauseRadius){
+				if (Input.touchCount<3){
+					startingTouchPoint = InputManager.touchSpot;
+					inputManager.SetJaiID(fingerID);
+				}
+			}
+		}
+		else{
+			if (!stabbing){
+				StartCoroutine(StabTheBeast());
 			}
 		}
 	}
-
-	protected override void OnTouchHeld(){
-		if (!stabbing){
-			StartCoroutine(StabTheBeast());
-		}
-	}
-
-	protected override void OnTouchEnd(int fingerID){
-		if (fingerID == myFingerID ){ //use the spear
-			myFingerID = -1;
-			Vector2 releaseTouchPoint = touchSpot;
-			Vector2 attackDir = (releaseTouchPoint - startingTouchPoint).normalized;
-			float releaseDist = Vector2.Distance (releaseTouchPoint,startingTouchPoint);
-			if (!throwing){
-				if ( releaseDist > distToThrow ){ //throw the spear
-					StartCoroutine(ThrowSpear(attackDir));
-					StartCoroutine(PullOutNewSpear());
-				}
+	void IEnd.OnTouchEnd(){
+		Vector2 releaseTouchPoint = InputManager.touchSpot;
+		Vector2 attackDir = (releaseTouchPoint - startingTouchPoint).normalized;
+		float releaseDist = Vector2.Distance (releaseTouchPoint,startingTouchPoint);
+		if (!throwing){
+			if ( releaseDist > distToThrow ){ //throw the spear
+				StartCoroutine(ThrowSpear(attackDir));
+				StartCoroutine(PullOutNewSpear());
 			}
 		}
 	}

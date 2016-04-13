@@ -88,7 +88,7 @@ public class Spear : MonoBehaviour, IThrowable {
 		ScoreSheet.Streaker.ReportHit(mySpearNumber);
 
 		IHurtable hurtInterface = col.GetComponent<IHurtable> ();
-		hurtInterface.GetHurt(myItems);
+		hurtInterface.GetHurt(ref myItems);
 
 		Bird bird = col.GetComponent<Bird>();
 		//Deliver damage and redirect the spear as a bounce

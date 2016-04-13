@@ -63,14 +63,5 @@ namespace GenericFunctions{
 		public static Vector2 seagullOffset = balloonOffset + Vector2.up * 1.25f;
 		public const float time2Destroy = 2f;
 		public const float time2ThrowSpear = 0.333333f;
-
-		public static int[] NegativeOnes(int numberOfNegativeOnes){
-			int[] negs = new int[numberOfNegativeOnes];
-			for (int i = 0; i<numberOfNegativeOnes; i++){
-				negs[i] = -1;
-			}
-			return negs;
-		}
-
 	}
 }

@@ -37,6 +37,7 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 	protected SpawnDelegate SpawnBat;
 	protected SpawnDelegate SpawnTentacles;
 	protected SpawnDelegate SpawnCrows;
+	protected SpawnDelegate SpawnShoebill;
 	#endregion
 
 	void Awake(){
@@ -46,13 +47,14 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 			duckSpawnPoints[i] = SpawnPoint(i%2==0,heights[Mathf.FloorToInt(i/2)]);
 		}
 		SpawnPigeon = SpawnAtRandom(BirdType.Pigeon);
-		SpawnDuckLeader = SpawnAtRandom(BirdType.DuckLeader);
+		SpawnDuckLeader = ()=>SpawnBirds(BirdType.DuckLeader, SpawnPoint(Bool.TossCoin(),lowHeight*.5f,highHeight*.5f));
 		SpawnSeagull = SpawnAtRandom(BirdType.Seagull);
 		SpawnPelican = SpawnAtRandom(BirdType.Pelican);
 		SpawnAlbatross = SpawnAtRandom(BirdType.Albatross);
-		SpawnBabyCrow = SpawnAtRandom(BirdType.BabyCrow);
-		SpawnBat = SpawnAtRandom(BirdType.Bat);
 		SpawnTentacles = ()=> SpawnBirds(BirdType.Tentacles,Vector2.zero);
+		SpawnShoebill = SpawnAtRandom(BirdType.Shoebill);
+		SpawnBat = SpawnAtRandom(BirdType.Bat);
+		SpawnBabyCrow = SpawnAtRandom(BirdType.BabyCrow);
 		SpawnCrows = ()=> SpawnBirds(BirdType.Crow,Vector2.zero);
 	}
 
@@ -69,6 +71,11 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 	/// </summary>
 	public void SpawnBirds(BirdType birdType, Vector2 spawnPoint, DuckDirection duckDir = DuckDirection.UpRight){ 
 		int direction = spawnPoint.x<0 ? 1 : -1;
+
+		if (birdType == BirdType.Eagle){
+			spawnPoint= new Vector2(-Constants.WorldDimensions.x *5f,0f);
+		}
+
 		Bird bird = (Instantiate (Incubator.Instance.Birds[(int)birdType], spawnPoint, Quaternion.identity) as GameObject).GetComponent<Bird>();
 
 		if (birdType == BirdType.Pigeon || birdType == BirdType.BirdOfParadise){
