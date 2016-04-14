@@ -14,7 +14,7 @@ public class Pigeon_Wave : Wave {
 			AtHeight(heights),
 			AtHeight(bottomHeights) + AtHeight(topHeights)
 		};
-		for (int j=0; j<SpawnPigeons.Length; j++){
+		for (int j=0; j< SpawnPigeons.Length; j++){
 			for (int i=0; i<heights.Length; i++){
 				yield return StartCoroutine (Produce1Wait3(()=> SpawnPigeons[j](i)));
 			}

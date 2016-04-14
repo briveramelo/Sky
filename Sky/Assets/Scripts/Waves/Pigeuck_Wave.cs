@@ -22,7 +22,7 @@ public class Pigeuck_Wave : Wave {
 		//PIGEONS MAKING A RUNWAY FOR FLYING DUCKS
 		SpawnDelegate SpawnPigeons = AtHeights(pigeonHeights);
 		for (int i=0; i<4; i++){
-			SpawnPigeons();
+            SpawnPigeons();
 			if (i==2) SpawnBirds (BirdType.DuckLeader, SpawnPoint(right,0));
 			yield return new WaitForSeconds (.5f);
 		}

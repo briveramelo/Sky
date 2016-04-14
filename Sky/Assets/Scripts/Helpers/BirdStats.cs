@@ -7,9 +7,14 @@ public class BirdStats {
 	private BirdType myBirdType;		public BirdType MyBirdType{get{return myBirdType;}}
 	private int health;					public int Health{get{return health;} set{health = value;}}
 
-	private int killPointValueBase;		public int KillPointValueBase{get{return killPointValueBase;} set{killPointValueBase = value;}}
-	private int damagePointValueBase;	public int DamagePointValueBase{get{return damagePointValueBase;}}
-	private int killPointValue;			public int KillPointValue{get{return killPointValue;} set{killPointValue = value;}}
+    int killPointValueBase;
+    public int KillPointValueBase{get{return killPointValueBase;}
+        set {
+            killPointValueBase = killPointValue = value;
+        }
+    }
+	readonly int damagePointValueBase;	public int DamagePointValueBase{get{return damagePointValueBase;}}
+	private int killPointValue;			public int KillPointValue{get{return killPointValue;}}
 	private int damagePointValue;		public int DamagePointValue{get{return damagePointValue;}}
 
 	private float killPointMultiplier;	public float KillPointMultiplier{get{return killPointMultiplier;}}
@@ -18,24 +23,24 @@ public class BirdStats {
 	private Vector2 birdPosition;
 	public Vector2 BirdPosition{get{return birdPosition;}
 		set{
-			birdPosition = value;
-			if (Mathf.Abs(value.x)>(Constants.WorldDimensions.x)*.9f){
-				birdPosition = new Vector2(Mathf.Sign(birdPosition.x) * Constants.WorldDimensions.x*.9f,birdPosition.y);
-			}
-			if (Mathf.Abs(value.y)>(Constants.WorldDimensions.y)*.9f){
-				birdPosition = new Vector2(birdPosition.x,Mathf.Sign(birdPosition.y) *Constants.WorldDimensions.y * 0.9f);
-			}
+            float xClamp = Constants.WorldDimensions.x * .9f;
+            float yClamp = Constants.WorldDimensions.y * .9f;
+            birdPosition = new Vector2 (Mathf.Clamp(value.x, -xClamp, xClamp), Mathf.Clamp(value.y, -yClamp, yClamp));
 		}
 	}
 
 	const int basePointMultiplier =10;
 	public int TotalThreatValue{
-		get{return ( (health-1) * damagePointValueBase + killPointValueBase);}
+		get{return ( Mathf.Clamp((health-1),0,100) * damagePointValueBase + killPointValueBase);}
 	}
-	public int ThreatToSubtract{
-		get{return ( health<=0 ? killPointValueBase : damagePointValueBase);}
-	}
-	public int TotalPointValue{
+    public int LifeThreat{
+        get { return killPointValueBase; }
+    }
+    public int DamageThreat{
+        get { return damagePointValueBase; }
+    }
+
+    public int TotalPointValue{
 		get{return ( basePointMultiplier * ((health-1) * damagePointValueBase + killPointValueBase));}
 	}
 	public int PointsToAdd{
@@ -143,7 +148,7 @@ public class BirdStats {
 			break;
 		}
 
-		killPointValueBase = killPointValue;
 		damagePointValueBase = damagePointValue;
+		killPointValueBase = killPointValue;
 	}
 }

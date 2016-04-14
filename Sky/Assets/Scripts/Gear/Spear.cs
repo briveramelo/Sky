@@ -7,16 +7,17 @@ public interface IThrowable {
 	void FlyFree(Vector2 throwDir);
 }
 
-public class SpearItems{
-	public SpearItems(Collider2D spearCollider, Vector2 spearVelocity, int birdsHit){
-		this.spearCollider = spearCollider;
-		this.spearVelocity = spearVelocity;
-		this.birdsHit = birdsHit;
-	}
-	public SpearItems(){}
-	Collider2D spearCollider; public Collider2D SpearCollider{get{return spearCollider;}}
-	Vector2 spearVelocity; public Vector2 SpearVelocity{get{return spearVelocity;}}
-	int birdsHit; public int BirdsHit {get{return birdsHit;}}
+public class SpearItems {
+    public SpearItems(Collider2D spearCollider, Vector2 spearVelocity, int birdsHit) {
+        this.spearCollider = spearCollider;
+        this.spearVelocity = spearVelocity;
+        this.birdsHit = birdsHit;
+    }
+    public SpearItems() { }
+    Collider2D spearCollider; public Collider2D SpearCollider { get { return spearCollider; } }
+    Vector2 spearVelocity; public Vector2 SpearVelocity { get { return spearVelocity; } }
+    int birdsHit; public int BirdsHit { get { return birdsHit; } }
+    public int Damage { get{return 1;}}
 }
 
 public class Spear : MonoBehaviour, IThrowable {

@@ -4,61 +4,115 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System;
 using System.Linq;
+using GenericFunctions;
+
+
+public struct Range
+{
+    public float min;
+    public float max;
+    public Range(float min, float max)
+    {
+        this.min = min;
+        this.max = max;
+    }
+}
+
 public class Endless_Wave : Wave {
 
-	protected override IEnumerator RunWave(){
-		while (true){
-			while (true){
-				yield return null;
-			}
-			yield return null;
-		}
-	}
+    [SerializeField] Difficulty Toughness;
 
-	void Awake(){
-		CheckToUnlock();
-	}
+    protected override IEnumerator RunWave()
+    {
+        StartCoroutine(UnlockBirdies(lockedStandardBirds, unlockedStandardBirds));
+        StartCoroutine(UnlockBirdies(lockedBossBirds, unlockedBossBirds));
+        StartCoroutine(SpawnBirdies(() => {
+            if (unlockedStandardBirds.Count > 0)
+            {
+                BirdType[] birdTypes = new BirdType[(int)Toughness];
+                for (int i = 0; i < (int)Toughness; i++) {
+                    birdTypes[i] = unlockedStandardBirds[UnityEngine.Random.Range(0, unlockedStandardBirds.Count)];
+                }
+                return birdTypes;
+            }
+            else {
+                return new BirdType[] { BirdType.All };
+            }
+        },
+        new Range(0.5f, 3f)));
+
+        yield return StartCoroutine(SpawnBirdies(() => {
+            if (unlockedBossBirds.Count > 0)
+            {
+                return new BirdType[] { unlockedBossBirds[UnityEngine.Random.Range(0, unlockedBossBirds.Count)] };
+            }
+            else
+            {
+                return new BirdType[] { BirdType.All };
+            }
+        }, 
+        new Range(30f, 45f)));
+    }
+
+    IEnumerator UnlockBirdies(OrderedDictionary lockedBirds, List<BirdType> unlockedBirds) {
+        for (int i = 0; i < lockedBirds.Count; i++) {
+            yield return new WaitForSeconds((float)lockedBirds.Cast<DictionaryEntry>().ElementAt(i).Value);
+            BirdType unlockedBird = (BirdType)lockedBirds.Cast<DictionaryEntry>().ElementAt(i).Key;
+            unlockedBirds.Add(unlockedBird);
+            SpawnBirds(unlockedBird, SpawnPoint(Bool.TossCoin(), lowHeight, highHeight));
+        }
+    }
+
+    public enum Difficulty {
+        Easy = 1,
+        Medium = 3,
+        Hard = 5
+    }
+
+    float emotionalCap = 50f;
+    float emotionalSafePoint = 10f;
+    IEnumerator SpawnBirdies(Func<BirdType[]> birdSelection, Range timeRange) {
+        while (true) {
+            while (EmotionalIntensity.Intensity < emotionalCap) {
+                yield return StartCoroutine(WaitUntilTimeRange(timeRange.min, timeRange.max));
+                BirdType[] birdsToSpawn = birdSelection();
+                foreach (BirdType bird in birdsToSpawn) {
+                    if (bird != BirdType.All) {
+                        BirdSpawnDelegates[bird]();
+                    }
+                }
+            }
+            while (EmotionalIntensity.Intensity > emotionalSafePoint) {
+                yield return null;
+            }
+            yield return null;
+        }
+    }
 
 	#region BirdType Collections
-
-	OrderedDictionary lockedBirds = new OrderedDictionary(){
+	OrderedDictionary lockedStandardBirds = new OrderedDictionary(){
 		{BirdType.Shoebill,		0f},
-		{BirdType.Pigeon, 		4f},
-		{BirdType.Albatross, 	9f},
-		{BirdType.Seagull, 		14f},
-		{BirdType.Duck, 		19f},
-		{BirdType.Pelican, 		24f},
-		{BirdType.Bat, 			29f}
+		{BirdType.Pigeon, 		.5f * 60f},
+		{BirdType.Albatross,    1.5f * 60f},
+		{BirdType.Seagull,      2.5f * 60f},
+		{BirdType.Duck,         3f * 60f},
+		{BirdType.Pelican,      4f * 60f},
+		{BirdType.Bat,          5f * 60f}
 	};
-	List<BirdType> unlockedBirds = new List<BirdType>();
+	List<BirdType> unlockedStandardBirds = new List<BirdType>();
 
-	BirdType[] ignoreBirds = new BirdType[]{
-		BirdType.All,
-		BirdType.BirdOfParadise,
-		BirdType.Crow
-	};
-	BirdType[] bossBirds = new BirdType[]{
-		BirdType.Eagle,
-		BirdType.Tentacles,
-		BirdType.BabyCrow,
-		BirdType.DuckLeader
-	};
-	#endregion
+    OrderedDictionary lockedBossBirds = new OrderedDictionary(){
+		{BirdType.DuckLeader,   3.5f * 60f },
+        {BirdType.Tentacles,    4.5f * 60f },
+		{BirdType.BabyCrow,     5.5f * 60f },
+        {BirdType.Eagle,        6.5f * 60f }
+    };
+    List<BirdType> unlockedBossBirds = new List<BirdType>();
 
-	void UnlockNextBird(){
-		BirdType unlockedBird = (BirdType)lockedBirds.Cast<DictionaryEntry>().ElementAt(0).Key;
-		unlockedBirds.Add(unlockedBird);
-		lockedBirds.Remove(unlockedBird);
-	}
-
-	float timeOfLastUnlock =0f;
-	float timeBeforeNextUnlock =0f;
-	void CheckToUnlock(){
-		if (Time.time - timeOfLastUnlock > timeBeforeNextUnlock){
-			timeOfLastUnlock = Time.time;
-			timeBeforeNextUnlock = (float)lockedBirds.Cast<DictionaryEntry>().ElementAt(0).Value;
-			UnlockNextBird();
-		}
-		Invoke("CheckToUnlock",5f);
-	}
+    BirdType[] ignoreBirds = new BirdType[]{
+        BirdType.All,
+        BirdType.BirdOfParadise,
+        BirdType.Crow
+    };
+    #endregion
 }

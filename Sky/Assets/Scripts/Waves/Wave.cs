@@ -23,40 +23,36 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 	protected const bool right = true;
 	protected const bool left = false;
 	#region SpawnDelegates
-	SpawnDelegate SpawnAtRandom(BirdType birdType){
+	protected SpawnDelegate SpawnAtRandom(BirdType birdType){
 		return ()=>{
-			SpawnBirds(birdType, SpawnPoint(Bool.TossCoin(),lowHeight,highHeight));
+            Vector2 spawnPoint;
+            if (birdType == BirdType.DuckLeader) {
+                spawnPoint= SpawnPoint(Bool.TossCoin(), .5f *lowHeight, .5f *highHeight);
+            }
+            else if (birdType == BirdType.Tentacles || birdType == BirdType.Crow) {
+                spawnPoint = Vector2.zero;
+            }
+            else {
+                spawnPoint = SpawnPoint(Bool.TossCoin(), lowHeight, highHeight);
+            }
+            SpawnBirds(birdType, spawnPoint, (DuckDirection)UnityEngine.Random.Range(0, Enum.GetNames(typeof(DuckDirection)).Length));
 		};
 	}
-	protected SpawnDelegate SpawnPigeon;
-	protected SpawnDelegate SpawnDuckLeader;
-	protected SpawnDelegate SpawnSeagull;
-	protected SpawnDelegate SpawnPelican;
-	protected SpawnDelegate SpawnAlbatross;
-	protected SpawnDelegate SpawnBabyCrow;
-	protected SpawnDelegate SpawnBat;
-	protected SpawnDelegate SpawnTentacles;
-	protected SpawnDelegate SpawnCrows;
-	protected SpawnDelegate SpawnShoebill;
-	#endregion
 
-	void Awake(){
+    protected Dictionary<BirdType, SpawnDelegate> BirdSpawnDelegates = new Dictionary<BirdType, SpawnDelegate>();
+    #endregion
+
+    void Awake(){
 		heights = new float[]{lowHeight, medHeight, highHeight};
 		duckSpawnPoints = new Vector2[6];
 		for (int i=0; i<6; i++){
 			duckSpawnPoints[i] = SpawnPoint(i%2==0,heights[Mathf.FloorToInt(i/2)]);
 		}
-		SpawnPigeon = SpawnAtRandom(BirdType.Pigeon);
-		SpawnDuckLeader = ()=>SpawnBirds(BirdType.DuckLeader, SpawnPoint(Bool.TossCoin(),lowHeight*.5f,highHeight*.5f));
-		SpawnSeagull = SpawnAtRandom(BirdType.Seagull);
-		SpawnPelican = SpawnAtRandom(BirdType.Pelican);
-		SpawnAlbatross = SpawnAtRandom(BirdType.Albatross);
-		SpawnTentacles = ()=> SpawnBirds(BirdType.Tentacles,Vector2.zero);
-		SpawnShoebill = SpawnAtRandom(BirdType.Shoebill);
-		SpawnBat = SpawnAtRandom(BirdType.Bat);
-		SpawnBabyCrow = SpawnAtRandom(BirdType.BabyCrow);
-		SpawnCrows = ()=> SpawnBirds(BirdType.Crow,Vector2.zero);
-	}
+
+        for (int i = 0; i < Enum.GetNames(typeof(BirdType)).Length - 1; i++) {
+            BirdSpawnDelegates.Add((BirdType)i, SpawnAtRandom((BirdType)i));
+        }
+    }
 
 	IEnumerator IWaveRunnable.RunWave(){
 		yield return StartCoroutine (RunWave());

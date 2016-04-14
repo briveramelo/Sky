@@ -52,7 +52,7 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 			leader = (IDuckToLeader)leaderScript;
 		}
 		else{
-			((ILeaderToDuck)this).Scatter();
+			Scatter();
 		}
 		base.Awake();
 	}
@@ -96,10 +96,14 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 
 	#region ILeaderToDuck
 	void ILeaderToDuck.Scatter(){
-		CurrentVelocity = scatterDir[formationIndex] * moveSpeed;
-		birdStats.KillPointValueBase = 3;
-		bouncing = true;
+        ScoreSheet.Tallier.TallyThreat(ref birdStats, 2);
+        Scatter();
 	}
+    void Scatter() {
+        CurrentVelocity = scatterDir[formationIndex] * moveSpeed;
+        birdStats.KillPointValueBase = 3;
+        bouncing = true;
+    }
 	int ILeaderToDuck.FormationIndex {
 		get{return formationIndex;}
 		set{formationIndex = value;

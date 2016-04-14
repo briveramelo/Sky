@@ -36,11 +36,15 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
 	List<IHold> holders;
 	IEnd stickEnd;
 	IEnd jaiEnd;
+	#endregion
 
 	int stickEngineFinger =-1;
 	int jaiFinger =-1;
 
-	void Awake(){
+    Vector2 correctionPixels;
+    float correctionPixelFactor;
+
+    void Awake(){
 		beginners = new List<IBegin>(new IBegin[]{
 			(IBegin)joyfulstick,
 			(IBegin)jai,
@@ -52,11 +56,20 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
 		});
 		stickEnd = (IEnd)joyfulstick;
 		jaiEnd = (IEnd)jai;
-	}
-	#endregion
+        bool isMacEditor = Application.platform == RuntimePlatform.OSXEditor;
+        bool isWindowsEditor = Application.platform == RuntimePlatform.WindowsEditor;
+        if (isMacEditor) {
+            correctionPixels = new Vector2(Constants.ScreenDimensions.x / 2, (-3 * Constants.ScreenDimensions.y / 2));
+            correctionPixelFactor = Constants.WorldDimensions.y * 2 / Constants.ScreenDimensions.y;
+        }
+        else if (isWindowsEditor){
+            correctionPixels = -Constants.ScreenDimensions / 2;
+            correctionPixelFactor = .01f;
+        }
+    }
 
-	#region IFreezable
-	bool isFrozen; bool IFreezable.IsFrozen{get{return isFrozen;}set{isFrozen = value;}}
+    #region IFreezable
+    bool isFrozen; bool IFreezable.IsFrozen{get{return isFrozen;}set{isFrozen = value;}}
 	#endregion
 
 	#region ISetIDs
@@ -71,7 +84,7 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
 	void Update () {
 		if (Input.touchCount>0){
 			foreach (Touch finger in Input.touches){
-				touchSpot = (finger.position + Constants.correctionPixels) * Constants.correctionPixelFactor;
+                touchSpot = (finger.position + correctionPixels) * correctionPixelFactor;
 				if (finger.phase == TouchPhase.Began){
 					beginners.ForEach(beginner=> beginner.OnTouchBegin(finger.fingerId));
 				}

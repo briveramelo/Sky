@@ -128,20 +128,25 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 	}
 
 	#region TakeDamage
-	protected override void TakeDamage(ref SpearItems spearItems){
+	protected override int TakeDamage(ref SpearItems spearItems){
 		bool holding = spearItems.SpearVelocity.x==0;
 		Vector2 spawnSpot;
 		Vector2 gutVel;
+        int damageDealt;
 		if (holding){
 			gutVel = new Vector2 (-Mathf.Sign(transform.localScale.x) * Random.value, Random.value).normalized;
 			spawnSpot = tipTransform.position;
-		}
+            damageDealt = 0;
+        }
 		else{
 			gutVel = spearItems.SpearVelocity;
 			spawnSpot = birdCollider.bounds.ClosestPoint(spearItems.SpearCollider.transform.position);
-			birdStats.Health--;
+            damageDealt = spearItems.Damage;
 		}
+
+        birdStats.Health -= damageDealt;
 		(Instantiate (guts, spawnSpot, Quaternion.identity) as GameObject).GetComponent<IBleedable>().GenerateGuts(ref birdStats, gutVel);
+        return damageDealt;
 	}
 	#endregion
 

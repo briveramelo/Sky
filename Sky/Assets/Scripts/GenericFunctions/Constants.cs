@@ -36,13 +36,10 @@ namespace GenericFunctions{
 			trans.localScale = new Vector3 ((forward ? 1:-1) * Mathf.Abs(trans.localScale.x), trans.localScale.y, trans.localScale.z);
 		}
 			
-		static Vector2 screenDimensions = new Vector2 (Screen.width, Screen.height);
+		static Vector2 screenDimensions = new Vector2(1136, 640);  //new Vector2 (Screen.width, Screen.height);
 		public static Vector2 ScreenDimensions{get{return screenDimensions;}}
 		static Vector2 worldDimensions = ScreenDimensions /200f;
 		public static Vector2 WorldDimensions{get{return worldDimensions;}}
-
-		public static Vector2 correctionPixels = new Vector2 (Screen.width/2,(-3*Screen.height/2));
-		public static float correctionPixelFactor = WorldDimensions.y * 2 / Screen.height;
 
 		public const int basketLayer = 8;
 		public const int spearLayer = 9;

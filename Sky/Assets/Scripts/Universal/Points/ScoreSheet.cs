@@ -6,10 +6,11 @@ using System.Linq;
 
 #region Interfaces
 public interface ITallyable {
-	void TallyBirth(BirdStats birdStats);
-	void TallyDeath(BirdStats birdStats);
-	void TallyKill(BirdStats birdStats);
-	void TallyPoints(BirdStats birdStats);
+	void TallyBirth(ref BirdStats birdStats);
+	void TallyDeath(ref BirdStats birdStats);
+	void TallyKill(ref BirdStats birdStats);
+	void TallyPoints(ref BirdStats birdStats);
+    void TallyThreat(ref BirdStats birdStats, int threatChange);
 }
 public interface IResetable{
 	void ResetWaveCounters();
@@ -167,30 +168,30 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 		BirdType.Eagle,
 		BirdType.BirdOfParadise
 	};
-	void ITallyable.TallyBirth(BirdStats birdStats){
+	void ITallyable.TallyBirth(ref BirdStats birdStats){
 		((BirdCounter)(allCounters[CounterType.Spawned])).SetCount(birdStats.MyBirdType, increase);
 		((BirdCounter)(allCounters[CounterType.Alive])).SetCount(birdStats.MyBirdType, increase);
-
-		((PointCounter)(allCounters[CounterType.Threat])).SetCount(birdStats.MyBirdType, birdStats.TotalThreatValue);
-		Debug.Log(Reporter.GetCounts(CounterType.Threat, true, checkForDecay));
 	}
 
-	void ITallyable.TallyDeath(BirdStats birdStats){
+	void ITallyable.TallyDeath(ref BirdStats birdStats){
 		((BirdCounter)(allCounters[CounterType.Alive])).SetCount(birdStats.MyBirdType, decrease);
 	}
 
-	void ITallyable.TallyKill(BirdStats birdStats){
+	void ITallyable.TallyKill(ref BirdStats birdStats){
 		((BirdCounter)(allCounters[CounterType.Killed])).SetCount(birdStats.MyBirdType, increase);
 	}
 
-	void ITallyable.TallyPoints(BirdStats birdStats){
+	void ITallyable.TallyPoints(ref BirdStats birdStats){
 		((PointCounter)(allCounters[CounterType.Scored])).SetCount (birdStats.MyBirdType, birdStats.PointsToAdd);
-		((PointCounter)(allCounters[CounterType.Threat])).SetCount(birdStats.MyBirdType, -birdStats.ThreatToSubtract);
-		Debug.Log(Reporter.GetCounts(CounterType.Threat, true, checkForDecay));
-
 		(Instantiate(points, birdStats.BirdPosition, Quaternion.identity) as GameObject).GetComponent<IDisplayable>().DisplayPoints(birdStats.PointsToAdd);
 		((IDisplayable)scoreBoard).DisplayPoints(((PointCounter)(allCounters[CounterType.Scored])).GetCount(BirdType.All, false));
 	}
 
-	#endregion
+    void ITallyable.TallyThreat(ref BirdStats birdStats, int threatChange) {
+        if (checkForDecay.Contains(birdStats.MyBirdType)) {
+            ((PointCounter)(allCounters[CounterType.Threat])).SetCount(birdStats.MyBirdType, threatChange);
+        }
+    }
+
+    #endregion
 }

@@ -6,22 +6,24 @@ public class Seagull_Wave : Wave {
 
 	protected override IEnumerator RunWave(){
 
-		// 1 WAIT 3 SEAGULL
-		if (ScoreSheet.Reporter.GetCount(CounterType.Alive,false,BirdType.Tentacles)==0) SpawnTentacles();
-		yield return StartCoroutine(Produce1Wait3(SpawnSeagull));
+        // 1 WAIT 3 SEAGULL
+        if (ScoreSheet.Reporter.GetCount(CounterType.Alive, false, BirdType.Tentacles) == 0) {
+            BirdSpawnDelegates[BirdType.Tentacles]();
+        }
+		yield return StartCoroutine(Produce1Wait3(BirdSpawnDelegates[BirdType.Seagull]));
 
 		// 5 PIGEONS
 		// 2 SEAGULLS
-		BirdWaiter WaitFor1Pigeons = new BirdWaiter(CounterType.Spawned, false,1,SpawnSeagull,BirdType.Pigeon);
-		BirdWaiter WaitFor4Pigeons = new BirdWaiter(CounterType.Spawned, false,4,SpawnSeagull,BirdType.Pigeon);
+		BirdWaiter WaitFor1Pigeons = new BirdWaiter(CounterType.Spawned, false,1, BirdSpawnDelegates[BirdType.Seagull], BirdType.Pigeon);
+		BirdWaiter WaitFor4Pigeons = new BirdWaiter(CounterType.Spawned, false,4, BirdSpawnDelegates[BirdType.Seagull], BirdType.Pigeon);
 		StartCoroutine(WaitInParallel(WaitFor1Pigeons,WaitFor4Pigeons));
-		yield return StartCoroutine (MassProduce(SpawnPigeon,5));
+		yield return StartCoroutine (MassProduce(BirdSpawnDelegates[BirdType.Pigeon],5));
 		yield return StartCoroutine(WaitFor(allDeadExceptTentacles,true));
 
 		// 3 DUCKS
 		// 2 SEAGULLS
-		BirdWaiter WaitFor1Duck = new BirdWaiter(CounterType.Spawned, false,1,SpawnSeagull,BirdType.Duck);
-		BirdWaiter WaitFor3Ducks = new BirdWaiter(CounterType.Spawned, false,3,SpawnSeagull,BirdType.Duck);
+		BirdWaiter WaitFor1Duck = new BirdWaiter(CounterType.Spawned, false,1, BirdSpawnDelegates[BirdType.Seagull], BirdType.Duck);
+		BirdWaiter WaitFor3Ducks = new BirdWaiter(CounterType.Spawned, false,3, BirdSpawnDelegates[BirdType.Seagull], BirdType.Duck);
 		StartCoroutine(WaitInParallel(WaitFor1Duck,WaitFor3Ducks));
 		yield return StartCoroutine (ProduceDucks(3));
 		yield return StartCoroutine(WaitFor(allDeadExceptTentacles,true));
