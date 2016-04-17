@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GenericFunctions;
+
 public class GameCamera : MonoBehaviour {
 
 	public static GameCamera Instance;

@@ -36,6 +36,7 @@ public class Bat : Bird {
 	private int yRadiusIndex;
 
 	private bool clockwise;
+    bool orbiting;
 	#endregion
 
 	protected override void Awake () {
@@ -92,7 +93,9 @@ public class Bat : Bird {
 	// Set speed proportional to the curvature of the point on the ellipse
 	private IEnumerator Orbit(){
 		ShuffleOrbitalPhase();
-		ellipseAng = ConvertAnglesAndVectors.ConvertVector2FloatAngle(-rigbod.velocity);
+        orbiting = true;
+        ScoreSheet.Tallier.TallyThreat(Threat.BatSurrounding);
+        ellipseAng = ConvertAnglesAndVectors.ConvertVector2FloatAngle(-rigbod.velocity);
 		targetPositions[realTimeIndex] = FindEllipsePosition();
 
 		while (true) {
@@ -143,4 +146,12 @@ public class Bat : Bird {
 			orbitalRadii[yRadiusIndex] * Mathf.Sin(ellipseAng * Mathf.Deg2Rad));
 		return (Vector2)Constants.balloonCenter.position + ellipseTrace;
 	}
+
+    protected override void DieUniquely()
+    {
+        if (orbiting) {
+            ScoreSheet.Tallier.TallyThreat(Threat.BatLeft);
+        }
+        base.DieUniquely();
+    }
 }

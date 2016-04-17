@@ -27,32 +27,36 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
 	}
 
 	void IBegin.OnTouchBegin(int fingerID){
-		if (!beingHeld){
-			float distFromStick = Vector2.Distance(InputManager.touchSpot,Joyfulstick.startingJoystickSpot);
-			float distFromPause = Vector2.Distance(InputManager.touchSpot,Pauser.pauseSpot);
-			if (distFromStick>Joyfulstick.joystickMaxStartDist && distFromPause > Pauser.pauseRadius){
-				if (Input.touchCount<3){
-					startingTouchPoint = InputManager.touchSpot;
-					inputManager.SetJaiID(fingerID);
-				}
-			}
-		}
-		else{
-			if (!stabbing){
-				StartCoroutine(StabTheBeast());
-			}
-		}
+        if (!Pauser.Paused) {
+            if (!beingHeld){
+			    float distFromStick = Vector2.Distance(InputManager.touchSpot,Joyfulstick.startingJoystickSpot);
+			    float distFromPause = Vector2.Distance(InputManager.touchSpot,Pauser.pauseSpot);
+			    if (distFromStick>Joyfulstick.joystickMaxStartDist && distFromPause > Pauser.pauseRadius){
+				    if (Input.touchCount<3){
+					    startingTouchPoint = InputManager.touchSpot;
+					    inputManager.SetJaiID(fingerID);
+				    }
+			    }
+		    }
+		    else{
+			    if (!stabbing){
+				    StartCoroutine(StabTheBeast());
+			    }
+		    }
+        }
 	}
 	void IEnd.OnTouchEnd(){
-		Vector2 releaseTouchPoint = InputManager.touchSpot;
-		Vector2 attackDir = (releaseTouchPoint - startingTouchPoint).normalized;
-		float releaseDist = Vector2.Distance (releaseTouchPoint,startingTouchPoint);
-		if (!throwing){
-			if ( releaseDist > distToThrow ){ //throw the spear
-				StartCoroutine(ThrowSpear(attackDir));
-				StartCoroutine(PullOutNewSpear());
-			}
-		}
+        if (!Pauser.Paused) {
+            Vector2 releaseTouchPoint = InputManager.touchSpot;
+		    Vector2 attackDir = (releaseTouchPoint - startingTouchPoint).normalized;
+		    float releaseDist = Vector2.Distance (releaseTouchPoint,startingTouchPoint);
+		    if (!throwing){
+			    if ( releaseDist > distToThrow ){ //throw the spear
+				    StartCoroutine(ThrowSpear(attackDir));
+				    StartCoroutine(PullOutNewSpear());
+			    }
+		    }
+        }
 	}
 
 	IEnumerator ThrowSpear(Vector2 throwDir){

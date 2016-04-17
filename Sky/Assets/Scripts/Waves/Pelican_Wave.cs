@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using GenericFunctions;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 
 public class Pelican_Wave : Wave {
 

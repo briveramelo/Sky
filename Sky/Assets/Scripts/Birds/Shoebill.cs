@@ -34,7 +34,8 @@ public class Shoebill : Bird {
 	protected override void Awake(){
 		basket =FindObjectOfType<BasketEngine>().GetComponent<IBumpable>();
 		sinPeriodShift = Random.Range(0,5f);
-
+        movingRight = transform.position.x < Constants.jaiTransform.position.x;
+        rigbod.velocity = Vector2.right * movingSign * 0.01f;
 		birdStats = new BirdStats(BirdType.Shoebill);
 		base.Awake();
 	}
@@ -71,7 +72,7 @@ public class Shoebill : Bird {
 				StartCoroutine(Fall());
 				StartCoroutine (Bool.Toggle(boolState=>canHitBasket=boolState,3f));
 				GameCamera.Instance.ShakeTheCamera();
-				basket.Bump(1.5f * new Vector2 (rigbod.velocity.x,rigbod.velocity.y * 5f).normalized);
+                basket.Bump(1.5f * new Vector2 (rigbod.velocity.x,rigbod.velocity.y * 5f).normalized);
 			}
 		}
 	}

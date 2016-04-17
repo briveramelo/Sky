@@ -213,7 +213,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 427720, guid: 60554f9710c5649689e1ffa39739f096, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 11444058, guid: 60554f9710c5649689e1ffa39739f096, type: 2}
       propertyPath: Murder
@@ -598,12 +598,16 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: abbbe6cb39e794bbea430f29a1ae015e, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &1319704463 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 427720, guid: 60554f9710c5649689e1ffa39739f096, type: 2}
+  m_PrefabInternal: {fileID: 302812336}
 --- !u!1001 &1378091324
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1319704463}
     m_Modifications:
     - target: {fileID: 455918, guid: f8ea1bc05e9af42b2b9cb52fc1172c84, type: 2}
       propertyPath: m_LocalPosition.x

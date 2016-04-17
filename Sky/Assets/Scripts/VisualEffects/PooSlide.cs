@@ -17,8 +17,9 @@ public class PooSlide : MonoBehaviour {
 		StartCoroutine (AnimateSplat (Constants.TargetPooInt));
 		StartCoroutine (SlideDown ());
 		Destroy (transform.parent.gameObject,15f);
+        ScoreSheet.Tallier.TallyThreat(Threat.Poop);
 
-		Constants.TargetPooInt++;
+        Constants.TargetPooInt++;
 		Constants.poosOnJaisFace++;
 	}
 
@@ -41,5 +42,6 @@ public class PooSlide : MonoBehaviour {
 	void OnDestroy(){
 		StopAllCoroutines ();
 		Constants.poosOnJaisFace--;
-	}
+        ScoreSheet.Tallier.TallyThreat(Threat.PoopCleaned);
+    }
 }

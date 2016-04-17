@@ -17,7 +17,7 @@ public class Eagle : Bird {
 		
 	protected override void Awake () {
 		birdStats = new BirdStats(BirdType.Eagle);
-		friendSummoner = FindObjectOfType<Bat_Wave>().GetComponent<ITriggerSpawnable>();
+		friendSummoner = FindObjectOfType<EagleFriends>().GetComponent<ITriggerSpawnable>();
 		moveDir = new Vector2[]{
 			Constants.ScreenDimensions.normalized,
 			new Vector2(-Constants.ScreenDimensions.x,Constants.ScreenDimensions.y).normalized,

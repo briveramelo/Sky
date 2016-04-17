@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using GenericFunctions;
 
 public interface ILeaderToDuck {
@@ -96,7 +95,7 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 
 	#region ILeaderToDuck
 	void ILeaderToDuck.Scatter(){
-        ScoreSheet.Tallier.TallyThreat(ref birdStats, 2);
+        ScoreSheet.Tallier.TallyThreat(Threat.FreeDuck);
         Scatter();
 	}
     void Scatter() {

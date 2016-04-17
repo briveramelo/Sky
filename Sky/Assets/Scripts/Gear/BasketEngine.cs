@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using GenericFunctions;
 
 public interface IBumpable{
@@ -23,5 +22,11 @@ public class BasketEngine : MonoBehaviour, IBumpable, IHold {
 		StopAllCoroutines();
 		basketBody.velocity = bumpDir;
 		StartCoroutine (Bool.Toggle(boolState=>movingEnabled=boolState,.5f));
-	}
+        ScoreSheet.Tallier.TallyThreat(Threat.BasketBumped);
+        Invoke("StabilizeBumpThreat", 7f);
+    }
+
+    void StabilizeBumpThreat() {
+        ScoreSheet.Tallier.TallyThreat(Threat.BasketStabilized);
+    }
 }

@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using GenericFunctions;
+
 public class Shoebill_Wave : Wave {
 
 	//SHOEBILLS

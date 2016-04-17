@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GenericFunctions;
 
 public class Pigeuck_Wave : Wave {
 

@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using GenericFunctions;
-using System.Linq;
+﻿using System.Collections;
 
 public class Duck_Wave : Wave {
 

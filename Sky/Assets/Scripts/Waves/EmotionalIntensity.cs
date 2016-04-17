@@ -1,66 +1,110 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public enum Threat{
-	BalloonPop = 0,
-	Poop = 1,
-	BasketThud =2,
-	BasketGrab =3,
-	BalloonSurround =4,
-	BirdSpawn =5
+	BalloonPopped = 25,
+    BalloonGained = -25,
+	BatSurrounding =2,
+    BatLeft = -2,
+
+	BasketGrabbed = 15,
+    BasketReleased = -15,
+	BasketBumped =5,
+    BasketStabilized = -5,
+
+    Poop = 10,
+    PoopCleaned = -10,
+    FreeDuck = 2,
 }
 
-public class EmotionalIntensity : MonoBehaviour {
+public enum BirdThreat {
+    Spawn = 0,
+    Damage = 1,
+    Leave = 2
+}
 
-	void Awake(){
-		Decay();
-	}
-	static float intensity; public static float Intensity{get{return intensity;}}
+public interface IThreat {
+    void RaiseThreat(Threat MyThreat);
+    void BirdThreat(ref BirdStats birdStats, BirdThreat MyThreat);
+}
 
-	void Increase(Threat newThreat, int threatValue = 0){
-		switch (newThreat){
-		case Threat.BalloonPop:
-			intensity+= 25;
-			break;
-		case Threat.Poop:
-			intensity+=10;
-			break;
-		case Threat.BasketThud:
-			intensity+=5;
-			break;
-		case Threat.BasketGrab:
-			intensity+=15;
-			break;
-		case Threat.BalloonSurround:
-			intensity+=2;
-			break;
-		case Threat.BirdSpawn:
-			intensity+= threatValue;
-			break;
-		}
-	}
+public class EmotionalIntensity : MonoBehaviour, IThreat{
 
-	BirdType[] checkForDecay = new BirdType[]{
-		BirdType.Pigeon,
-		BirdType.Duck,
-		BirdType.DuckLeader,
-		BirdType.Albatross,
+    public static IThreat ThreatTracker;
+    int level;
+    #region ThreateningBirds
+    static BirdType[] threateningBirds = new BirdType[]{
+        BirdType.Pigeon,
+        BirdType.Duck,
+        BirdType.DuckLeader,
+        BirdType.Albatross,
 		//BirdType.BabyCrow,
 		BirdType.Crow,
 		//BirdType.Seagull,
 		BirdType.Tentacles,
-		BirdType.Pelican,
-		//BirdType.Shoebill,
+        BirdType.Pelican,
+		BirdType.Shoebill,
 		BirdType.Bat,
-		BirdType.Eagle,
-		BirdType.BirdOfParadise
-	};
+        BirdType.Eagle,
+        BirdType.BirdOfParadise
+    };
+    public static BirdType[] ThreateningBirds { get { return threateningBirds; } }
+    #endregion
+
+    void OnLevelWasLoaded(int level) {
+        intensity = 0;
+        timeIntensity = new AnimationCurve();
+        editorIntensity = timeIntensity;
+        this.level = level;
+    }
+
+    void Awake() {
+        ThreatTracker = (IThreat)this;
+        editorIntensity = timeIntensity;
+        Decay();
+    }
+    static float intensity;
+    public static float Intensity { get { return intensity; }
+        private set {
+            intensity = Mathf.Clamp(value, 0, 1000);
+        }
+    }
+
+
+    static AnimationCurve timeIntensity = new AnimationCurve();
+    public AnimationCurve editorIntensity;
+    public static AnimationCurve TimeIntensity { get { return timeIntensity; } }
+
+    void Update() {
+        if (level!= (int)Scenes.Menu) {
+            timeIntensity.AddKey(Time.time, Intensity);
+        }
+    }
+
+    void IThreat.BirdThreat(ref BirdStats birdStats, BirdThreat MyThreat) {
+        int threat=0;
+        switch (MyThreat) {
+            case BirdThreat.Spawn:
+                threat = birdStats.TotalThreatValue;
+                break;
+            case BirdThreat.Damage:
+                threat = -birdStats.ThreatRemoved;
+                break;
+            case BirdThreat.Leave:
+                threat = -birdStats.TotalThreatValue;
+                break;
+        }
+        Intensity += threat;
+    }
+
+    void IThreat.RaiseThreat(Threat MyThreat){
+        Intensity += (int)MyThreat;
+    }
 
 	float repeatTime;
 	void Decay(){
-		bool decay = intensity>0 && ScoreSheet.Reporter.GetCounts(CounterType.Threat, true, checkForDecay)<=2;
+		bool decay = Intensity > 0 && ScoreSheet.Reporter.GetCount(CounterType.Alive, true, BirdType.All)<5;
 		if (decay){
-			intensity -= 1;
+            Intensity -= 1;
 			repeatTime=1f;
 		}
 		else{

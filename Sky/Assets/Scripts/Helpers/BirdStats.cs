@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
 using GenericFunctions;
 
 public class BirdStats {
 
 	private BirdType myBirdType;		public BirdType MyBirdType{get{return myBirdType;}}
 	private int health;					public int Health{get{return health;} set{health = value;}}
+    public int DamageTaken;
 
     int killPointValueBase;
     public int KillPointValueBase{get{return killPointValueBase;}
@@ -33,11 +33,10 @@ public class BirdStats {
 	public int TotalThreatValue{
 		get{return ( Mathf.Clamp((health-1),0,100) * damagePointValueBase + killPointValueBase);}
 	}
-    public int LifeThreat{
-        get { return killPointValueBase; }
-    }
-    public int DamageThreat{
-        get { return damagePointValueBase; }
+    public int ThreatRemoved{
+        get {
+            return health > 0 ? DamageTaken * damagePointValueBase : ((DamageTaken-1) * damagePointValueBase + killPointValueBase);
+        }
     }
 
     public int TotalPointValue{
@@ -136,9 +135,9 @@ public class BirdStats {
 			killPointValue = 2;
 			break;
 		case BirdType.Eagle:
-			killGutValue = 80;
-			killPointValue = 50;
-			health = 5;
+			killGutValue = 160;
+			killPointValue = 100;
+			health = 30;
 			damageGutValue = 4;
 			damagePointValue = 5;
 			break;

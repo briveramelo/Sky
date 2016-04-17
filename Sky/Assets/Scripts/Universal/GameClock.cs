@@ -7,7 +7,12 @@ public class GameClock : MonoBehaviour {
 	public static GameClock Instance{get{return instance;}}
 
 	void Awake(){
-		instance = this;
+        if (instance == null) {
+            instance = this;
+        }
+        else {
+            Destroy(gameObject);
+        }
 	}
 
 	public void SlowTime(float slowDuration, float timeScale){

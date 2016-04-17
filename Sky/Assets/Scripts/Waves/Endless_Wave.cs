@@ -6,7 +6,6 @@ using System;
 using System.Linq;
 using GenericFunctions;
 
-
 public struct Range
 {
     public float min;
@@ -20,38 +19,47 @@ public struct Range
 
 public class Endless_Wave : Wave {
 
+    public enum Difficulty{
+        Easy = 1,
+        Medium = 3,
+        Hard = 5
+    }
     [SerializeField] Difficulty Toughness;
+
+    void OnLevelWasLoaded(int level) {
+        if (level != (int)Scenes.Endless) {
+            StopAllCoroutines();
+        }
+    }
 
     protected override IEnumerator RunWave()
     {
         StartCoroutine(UnlockBirdies(lockedStandardBirds, unlockedStandardBirds));
         StartCoroutine(UnlockBirdies(lockedBossBirds, unlockedBossBirds));
-        StartCoroutine(SpawnBirdies(() => {
-            if (unlockedStandardBirds.Count > 0)
-            {
-                BirdType[] birdTypes = new BirdType[(int)Toughness];
-                for (int i = 0; i < (int)Toughness; i++) {
-                    birdTypes[i] = unlockedStandardBirds[UnityEngine.Random.Range(0, unlockedStandardBirds.Count)];
-                }
-                return birdTypes;
-            }
-            else {
-                return new BirdType[] { BirdType.All };
-            }
-        },
-        new Range(0.5f, 3f)));
+        StartCoroutine(SpawnBirdies(SelectStandardBirds, new Range(0.5f, 3f)));
+        yield return StartCoroutine(SpawnBirdies(SelectBossBirds, new Range(30f, 45f)));
+    }
 
-        yield return StartCoroutine(SpawnBirdies(() => {
-            if (unlockedBossBirds.Count > 0)
-            {
-                return new BirdType[] { unlockedBossBirds[UnityEngine.Random.Range(0, unlockedBossBirds.Count)] };
+    BirdType[] SelectStandardBirds() {
+        if (unlockedStandardBirds.Count > 0){
+            BirdType[] birdTypes = new BirdType[(int)Toughness];
+            for (int i = 0; i < (int)Toughness; i++){
+                birdTypes[i] = unlockedStandardBirds[UnityEngine.Random.Range(0, unlockedStandardBirds.Count)];
             }
-            else
-            {
-                return new BirdType[] { BirdType.All };
-            }
-        }, 
-        new Range(30f, 45f)));
+            return birdTypes;
+        }
+        else{
+            return new BirdType[] { BirdType.All };
+        }
+    }
+
+    BirdType[] SelectBossBirds() {
+        if (unlockedBossBirds.Count > 0){
+            return new BirdType[] { unlockedBossBirds[UnityEngine.Random.Range(0, unlockedBossBirds.Count)] };
+        }
+        else{
+            return new BirdType[] { BirdType.All };
+        }
     }
 
     IEnumerator UnlockBirdies(OrderedDictionary lockedBirds, List<BirdType> unlockedBirds) {
@@ -63,29 +71,24 @@ public class Endless_Wave : Wave {
         }
     }
 
-    public enum Difficulty {
-        Easy = 1,
-        Medium = 3,
-        Hard = 5
-    }
-
     float emotionalCap = 50f;
     float emotionalSafePoint = 10f;
-    IEnumerator SpawnBirdies(Func<BirdType[]> birdSelection, Range timeRange) {
+    IEnumerator SpawnBirdies(Func<BirdType[]> SelectBirds, Range timeRange) {
         while (true) {
             while (EmotionalIntensity.Intensity < emotionalCap) {
                 yield return StartCoroutine(WaitUntilTimeRange(timeRange.min, timeRange.max));
-                BirdType[] birdsToSpawn = birdSelection();
+                BirdType[] birdsToSpawn = SelectBirds();
                 foreach (BirdType bird in birdsToSpawn) {
                     if (bird != BirdType.All) {
                         BirdSpawnDelegates[bird]();
                     }
                 }
             }
+            Debug.LogWarning("Waiting for less stress");
             while (EmotionalIntensity.Intensity > emotionalSafePoint) {
                 yield return null;
             }
-            yield return null;
+            yield return new WaitForSeconds(2f);
         }
     }
 

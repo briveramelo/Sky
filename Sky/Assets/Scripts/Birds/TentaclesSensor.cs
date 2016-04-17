@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using GenericFunctions;
 
 public interface IToggleable {
 	void ToggleSensor(bool active);

@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using GenericFunctions;
+
 public class Seagull_Wave : Wave {
 
 	protected override IEnumerator RunWave(){

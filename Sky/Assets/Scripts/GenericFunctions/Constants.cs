@@ -32,7 +32,7 @@ namespace GenericFunctions{
 			}
 		}
 
-		public static void FaceForward(this Transform trans, bool forward){
+        public static void FaceForward(this Transform trans, bool forward){
 			trans.localScale = new Vector3 ((forward ? 1:-1) * Mathf.Abs(trans.localScale.x), trans.localScale.y, trans.localScale.z);
 		}
 			

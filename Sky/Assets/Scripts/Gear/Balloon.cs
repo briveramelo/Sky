@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using GenericFunctions;
-using System;
 
 public interface IBasketToBalloon {
 	void DetachFromBasket();
@@ -78,13 +77,14 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 	}
 
 	void Pop(){
-		Handheld.Vibrate ();
-		GameClock.Instance.SlowTime(.5f,.75f);
-		GameCamera.Instance.ShakeTheCamera();
-		StopAllCoroutines(); //specifically, stop the balloon from floating up
-
-		if (gameObject.layer == Constants.balloonLayer) ((IBalloonToBasket)(Basket.Instance)).ReportPoppedBalloon(this);
-		transform.parent = null;
+        if (gameObject.layer == Constants.balloonLayer) {
+            ((IBalloonToBasket)(Basket.Instance)).ReportPoppedBalloon(this);
+		    Handheld.Vibrate ();
+		    GameClock.Instance.SlowTime(.5f,.75f);
+		    GameCamera.Instance.ShakeTheCamera();
+		    StopAllCoroutines(); //specifically, stop the balloon from floating up
+		    transform.parent = null;
+        }
 		balloonCollider.enabled = false;
 		boundsCollider.enabled = false;
 		balloonAnimator.SetInteger("AnimState",1);

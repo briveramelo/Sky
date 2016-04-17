@@ -15,21 +15,18 @@ public abstract class Bird : MonoBehaviour, IHurtable {
 
 	protected virtual void Awake(){
 		ScoreSheet.Tallier.TallyBirth(ref birdStats);
-        ScoreSheet.Tallier.TallyThreat(ref birdStats, birdStats.TotalThreatValue);
+        ScoreSheet.Tallier.TallyBirdThreat(ref birdStats, BirdThreat.Spawn);
     }
 
-	void IHurtable.GetHurt(ref SpearItems spearItems){
+	void IHurtable.GetHurt(ref SpearItems spearItems) {
         int threatEliminated = birdStats.TotalThreatValue;
-        int damageDealt = TakeDamage(ref spearItems);
-        if (birdStats.Health > 0) {
-            threatEliminated = damageDealt * birdStats.DamageThreat;
-        }
+        birdStats.DamageTaken = TakeDamage(ref spearItems);
         birdStats.BirdPosition = transform.position;
 		birdStats.ModifyForStreak(ScoreSheet.Streaker.GetHitStreak());
 		birdStats.ModifyForCombo(spearItems.BirdsHit);
 		birdStats.ModifyForMultiplier();
 		ScoreSheet.Tallier.TallyPoints (ref birdStats);
-        ScoreSheet.Tallier.TallyThreat(ref birdStats, -threatEliminated);
+        ScoreSheet.Tallier.TallyBirdThreat(ref birdStats, BirdThreat.Damage);
         if (birdStats.Health<=0){
 			GameClock.Instance.SlowTime(.1f,.5f);
 			ScoreSheet.Tallier.TallyKill (ref birdStats);
@@ -52,7 +49,7 @@ public abstract class Bird : MonoBehaviour, IHurtable {
 		if (ScoreSheet.Instance){
 			ScoreSheet.Tallier.TallyDeath (ref birdStats);
             if (birdStats.Health > 0) {
-                ScoreSheet.Tallier.TallyThreat(ref birdStats, -birdStats.TotalThreatValue);
+                ScoreSheet.Tallier.TallyBirdThreat(ref birdStats, BirdThreat.Leave);
             }
         }
 		StopAllCoroutines();

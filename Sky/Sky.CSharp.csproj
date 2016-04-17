@@ -90,6 +90,7 @@
     <Compile Include="Assets\Scripts\Birds\TentaclesTip.cs" />
     <Compile Include="Assets\Scripts\Gear\Balloon.cs" />
     <Compile Include="Assets\Scripts\Gear\Basket.cs" />
+    <Compile Include="Assets\Scripts\Gear\BasketEngine.cs" />
     <Compile Include="Assets\Scripts\Gear\Rope.cs" />
     <Compile Include="Assets\Scripts\Gear\Spear.cs" />
     <Compile Include="Assets\Scripts\GenericFunctions\Constants.cs" />
@@ -97,7 +98,7 @@
     <Compile Include="Assets\Scripts\Helpers\BirdStats.cs" />
     <Compile Include="Assets\Scripts\Helpers\BirdTypes.cs" />
     <Compile Include="Assets\Scripts\Helpers\BirdWaiter.cs" />
-    <Compile Include="Assets\Scripts\Jai\BasketEngine.cs" />
+    <Compile Include="Assets\Scripts\Helpers\Corrections.cs" />
     <Compile Include="Assets\Scripts\Jai\InputManager.cs" />
     <Compile Include="Assets\Scripts\Jai\Jai.cs" />
     <Compile Include="Assets\Scripts\Jai\Joyfulstick.cs" />
@@ -113,13 +114,16 @@
     <Compile Include="Assets\Scripts\PixelPerfect\Scripts\PixelPerfectSprite.cs" />
     <Compile Include="Assets\Scripts\Universal\GameCamera.cs" />
     <Compile Include="Assets\Scripts\Universal\GameClock.cs" />
+    <Compile Include="Assets\Scripts\Universal\GameManager.cs" />
     <Compile Include="Assets\Scripts\Universal\Incubator.cs" />
+    <Compile Include="Assets\Scripts\Universal\MenuInputHandler.cs" />
     <Compile Include="Assets\Scripts\Universal\Pauser.cs" />
     <Compile Include="Assets\Scripts\Universal\Points\BirdPoints.cs" />
     <Compile Include="Assets\Scripts\Universal\Points\IDisplayable.cs" />
     <Compile Include="Assets\Scripts\Universal\Points\PointDisplay.cs" />
     <Compile Include="Assets\Scripts\Universal\Points\ScoreBoard.cs" />
     <Compile Include="Assets\Scripts\Universal\Points\ScoreSheet.cs" />
+    <Compile Include="Assets\Scripts\Universal\WaveSelector.cs" />
     <Compile Include="Assets\Scripts\Universal\WorldWrapper.cs" />
     <Compile Include="Assets\Scripts\VisualEffects\Guts.cs" />
     <Compile Include="Assets\Scripts\VisualEffects\MaskCamera.cs" />
@@ -127,6 +131,7 @@
     <Compile Include="Assets\Scripts\VisualEffects\PooSlide.cs" />
     <Compile Include="Assets\Scripts\Waves\Bat_Wave.cs" />
     <Compile Include="Assets\Scripts\Waves\Duck_Wave.cs" />
+    <Compile Include="Assets\Scripts\Waves\EagleFriends.cs" />
     <Compile Include="Assets\Scripts\Waves\EmotionalIntensity.cs" />
     <Compile Include="Assets\Scripts\Waves\Endless_Wave.cs" />
     <Compile Include="Assets\Scripts\Waves\Pelican_Wave.cs" />

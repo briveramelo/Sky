@@ -87,8 +87,9 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 		inputManager.IsFrozen = true;
 		jai.IsFrozen = false;
 		Basket.TentacleToBasket.AttachToTentacles(transform);
+        ScoreSheet.Tallier.TallyThreat(Threat.BasketGrabbed);
 
-		GameClock.Instance.SlowTime (0.4f, 0.5f);
+        GameClock.Instance.SlowTime (0.4f, 0.5f);
 		GameCamera.Instance.ShakeTheCamera();
 		Constants.bottomOfTheWorldCollider.enabled = false;
 
@@ -109,17 +110,21 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 		stabsTaken++;
 		TakeDamage(ref fakeSpear);
 		if (stabsTaken>=stabs2Retreat){
-			holdingJai = false;
-			inputManager.IsFrozen = false;
-			jai.IsFrozen = false;
-			sensor.ToggleSensor(false);
-			StartCoroutine ( DisableTentacles());
-			StartCoroutine ( me.ResetPosition(true));
-			Basket.TentacleToBasket.DetachFromTentacles();
-			Basket.TentacleToBasket.KnockDown(5f);
-		}
+            ReleaseBasket();
+        }
 	}
-	#endregion
+    #endregion
+
+    void ReleaseBasket() {
+        holdingJai = false;
+        inputManager.IsFrozen = false;
+        jai.IsFrozen = false;
+        sensor.ToggleSensor(false);
+        StartCoroutine(DisableTentacles());
+        StartCoroutine(me.ResetPosition(true));
+        Basket.TentacleToBasket.DetachFromTentacles();
+        Basket.TentacleToBasket.KnockDown(5f);
+    }
 
 	IEnumerator DisableTentacles(){
 		tipCollider.enabled = false;
@@ -154,6 +159,9 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 		if (Constants.bottomOfTheWorldCollider!=null){
 			Constants.bottomOfTheWorldCollider.enabled = true;
 		}
+        if (holdingJai) {
+            ReleaseBasket();
+        }
 		Destroy(transform.parent.gameObject);
 	}
 }

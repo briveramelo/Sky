@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using GenericFunctions;
+
 public abstract class LinearBird : Bird{
 
 	protected float moveSpeed;

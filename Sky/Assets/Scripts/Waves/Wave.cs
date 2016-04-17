@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using GenericFunctions;
 using System;
-using System.Linq;
+
 public interface IWaveRunnable{
 	IEnumerator RunWave();
 }
 public delegate void SpawnDelegate();
+
 public abstract class Wave : MonoBehaviour, IWaveRunnable{
 
 	protected BirdWaiter allDead = new BirdWaiter(CounterType.Alive,false, 0, BirdType.All);
@@ -41,6 +42,12 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 
     protected Dictionary<BirdType, SpawnDelegate> BirdSpawnDelegates = new Dictionary<BirdType, SpawnDelegate>();
     #endregion
+
+    void OnLevelWasLoaded(int level) {
+        if (level == (int)Scenes.Menu) {
+            StopAllCoroutines();
+        }
+    }
 
     void Awake(){
 		heights = new float[]{lowHeight, medHeight, highHeight};
@@ -106,7 +113,9 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 			int chosenPoint = UnityEngine.Random.Range(0,duckSpawnList.Count);
 			SpawnBirds(BirdType.Duck,duckSpawnList[chosenPoint], DuckDirectionGenerator(duckSpawnList[chosenPoint]));
 			duckSpawnList.RemoveAt(chosenPoint);
-			if (duckSpawnList.Count==0) duckSpawnList = new List<Vector2>(duckSpawnPoints);
+            if (duckSpawnList.Count == 0) {
+                duckSpawnList = new List<Vector2>(duckSpawnPoints);
+            }
 		}
 	}
 

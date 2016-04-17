@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using GenericFunctions;
-using System.Collections.Generic;
-using System;
+﻿using System.Collections;
 
 public class Pigeon_Wave : Wave {
 

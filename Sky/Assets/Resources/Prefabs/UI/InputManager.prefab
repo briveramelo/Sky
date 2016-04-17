@@ -12,7 +12,6 @@ GameObject:
   - 212: {fileID: 21254780}
   - 114: {fileID: 11485274}
   - 82: {fileID: 8232966}
-  - 82: {fileID: 8273700}
   m_Layer: 0
   m_Name: PauseButton
   m_TagString: Untagged
@@ -196,80 +195,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!82 &8273700
-AudioSource:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100616}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d9ac686a9258c48b3ba27c2266e035f2, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
 --- !u!114 &11414328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -299,7 +224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d945be92d0de4467b9bd9d210c65089c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursor: {fileID: 0}
   basketEngine: {fileID: 0}
   jai: {fileID: 0}
   joyfulstick: {fileID: 11462574}
@@ -315,8 +239,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 194fd3945ccbc4ee08377e7ff3e8fa14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pause: {fileID: 8232966}
-  unPause: {fileID: 8273700}
+  pauseSounds: {fileID: 8232966}
+  pause: {fileID: 8300000, guid: 9a254ed0f883042ef93c6df9f2cbf93a, type: 3}
+  unPause: {fileID: 8300000, guid: d9ac686a9258c48b3ba27c2266e035f2, type: 3}
 --- !u!114 &11462574
 MonoBehaviour:
   m_ObjectHideFlags: 1

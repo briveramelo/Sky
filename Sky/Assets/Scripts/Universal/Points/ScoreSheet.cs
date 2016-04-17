@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,8 @@ public interface ITallyable {
 	void TallyDeath(ref BirdStats birdStats);
 	void TallyKill(ref BirdStats birdStats);
 	void TallyPoints(ref BirdStats birdStats);
-    void TallyThreat(ref BirdStats birdStats, int threatChange);
+    void TallyThreat(Threat MyThreat);
+    void TallyBirdThreat(ref BirdStats birdStats, BirdThreat MyThreat);
 }
 public interface IResetable{
 	void ResetWaveCounters();
@@ -30,7 +30,6 @@ public enum CounterType{
 	Alive=	1,
 	Scored =2,
 	Killed =3,
-	Threat =4
 }
 
 public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IStreakable {
@@ -110,7 +109,7 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 		public PointCounter(CounterType counterType) : base(counterType){}
 	}
 
-	static Dictionary<CounterType, Counter> allCounters = new Dictionary<CounterType, Counter>();
+    static Dictionary<CounterType, Counter> allCounters;
 	#endregion
 	const bool increase = true;
 	const bool decrease = false;
@@ -121,8 +120,9 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 		Reporter = (IReportable)this;
 		Streaker = (IStreakable)this;
 
+        allCounters = new Dictionary<CounterType, Counter>();
 		for (int i=0; i<Enum.GetNames(typeof(CounterType)).Length; i++){
-			if ((CounterType)i==CounterType.Scored || (CounterType)i==CounterType.Threat){
+			if ((CounterType)i==CounterType.Scored){
 				allCounters.Add((CounterType)i, new PointCounter((CounterType)i));
 			}
 			else{
@@ -153,21 +153,6 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 	#endregion
 
 	#region ITallyable
-	BirdType[] checkForDecay = new BirdType[]{
-		BirdType.Pigeon,
-		BirdType.Duck,
-		BirdType.DuckLeader,
-		BirdType.Albatross,
-		//BirdType.BabyCrow,
-		BirdType.Crow,
-		//BirdType.Seagull,
-		BirdType.Tentacles,
-		BirdType.Pelican,
-		//BirdType.Shoebill,
-		BirdType.Bat,
-		BirdType.Eagle,
-		BirdType.BirdOfParadise
-	};
 	void ITallyable.TallyBirth(ref BirdStats birdStats){
 		((BirdCounter)(allCounters[CounterType.Spawned])).SetCount(birdStats.MyBirdType, increase);
 		((BirdCounter)(allCounters[CounterType.Alive])).SetCount(birdStats.MyBirdType, increase);
@@ -187,9 +172,14 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 		((IDisplayable)scoreBoard).DisplayPoints(((PointCounter)(allCounters[CounterType.Scored])).GetCount(BirdType.All, false));
 	}
 
-    void ITallyable.TallyThreat(ref BirdStats birdStats, int threatChange) {
-        if (checkForDecay.Contains(birdStats.MyBirdType)) {
-            ((PointCounter)(allCounters[CounterType.Threat])).SetCount(birdStats.MyBirdType, threatChange);
+    void ITallyable.TallyThreat(Threat MyThreat) {
+        EmotionalIntensity.ThreatTracker.RaiseThreat(MyThreat);
+    }
+    void ITallyable.TallyBirdThreat(ref BirdStats birdStats, BirdThreat MyThreat)
+    {
+        if (EmotionalIntensity.ThreateningBirds.Contains(birdStats.MyBirdType))
+        {
+            EmotionalIntensity.ThreatTracker.BirdThreat(ref birdStats, MyThreat);
         }
     }
 

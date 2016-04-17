@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GenericFunctions;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public interface ITentacleToBasket {
 	void KnockDown(float downForce);
@@ -46,6 +47,7 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 	#region IBalloonToBasket
 	void IBalloonToBasket.ReportPoppedBalloon(IBasketToBalloon poppedBalloon){
 		balloons.Remove(poppedBalloon);
+        ScoreSheet.Tallier.TallyThreat(Threat.BalloonPopped);
 		GrantBalloonInvincibility();
 		if (balloons.Count<1){
 			StartCoroutine (EndItAll());
@@ -62,16 +64,9 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 	IEnumerator EndItAll(){
 		rigbod.gravityScale = 1;
 		basketCollider.enabled = false;
-		yield return new WaitForSeconds (2.5f);
-		foreach (Rigidbody2D rigger in FindObjectsOfType<Rigidbody2D>()){
-			rigger.isKinematic = true;
-		}
 		SaveLoadData.Instance.PromptSave ();
-//		while (SaveLoadData.Instance.prompting){
-//			yield return null;
-//		}
 		yield return new WaitForSeconds (1f);
-		UnityEditor.EditorApplication.isPlaying = false;
+		SceneManager.LoadScene((int)Scenes.Menu);
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
@@ -93,7 +88,8 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 		newBalloon.AttachToBasket(relativeBalloonPositions[newBalloonNumber]);
 		newBalloon.BalloonNumber = newBalloonNumber;
 		balloons.Add(newBalloon);
-	}
+        ScoreSheet.Tallier.TallyThreat(Threat.BalloonGained);
+    }
 
 	#region ITentacleToBasket
 	void ITentacleToBasket.KnockDown(float downForce){
@@ -113,8 +109,8 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 		rigbod.velocity = Vector2.zero;
 		rigbod.isKinematic = true;
 		basketCollider.enabled = false;
-
-		transform.parent = tentaclesTransform;
+        ScoreSheet.Tallier.TallyThreat(Threat.BasketGrabbed);
+        transform.parent = tentaclesTransform;
 	}
 
 	void ITentacleToBasket.DetachFromTentacles(){
@@ -122,6 +118,7 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 		transform.localScale = Vector3.one;
 		basketCollider.enabled = true;
 		rigbod.isKinematic = false;
-	}
+        ScoreSheet.Tallier.TallyThreat(Threat.BasketReleased);
+    }
 	#endregion
 }
