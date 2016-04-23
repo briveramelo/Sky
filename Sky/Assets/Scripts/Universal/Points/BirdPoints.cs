@@ -2,7 +2,7 @@
 
 public class BirdPoints : PointDisplay {
 
-	[Range(0,1)] public float moveSpeed;
+	const float moveSpeed = 0.017f;
 	protected override void DisplayPoints(int points){
 		myText.text = "+" + points.ToString();
 	}

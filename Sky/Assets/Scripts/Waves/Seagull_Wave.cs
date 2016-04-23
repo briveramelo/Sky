@@ -3,7 +3,7 @@ using GenericFunctions;
 
 public class Seagull_Wave : Wave {
 
-	protected override IEnumerator RunWave(){
+	protected override IEnumerator GenerateBirds(){
 
         // 1 WAIT 3 SEAGULL
         if (ScoreSheet.Reporter.GetCount(CounterType.Alive, false, BirdType.Tentacles) == 0) {
@@ -33,7 +33,5 @@ public class Seagull_Wave : Wave {
 		SpawnBirds(BirdType.DuckLeader,SpawnPoint(leaderSide, 0));
 		SpawnBirds(BirdType.Seagull,SpawnPoint(!leaderSide, 0.25f,.75f));
 		yield return StartCoroutine(WaitFor(allDeadExceptTentacles,true));
-
-		yield return StartCoroutine (base.RunWave());
 	}
 }

@@ -112,19 +112,20 @@
     <Compile Include="Assets\Scripts\PixelPerfect\Scripts\Internal\PixelPerfectObject.cs" />
     <Compile Include="Assets\Scripts\PixelPerfect\Scripts\PixelPerfectCamera.cs" />
     <Compile Include="Assets\Scripts\PixelPerfect\Scripts\PixelPerfectSprite.cs" />
-    <Compile Include="Assets\Scripts\Universal\GameCamera.cs" />
-    <Compile Include="Assets\Scripts\Universal\GameClock.cs" />
-    <Compile Include="Assets\Scripts\Universal\GameManager.cs" />
-    <Compile Include="Assets\Scripts\Universal\Incubator.cs" />
-    <Compile Include="Assets\Scripts\Universal\MenuInputHandler.cs" />
-    <Compile Include="Assets\Scripts\Universal\Pauser.cs" />
+    <Compile Include="Assets\Scripts\Universal\Game\GameCamera.cs" />
+    <Compile Include="Assets\Scripts\Universal\Game\GameClock.cs" />
+    <Compile Include="Assets\Scripts\Universal\Game\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Universal\Game\Incubator.cs" />
+    <Compile Include="Assets\Scripts\Universal\Game\Pauser.cs" />
+    <Compile Include="Assets\Scripts\Universal\Game\WorldWrapper.cs" />
+    <Compile Include="Assets\Scripts\Universal\Menu\MenuInputHandler.cs" />
+    <Compile Include="Assets\Scripts\Universal\Menu\WaveSelector.cs" />
     <Compile Include="Assets\Scripts\Universal\Points\BirdPoints.cs" />
-    <Compile Include="Assets\Scripts\Universal\Points\IDisplayable.cs" />
     <Compile Include="Assets\Scripts\Universal\Points\PointDisplay.cs" />
+    <Compile Include="Assets\Scripts\Universal\Points\RenderCameraFinder.cs" />
     <Compile Include="Assets\Scripts\Universal\Points\ScoreBoard.cs" />
     <Compile Include="Assets\Scripts\Universal\Points\ScoreSheet.cs" />
-    <Compile Include="Assets\Scripts\Universal\WaveSelector.cs" />
-    <Compile Include="Assets\Scripts\Universal\WorldWrapper.cs" />
+    <Compile Include="Assets\Scripts\VisualEffects\AnimationHelper.cs" />
     <Compile Include="Assets\Scripts\VisualEffects\Guts.cs" />
     <Compile Include="Assets\Scripts\VisualEffects\MaskCamera.cs" />
     <Compile Include="Assets\Scripts\VisualEffects\PooNugget.cs" />
@@ -139,8 +140,10 @@
     <Compile Include="Assets\Scripts\Waves\Pigeuck_Wave.cs" />
     <Compile Include="Assets\Scripts\Waves\Seagull_Wave.cs" />
     <Compile Include="Assets\Scripts\Waves\Shoebill_Wave.cs" />
+    <Compile Include="Assets\Scripts\Waves\Tips.cs" />
     <Compile Include="Assets\Scripts\Waves\Wave.cs" />
     <Compile Include="Assets\Scripts\Waves\WaveManager.cs" />
+    <Compile Include="Assets\Scripts\Waves\WaveUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Shaders\MaskConstruction.shader" />

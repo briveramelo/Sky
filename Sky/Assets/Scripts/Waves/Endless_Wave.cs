@@ -32,7 +32,7 @@ public class Endless_Wave : Wave {
         }
     }
 
-    protected override IEnumerator RunWave()
+    protected override IEnumerator GenerateBirds()
     {
         StartCoroutine(UnlockBirdies(lockedStandardBirds, unlockedStandardBirds));
         StartCoroutine(UnlockBirdies(lockedBossBirds, unlockedBossBirds));

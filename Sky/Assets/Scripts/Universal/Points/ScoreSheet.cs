@@ -18,6 +18,7 @@ public interface IResetable{
 public interface IReportable{
 	int GetCount(CounterType counter, bool currentWave, BirdType birdType);
 	int GetCounts(CounterType counter, bool currentWave, params BirdType[] birdTypes);
+    int GetScore(ScoreType scoreType, bool currentWave, BirdType birdType);
 }
 public interface IStreakable{
 	void ReportHit(int spearNumber);
@@ -30,6 +31,12 @@ public enum CounterType{
 	Alive=	1,
 	Scored =2,
 	Killed =3,
+}
+
+public enum ScoreType {
+    Total=0,
+    Streak=1,
+    Combo=2
 }
 
 public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IStreakable {
@@ -71,8 +78,8 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 	public static IReportable Reporter;
 	public static IStreakable Streaker;
 
-	[SerializeField] private GameObject points; 
-	[SerializeField] private ScoreBoard scoreBoard;
+	[SerializeField] GameObject points; 
+	[SerializeField] ScoreBoard scoreBoard;
 
 	#region BirdCounters
 	class Counter{
@@ -110,11 +117,14 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 	}
 
     static Dictionary<CounterType, Counter> allCounters;
+    static Dictionary<ScoreType, PointCounter> scoreCounters;
 	#endregion
 	const bool increase = true;
 	const bool decrease = false;
 	void Awake(){
-		Instance = this;
+        Instance = this;
+        scoreBoard = FindObjectOfType<ScoreBoard>();
+
 		Tallier = (ITallyable)this;
 		Resetter = (IResetable)this;
 		Reporter = (IReportable)this;
@@ -123,12 +133,16 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
         allCounters = new Dictionary<CounterType, Counter>();
 		for (int i=0; i<Enum.GetNames(typeof(CounterType)).Length; i++){
 			if ((CounterType)i==CounterType.Scored){
-				allCounters.Add((CounterType)i, new PointCounter((CounterType)i));
+				allCounters.Add((CounterType)i, new PointCounter(CounterType.Scored));
 			}
 			else{
 				allCounters.Add((CounterType)i, new BirdCounter((CounterType)i));
 			}
 		}
+        scoreCounters = new Dictionary<ScoreType, PointCounter>();
+        for (int i=0; i<Enum.GetNames(typeof(ScoreType)).Length; i++) {
+            scoreCounters.Add((ScoreType)i, new PointCounter(CounterType.Scored));
+        }
 	}
 
 	#region IResetable
@@ -150,6 +164,9 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 		} 
 		return total;
 	}
+    int IReportable.GetScore(ScoreType scoreType, bool currentWave, BirdType birdType){
+		return scoreCounters[scoreType].GetCount(birdType, currentWave);
+    }
 	#endregion
 
 	#region ITallyable
@@ -168,6 +185,10 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 
 	void ITallyable.TallyPoints(ref BirdStats birdStats){
 		((PointCounter)(allCounters[CounterType.Scored])).SetCount (birdStats.MyBirdType, birdStats.PointsToAdd);
+        scoreCounters[ScoreType.Total].SetCount(birdStats.MyBirdType, birdStats.PointsToAdd);
+        scoreCounters[ScoreType.Streak].SetCount(birdStats.MyBirdType, birdStats.StreakPoints);
+        scoreCounters[ScoreType.Combo].SetCount(birdStats.MyBirdType, birdStats.ComboPoints);
+
 		(Instantiate(points, birdStats.BirdPosition, Quaternion.identity) as GameObject).GetComponent<IDisplayable>().DisplayPoints(birdStats.PointsToAdd);
 		((IDisplayable)scoreBoard).DisplayPoints(((PointCounter)(allCounters[CounterType.Scored])).GetCount(BirdType.All, false));
 	}

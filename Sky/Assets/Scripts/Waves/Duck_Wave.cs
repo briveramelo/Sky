@@ -2,7 +2,7 @@
 
 public class Duck_Wave : Wave {
 
-	protected override IEnumerator RunWave(){
+	protected override IEnumerator GenerateBirds(){
 		float[] heights = new float[]{-1,1};
 		DuckDirection[] directions = new DuckDirection[]{DuckDirection.UpLeft, DuckDirection.DownLeft};
 
@@ -13,8 +13,6 @@ public class Duck_Wave : Wave {
 		}
 		yield return MirrorDucks(heights, directions);
 		yield return MirrorDucks(new float[]{0,0}, directions);
-
-		yield return StartCoroutine (base.RunWave());
 	}
 
 	IEnumerator MirrorDucks(float[] heights, DuckDirection[] directions){

@@ -2,7 +2,7 @@
 
 public class Pelican_Wave : Wave {
 
-	protected override IEnumerator RunWave(){
+	protected override IEnumerator GenerateBirds(){
         // 1 Wait 3 PELICAN
         if (ScoreSheet.Reporter.GetCount(CounterType.Alive, false, BirdType.Tentacles) == 0) {
             BirdSpawnDelegates[BirdType.Tentacles]();
@@ -44,7 +44,5 @@ public class Pelican_Wave : Wave {
 		StartCoroutine (ProduceDucks(1));
 		SpawnSeagullandPelican();
 		yield return StartCoroutine(WaitFor(allDeadExceptTentacles,true));
-
-		yield return StartCoroutine (base.RunWave());
 	}
 }

@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour, IWaveSet {
     void OnLevelWasLoaded(int level) {
         if (previousLevel != null) {
             if (level == (int)Scenes.Endless || level == (int)Scenes.Story) {
-                Debug.Log(waveInterface);
                 waveInterface.RunWaves(MyWaveType);
             }
         }

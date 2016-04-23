@@ -7,10 +7,13 @@ using System;
 public interface IWaveRunnable{
 	IEnumerator RunWave();
 }
+
 public delegate void SpawnDelegate();
 
 public abstract class Wave : MonoBehaviour, IWaveRunnable{
 
+    [SerializeField] WaveName MyWaveName;
+    
 	protected BirdWaiter allDead = new BirdWaiter(CounterType.Alive,false, 0, BirdType.All);
 	protected BirdWaiter allDeadExceptTentacles = new BirdWaiter(CounterType.Alive,true, 0, BirdType.Tentacles);
 
@@ -21,6 +24,7 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 	protected static float[] heights;
 	protected Vector2[] duckSpawnPoints;
 
+    const float wavePauseTime = 10f;
 	protected const bool right = true;
 	protected const bool left = false;
 	#region SpawnDelegates
@@ -48,7 +52,7 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
             StopAllCoroutines();
         }
     }
-
+    IWaveUI waveUI;
     void Awake(){
 		heights = new float[]{lowHeight, medHeight, highHeight};
 		duckSpawnPoints = new Vector2[6];
@@ -59,16 +63,27 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
         for (int i = 0; i < Enum.GetNames(typeof(BirdType)).Length - 1; i++) {
             BirdSpawnDelegates.Add((BirdType)i, SpawnAtRandom((BirdType)i));
         }
+        waveUI = FindObjectOfType<WaveUI>().GetComponent<IWaveUI>();
     }
 
 	IEnumerator IWaveRunnable.RunWave(){
-		yield return StartCoroutine (RunWave());
+        yield return StartCoroutine (StartWave());
+		yield return StartCoroutine (GenerateBirds());
+		yield return StartCoroutine (FinishWave());
 	}
 
-	protected virtual IEnumerator RunWave(){
-		//override with specific wave content here
-		yield return StartCoroutine (FinishTheWave());
-	} 
+    IEnumerator StartWave() {
+        yield return StartCoroutine(waveUI.AnimateWaveStart(MyWaveName));
+    }
+    protected virtual IEnumerator GenerateBirds() { yield return null; }
+    IEnumerator FinishWave(){
+		yield return new WaitForSeconds(2f);
+		SpawnBirds (BirdType.BirdOfParadise, SpawnPoint(right,lowHeight));
+		yield return StartCoroutine(WaitFor(allDeadExceptTentacles,true));
+        yield return StartCoroutine(waveUI.AnimateWaveEnd(MyWaveName));
+		waveNumber++;
+		ScoreSheet.Resetter.ResetWaveCounters();
+	}
 
 	/// <summary> Spawn Birds
 	/// </summary>
@@ -106,9 +121,9 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 		}
 	}
 
-	protected IEnumerator ProduceDucks(int number){
+	protected IEnumerator ProduceDucks(int numDucks){
 		List<Vector2> duckSpawnList = new List<Vector2>(duckSpawnPoints);
-		for (int i=0; i<number; i++){
+		for (int i=0; i<numDucks; i++){
 			yield return new WaitForSeconds(1f);
 			int chosenPoint = UnityEngine.Random.Range(0,duckSpawnList.Count);
 			SpawnBirds(BirdType.Duck,duckSpawnList[chosenPoint], DuckDirectionGenerator(duckSpawnList[chosenPoint]));
@@ -159,7 +174,9 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 			yield return null;
 		}
 		FinishWaiting(birdWaiter);
-		if (waitExtra) yield return StartCoroutine (WaitUntilTimeRange());
+		if (waitExtra) {
+            yield return StartCoroutine (WaitUntilTimeRange());
+        }
 	}
 
 	/// <summary> Wait between minTime and maxTime seconds
@@ -190,13 +207,5 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 				birdWaiter.Spawn();
 			}
 		}
-	}
-
-	protected IEnumerator FinishTheWave(){
-		yield return new WaitForSeconds(2f);
-		SpawnBirds (BirdType.BirdOfParadise, SpawnPoint(right,lowHeight));
-		yield return StartCoroutine(WaitFor(allDeadExceptTentacles,true));
-		waveNumber++;
-		ScoreSheet.Resetter.ResetWaveCounters();
 	}
 }

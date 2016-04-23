@@ -13,6 +13,9 @@ public class BirdStats {
             killPointValueBase = killPointValue = value;
         }
     }
+    int streakPoints; public int StreakPoints { get { return streakPoints * basePointMultiplier; } }
+    int comboPoints; public int ComboPoints { get { return comboPoints * basePointMultiplier; } }
+
 	readonly int damagePointValueBase;	public int DamagePointValueBase{get{return damagePointValueBase;}}
 	private int killPointValue;			public int KillPointValue{get{return killPointValue;}}
 	private int damagePointValue;		public int DamagePointValue{get{return damagePointValue;}}
@@ -50,12 +53,15 @@ public class BirdStats {
 	}
 
 	public void ModifyForStreak(int birdStreak){
-		killPointValue = killPointValueBase + birdStreak-1;
-		damagePointValue = damagePointValueBase + birdStreak-1;
+        streakPoints = birdStreak-1;
+        killPointValue = killPointValueBase + streakPoints;
+		damagePointValue = damagePointValueBase + streakPoints;
 	}
 	public void ModifyForCombo(int birdsHit){
-		killPointValue *=birdsHit;
+        comboPoints = health<=0 ? killPointValue : damagePointValue;
+        killPointValue *=birdsHit;
 		damagePointValue *=birdsHit;
+        comboPoints = (health<=0 ? killPointValue : damagePointValue) - comboPoints;
 	}
 	public void ModifyForMultiplier(){
 		int totalFromMultiplier = 0;

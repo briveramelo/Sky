@@ -18,7 +18,6 @@ public class WaveManager : MonoBehaviour, IRunWaves {
 	private IWaveRunnable[] storyWaveCalls;
     [SerializeField] private Wave endlessWave;
 	private IWaveRunnable endlessWaveCall;
-	const float wavePauseTime = 10f;
 
     void OnLevelWasLoaded(int level) {
         if (level == (int)Scenes.Menu) {
@@ -40,7 +39,6 @@ public class WaveManager : MonoBehaviour, IRunWaves {
         if (MyWaveType == WaveType.Story) {
 		    foreach (IWaveRunnable wave in storyWaveCalls){
 			    yield return StartCoroutine (wave.RunWave());
-			    yield return new WaitForSeconds(wavePauseTime);
 		    }
         }
         else {

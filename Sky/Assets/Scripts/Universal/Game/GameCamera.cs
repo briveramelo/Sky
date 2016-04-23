@@ -7,7 +7,12 @@ public class GameCamera : MonoBehaviour {
 	private bool shaking;
 
 	void Awake(){
-		Instance = this;
+		if (Instance == null) {
+            Instance = this;
+        }
+        else {
+            Destroy(gameObject);
+        }
 	}
 
 	public void ShakeTheCamera(){

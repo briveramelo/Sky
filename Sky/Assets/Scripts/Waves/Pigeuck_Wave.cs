@@ -4,7 +4,7 @@ using System.Collections;
 public class Pigeuck_Wave : Wave {
 
 	//PIGEONS AND DUCKS
-	protected override IEnumerator RunWave(){		
+	protected override IEnumerator GenerateBirds(){		
 		//DUCK LEADER
 		SpawnBirds (BirdType.DuckLeader, SpawnPoint(right,0));
 		yield return StartCoroutine (WaitFor (allDead, true));
@@ -30,9 +30,8 @@ public class Pigeuck_Wave : Wave {
 		//PIGEONS MIMICKING FLYING DUCKS
 		yield return StartCoroutine(FlyPigeonsAsDuckLeader());
 		yield return StartCoroutine (WaitFor (allDead, true));
-
-		yield return StartCoroutine (base.RunWave());
 	}
+
 	delegate void PigeuckDelegate(int i);
 	PigeuckDelegate AtHeight(float[] pigeonHeights, float[] duckHeights, DuckDirection[] directions){
 		return (int i)=>{
