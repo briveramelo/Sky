@@ -19,6 +19,7 @@ public interface IReportable{
 	int GetCount(CounterType counter, bool currentWave, BirdType birdType);
 	int GetCounts(CounterType counter, bool currentWave, params BirdType[] birdTypes);
     int GetScore(ScoreType scoreType, bool currentWave, BirdType birdType);
+    void ReportScores();
 }
 public interface IStreakable{
 	void ReportHit(int spearNumber);
@@ -121,6 +122,7 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 	#endregion
 	const bool increase = true;
 	const bool decrease = false;
+    decimal startTime;
 	void Awake(){
         Instance = this;
         scoreBoard = FindObjectOfType<ScoreBoard>();
@@ -143,6 +145,7 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
         for (int i=0; i<Enum.GetNames(typeof(ScoreType)).Length; i++) {
             scoreCounters.Add((ScoreType)i, new PointCounter(CounterType.Scored));
         }
+        startTime = (decimal)Time.time;
 	}
 
 	#region IResetable
@@ -166,6 +169,17 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 	}
     int IReportable.GetScore(ScoreType scoreType, bool currentWave, BirdType birdType){
 		return scoreCounters[scoreType].GetCount(birdType, currentWave);
+    }
+    void IReportable.ReportScores() {
+        if (WaveManager.CurrentWave == WaveName.Endless) {
+            decimal duration = (decimal)Time.time - startTime;
+            EndlessScore MyEndlessScore = new EndlessScore(scoreCounters[ScoreType.Total].GetCount(BirdType.All, false), duration);
+            FindObjectOfType<SaveLoadData>().PromptSave(MyEndlessScore);
+        }
+        else {
+            StoryScore MyStoryScore = new StoryScore(scoreCounters[ScoreType.Total].GetCount(BirdType.All,false), WaveManager.CurrentWave);
+            FindObjectOfType<SaveLoadData>().PromptSave(MyStoryScore);
+        }
     }
 	#endregion
 
@@ -203,6 +217,5 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
             EmotionalIntensity.ThreatTracker.BirdThreat(ref birdStats, MyThreat);
         }
     }
-
     #endregion
 }

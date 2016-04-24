@@ -6,7 +6,7 @@ public class MenuInputHandler : MonoBehaviour, IFreezable {
 
     public static Vector2 touchSpot;
 
-    [SerializeField] WaveSelector[] Enders;
+    [SerializeField] Selector[] selectors;
     List<IEnd> enders;
 
     Vector2 correctionPixels;
@@ -23,7 +23,7 @@ public class MenuInputHandler : MonoBehaviour, IFreezable {
     }
 
     void Awake() {
-        enders = new List<IEnd>((IEnd[])Enders);
+        enders = new List<IEnd>(selectors);
         Corrections pixelFix = new Corrections(false);
         correctionPixels = pixelFix.correctionPixels;
         correctionPixelFactor = pixelFix.correctionPixelFactor;

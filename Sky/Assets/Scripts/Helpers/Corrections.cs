@@ -9,7 +9,7 @@ public struct Corrections
     public Corrections(bool whatever)
     {
         bool isMacEditor = Application.platform == RuntimePlatform.OSXEditor;
-        bool isWindowsEditor = Application.platform == RuntimePlatform.WindowsEditor;
+        //bool isWindowsEditor = Application.platform == RuntimePlatform.WindowsEditor;
         if (isMacEditor)
         {
             correctionPixels = new Vector2(Constants.ScreenDimensions.x / 2, (-3 * Constants.ScreenDimensions.y / 2));

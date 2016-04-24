@@ -1,9 +1,15 @@
 ﻿using UnityEngine;
 
-public class GameManager : MonoBehaviour, IWaveSet {
+public interface IScoreMenu {
+    void SetScoreMenu(GameMode ScoreMenu);
+}
+
+public class GameManager : MonoBehaviour, IWaveSet, IScoreMenu {
 
     public static GameManager Instance;
     WaveType MyWaveType;
+    static GameMode scoreMenu; public static GameMode ScoreMenu {get { return scoreMenu; } }
+
     [SerializeField] WaveManager waveManager;
     IRunWaves waveInterface;
     int? previousLevel;
@@ -22,6 +28,10 @@ public class GameManager : MonoBehaviour, IWaveSet {
 
     void IWaveSet.SetWaveType(WaveType MyWaveType) {
         this.MyWaveType = MyWaveType;
+    }
+
+    void IScoreMenu.SetScoreMenu(GameMode ScoreMenu) {
+        scoreMenu = ScoreMenu;
     }
 
     void OnLevelWasLoaded(int level) {

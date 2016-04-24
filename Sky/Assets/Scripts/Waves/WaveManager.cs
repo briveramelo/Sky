@@ -18,6 +18,7 @@ public class WaveManager : MonoBehaviour, IRunWaves {
 	private IWaveRunnable[] storyWaveCalls;
     [SerializeField] private Wave endlessWave;
 	private IWaveRunnable endlessWaveCall;
+    static WaveName currentWave; public static WaveName CurrentWave {get { return currentWave; } }
 
     void OnLevelWasLoaded(int level) {
         if (level == (int)Scenes.Menu) {
@@ -38,11 +39,13 @@ public class WaveManager : MonoBehaviour, IRunWaves {
 		yield return null;
         if (MyWaveType == WaveType.Story) {
 		    foreach (IWaveRunnable wave in storyWaveCalls){
-			    yield return StartCoroutine (wave.RunWave());
+                currentWave = wave.MyWave;
+                yield return StartCoroutine (wave.RunWave());
 		    }
         }
         else {
             StartCoroutine(endlessWaveCall.RunWave());
+            currentWave = WaveName.Endless;
         }
 	}
 

@@ -2,56 +2,30 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public interface ILiftable {
-    void LiftButton();
-}
 public enum Scenes {
     Menu = 0,
     Story =1,
-    Endless =2
+    Endless =2,
+    Scores =3,
 }
 
-public class WaveSelector : MonoBehaviour, IEnd {
+public class WaveSelector : Selector {
 
     [SerializeField] WaveType MyWaveType;
-    [SerializeField] Animator buttonAnimator;
-    [SerializeField] TextMesh myText;
-    [SerializeField] AudioSource buttonNoise;
-    [SerializeField] AudioClip buttonPress;
-    [SerializeField] AudioClip buttonLift;
-
-    float buttonRadius = 1f;
     IWaveSet waveManager;
-    IFreezable inputManager;
-
-    enum ButtonState {
-        Up =0,
-        Pressed =1
-    }
-
-    void Awake() {
+    
+    protected override void Awake() {
         waveManager = FindObjectOfType<GameManager>().GetComponent<IWaveSet>();
-        inputManager = FindObjectOfType<MenuInputHandler>().GetComponent<IFreezable>();
+        buttonRadius = 1.25f;
+        base.Awake();
     }
 
-    void IEnd.OnTouchEnd(){
-        if (Vector2.Distance(MenuInputHandler.touchSpot, transform.position) < buttonRadius){
-            if (buttonAnimator.GetInteger("AnimState") == (int)ButtonState.Up){
-                StartCoroutine (PressButton());
-            }
-        }
-    }
-
-    IEnumerator PressButton() {
+    protected override IEnumerator PressButton() {
         buttonAnimator.SetInteger("AnimState", (int)ButtonState.Pressed);
         buttonNoise.PlayOneShot(buttonPress);
         waveManager.SetWaveType(MyWaveType);
         inputManager.IsFrozen = true;
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene((int)MyWaveType);
-    }
-
-    void AnimatePush() {
-        myText.color = Color.red;
     }
 }

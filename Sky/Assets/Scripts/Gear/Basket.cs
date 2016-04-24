@@ -64,7 +64,7 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 	IEnumerator EndItAll(){
 		rigbod.gravityScale = 1;
 		basketCollider.enabled = false;
-		SaveLoadData.Instance.PromptSave ();
+		ScoreSheet.Reporter.ReportScores ();
 		yield return new WaitForSeconds (1f);
 		SceneManager.LoadScene((int)Scenes.Menu);
 	}

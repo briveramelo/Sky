@@ -6,6 +6,7 @@ using System;
 
 public interface IWaveRunnable{
 	IEnumerator RunWave();
+    WaveName MyWave { get; }
 }
 
 public delegate void SpawnDelegate();
@@ -13,6 +14,7 @@ public delegate void SpawnDelegate();
 public abstract class Wave : MonoBehaviour, IWaveRunnable{
 
     [SerializeField] WaveName MyWaveName;
+    WaveName IWaveRunnable.MyWave {get { return MyWaveName; } }
     
 	protected BirdWaiter allDead = new BirdWaiter(CounterType.Alive,false, 0, BirdType.All);
 	protected BirdWaiter allDeadExceptTentacles = new BirdWaiter(CounterType.Alive,true, 0, BirdType.Tentacles);

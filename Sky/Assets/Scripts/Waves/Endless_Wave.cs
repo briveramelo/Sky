@@ -94,28 +94,22 @@ public class Endless_Wave : Wave {
 
 	#region BirdType Collections
 	OrderedDictionary lockedStandardBirds = new OrderedDictionary(){
-		{BirdType.Shoebill,		0f},
-		{BirdType.Pigeon, 		.5f * 60f},
-		{BirdType.Albatross,    1.5f * 60f},
-		{BirdType.Seagull,      2.5f * 60f},
-		{BirdType.Duck,         3f * 60f},
-		{BirdType.Pelican,      4f * 60f},
-		{BirdType.Bat,          5f * 60f}
+		{BirdType.Pigeon, 		0f * 60f},
+		{BirdType.Albatross,    .5f * 60f},
+		{BirdType.Seagull,      1f * 60f},
+		{BirdType.Duck,         1.5f * 60f},
+		{BirdType.Pelican,      2f * 60f},
+		{BirdType.Shoebill,		2.5f * 60f},
+		{BirdType.Bat,          3f * 60f}
 	};
 	List<BirdType> unlockedStandardBirds = new List<BirdType>();
 
     OrderedDictionary lockedBossBirds = new OrderedDictionary(){
 		{BirdType.DuckLeader,   3.5f * 60f },
-        {BirdType.Tentacles,    4.5f * 60f },
-		{BirdType.BabyCrow,     5.5f * 60f },
-        {BirdType.Eagle,        6.5f * 60f }
+        {BirdType.Tentacles,    4f * 60f },
+		{BirdType.BabyCrow,     4.5f * 60f },
+        {BirdType.Eagle,        5f * 60f }
     };
     List<BirdType> unlockedBossBirds = new List<BirdType>();
-
-    BirdType[] ignoreBirds = new BirdType[]{
-        BirdType.All,
-        BirdType.BirdOfParadise,
-        BirdType.Crow
-    };
     #endregion
 }

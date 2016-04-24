@@ -19,7 +19,6 @@ public abstract class Bird : MonoBehaviour, IHurtable {
     }
 
 	void IHurtable.GetHurt(ref SpearItems spearItems) {
-        int threatEliminated = birdStats.TotalThreatValue;
         birdStats.DamageTaken = TakeDamage(ref spearItems);
         birdStats.BirdPosition = transform.position;
 		birdStats.ModifyForStreak(ScoreSheet.Streaker.GetHitStreak());

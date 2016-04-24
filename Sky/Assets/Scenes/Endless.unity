@@ -167,10 +167,31 @@ Prefab:
     - target: {fileID: 22388970, guid: 3dfc356532b7848acb65b822041a5d96, type: 2}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 645033313}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3dfc356532b7848acb65b822041a5d96, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &15794271 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 119136, guid: 3dfc356532b7848acb65b822041a5d96, type: 2}
+  m_PrefabInternal: {fileID: 15794270}
+--- !u!223 &15794272 stripped
+Canvas:
+  m_PrefabParentObject: {fileID: 22388970, guid: 3dfc356532b7848acb65b822041a5d96,
+    type: 2}
+  m_PrefabInternal: {fileID: 15794270}
+--- !u!114 &15794273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 15794271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ab5af705a9bb8c41b3fd1209e87642f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyCanvas: {fileID: 15794272}
 --- !u!1001 &445984454
 Prefab:
   m_ObjectHideFlags: 0
@@ -313,6 +334,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 60554f9710c5649689e1ffa39739f096, type: 2}
   m_IsPrefabParent: 0
+--- !u!20 &645033313 stripped
+Camera:
+  m_PrefabParentObject: {fileID: 2091520, guid: 60554f9710c5649689e1ffa39739f096,
+    type: 2}
+  m_PrefabInternal: {fileID: 645033312}
 --- !u!1001 &919684421
 Prefab:
   m_ObjectHideFlags: 0
