@@ -30,7 +30,7 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
         if (!Pauser.Paused) {
             if (!beingHeld){
 			    float distFromStick = Vector2.Distance(InputManager.touchSpot,Joyfulstick.startingJoystickSpot);
-			    float distFromPause = Vector2.Distance(InputManager.touchSpot,Pauser.pauseSpot);
+			    float distFromPause = Vector2.Distance(InputManager.touchSpot,Pauser.PauseSpot);
 			    if (distFromStick>Joyfulstick.joystickMaxStartDist && distFromPause > Pauser.pauseRadius){
 				    if (Input.touchCount<3){
 					    startingTouchPoint = InputManager.touchSpot;
@@ -45,6 +45,7 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
 		    }
         }
 	}
+
 	void IEnd.OnTouchEnd(){
         if (!Pauser.Paused) {
             Vector2 releaseTouchPoint = InputManager.touchSpot;
@@ -72,7 +73,8 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
 	}
 
 	IEnumerator StabTheBeast(){
-		stabbing = true;
+        Debug.Log("Stabbing");
+        stabbing = true;
 		//jaiAnimator.SetInteger("AnimState",5);
 		Tentacles.StabbableTentacle.GetStabbed(); //stab the tentacle!
 		yield return new WaitForSeconds (.1f);

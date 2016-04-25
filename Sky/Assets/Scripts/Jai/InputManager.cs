@@ -31,9 +31,11 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
 	[SerializeField] Jai jai;
 	[SerializeField] Joyfulstick joyfulstick;
 	[SerializeField] Pauser pauser;
+    [SerializeField] Selector[] selectors;
 
 	List<IBegin> beginners;
 	List<IHold> holders;
+    List<IEnd> enders;
 	IEnd stickEnd;
 	IEnd jaiEnd;
 	#endregion
@@ -54,8 +56,10 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
 			(IHold)basketEngine,
 			(IHold)joyfulstick,
 		});
+        enders = new List<IEnd>((IEnd[])selectors);
 		stickEnd = (IEnd)joyfulstick;
 		jaiEnd = (IEnd)jai;
+
         Corrections pixelFix = new Corrections(true);
         correctionPixels = pixelFix.correctionPixels;
         correctionPixelFactor = pixelFix.correctionPixelFactor;
@@ -81,22 +85,23 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
 				if (finger.phase == TouchPhase.Began){
 					beginners.ForEach(beginner=> beginner.OnTouchBegin(finger.fingerId));
 				}
-				if(!isFrozen){
-					if (finger.phase == TouchPhase.Moved || finger.phase == TouchPhase.Stationary){
-						if (finger.fingerId == stickEngineFinger){
-							holders.ForEach(holder=> holder.OnTouchHeld());
-						}
+				else if (finger.phase == TouchPhase.Moved || finger.phase == TouchPhase.Stationary){
+					if (finger.fingerId == stickEngineFinger && !isFrozen){
+						holders.ForEach(holder=> holder.OnTouchHeld());
 					}
-					else if (finger.phase == TouchPhase.Ended){
-						if (finger.fingerId == stickEngineFinger){
-							stickEnd.OnTouchEnd();
-							stickEngineFinger =-1;
-						}
-						else if (finger.fingerId == jaiFinger){
-							jaiEnd.OnTouchEnd();
-							jaiFinger =-1;
-						}
+				}
+				else if (finger.phase == TouchPhase.Ended){
+					if (finger.fingerId == stickEngineFinger && !isFrozen){
+						stickEnd.OnTouchEnd();
+						stickEngineFinger =-1;
 					}
+					else if (finger.fingerId == jaiFinger && !isFrozen){
+						jaiEnd.OnTouchEnd();
+						jaiFinger =-1;
+					}
+                    else {
+                        enders.ForEach(ender=> ender.OnTouchEnd());
+                    }
 				}
 			}
 		}

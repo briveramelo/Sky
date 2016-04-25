@@ -48,6 +48,4 @@ public class WaveManager : MonoBehaviour, IRunWaves {
             currentWave = WaveName.Endless;
         }
 	}
-
-    
 }

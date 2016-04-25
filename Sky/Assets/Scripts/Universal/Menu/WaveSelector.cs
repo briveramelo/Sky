@@ -13,18 +13,19 @@ public class WaveSelector : Selector {
 
     [SerializeField] WaveType MyWaveType;
     IWaveSet waveManager;
+    IFreezable inputManager;
+
+    protected override Vector2 TouchSpot {get { return MenuInputHandler.touchSpot; } }
     
-    protected override void Awake() {
+    void Awake() {
         waveManager = FindObjectOfType<GameManager>().GetComponent<IWaveSet>();
-        buttonRadius = 1.25f;
-        base.Awake();
+        inputManager = FindObjectOfType<MenuInputHandler>().GetComponent<IFreezable>();
     }
 
     protected override IEnumerator PressButton() {
-        buttonAnimator.SetInteger("AnimState", (int)ButtonState.Pressed);
         buttonNoise.PlayOneShot(buttonPress);
         waveManager.SetWaveType(MyWaveType);
-        inputManager.IsFrozen = true;
+        //inputManager.IsFrozen = true;
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene((int)MyWaveType);
     }

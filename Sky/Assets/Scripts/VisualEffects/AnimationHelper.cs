@@ -5,7 +5,7 @@ public class AnimationHelper : MonoBehaviour {
 
 	[SerializeField] Animator myAnimator;
 
-    void SetAnimState(int i) {
-        myAnimator.SetInteger("AnimState", i);
+    void SetAnimState(TextAnimState MyAnim) {
+        myAnimator.SetInteger("AnimState", (int)MyAnim);
     }
 }

@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
 using GenericFunctions;
+using System.Linq;
 
 public interface IBumpable{
 	void Bump(Vector2 bumpDir);
 }
 
-public class BasketEngine : MonoBehaviour, IBumpable, IHold {
+public interface IDie {
+    void Die();
+}
 
-	[SerializeField] private Rigidbody2D basketBody;
+public class BasketEngine : MonoBehaviour, IBumpable, IHold, IDie {
+
+	[SerializeField] Rigidbody2D basketBody;
 	const float moveSpeed = 2.7f;
 	bool movingEnabled =true;
 
@@ -23,10 +28,14 @@ public class BasketEngine : MonoBehaviour, IBumpable, IHold {
 		basketBody.velocity = bumpDir;
 		StartCoroutine (Bool.Toggle(boolState=>movingEnabled=boolState,.5f));
         ScoreSheet.Tallier.TallyThreat(Threat.BasketBumped);
-        Invoke("StabilizeBumpThreat", 7f);
+        Invoke("StabilizeBumpThreat", 2f);
     }
 
     void StabilizeBumpThreat() {
         ScoreSheet.Tallier.TallyThreat(Threat.BasketStabilized);
+    }
+
+    void IDie.Die() {
+        movingEnabled = false;
     }
 }

@@ -25,6 +25,9 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 	[SerializeField] private Transform basketCenter;
 	[SerializeField] private List<Balloon> balloonScripts; private List<IBasketToBalloon> balloons;
 	[SerializeField] private BoxCollider2D basketCollider;
+    [SerializeField] Collider2D[] boundingColliders;
+
+    [SerializeField] BasketEngine basketEngine;
 
 	private Vector2[] relativeBalloonPositions;
 
@@ -63,7 +66,8 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 
 	IEnumerator EndItAll(){
 		rigbod.gravityScale = 1;
-		basketCollider.enabled = false;
+        ((IDie)basketEngine).Die();
+        boundingColliders.ToList().ForEach(col => col.enabled = false);
 		ScoreSheet.Reporter.ReportScores ();
 		yield return new WaitForSeconds (1f);
 		SceneManager.LoadScene((int)Scenes.Menu);
@@ -114,7 +118,7 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 	}
 
 	void ITentacleToBasket.DetachFromTentacles(){
-		transform.parent = null;
+        transform.parent = null;
 		transform.localScale = Vector3.one;
 		basketCollider.enabled = true;
 		rigbod.isKinematic = false;

@@ -20,7 +20,28 @@ public enum WaveName {
     Endless = 7
 }
 
+public enum TextAnimState {
+    Idle_OnScreen=-1,
+    Idle_Offscreen =0,
+    LeftAcross = 1,
+    RightAcross = 2,
+    RightCenter =4
+}
+
+public enum PointAnimState {
+    Idle =0,
+    Shine =1,
+    Poof =2
+}
+
 public class WaveUI : MonoBehaviour, IWaveUI {
+
+    void OnLevelWasLoaded(int level) {
+        if (level == (int)Scenes.Menu) {
+            StopAllCoroutines();
+            ClearText();
+        }
+    }
 
 	[SerializeField] Text Title, SubTitle, PointTotal, Streak, Combo;
     [SerializeField] Animator TitleA, SubTitleA, PointTotalA, StreakA, ComboA;
@@ -35,15 +56,6 @@ public class WaveUI : MonoBehaviour, IWaveUI {
         {WaveName.Bat,          "Erratic " },
         {WaveName.Endless,      "Indulge yourself" }
     };
-
-    private enum TextAnimState {
-        Idle_OnScreen=-1,
-        Idle_Offscreen =0,
-        LeftAcross = 1,
-        RightAcross = 2,
-        LeftCenter =3,
-        RightCenter =4
-    }
 
     IEnumerator IWaveUI.AnimateWaveStart(WaveName waveName) {
         Title.text = waveName.ToString() + " Wave";
@@ -70,11 +82,7 @@ public class WaveUI : MonoBehaviour, IWaveUI {
         yield return new WaitForSeconds(2f);
     }
 
-    private enum PointAnimState {
-        Idle =0,
-        Shine =1,
-        Poof =2
-    }
+    
 
     IEnumerator DisplayPoints() {
         PointTotal.text = "WAVE SCORE: " + ScoreSheet.Reporter.GetScore(ScoreType.Total, true, BirdType.All).ToString();
@@ -119,4 +127,12 @@ public class WaveUI : MonoBehaviour, IWaveUI {
         }
     }
 
+    void ClearText() {
+        TitleA.SetInteger("AnimState", (int)TextAnimState.Idle_Offscreen);
+        SubTitleA.SetInteger("AnimState", (int)TextAnimState.Idle_Offscreen);
+
+        PointTotal.text = "";
+        Streak.text = "";
+        Combo.text = "";
+    }
 }

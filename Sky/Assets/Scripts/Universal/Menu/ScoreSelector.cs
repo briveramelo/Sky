@@ -11,15 +11,10 @@ public class ScoreSelector : Selector{
 
     [SerializeField] GameMode MyScoreScene;
 
-    protected override void Awake() {
-        buttonRadius = .7f;
-        base.Awake();
-    }
+    protected override Vector2 TouchSpot {get { return MenuInputHandler.touchSpot; } }
 
     protected override IEnumerator PressButton() {
-        buttonAnimator.SetInteger("AnimState", (int)ButtonState.Pressed);
         buttonNoise.PlayOneShot(buttonPress);
-        inputManager.IsFrozen = true;
         yield return null;
         ((IScoreMenu)(GameManager.Instance)).SetScoreMenu(MyScoreScene);
         SceneManager.LoadScene((int)Scenes.Scores);

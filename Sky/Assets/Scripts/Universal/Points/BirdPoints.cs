@@ -2,7 +2,7 @@
 
 public class BirdPoints : PointDisplay {
 
-	const float moveSpeed = 0.017f;
+	const float moveSpeed = .5f;
 	protected override void DisplayPoints(int points){
 		myText.text = "+" + points.ToString();
 	}
@@ -13,6 +13,6 @@ public class BirdPoints : PointDisplay {
 	}
 
 	void Update(){
-		transform.position += Vector3.up * moveSpeed;
+		transform.position += Vector3.up * moveSpeed * Time.deltaTime;
 	}
 }

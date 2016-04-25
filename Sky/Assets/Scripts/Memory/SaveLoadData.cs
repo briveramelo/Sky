@@ -32,12 +32,12 @@ public class SaveLoadData : MonoBehaviour {
 
 	public void PromptSave(StoryScore NewStoryScore){
         currentDataSave.storyScores.Sort();
-        bool isNewHighScore = currentDataSave.storyScores.Count == maxScores ? NewStoryScore.CompareTo(currentDataSave.storyScores[currentDataSave.storyScores.Count-1]) > 0 : true;
+        bool isNewHighScore = currentDataSave.storyScores.Count == maxScores ? NewStoryScore.CompareTo(currentDataSave.storyScores[currentDataSave.storyScores.Count-1]) < 0 : true;
         AddNewHighScore(ref currentDataSave.storyScores, NewStoryScore, isNewHighScore);
 	}
     public void PromptSave(EndlessScore NewEndlessScore){
         currentDataSave.endlessScores.Sort();
-        bool isNewEndless = currentDataSave.endlessScores.Count == maxScores ? NewEndlessScore.CompareTo(currentDataSave.endlessScores[currentDataSave.endlessScores.Count-1]) > 0 : true;
+        bool isNewEndless = currentDataSave.endlessScores.Count == maxScores ? NewEndlessScore.CompareTo(currentDataSave.endlessScores[currentDataSave.endlessScores.Count-1]) < 0 : true;
         AddNewHighScore(ref currentDataSave.endlessScores, NewEndlessScore, isNewEndless);
 	}
 
@@ -48,7 +48,7 @@ public class SaveLoadData : MonoBehaviour {
         }
         else {
             if (isNewHighScore) {
-                MyList.Remove(MyList[maxScores]);
+                MyList.Remove(MyList[maxScores-1]);
                 MyList.Add(NewEntry);
                 MyList.Sort();
             }

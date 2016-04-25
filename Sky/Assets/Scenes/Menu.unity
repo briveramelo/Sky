@@ -100,7 +100,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &133665780
 Transform:
@@ -174,7 +174,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &133876109
 Transform:
@@ -210,7 +210,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!114 &373896023
 MonoBehaviour:
@@ -223,11 +223,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f67efeb402d71794b97543a989240335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonAnimator: {fileID: 373896026}
-  myText: {fileID: 2106051251}
   buttonNoise: {fileID: 373896024}
   buttonPress: {fileID: 8300000, guid: 9a254ed0f883042ef93c6df9f2cbf93a, type: 3}
-  buttonLift: {fileID: 8300000, guid: d9ac686a9258c48b3ba27c2266e035f2, type: 3}
+  buttonRadius: 0.66
   MyScoreScene: 1
 --- !u!82 &373896024
 AudioSource:
@@ -448,7 +446,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1028316326
 Transform:
@@ -524,7 +522,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1115328400
 Transform:
@@ -603,7 +601,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1118760575
 Transform:
@@ -768,11 +766,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f67efeb402d71794b97543a989240335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonAnimator: {fileID: 1118760579}
-  myText: {fileID: 133665781}
   buttonNoise: {fileID: 1118760578}
   buttonPress: {fileID: 8300000, guid: 9a254ed0f883042ef93c6df9f2cbf93a, type: 3}
-  buttonLift: {fileID: 8300000, guid: d9ac686a9258c48b3ba27c2266e035f2, type: 3}
+  buttonRadius: 0.66
   MyScoreScene: 0
 --- !u!1 &1340570968
 GameObject:
@@ -792,7 +788,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1340570969
 Transform:
@@ -957,11 +953,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2f13beb69cca04aae86010610ed755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonAnimator: {fileID: 1340570973}
-  myText: {fileID: 1028316327}
   buttonNoise: {fileID: 1340570972}
   buttonPress: {fileID: 8300000, guid: 9a254ed0f883042ef93c6df9f2cbf93a, type: 3}
-  buttonLift: {fileID: 8300000, guid: d9ac686a9258c48b3ba27c2266e035f2, type: 3}
+  buttonRadius: 1.3
   MyWaveType: 1
 --- !u!1001 &1594821611
 Prefab:
@@ -1002,22 +996,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 2091520, guid: 60554f9710c5649689e1ffa39739f096, type: 2}
-      propertyPath: field of view
-      value: 28.234205
-      objectReference: {fileID: 0}
-    - target: {fileID: 2091520, guid: 60554f9710c5649689e1ffa39739f096, type: 2}
-      propertyPath: orthographic size
-      value: 2.5149999
-      objectReference: {fileID: 0}
-    - target: {fileID: 11410288, guid: 60554f9710c5649689e1ffa39739f096, type: 2}
-      propertyPath: targetPixelHeight
-      value: 640
-      objectReference: {fileID: 0}
-    - target: {fileID: 11410288, guid: 60554f9710c5649689e1ffa39739f096, type: 2}
-      propertyPath: showGizmos
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 60554f9710c5649689e1ffa39739f096, type: 2}
   m_IsPrefabParent: 0
@@ -1031,11 +1009,11 @@ GameObject:
   - 4: {fileID: 1737263972}
   - 114: {fileID: 1737263971}
   m_Layer: 0
-  m_Name: InputManager
+  m_Name: Menu_InputManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!114 &1737263971
 MonoBehaviour:
@@ -1084,7 +1062,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1887610392
 Transform:
@@ -1231,11 +1209,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2f13beb69cca04aae86010610ed755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonAnimator: {fileID: 1887610395}
-  myText: {fileID: 1115328401}
   buttonNoise: {fileID: 1887610394}
   buttonPress: {fileID: 8300000, guid: 9a254ed0f883042ef93c6df9f2cbf93a, type: 3}
-  buttonLift: {fileID: 8300000, guid: d9ac686a9258c48b3ba27c2266e035f2, type: 3}
+  buttonRadius: 1.3
   MyWaveType: 2
 --- !u!114 &1887610397
 MonoBehaviour:
@@ -1270,7 +1246,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!102 &2106051251
 TextMesh:

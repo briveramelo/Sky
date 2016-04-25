@@ -23,7 +23,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 
 	[SerializeField] private Transform tipTransform;
 	[SerializeField] private Collider2D tipCollider;
-	private SpearItems fakeSpear;
+	private SpearItems fakeSpear = new SpearItems();
 
 	private Vector2 homeSpot = new Vector2 (0f,-.75f - Constants.WorldDimensions.y);
 	
@@ -85,7 +85,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 		stabsTaken = 0;
 		holdingJai = true;
 		inputManager.IsFrozen = true;
-		jai.IsFrozen = false;
+		jai.IsFrozen = true;
 		Basket.TentacleToBasket.AttachToTentacles(transform);
         ScoreSheet.Tallier.TallyThreat(Threat.BasketGrabbed);
 
@@ -107,7 +107,8 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 
 	#region IStabbable
 	void IStabbable.GetStabbed(){
-		stabsTaken++;
+        Debug.Log("Stabbed!");
+        stabsTaken++;
 		TakeDamage(ref fakeSpear);
 		if (stabsTaken>=stabs2Retreat){
             ReleaseBasket();
@@ -119,11 +120,12 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
         holdingJai = false;
         inputManager.IsFrozen = false;
         jai.IsFrozen = false;
+        Basket.TentacleToBasket.DetachFromTentacles();
+        Basket.TentacleToBasket.KnockDown(5f);
+
         sensor.ToggleSensor(false);
         StartCoroutine(DisableTentacles());
         StartCoroutine(me.ResetPosition(true));
-        Basket.TentacleToBasket.DetachFromTentacles();
-        Basket.TentacleToBasket.KnockDown(5f);
     }
 
 	IEnumerator DisableTentacles(){

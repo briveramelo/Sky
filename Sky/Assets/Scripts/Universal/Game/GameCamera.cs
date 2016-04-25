@@ -5,6 +5,7 @@ public class GameCamera : MonoBehaviour {
 
 	public static GameCamera Instance;
 	private bool shaking;
+    Vector3 startSpot;
 
 	void Awake(){
 		if (Instance == null) {
@@ -13,6 +14,7 @@ public class GameCamera : MonoBehaviour {
         else {
             Destroy(gameObject);
         }
+        startSpot = transform.position;
 	}
 
 	public void ShakeTheCamera(){
@@ -27,13 +29,11 @@ public class GameCamera : MonoBehaviour {
 	
 	IEnumerator ShakeIt(){
 		shaking = true;
-		Vector3 startSpot = transform.position;
 		while (shaking) {
-			Vector3 shift = new Vector3( Random.insideUnitCircle.x,Random.insideUnitCircle.y,-10) * .2f;
+			Vector3 shift = new Vector3( Random.insideUnitCircle.x * .2f,Random.insideUnitCircle.y * .2f,0f);
 			transform.position = startSpot + shift;
 			yield return null;
 		}
-		transform.position = new Vector3 (0f, 0f, -10f);
-		yield return null;
+		transform.position = startSpot;
 	}
 }

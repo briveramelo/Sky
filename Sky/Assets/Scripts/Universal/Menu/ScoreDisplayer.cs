@@ -5,7 +5,7 @@ using System;
 
 public class ScoreDisplayer : MonoBehaviour {
 
-    [SerializeField] Text Title;
+    [SerializeField] Text Title, Column1_Title, Column2_Title;
     [SerializeField] Text[] column1, column2;
 
     DataSave currentDataSave;
@@ -17,6 +17,8 @@ public class ScoreDisplayer : MonoBehaviour {
 
     void DisplayScene(GameMode MyGameMode) {
         Title.text = MyGameMode.ToString().ToUpper() + " HIGH SCORES";
+        Column1_Title.text = MyGameMode == GameMode.Story ? "Final Wave" : "Score";
+        Column2_Title.text = MyGameMode == GameMode.Story ? "Score" : "Time";
         switch (MyGameMode) {
             case GameMode.Story:
                 DisplayScores(ref currentDataSave.storyScores);
@@ -36,7 +38,7 @@ public class ScoreDisplayer : MonoBehaviour {
     void DisplayScores(ref List<EndlessScore> MyScores) {
         for (int i=0; i<MyScores.Count; i++) {
             column1[i].text = MyScores[i].Score.ToString();
-            column2[i].text = MyScores[i].Duration.ToString();
+            column2[i].text = ((int)MyScores[i].Duration).ToString() + "s";
         }
     }
     
