@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ContinueSelector : Selector {
+public class PlaySelector : Selector {
 
     protected override Vector2 TouchSpot {get { return InputManager.touchSpot; } }
     [SerializeField] Pauser pauser;

@@ -13,8 +13,7 @@ public interface ICrowToMurder {
 public class Murder : MonoBehaviour, ICrowToMurder {
 
 	[SerializeField] private Crow[] crows;
-	private List<IMurderToCrow> crowsAlive;
-	private List<IMurderToCrow> crowsToSwoop;
+	List<IMurderToCrow> crowsAlive, crowsToSwoop;
 	private ICrowToMurder me;
 
 	private Vector2[] crowPositions  = new Vector2[]{
@@ -30,12 +29,11 @@ public class Murder : MonoBehaviour, ICrowToMurder {
 	private int cycle;
 
 	void Awake () {
-		crowsAlive = new List<IMurderToCrow>();
-		for (int j=0; j<crows.Length; j++){
-			crowsAlive.Add((IMurderToCrow)crows[j]);
+		crowsAlive = new List<IMurderToCrow>((IMurderToCrow[])crows);
+		crowsToSwoop = new List<IMurderToCrow>(crowsAlive);
+		for (int j=0; j<crowsAlive.Count; j++){
 			crowsAlive[j].InitializeCrow(j, crowPositions[j]);
 		}
-		crowsToSwoop = new List<IMurderToCrow>(crowsAlive);
 		cycle = 1;
 		me = (ICrowToMurder)this;
 		me.SendNextCrow ();
@@ -44,12 +42,13 @@ public class Murder : MonoBehaviour, ICrowToMurder {
 	#region ICrowToMurder Interface
 	void ICrowToMurder.SendNextCrow(){
 		if (crowsToSwoop.Count>0){
-			int luckyCrow = Random.Range (0,crowsToSwoop.Count);
+			int luckyCrow = Random.Range (0,crowsToSwoop.Count-1);
 			crowsToSwoop[luckyCrow].TakeFlight();
 			crowsToSwoop.Remove(crowsToSwoop[luckyCrow]);
 		}
-		else if (crowsAlive.Count>0)
+		else if (crowsAlive.Count>0) {
 			StartCoroutine ( ResetTheCycle());
+        }
 	}
 
 	void ICrowToMurder.ReportCrowDown(IMurderToCrow crowDown){
@@ -70,7 +69,9 @@ public class Murder : MonoBehaviour, ICrowToMurder {
 		crowsToSwoop = new List<IMurderToCrow>(crowsAlive);
 		yield return new WaitForSeconds (3f);
 		cycle++;
-		if (cycle>=maxCycles) Destroy(gameObject);
+		if (cycle>=maxCycles) {
+            Destroy(gameObject);
+        }
 		me.SendNextCrow();
 	}
 }

@@ -7,7 +7,7 @@ public abstract class Selector : MonoBehaviour, IEnd {
     [SerializeField] protected AudioClip buttonPress;
 
     [SerializeField, Range(0,2)] protected float buttonRadius;
-    abstract protected Vector2 TouchSpot {get; }
+    abstract protected Vector2 TouchSpot {get;}
 
     void OnDrawGizmosSelected() {
         Gizmos.color = Color.green;

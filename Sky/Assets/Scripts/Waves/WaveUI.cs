@@ -7,8 +7,10 @@ using System.Linq;
 public interface IWaveUI {
     IEnumerator AnimateWaveStart(WaveName waveName);
     IEnumerator AnimateWaveEnd(WaveName waveName);
+    IEnumerator AnimateStoryEnd();
 }
 
+#region enums
 public enum WaveName {
     Pigeon =0,
     Duck =1,
@@ -17,7 +19,9 @@ public enum WaveName {
     Pelican = 4,
     Shoebill = 5,
     Bat = 6,
-    Endless = 7
+    Eagle =7,
+    Complete = 8,
+    Endless = 9,
 }
 
 public enum TextAnimState {
@@ -33,19 +37,31 @@ public enum PointAnimState {
     Shine =1,
     Poof =2
 }
+#endregion
 
 public class WaveUI : MonoBehaviour, IWaveUI {
 
+	[SerializeField] Text Title, SubTitle, PointTotal, Streak, Combo;
+    [SerializeField] Animator TitleA, SubTitleA, PointTotalA, StreakA, ComboA;
+
+    #region Load Level
     void OnLevelWasLoaded(int level) {
         if (level == (int)Scenes.Menu) {
             StopAllCoroutines();
             ClearText();
         }
     }
+    void ClearText() {
+        TitleA.SetInteger("AnimState", (int)TextAnimState.Idle_Offscreen);
+        SubTitleA.SetInteger("AnimState", (int)TextAnimState.Idle_Offscreen);
 
-	[SerializeField] Text Title, SubTitle, PointTotal, Streak, Combo;
-    [SerializeField] Animator TitleA, SubTitleA, PointTotalA, StreakA, ComboA;
+        PointTotal.text = "";
+        Streak.text = "";
+        Combo.text = "";
+    }
+    #endregion
 
+    #region Wave Subtitles
     Dictionary<WaveName, string> WaveSubtitles = new Dictionary<WaveName, string>() {
         {WaveName.Pigeon,       "Rats of the sky" },
         {WaveName.Duck,         "Simple but foul beasts" },
@@ -54,53 +70,21 @@ public class WaveUI : MonoBehaviour, IWaveUI {
         {WaveName.Pelican,      "Divebombing" },
         {WaveName.Shoebill,     "Dumb as rocks, and they hit just as hard" },
         {WaveName.Bat,          "Erratic " },
+        {WaveName.Eagle,        "His time has come..." },
         {WaveName.Endless,      "Indulge yourself" }
     };
+    #endregion
 
     IEnumerator IWaveUI.AnimateWaveStart(WaveName waveName) {
-        Title.text = waveName.ToString() + " Wave";
-        SubTitle.text = WaveSubtitles[waveName];
-        TitleA.SetInteger("AnimState", (int)TextAnimState.RightAcross);
-        SubTitleA.SetInteger("AnimState", (int)TextAnimState.LeftAcross);
-        while (TitleA.GetInteger("AnimState") == (int)TextAnimState.RightAcross) {
-            yield return null;
-        }
+        yield return StartCoroutine(DisplayTip());
+        yield return StartCoroutine(DisplayWaveName(waveName));
     }
-
     IEnumerator IWaveUI.AnimateWaveEnd(WaveName waveName) {
-        Title.text += " Complete";
-        TitleA.SetInteger("AnimState", (int)TextAnimState.RightCenter);
-        //move progress sprites to the center 
-        while (TitleA.GetInteger("AnimState") == (int)TextAnimState.RightCenter) {
-            yield return null;
-        }
-        yield return StartCoroutine (DisplayPoints());
-        yield return new WaitForSeconds(1f);
-        yield return StartCoroutine (DisplayTip());
-        TitleA.SetInteger("AnimState", (int)TextAnimState.Idle_Offscreen);
-        SubTitleA.SetInteger("AnimState", (int)TextAnimState.Idle_Offscreen);
-        yield return new WaitForSeconds(2f);
+        yield return StartCoroutine (DisplayWaveComplete());
+        yield return StartCoroutine (DisplayPoints(true));
     }
 
-    
-
-    IEnumerator DisplayPoints() {
-        PointTotal.text = "WAVE SCORE: " + ScoreSheet.Reporter.GetScore(ScoreType.Total, true, BirdType.All).ToString();
-        Streak.text = "Streaks: " + ScoreSheet.Reporter.GetScore(ScoreType.Streak, true, BirdType.All).ToString();
-        Combo.text = "Combos: " + ScoreSheet.Reporter.GetScore(ScoreType.Combo, true, BirdType.All).ToString();
-
-        PointTotalA.SetInteger("AnimState", (int)PointAnimState.Shine);
-        StreakA.SetInteger("AnimState", (int)PointAnimState.Shine);
-        ComboA.SetInteger("AnimState", (int)PointAnimState.Shine);
-
-        yield return new WaitForSeconds(1f);
-        yield return StartCoroutine(WaitForInput());
-
-        PointTotalA.SetInteger("AnimState", (int)PointAnimState.Poof);
-        StreakA.SetInteger("AnimState", (int)PointAnimState.Poof);
-        ComboA.SetInteger("AnimState", (int)PointAnimState.Poof);
-    }
-
+    #region AnimateWaveStart
     List<Tip> NewTips = System.Enum.GetValues(typeof(Tip)).Cast<Tip>().ToList();
     IEnumerator DisplayTip() {
         int nextTip = Random.Range(0, NewTips.Count);
@@ -114,25 +98,54 @@ public class WaveUI : MonoBehaviour, IWaveUI {
         TitleA.SetInteger("AnimState", (int)TextAnimState.Idle_OnScreen);
         SubTitleA.SetInteger("AnimState", (int)TextAnimState.Idle_OnScreen);
 
-        yield return new WaitForSeconds(2f);
-        yield return StartCoroutine(WaitForInput());
+        yield return new WaitForSeconds(4f);
+        TitleA.SetInteger("AnimState", (int)TextAnimState.Idle_Offscreen);
+        SubTitleA.SetInteger("AnimState", (int)TextAnimState.Idle_Offscreen);
     }
-
-    IEnumerator WaitForInput() {
-        while (true) {
-            if (Input.touches.Length>0) {
-                break;
-            }
+    IEnumerator DisplayWaveName(WaveName waveName) {
+        Title.text = waveName.ToString() + " Wave";
+        SubTitle.text = WaveSubtitles[waveName];
+        TitleA.SetInteger("AnimState", (int)TextAnimState.RightAcross);
+        SubTitleA.SetInteger("AnimState", (int)TextAnimState.LeftAcross);
+        while (TitleA.GetInteger("AnimState") == (int)TextAnimState.RightAcross) {
             yield return null;
         }
     }
+    #endregion
 
-    void ClearText() {
-        TitleA.SetInteger("AnimState", (int)TextAnimState.Idle_Offscreen);
-        SubTitleA.SetInteger("AnimState", (int)TextAnimState.Idle_Offscreen);
-
-        PointTotal.text = "";
-        Streak.text = "";
-        Combo.text = "";
+    #region AnimateWaveEnd
+    IEnumerator DisplayWaveComplete() {
+        Title.text += " Complete";
+        TitleA.SetInteger("AnimState", (int)TextAnimState.RightCenter);
+        //move progress sprites to the center 
+        while (TitleA.GetInteger("AnimState") == (int)TextAnimState.RightCenter) {
+            yield return null;
+        }
     }
+    public IEnumerator DisplayPoints(bool isWaveScore) {
+        string scoretype = isWaveScore ? "WAVE" : "TOTAL";
+        PointTotal.text = scoretype + " SCORE: " + ScoreSheet.Reporter.GetScore(ScoreType.Total, isWaveScore, BirdType.All).ToString();
+        Streak.text = "Streaks: " + ScoreSheet.Reporter.GetScore(ScoreType.Streak, isWaveScore, BirdType.All).ToString();
+        Combo.text = "Combos: " + ScoreSheet.Reporter.GetScore(ScoreType.Combo, isWaveScore, BirdType.All).ToString();
+
+        PointTotalA.SetInteger("AnimState", (int)PointAnimState.Shine);
+        StreakA.SetInteger("AnimState", (int)PointAnimState.Shine);
+        ComboA.SetInteger("AnimState", (int)PointAnimState.Shine);
+
+        yield return new WaitForSeconds(4f);
+
+        PointTotalA.SetInteger("AnimState", (int)PointAnimState.Poof);
+        StreakA.SetInteger("AnimState", (int)PointAnimState.Poof);
+        ComboA.SetInteger("AnimState", (int)PointAnimState.Poof);
+        yield return new WaitForSeconds(2f);
+    }
+    IEnumerator IWaveUI.AnimateStoryEnd() {
+        Title.text = "Story Complete";
+        TitleA.SetInteger("AnimState", (int)TextAnimState.RightCenter);
+         
+        while (TitleA.GetInteger("AnimState") == (int)TextAnimState.RightCenter) {
+            yield return null;
+        }
+    }
+    #endregion
 }

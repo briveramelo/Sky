@@ -8,6 +8,7 @@ public interface IBumpable{
 
 public interface IDie {
     void Die();
+    void Rebirth();
 }
 
 public class BasketEngine : MonoBehaviour, IBumpable, IHold, IDie {
@@ -37,5 +38,8 @@ public class BasketEngine : MonoBehaviour, IBumpable, IHold, IDie {
 
     void IDie.Die() {
         movingEnabled = false;
+    }
+    void IDie.Rebirth() {
+        movingEnabled = true;
     }
 }

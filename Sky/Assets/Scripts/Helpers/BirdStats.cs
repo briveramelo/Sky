@@ -20,7 +20,6 @@ public class BirdStats {
 	private int killPointValue;			public int KillPointValue{get{return killPointValue;}}
 	private int damagePointValue;		public int DamagePointValue{get{return damagePointValue;}}
 
-	private float killPointMultiplier;	public float KillPointMultiplier{get{return killPointMultiplier;}}
 	private int damageGutValue;			public int DamageGutValue{get{return damageGutValue;}}
 	private int killGutValue;			public int KillGutValue{get{return killGutValue;}}
 	private Vector2 birdPosition;
@@ -63,26 +62,12 @@ public class BirdStats {
 		damagePointValue *=birdsHit;
         comboPoints = (health<=0 ? killPointValue : damagePointValue) - comboPoints;
 	}
-	public void ModifyForMultiplier(){
-		int totalFromMultiplier = 0;
-		if (Health<=0){
-			if (MyBirdType == BirdType.Seagull || MyBirdType == BirdType.Tentacles){ 
-				foreach (Bird bird in MonoBehaviour.FindObjectsOfType<Bird>()){
-					if (!(bird.MyBirdStats.MyBirdType==BirdType.Seagull || bird.MyBirdStats.MyBirdType==BirdType.Tentacles)){
-						totalFromMultiplier += (int)(bird.MyBirdStats.TotalPointValue * KillPointMultiplier);
-					}
-				}
-			}
-		}
-		killPointValue += totalFromMultiplier;
-	}
 
 	public BirdStats(BirdType birdType){
 		myBirdType = birdType;
 		health = 1;
 		killPointValue =1;
 		damagePointValue=1;
-		killPointMultiplier=0;
 		damageGutValue=1;
 		killGutValue=1;
 
@@ -116,14 +101,12 @@ public class BirdStats {
 		case BirdType.Seagull:
 			killGutValue = 4;
 			killPointValue = 2;
-			killPointMultiplier = 2;
 			break;
 		case BirdType.Tentacles:
 			killGutValue = 80;
 			killPointValue = 10;
 			health = 25;
 			damageGutValue = 4;
-			killPointMultiplier = 1.5f;
 			break;
 		case BirdType.Pelican:
 			killGutValue = 10;

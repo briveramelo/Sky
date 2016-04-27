@@ -12,10 +12,15 @@ public interface ISensorToTentacle {
 public interface ITipToTentacle{
 	IEnumerator PullDownTheKill();
 }
+public interface IReleasable {
+    void ReleaseJai();
+}
 
-public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
+public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IReleasable {
 
+    public static Tentacles Instance;
 	public static IStabbable StabbableTentacle;
+    public static IReleasable Releaser;
 	private ISensorToTentacle me; //just because I wanted to use ResetPosition locally with less mess...
 	[SerializeField] private TentaclesSensor ts; private IToggleable sensor; private IJaiDetected sensorOnJai;
 	IFreezable inputManager;
@@ -40,7 +45,9 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 	private bool holdingJai;
 
 	protected override void Awake(){
-		StabbableTentacle = (IStabbable)this;
+        Instance = this;
+        StabbableTentacle = (IStabbable)this;
+        Releaser = (IReleasable)this;
 		me = (ISensorToTentacle)this;
 		sensor = (IToggleable)ts;
 		sensorOnJai = (IJaiDetected)ts;
@@ -107,7 +114,6 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 
 	#region IStabbable
 	void IStabbable.GetStabbed(){
-        Debug.Log("Stabbed!");
         stabsTaken++;
 		TakeDamage(ref fakeSpear);
 		if (stabsTaken>=stabs2Retreat){
@@ -115,6 +121,12 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
         }
 	}
     #endregion
+
+    void IReleasable.ReleaseJai() {
+        if (holdingJai) {
+            ReleaseBasket();
+        }
+    }
 
     void ReleaseBasket() {
         holdingJai = false;

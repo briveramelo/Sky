@@ -59,9 +59,8 @@ public class SaveLoadData : MonoBehaviour {
 	void Save(){
 		BinaryFormatter bf = new BinaryFormatter ();
 		FileStream fileStream = File.Create(Application.dataPath + "/SaveData/savefile.dat");
-		//DataSave ExtractedDataSave = new DataSave(CurrentDataSave);
-		
-		bf.Serialize (fileStream, currentDataSave);
+
+		bf.Serialize (fileStream, new DataSave(currentDataSave));
 		fileStream.Close ();
 	}
 	

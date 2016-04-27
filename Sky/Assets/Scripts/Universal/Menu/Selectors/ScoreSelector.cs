@@ -2,21 +2,16 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public enum GameMode {
-    Story =0,
-    Endless =1
-}
-
 public class ScoreSelector : Selector{
 
-    [SerializeField] GameMode MyScoreScene;
+    [SerializeField] GameMode MyGameMode;
+    [SerializeField] ScoreDisplayer theScoreDisplayer;
 
     protected override Vector2 TouchSpot {get { return MenuInputHandler.touchSpot; } }
 
     protected override IEnumerator PressButton() {
         buttonNoise.PlayOneShot(buttonPress);
+        theScoreDisplayer.DisplayStats(MyGameMode);
         yield return null;
-        ((IScoreMenu)(GameManager.Instance)).SetScoreMenu(MyScoreScene);
-        SceneManager.LoadScene((int)Scenes.Scores);
     }
 }

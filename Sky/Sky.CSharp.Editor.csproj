@@ -114,6 +114,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Editor\EagleFriends_Editor.cs" />
     <Compile Include="Assets\Editor\ReplaceGameObjects.cs" />
   </ItemGroup>
   <ItemGroup>

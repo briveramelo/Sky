@@ -17,6 +17,7 @@ GameObject:
   - 114: {fileID: 11424108}
   - 114: {fileID: 11433052}
   - 114: {fileID: 11415344}
+  - 114: {fileID: 11418284}
   - 114: {fileID: 11417322}
   m_Layer: 0
   m_Name: WaveManager
@@ -378,7 +379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d46309452fb5a4e549160530ac9a6192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyWaveName: 7
+  MyWaveName: 9
   Toughness: 1
 --- !u!114 &11417322
 MonoBehaviour:
@@ -430,6 +431,18 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 
+--- !u!114 &11418284
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deea2b96a8385f94e92071c7f49ec912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyWaveName: 7
 --- !u!114 &11418866
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -669,6 +682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c31b992501ef44f7ca4d8ca39e989902, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waveUI: {fileID: 11442198}
   storyWaves:
   - {fileID: 11442178}
   - {fileID: 11442076}
@@ -677,6 +691,7 @@ MonoBehaviour:
   - {fileID: 11451178}
   - {fileID: 11424108}
   - {fileID: 11433052}
+  - {fileID: 11418284}
   endlessWave: {fileID: 11415344}
 --- !u!114 &11460900
 MonoBehaviour:

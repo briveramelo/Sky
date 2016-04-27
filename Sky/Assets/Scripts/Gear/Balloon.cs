@@ -25,11 +25,12 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 	private float popTime = 30f;
 
 	void Awake () {
-		int randomBalloon = UnityEngine.Random.Range(0,balloonSprites.Length);
+		int randomBalloon = Random.Range(0,balloonSprites.Length);
 		mySprite.sprite = balloonSprites[randomBalloon];
 		balloonAnimator.runtimeAnimatorController = balloonAnimators[randomBalloon];
 		if (!transform.parent){
 			boundsCollider.enabled = false;
+            StartCoroutine(((IBasketToBalloon)this).BecomeInvincible());
 			StartCoroutine (FloatUp());
 		}
 	}

@@ -4,15 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class QuitSelector : Selector {
 
-    [SerializeField] WaveUI waveUI;
     [SerializeField] Pauser pauser;
     protected override Vector2 TouchSpot { get { return InputManager.touchSpot; } }
-
-    void Start() {
-        if (waveUI == null) {
-            waveUI = FindObjectOfType<WaveUI>();
-        }
-    }
+    [SerializeField] bool shouldSaveScore;
 
     protected override IEnumerator PressButton() {
         buttonNoise.PlayOneShot(buttonPress);
@@ -21,6 +15,9 @@ public class QuitSelector : Selector {
             yield return null;
         }
         pauser.ResetPause();
+        if (shouldSaveScore) {
+            ScoreSheet.Reporter.ReportScores();
+        }
         SceneManager.LoadScene((int)Scenes.Menu);
         yield return null;
     }

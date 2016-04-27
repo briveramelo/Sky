@@ -35,11 +35,5 @@ public class Bat_Wave : Wave {
 		SpawnBirds(BirdType.Albatross,SpawnPoint(Bool.TossCoin(),lowHeight));
 		yield return StartCoroutine (MassProduce(BirdSpawnDelegates[BirdType.Bat],5));
 		yield return StartCoroutine(WaitFor(allDead,true));
-
-		SpawnBirds(BirdType.DuckLeader,SpawnPoint(right,medHeight));
-		SpawnBirds(BirdType.Eagle,Vector2.zero);
-		//Many more birds will spawn (triggered from eagle)
-		yield return StartCoroutine(WaitFor(allDead,true));
-
 	}
 }

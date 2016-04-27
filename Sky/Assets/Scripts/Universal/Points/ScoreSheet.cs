@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 
 #region Interfaces
 public interface ITallyable {
@@ -20,6 +21,7 @@ public interface IReportable{
 	int GetCounts(CounterType counter, bool currentWave, params BirdType[] birdTypes);
     int GetScore(ScoreType scoreType, bool currentWave, BirdType birdType);
     void ReportScores();
+    IEnumerator DisplayTotal();
 }
 public interface IStreakable{
 	void ReportHit(int spearNumber);
@@ -153,12 +155,15 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 		for (int i=0; i<allCounters.Count; i++){
 			allCounters[(CounterType)i].ResetCurrentCount();
 		}
+        for (int i=0; i<scoreCounters.Count; i++){
+			scoreCounters[(ScoreType)i].ResetCurrentCount();
+		}
 	}
 	#endregion
 
 	#region IReportable
 	int IReportable.GetCount(CounterType counter, bool currentWave, BirdType birdType){
-		return allCounters[counter].GetCount(birdType, currentWave);
+        return allCounters[counter].GetCount(birdType, currentWave);
 	}
 	int IReportable.GetCounts(CounterType counter, bool currentWave, params BirdType[] birdTypes){
 		int total=0;
@@ -180,6 +185,9 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
             StoryScore MyStoryScore = new StoryScore(scoreCounters[ScoreType.Total].GetCount(BirdType.All,false), WaveManager.CurrentWave);
             FindObjectOfType<SaveLoadData>().PromptSave(MyStoryScore);
         }
+    }
+    IEnumerator IReportable.DisplayTotal() {
+        yield return StartCoroutine(FindObjectOfType<WaveUI>().DisplayPoints(false));
     }
 	#endregion
 

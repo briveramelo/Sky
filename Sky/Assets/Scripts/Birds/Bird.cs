@@ -23,7 +23,6 @@ public abstract class Bird : MonoBehaviour, IHurtable {
         birdStats.BirdPosition = transform.position;
 		birdStats.ModifyForStreak(ScoreSheet.Streaker.GetHitStreak());
 		birdStats.ModifyForCombo(spearItems.BirdsHit);
-		birdStats.ModifyForMultiplier();
 		ScoreSheet.Tallier.TallyPoints (ref birdStats);
         ScoreSheet.Tallier.TallyBirdThreat(ref birdStats, BirdThreat.Damage);
         if (birdStats.Health<=0){
@@ -34,9 +33,9 @@ public abstract class Bird : MonoBehaviour, IHurtable {
 	}
 
 	protected virtual int TakeDamage(ref SpearItems spearItems){
-		(Instantiate (guts, transform.position, Quaternion.identity) as GameObject).GetComponent<IBleedable>().GenerateGuts(ref birdStats, spearItems.SpearVelocity);
         int damageDealt = Mathf.Clamp(spearItems.Damage, 0, birdStats.Health);
         birdStats.Health -= damageDealt;
+		(Instantiate (guts, transform.position, Quaternion.identity) as GameObject).GetComponent<IBleedable>().GenerateGuts(ref birdStats, spearItems.SpearVelocity);
         return damageDealt;
     }
 
