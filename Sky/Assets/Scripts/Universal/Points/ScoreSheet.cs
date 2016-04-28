@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
+using GenericFunctions;
 
 #region Interfaces
 public interface ITallyable {
@@ -12,6 +13,7 @@ public interface ITallyable {
 	void TallyPoints(ref BirdStats birdStats);
     void TallyThreat(Threat MyThreat);
     void TallyBirdThreat(ref BirdStats birdStats, BirdThreat MyThreat);
+    void TallyBalloonPoints(Vector2 balloonPosition);
 }
 public interface IResetable{
 	void ResetWaveCounters();
@@ -211,9 +213,24 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
         scoreCounters[ScoreType.Streak].SetCount(birdStats.MyBirdType, birdStats.StreakPoints);
         scoreCounters[ScoreType.Combo].SetCount(birdStats.MyBirdType, birdStats.ComboPoints);
 
-		(Instantiate(points, birdStats.BirdPosition, Quaternion.identity) as GameObject).GetComponent<IDisplayable>().DisplayPoints(birdStats.PointsToAdd);
-		((IDisplayable)scoreBoard).DisplayPoints(((PointCounter)(allCounters[CounterType.Scored])).GetCount(BirdType.All, false));
+        
+        DisplayPoints(birdStats.BirdPosition, birdStats.PointsToAdd);
 	}
+    void ITallyable.TallyBalloonPoints(Vector2 balloonPosition) {
+        int balloonPoints = 1000;
+        ((PointCounter)(allCounters[CounterType.Scored])).SetCount (BirdType.BabyCrow, balloonPoints);
+        scoreCounters[ScoreType.Total].SetCount(BirdType.BabyCrow, balloonPoints);
+
+        DisplayPoints(balloonPosition, balloonPoints);
+    }
+    void DisplayPoints(Vector2 position, int pointsToAdd) {
+        float xClamp = Constants.WorldDimensions.x * .9f;
+        float yClamp = Constants.WorldDimensions.y * .9f;
+        Vector2 spawnPosition = new Vector2 (Mathf.Clamp(position.x, -xClamp, xClamp), Mathf.Clamp(position.y, -yClamp, yClamp));
+
+        (Instantiate(points, spawnPosition, Quaternion.identity) as GameObject).GetComponent<IDisplayable>().DisplayPoints(pointsToAdd);
+		((IDisplayable)scoreBoard).DisplayPoints(((PointCounter)(allCounters[CounterType.Scored])).GetCount(BirdType.All, false));
+    }
 
     void ITallyable.TallyThreat(Threat MyThreat) {
         EmotionalIntensity.ThreatTracker.RaiseThreat(MyThreat);

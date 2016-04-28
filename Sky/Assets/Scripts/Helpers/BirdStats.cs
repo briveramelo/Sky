@@ -22,14 +22,7 @@ public class BirdStats {
 
 	private int damageGutValue;			public int DamageGutValue{get{return damageGutValue;}}
 	private int killGutValue;			public int KillGutValue{get{return killGutValue;}}
-	private Vector2 birdPosition;
-	public Vector2 BirdPosition{get{return birdPosition;}
-		set{
-            float xClamp = Constants.WorldDimensions.x * .9f;
-            float yClamp = Constants.WorldDimensions.y * .9f;
-            birdPosition = new Vector2 (Mathf.Clamp(value.x, -xClamp, xClamp), Mathf.Clamp(value.y, -yClamp, yClamp));
-		}
-	}
+	private Vector2 birdPosition;   	public Vector2 BirdPosition{get{return birdPosition;} set { birdPosition = value; } }
 
 	const int basePointMultiplier =10;
 	public int TotalThreatValue{

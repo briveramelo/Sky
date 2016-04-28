@@ -79,15 +79,26 @@ public class Spear : MonoBehaviour, IThrowable {
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.layer == Constants.birdLayer){
-			DeliverDamage(col);
+            Hit();
+            DeliverDamage(col);
 		}
+        else if (col.gameObject.layer == Constants.balloonFloatingLayer) {
+            Hit();
+            PopBalloon(col);
+        }
 	}
 
-	void DeliverDamage(Collider2D col){
-		birdsHit++;
-		myItems = new SpearItems(spearTipCollider, rigbod.velocity, birdsHit);
-		ScoreSheet.Streaker.ReportHit(mySpearNumber);
+    void PopBalloon(Collider2D col) {
+        col.GetComponent<Balloon>().Pop();
+    }
 
+    void Hit() {
+		birdsHit++;
+        myItems = new SpearItems(spearTipCollider, rigbod.velocity, birdsHit);
+		ScoreSheet.Streaker.ReportHit(mySpearNumber);
+    }
+
+	void DeliverDamage(Collider2D col){
 		IHurtable hurtInterface = col.GetComponent<IHurtable> ();
 		hurtInterface.GetHurt(ref myItems);
 

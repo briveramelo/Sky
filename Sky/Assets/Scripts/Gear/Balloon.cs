@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using GenericFunctions;
+using System.Collections.Generic;
 
 public interface IBasketToBalloon {
 	void DetachFromBasket();
@@ -10,19 +11,20 @@ public interface IBasketToBalloon {
 }
 public class Balloon : MonoBehaviour, IBasketToBalloon{
 
-	[SerializeField] private GameObject rope;
+	[SerializeField] GameObject rope;
 	[SerializeField] PixelPerfectSprite pixelPerfect;
-	[SerializeField] private SpriteRenderer mySprite;
-	[SerializeField] private Sprite[] balloonSprites;
-	[SerializeField] private RuntimeAnimatorController[] balloonAnimators;
-	[SerializeField] private CircleCollider2D balloonCollider;
-	[SerializeField] private CircleCollider2D boundsCollider;
-	[SerializeField] private Animator balloonAnimator;
-	[SerializeField] private AudioSource popNoise;
+	[SerializeField] SpriteRenderer mySprite;
+	[SerializeField] Sprite[] balloonSprites;
+	[SerializeField] RuntimeAnimatorController[] balloonAnimators;
+	[SerializeField] CircleCollider2D balloonCollider;
+	[SerializeField] CircleCollider2D boundsCollider;
+	[SerializeField] Animator balloonAnimator;
+	[SerializeField] AudioSource popNoise;
+    [SerializeField] List<SpriteRenderer> mySprites;
 
-	private int balloonNumber;
-	private float moveSpeed = 0.75f;
-	private float popTime = 30f;
+	int balloonNumber;
+	const float moveSpeed = 0.75f;
+	const float popTime = 30f;
 
 	void Awake () {
 		int randomBalloon = Random.Range(0,balloonSprites.Length);
@@ -55,9 +57,26 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 
 	IEnumerator IBasketToBalloon.BecomeInvincible(){
 		balloonCollider.enabled = false;
-		yield return new WaitForSeconds(1.5f);
+        yield return StartCoroutine(FlashColor(1.5f));
 		balloonCollider.enabled = true;
 	}
+
+    IEnumerator FlashColor(float invincibleTime) {
+        bool isVisible = false;
+        Color invisible = Color.clear;
+        Color visible = Color.white;
+        float timePassed = 0f;
+        float invisibleTime = 0.1f;
+        float visibleTime = 0.2f;
+        while (timePassed<invincibleTime) {
+            mySprites.ForEach(sprite => sprite.color = isVisible ? visible : invisible);
+            float timeToWait = isVisible ? visibleTime : invisibleTime;
+            yield return new WaitForSeconds(timeToWait);
+            timePassed += timeToWait;
+            isVisible = !isVisible;
+        }
+        mySprites.ForEach(sprite => sprite.color = visible);
+    } 
 	#endregion
 
 	IEnumerator FloatUp(){
@@ -72,12 +91,12 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (balloonCollider.isActiveAndEnabled && col.gameObject.layer == Constants.birdLayer || col.gameObject.layer == Constants.spearLayer){//bird layer pops free balloon
+		if (balloonCollider.isActiveAndEnabled && col.gameObject.layer == Constants.birdLayer){//bird layer pops free balloon
 			Pop();
 		}
 	}
 
-	void Pop(){
+	public void Pop(){
         if (gameObject.layer == Constants.balloonLayer) {
             ((IBalloonToBasket)(Basket.Instance)).ReportPoppedBalloon(this);
 		    Handheld.Vibrate ();
@@ -85,6 +104,9 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 		    GameCamera.Instance.ShakeTheCamera();
 		    StopAllCoroutines(); //specifically, stop the balloon from floating up
 		    transform.parent = null;
+        }
+        else {
+            ScoreSheet.Tallier.TallyBalloonPoints(transform.position);
         }
 		balloonCollider.enabled = false;
 		boundsCollider.enabled = false;

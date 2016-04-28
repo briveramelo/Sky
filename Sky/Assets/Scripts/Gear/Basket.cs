@@ -27,11 +27,15 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 	[SerializeField] BoxCollider2D basketCollider;
     [SerializeField] Collider2D[] boundingColliders;
     [SerializeField] GameObject balloonReplacement;
+    [SerializeField] List<SpriteRenderer> mySprites;
+    [SerializeField] AudioSource myAudio;
+    [SerializeField] AudioClip invincible, ready, rebirth;
 
     [SerializeField] BasketEngine basketEngine;
 
 	private Vector2[] relativeBalloonPositions;
     int continuesRemaining =1;
+    const float invincibleTime = 1.5f;
 
 	void Awake () {
 		Instance = this;
@@ -53,6 +57,7 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 		balloons.Remove(poppedBalloon);
         ScoreSheet.Tallier.TallyThreat(Threat.BalloonPopped);
 		GrantBalloonInvincibility();
+        PlayRecoverySounds();
 		if (balloons.Count<1){
 			StartCoroutine (FallToDeath());
 		}
@@ -63,7 +68,33 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 		for (int i=0; i<balloons.Count; i++){
 			StartCoroutine (balloons[i].BecomeInvincible());
 		}
+        StartCoroutine(FlashColor(invincibleTime));
 	}
+
+    void PlayRecoverySounds() {
+        myAudio.PlayOneShot(invincible);
+        if (balloons.Count>=1) {
+            myAudio.PlayDelayed(invincible.length); // plays "ready" clip
+        }
+    }
+
+    IEnumerator FlashColor(float invincibleTime) {
+        bool isVisible = false;
+        Color invisible = Color.clear;
+        Color visible = Color.white;
+        float timePassed = 0f;
+        float invisibleTime = 0.1f;
+        float visibleTime = 0.2f;
+        while (timePassed<invincibleTime) {
+            mySprites.ForEach(sprite => sprite.color = isVisible ? visible : invisible);
+            float timeToWait = isVisible ? visibleTime : invisibleTime;
+            yield return new WaitForSeconds(timeToWait);
+            timePassed += timeToWait;
+            isVisible = !isVisible;
+        }
+        mySprites.ForEach(sprite => sprite.color = visible);
+        
+    }
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.layer == Constants.balloonFloatingLayer){
@@ -125,7 +156,7 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
         rigbod.gravityScale = 1;
         ((IDie)basketEngine).Die();
         boundingColliders.ToList().ForEach(col => col.enabled = false);
-        yield return new WaitForSeconds (1f);
+        yield return new WaitForSeconds (invincibleTime);
         if (continuesRemaining>0) {
             continuesRemaining--;
             FindObjectOfType<Continuer>().DisplayContinueMenu(true);
@@ -139,6 +170,7 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
     public void ComeBackToLife() {
         rigbod.gravityScale = 0;
         ((IDie)basketEngine).Rebirth();
+        PlayRebirthSounds();
         transform.position = Vector3.zero;
         rigbod.velocity = Vector2.zero;
         boundingColliders.ToList().ForEach(col => col.enabled = true);
@@ -148,5 +180,9 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
             CollectNewBalloon(newBalloon);
         }
         GrantBalloonInvincibility();
+    }
+
+    void PlayRebirthSounds() {
+        myAudio.PlayOneShot(rebirth);
     }
 }

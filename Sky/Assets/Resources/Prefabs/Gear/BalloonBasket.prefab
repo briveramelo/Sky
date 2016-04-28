@@ -798,7 +798,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -820,7 +820,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!82 &8229386
 AudioSource:
   m_ObjectHideFlags: 1
@@ -830,7 +830,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b673a4a7ecb9844a88d71879cffffa9b, type: 3}
+  m_audioClip: {fileID: 8300000, guid: b357caddb32f63643880763c4f33680d, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1228,6 +1228,9 @@ MonoBehaviour:
   boundsCollider: {fileID: 5845714}
   balloonAnimator: {fileID: 9543104}
   popNoise: {fileID: 8267634}
+  mySprites:
+  - {fileID: 21219614}
+  - {fileID: 21251440}
 --- !u!114 &11442804
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1278,6 +1281,9 @@ MonoBehaviour:
   boundsCollider: {fileID: 5878826}
   balloonAnimator: {fileID: 9584112}
   popNoise: {fileID: 8224834}
+  mySprites:
+  - {fileID: 21253978}
+  - {fileID: 21281734}
 --- !u!114 &11446756
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1340,6 +1346,9 @@ MonoBehaviour:
   boundsCollider: {fileID: 5866876}
   balloonAnimator: {fileID: 9582814}
   popNoise: {fileID: 8224302}
+  mySprites:
+  - {fileID: 21245520}
+  - {fileID: 21269140}
 --- !u!114 &11457648
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1462,6 +1471,14 @@ MonoBehaviour:
   - {fileID: 6179780}
   - {fileID: 5847812}
   balloonReplacement: {fileID: 125308, guid: 843c1b0a79ab54d09845b45382dae317, type: 2}
+  mySprites:
+  - {fileID: 21246820}
+  - {fileID: 21204402}
+  - {fileID: 21280764}
+  myAudio: {fileID: 8229386}
+  invincible: {fileID: 8300000, guid: 54110b6b699257a4a9403255aa329c6f, type: 3}
+  ready: {fileID: 8300000, guid: b357caddb32f63643880763c4f33680d, type: 3}
+  rebirth: {fileID: 8300000, guid: cf8039895164b90438877f0da518e3a5, type: 3}
   basketEngine: {fileID: 11425082}
 --- !u!114 &11497180
 MonoBehaviour:

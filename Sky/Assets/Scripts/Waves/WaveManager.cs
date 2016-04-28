@@ -17,7 +17,19 @@ public class WaveManager : MonoBehaviour {
     static WaveName currentWave; public static WaveName CurrentWave {get { return currentWave; } }
 
     void OnLevelWasLoaded(int level) {
-        switch ((Scenes)level) {
+        ChooseMode((Scenes)level);
+    }
+
+	void Awake(){
+        storyWaveCalls = (IWaveRunnable[])storyWaves;
+        endlessWaveCall = (IWaveRunnable)endlessWave;
+        myWaveUI = (IWaveUI)waveUI;
+        StopAllCoroutines();
+        ChooseMode((Scenes)SceneManager.GetActiveScene().buildIndex);
+	}
+
+    void ChooseMode(Scenes loadedScene) {
+        switch (loadedScene) {
             case Scenes.Menu:
                 StopAllCoroutines();
                 break;
@@ -31,12 +43,6 @@ public class WaveManager : MonoBehaviour {
                 break;
         }
     }
-
-	void Awake(){
-        storyWaveCalls = (IWaveRunnable[])storyWaves;
-        endlessWaveCall = (IWaveRunnable)endlessWave;
-        myWaveUI = (IWaveUI)waveUI;
-	}
 
     IEnumerator RunStoryWaves() {
 		foreach (IWaveRunnable wave in storyWaveCalls){

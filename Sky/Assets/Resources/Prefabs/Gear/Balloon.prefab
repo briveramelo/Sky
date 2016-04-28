@@ -243,8 +243,12 @@ MonoBehaviour:
   - {fileID: 9100000, guid: c28186469c6a74be68cca4ae1417b5da, type: 2}
   - {fileID: 9100000, guid: e46fda12a9cd34991b0e8ac5782f7b54, type: 2}
   balloonCollider: {fileID: 5843708}
+  boundsCollider: {fileID: 0}
   balloonAnimator: {fileID: 9507158}
   popNoise: {fileID: 8277244}
+  mySprites:
+  - {fileID: 21284144}
+  - {fileID: 21250204}
 --- !u!114 &11435340
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -100,7 +100,6 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
 						jaiFinger =-1;
 					}
                     else {
-                        Debug.Log("Ended");
                         enders.ForEach(ender=> ender.OnTouchEnd());
                     }
 				}

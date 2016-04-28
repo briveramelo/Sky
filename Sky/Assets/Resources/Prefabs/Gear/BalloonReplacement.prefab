@@ -279,6 +279,9 @@ MonoBehaviour:
   boundsCollider: {fileID: 5854780}
   balloonAnimator: {fileID: 9508006}
   popNoise: {fileID: 8260608}
+  mySprites:
+  - {fileID: 21250480}
+  - {fileID: 21291662}
 --- !u!114 &11498238
 MonoBehaviour:
   m_ObjectHideFlags: 1

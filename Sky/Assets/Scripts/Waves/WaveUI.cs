@@ -25,8 +25,8 @@ public enum WaveName {
 }
 
 public enum TextAnimState {
-    Idle_OnScreen=-1,
-    Idle_Offscreen =0,
+    Idle_Offscreen =-1,
+    Idle_OnScreen =0,
     LeftAcross = 1,
     RightAcross = 2,
     RightCenter =4
@@ -77,10 +77,12 @@ public class WaveUI : MonoBehaviour, IWaveUI {
 
     IEnumerator IWaveUI.AnimateWaveStart(WaveName waveName) {
         yield return StartCoroutine(DisplayTip());
+        yield return null;
         yield return StartCoroutine(DisplayWaveName(waveName));
     }
     IEnumerator IWaveUI.AnimateWaveEnd(WaveName waveName) {
         yield return StartCoroutine (DisplayWaveComplete());
+        yield return null;
         yield return StartCoroutine (DisplayPoints(true));
     }
 
@@ -94,7 +96,6 @@ public class WaveUI : MonoBehaviour, IWaveUI {
         if (NewTips.Count==0) {
             NewTips = System.Enum.GetValues(typeof(Tip)).Cast<Tip>().ToList();
         }
-
         TitleA.SetInteger("AnimState", (int)TextAnimState.Idle_OnScreen);
         SubTitleA.SetInteger("AnimState", (int)TextAnimState.Idle_OnScreen);
 

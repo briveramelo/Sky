@@ -21,8 +21,8 @@ public static class Tips {
         {Tip.Crows, "Crows protect their young, viciously" },
         {Tip.Ducks, "Ducks follow their leader, but they’re lost without one" },
         {Tip.Bats, "Don’t move too quickly with a swarm of bats around- they might pop your balloons" },
-        {Tip.BirdOfParadise, "Killing a Bird of Paradise brings an extra balloon" },
-        {Tip.Tentacles, "Strike The Might Tentacles rapidly to free yourself from his grasp" },
+        {Tip.BirdOfParadise, "Kill a Bird of Paradise to gain an extra balloon" },
+        {Tip.Tentacles, "Strike The Mighty Tentacles rapidly to free yourself from his grasp" },
         {Tip.Pelicans, "Move quickly sideways to avoid a Pelican dive bomb" },
         {Tip.Shit, "Wipe your screen to clean off birdshit" }
     };
