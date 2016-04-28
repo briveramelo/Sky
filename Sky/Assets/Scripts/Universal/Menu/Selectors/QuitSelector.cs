@@ -9,7 +9,7 @@ public class QuitSelector : Selector {
     [SerializeField] bool shouldSaveScore;
 
     protected override IEnumerator PressButton() {
-        buttonNoise.PlayOneShot(buttonPress);
+        AudioManager.PlayAudio(buttonPress);
         float startTime = Time.unscaledTime;
         while (Time.unscaledTime - startTime < 1f) {
             yield return null;

@@ -3,7 +3,6 @@ using System.Collections;
 
 public abstract class Selector : MonoBehaviour, IEnd {
 
-    [SerializeField] protected AudioSource buttonNoise;
     [SerializeField] protected AudioClip buttonPress;
 
     [SerializeField, Range(0,2)] protected float buttonRadius;

@@ -19,8 +19,8 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 	[SerializeField] CircleCollider2D balloonCollider;
 	[SerializeField] CircleCollider2D boundsCollider;
 	[SerializeField] Animator balloonAnimator;
-	[SerializeField] AudioSource popNoise;
     [SerializeField] List<SpriteRenderer> mySprites;
+    [SerializeField] AudioClip pop;
 
 	int balloonNumber;
 	const float moveSpeed = 0.75f;
@@ -111,7 +111,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 		balloonCollider.enabled = false;
 		boundsCollider.enabled = false;
 		balloonAnimator.SetInteger("AnimState",1);
-		popNoise.Play ();
+        AudioManager.PlayAudio(pop);
 		Destroy (rope);
 		Destroy (gameObject,Constants.time2Destroy);
 	}

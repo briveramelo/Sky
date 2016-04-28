@@ -7,7 +7,7 @@ public class BackSelector : Selector {
     protected override Vector2 TouchSpot { get { return MenuInputHandler.touchSpot; } }
 
     protected override IEnumerator PressButton() {
-        buttonNoise.PlayOneShot(buttonPress);
+        AudioManager.PlayAudio(buttonPress);
         SceneManager.LoadScene((int)Scenes.Menu);
         yield return null;
     }

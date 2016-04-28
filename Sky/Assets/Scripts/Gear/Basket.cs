@@ -28,7 +28,6 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
     [SerializeField] Collider2D[] boundingColliders;
     [SerializeField] GameObject balloonReplacement;
     [SerializeField] List<SpriteRenderer> mySprites;
-    [SerializeField] AudioSource myAudio;
     [SerializeField] AudioClip invincible, ready, rebirth;
 
     [SerializeField] BasketEngine basketEngine;
@@ -49,7 +48,6 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 			balloons[i].BalloonNumber = i;
 			relativeBalloonPositions[i] = balloonScripts[i].transform.position - Constants.jaiTransform.position;
 		}
-
 	}
 
 	#region IBalloonToBasket
@@ -72,9 +70,9 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 	}
 
     void PlayRecoverySounds() {
-        myAudio.PlayOneShot(invincible);
+        AudioManager.PlayAudio(invincible);
         if (balloons.Count>=1) {
-            myAudio.PlayDelayed(invincible.length); // plays "ready" clip
+            AudioManager.PlayReadyDelayed(invincible.length);
         }
     }
 
@@ -183,6 +181,6 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
     }
 
     void PlayRebirthSounds() {
-        myAudio.PlayOneShot(rebirth);
+        AudioManager.PlayAudio(rebirth);
     }
 }

@@ -7,7 +7,6 @@ public class Pauser : MonoBehaviour, IBegin {
     static Vector2 pauseSpot;   public static Vector2 PauseSpot {get { return pauseSpot; } }
 	public static readonly float pauseRadius = 0.5f;
 
-    [SerializeField] AudioSource pauseSounds;
 	[SerializeField] AudioClip pause, unPause;
     [SerializeField] GameObject joystick, pauseMenu, pauseButtonCanvas;
 
@@ -26,14 +25,14 @@ public class Pauser : MonoBehaviour, IBegin {
 
     void Pause() {
         paused = true;
-        pauseSounds.PlayOneShot(pause);
+        AudioManager.PlayAudio(pause);
         Time.timeScale = 0f;
         ShowPauseMenu(true);
     }
 
     public void UnPause() {
         paused = false;
-        pauseSounds.PlayOneShot(unPause);
+        AudioManager.PlayAudio(unPause);
         Time.timeScale = 1f;
         ShowPauseMenu(false);
     }

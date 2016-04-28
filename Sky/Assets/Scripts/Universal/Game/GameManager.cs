@@ -1,13 +1,8 @@
 ﻿using UnityEngine;
 
-public interface IScoreMenu {
-    void SetScoreMenu(GameMode ScoreMenu);
-}
-
-public class GameManager : MonoBehaviour, IScoreMenu {
+public class GameManager : MonoBehaviour {
 
     public static GameManager Instance;
-    static GameMode scoreMenu; public static GameMode ScoreMenu {get { return scoreMenu; } }
 
     [SerializeField] WaveManager waveManager;
 
@@ -19,9 +14,5 @@ public class GameManager : MonoBehaviour, IScoreMenu {
         else {
             Destroy(gameObject);
         }
-    }
-
-    void IScoreMenu.SetScoreMenu(GameMode ScoreMenu) {
-        scoreMenu = ScoreMenu;
     }
 }

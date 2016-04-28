@@ -114,6 +114,7 @@
     <Compile Include="Assets\Scripts\PixelPerfect\Scripts\Internal\PixelPerfectObject.cs" />
     <Compile Include="Assets\Scripts\PixelPerfect\Scripts\PixelPerfectCamera.cs" />
     <Compile Include="Assets\Scripts\PixelPerfect\Scripts\PixelPerfectSprite.cs" />
+    <Compile Include="Assets\Scripts\Universal\Game\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Universal\Game\GameCamera.cs" />
     <Compile Include="Assets\Scripts\Universal\Game\GameClock.cs" />
     <Compile Include="Assets\Scripts\Universal\Game\GameManager.cs" />

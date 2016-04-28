@@ -21,7 +21,7 @@ public class WaveSelector : Selector {
     }
 
     protected override IEnumerator PressButton() {
-        buttonNoise.PlayOneShot(buttonPress);
+        AudioManager.PlayAudio(buttonPress);
         //inputManager.IsFrozen = true;
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene((int)MyWaveType);

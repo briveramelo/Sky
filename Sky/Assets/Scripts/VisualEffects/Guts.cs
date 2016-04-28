@@ -7,10 +7,12 @@ public interface IBleedable{
 }
 public class Guts : MonoBehaviour, IBleedable {
 
-	[SerializeField] private GameObject[] gutSplosions;
+	[SerializeField] GameObject[] gutSplosions;
+    [SerializeField] AudioClip gutSound;
 
 	void Awake(){
-		Destroy(gameObject,Constants.time2Destroy);
+        AudioManager.PlayAudio(gutSound);
+        Destroy(gameObject,Constants.time2Destroy);
 	}
 
 	void IBleedable.GenerateGuts(ref BirdStats birdStats, Vector2 gutDirection){

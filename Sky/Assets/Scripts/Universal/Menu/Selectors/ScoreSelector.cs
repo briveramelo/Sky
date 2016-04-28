@@ -10,7 +10,7 @@ public class ScoreSelector : Selector{
     protected override Vector2 TouchSpot {get { return MenuInputHandler.touchSpot; } }
 
     protected override IEnumerator PressButton() {
-        buttonNoise.PlayOneShot(buttonPress);
+        AudioManager.PlayAudio(buttonPress);
         theScoreDisplayer.DisplayStats(MyGameMode);
         yield return null;
     }
