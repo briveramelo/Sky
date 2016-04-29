@@ -53,12 +53,12 @@ namespace GenericFunctions{
 		public const int teleporterLayer = 17;
 		public const int worldBoundsLayer = 18;
 		public const int pooNuggetLayer = 19;
-		public const int balloonBoundsLayer = 20;
+	    public const int balloonBoundsLayer = 20;
+        public const int shoebillHornLayer = 21;
+        public const int collectableWeaponLayer = 22;
 
-		public static Vector2 stockSpearPosition = new Vector3 (0.14f, 0.12f);
-		public static Vector2 balloonOffset = new Vector2 (0f, 1.6f);
-		public static Vector2 seagullOffset = balloonOffset + Vector2.up * 1.25f;
 		public const float time2Destroy = 2f;
 		public const float time2ThrowSpear = 0.333333f;
+        public const float time2StrikeLightning = 0.5f;
 	}
 }

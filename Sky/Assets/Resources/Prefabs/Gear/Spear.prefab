@@ -57,7 +57,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176796}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -60.86951, y: -199.93376, z: 0}
+  m_LocalPosition: {x: -1.1531062, y: -0.5678773, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 452470}
@@ -113,11 +113,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc1281aa9fb149dfaf234391febc1fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackCollider: {fileID: 5849666}
+  useSound: {fileID: 8300000, guid: a383e95bfe8b17148b55737e5a073673, type: 3}
   pixelRotationScript: {fileID: 11457812}
   pixelPerfectSpriteScript: {fileID: 11484084}
   spearTipParentTransform: {fileID: 452470}
   spearTipTransform: {fileID: 497350}
-  spearTipCollider: {fileID: 5849666}
 --- !u!114 &11457812
 MonoBehaviour:
   m_ObjectHideFlags: 1

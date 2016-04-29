@@ -578,7 +578,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e34f83c171d8dd24a9c8e2003b016fbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonNoise: {fileID: 1118760578}
   buttonPress: {fileID: 8300000, guid: 9a254ed0f883042ef93c6df9f2cbf93a, type: 3}
   buttonRadius: 0.66
 --- !u!1001 &1337498549
@@ -806,10 +805,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2f13beb69cca04aae86010610ed755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonNoise: {fileID: 1340570972}
   buttonPress: {fileID: 8300000, guid: 9a254ed0f883042ef93c6df9f2cbf93a, type: 3}
   buttonRadius: 1.3
-  MyWaveType: 1
+  MyWaveType: 2
 --- !u!1 &1737263970
 GameObject:
   m_ObjectHideFlags: 0
@@ -1019,10 +1017,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2f13beb69cca04aae86010610ed755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonNoise: {fileID: 1887610394}
   buttonPress: {fileID: 8300000, guid: 9a254ed0f883042ef93c6df9f2cbf93a, type: 3}
   buttonRadius: 1.3
-  MyWaveType: 2
+  MyWaveType: 3
 --- !u!114 &1887610397
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -28,7 +28,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 
 	[SerializeField] private Transform tipTransform;
 	[SerializeField] private Collider2D tipCollider;
-	private SpearItems fakeSpear = new SpearItems();
+	private WeaponStats fakeWeapon = new WeaponStats();
 
 	private Vector2 homeSpot = new Vector2 (0f,-.75f - Constants.WorldDimensions.y);
 	
@@ -115,7 +115,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 	#region IStabbable
 	void IStabbable.GetStabbed(){
         stabsTaken++;
-		TakeDamage(ref fakeSpear);
+		TakeDamage(ref fakeWeapon);
 		if (stabsTaken>=stabs2Retreat){
             ReleaseBasket();
         }
@@ -147,8 +147,8 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 	}
 
 	#region TakeDamage
-	protected override int TakeDamage(ref SpearItems spearItems){
-		bool holding = spearItems.SpearVelocity.x==0;
+	protected override int TakeDamage(ref WeaponStats weaponStats){
+		bool holding = weaponStats.Velocity.x==0;
 		Vector2 spawnSpot;
 		Vector2 gutVel;
         int damageDealt;
@@ -158,9 +158,9 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
             damageDealt = 0;
         }
 		else{
-			gutVel = spearItems.SpearVelocity;
-			spawnSpot = birdCollider.bounds.ClosestPoint(spearItems.SpearCollider.transform.position);
-            damageDealt = spearItems.Damage;
+			gutVel = weaponStats.Velocity;
+			spawnSpot = birdCollider.bounds.ClosestPoint(weaponStats.WeaponCollider.transform.position);
+            damageDealt = weaponStats.Damage;
 		}
 
         birdStats.Health -= damageDealt;

@@ -7,21 +7,24 @@ using System.Linq;
 public interface IWaveUI {
     IEnumerator AnimateWaveStart(WaveName waveName);
     IEnumerator AnimateWaveEnd(WaveName waveName);
+    IEnumerator AnimateStoryStart();
     IEnumerator AnimateStoryEnd();
+    void GrabbedWeapon();
 }
 
 #region enums
 public enum WaveName {
-    Pigeon =0,
-    Duck =1,
-    Pigeuck =2,
-    Seagull =3,
-    Pelican = 4,
-    Shoebill = 5,
-    Bat = 6,
-    Eagle =7,
-    Complete = 8,
-    Endless = 9,
+    Intro = 0,
+    Pigeon =1,
+    Duck =2,
+    Pigeuck =3,
+    Seagull =4,
+    Pelican = 5,
+    Shoebill = 6,
+    Bat = 7,
+    Eagle =8,
+    Complete = 9,
+    Endless = 10,
 }
 
 public enum TextAnimState {
@@ -43,6 +46,7 @@ public class WaveUI : MonoBehaviour, IWaveUI {
 
 	[SerializeField] Text Title, SubTitle, PointTotal, Streak, Combo;
     [SerializeField] Animator TitleA, SubTitleA, PointTotalA, StreakA, ComboA;
+    [SerializeField] GameObject joystickHelp, swipeHelp;
 
     #region Load Level
     void OnLevelWasLoaded(int level) {
@@ -63,16 +67,40 @@ public class WaveUI : MonoBehaviour, IWaveUI {
 
     #region Wave Subtitles
     Dictionary<WaveName, string> WaveSubtitles = new Dictionary<WaveName, string>() {
-        {WaveName.Pigeon,       "Rats of the sky" },
-        {WaveName.Duck,         "Simple but foul beasts" },
-        {WaveName.Pigeuck,      "There will be blood" },
+        {WaveName.Intro,        "Rescue your son!" },
+        {WaveName.Pigeon,       "Clear out the sky rats" },
+        {WaveName.Duck,         "Carve through these meatsacks" },
+        {WaveName.Pigeuck,      "Get bloody" },
         {WaveName.Seagull,      "Prepare for a shitstorm" },
-        {WaveName.Pelican,      "Divebombing" },
-        {WaveName.Shoebill,     "Dumb as rocks, and they hit just as hard" },
-        {WaveName.Bat,          "Erratic " },
-        {WaveName.Eagle,        "His time has come..." },
+        {WaveName.Pelican,      "Watch your head" },
+        {WaveName.Shoebill,     "Hold on to your butts!" },
+        {WaveName.Bat,          "Tread lightly" },
+        {WaveName.Eagle,        "Make him pay..." },
         {WaveName.Endless,      "Indulge yourself" }
     };
+    #endregion
+
+    #region Animate Story Start
+    bool hasWeapon = false;
+    void IWaveUI.GrabbedWeapon() {
+        hasWeapon = true;
+    }
+    IEnumerator IWaveUI.AnimateStoryStart() {
+        if (!hasWeapon) {
+            yield return new WaitForSeconds(1f);
+            yield return ShowHelpTip(activate=>joystickHelp.SetActive(activate));
+            while (!hasWeapon) {
+                yield return null;
+            }
+            yield return ShowHelpTip(activate=>swipeHelp.SetActive(activate));
+        }
+    }
+
+    IEnumerator ShowHelpTip(System.Action<bool> lambda) {
+        lambda(true);
+        yield return new WaitForSeconds(5.5f);
+        lambda(false);
+    }
     #endregion
 
     IEnumerator IWaveUI.AnimateWaveStart(WaveName waveName) {
@@ -140,6 +168,8 @@ public class WaveUI : MonoBehaviour, IWaveUI {
         ComboA.SetInteger("AnimState", (int)PointAnimState.Poof);
         yield return new WaitForSeconds(2f);
     }
+    #endregion
+
     IEnumerator IWaveUI.AnimateStoryEnd() {
         Title.text = "Story Complete";
         TitleA.SetInteger("AnimState", (int)TextAnimState.RightCenter);
@@ -148,5 +178,4 @@ public class WaveUI : MonoBehaviour, IWaveUI {
             yield return null;
         }
     }
-    #endregion
 }

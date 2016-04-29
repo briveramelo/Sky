@@ -206,7 +206,7 @@ MonoBehaviour:
   mySprites:
   - {fileID: 21250480}
   - {fileID: 21291662}
-  pop: {fileID: 8300000, guid: b673a4a7ecb9844a88d71879cffffa9b, type: 3}
+  pop: {fileID: 8300000, guid: 8029661f41e3e9d468d5c91e6795306d, type: 3}
 --- !u!114 &11498238
 MonoBehaviour:
   m_ObjectHideFlags: 1

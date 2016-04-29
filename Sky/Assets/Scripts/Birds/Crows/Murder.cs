@@ -53,6 +53,7 @@ public class Murder : MonoBehaviour, ICrowToMurder {
 
 	void ICrowToMurder.ReportCrowDown(IMurderToCrow crowDown){
 		crowsAlive.Remove(crowDown);
+        crowsToSwoop.Remove(crowDown);
 		if (crowsAlive.Count==0){
 			StopAllCoroutines();
 			Destroy(gameObject);

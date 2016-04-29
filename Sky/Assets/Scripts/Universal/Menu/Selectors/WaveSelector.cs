@@ -4,9 +4,14 @@ using UnityEngine.SceneManagement;
 
 public enum Scenes {
     Menu = 0,
-    Story =1,
-    Endless =2,
-    Scores =3,
+    Intro =1,
+    Story =2,
+    Endless =3,
+    Scores =4,
+}
+public enum WaveType {
+    Story = 2,
+    Endless = 3
 }
 
 public class WaveSelector : Selector {

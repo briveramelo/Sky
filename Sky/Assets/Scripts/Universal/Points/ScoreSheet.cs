@@ -46,31 +46,42 @@ public enum ScoreType {
 
 public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IStreakable {
 
+    void OnLevelWasLoaded(int level) {
+        if (level == (int)Scenes.Story || level == (int)Scenes.Endless) {
+            ResetHitStreak();
+        }
+    }
+
 	#region IStreakable
 	static int hitStreak;
 	static int tempStreak;
-	static int lastSpearNumber;
-	void IStreakable.ReportHit(int spearNumber){
-		int spearNumberDif= spearNumber-lastSpearNumber;
+	static int lastHitWeaponNumber;
+    void ResetHitStreak() {
+        hitStreak = 0;
+        tempStreak = 0;
+        lastHitWeaponNumber = 0;
+    }
+	void IStreakable.ReportHit(int newHitWeaponNumber){
+        int weaponNumberDif= newHitWeaponNumber-lastHitWeaponNumber;
 
-		if (spearNumberDif==0 || spearNumberDif==1){
+		if (weaponNumberDif==0 || weaponNumberDif==1){
 			//continue the streeeeeaaaakkkk!
 			hitStreak++;
-			if (spearNumberDif==1){
+			if (weaponNumberDif==1){
 				tempStreak = 1;
 			}
 		}
-		else if (spearNumberDif>1){
+		else if (weaponNumberDif>1){
 			//c-c-c-combo breaker
 			tempStreak = hitStreak;
 			hitStreak = 1;
 		}
-		else if (spearNumberDif<0){
+		else if (weaponNumberDif<0){
 			//Combo RESTORATION!
 			hitStreak = tempStreak+1;
 			//rectify points
 		}
-		lastSpearNumber = spearNumber;
+		lastHitWeaponNumber = newHitWeaponNumber;
 	}
 	int IStreakable.GetHitStreak(){
 		return hitStreak;

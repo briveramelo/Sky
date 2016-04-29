@@ -2,7 +2,7 @@
 using System.Collections;
 
 public interface IHurtable {
-	void GetHurt(ref SpearItems spearItems);
+	void GetHurt(ref WeaponStats weaponStats);
 }
 
 public abstract class Bird : MonoBehaviour, IHurtable {
@@ -18,11 +18,11 @@ public abstract class Bird : MonoBehaviour, IHurtable {
         ScoreSheet.Tallier.TallyBirdThreat(ref birdStats, BirdThreat.Spawn);
     }
 
-	void IHurtable.GetHurt(ref SpearItems spearItems) {
-        birdStats.DamageTaken = TakeDamage(ref spearItems);
+	void IHurtable.GetHurt(ref WeaponStats weaponStats) {
+        birdStats.DamageTaken = TakeDamage(ref weaponStats);
         birdStats.BirdPosition = transform.position;
 		birdStats.ModifyForStreak(ScoreSheet.Streaker.GetHitStreak());
-		birdStats.ModifyForCombo(spearItems.BirdsHit);
+		birdStats.ModifyForCombo(weaponStats.BirdsHit);
 		ScoreSheet.Tallier.TallyPoints (ref birdStats);
         ScoreSheet.Tallier.TallyBirdThreat(ref birdStats, BirdThreat.Damage);
         if (birdStats.Health<=0){
@@ -32,10 +32,10 @@ public abstract class Bird : MonoBehaviour, IHurtable {
 		}
 	}
 
-	protected virtual int TakeDamage(ref SpearItems spearItems){
-        int damageDealt = Mathf.Clamp(spearItems.Damage, 0, birdStats.Health);
+	protected virtual int TakeDamage(ref WeaponStats weaponStats){
+        int damageDealt = Mathf.Clamp(weaponStats.Damage, 0, birdStats.Health);
         birdStats.Health -= damageDealt;
-		(Instantiate (guts, transform.position, Quaternion.identity) as GameObject).GetComponent<IBleedable>().GenerateGuts(ref birdStats, spearItems.SpearVelocity);
+		(Instantiate (guts, transform.position, Quaternion.identity) as GameObject).GetComponent<IBleedable>().GenerateGuts(ref birdStats, weaponStats.Velocity);
         return damageDealt;
     }
 

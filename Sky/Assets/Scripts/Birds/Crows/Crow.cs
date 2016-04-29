@@ -42,6 +42,7 @@ public class Crow : Bird, IMurderToCrow {
 
 	bool isKiller;
 	bool readyToFly = true;
+    bool hasRequestedNext;
     public int myCrowNum;
 	#endregion
 
@@ -54,7 +55,8 @@ public class Crow : Bird, IMurderToCrow {
         commitDistance = isKiller ? commitDistance : 3f;
 	}
 	void IMurderToCrow.TakeFlight(){
-		readyToFly = false;
+        hasRequestedNext = false;
+        readyToFly = false;
 		birdCollider.enabled = true;
 		StartCoroutine ( TargetBalloons() );
 		StartCoroutine ( RequestNextCrow());
@@ -68,6 +70,7 @@ public class Crow : Bird, IMurderToCrow {
 		}
 		yield return null;
 		murderInterface.SendNextCrow();
+        hasRequestedNext = true;
 	}
 
 	IEnumerator TargetBalloons(){
@@ -128,6 +131,9 @@ public class Crow : Bird, IMurderToCrow {
 
 	protected override void DieUniquely(){
 		murderInterface.ReportCrowDown((IMurderToCrow)this);
+        if (!hasRequestedNext) {
+            murderInterface.SendNextCrow();
+        }
 		base.DieUniquely();
 	}
 }
