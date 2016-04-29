@@ -16,13 +16,17 @@ public class Albatross : Bird {
 		transform.FaceForward(rigbod.velocity.x<0);
 	}
 		
-	protected override void TakeDamage (ref SpearItems spearItems){
-		float hitHeight = birdCollider.bounds.ClosestPoint(spearItems.SpearCollider.transform.position).y;
-		if (spearItems.SpearVelocity.y>0 && hitHeight<transform.position.y){ //kill albatross with a tactical shot to the underbelly
-			birdStats.Health = 0;
-			//super kill!
-			//take a bite out of that soft, vulnerable tummy
-		}
-		base.TakeDamage(ref spearItems);
+	protected override int TakeDamage (ref WeaponStats weaponStats){
+		float hitHeight = birdCollider.bounds.ClosestPoint(weaponStats.WeaponCollider.transform.position).y;
+        int damageDealt;
+        if (weaponStats.Velocity.y > 0 && hitHeight < transform.position.y){ //kill albatross with a tactical shot to the underbelly
+            damageDealt = birdStats.Health;
+        }
+        else {
+            damageDealt = weaponStats.Damage;
+        }
+        birdStats.Health -= damageDealt;
+        (Instantiate(guts, transform.position, Quaternion.identity) as GameObject).GetComponent<IBleedable>().GenerateGuts(ref birdStats, weaponStats.Velocity);
+        return damageDealt;
 	}
 }

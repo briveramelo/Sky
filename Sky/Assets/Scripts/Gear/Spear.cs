@@ -3,36 +3,16 @@ using System.Collections;
 using PixelArtRotation;
 using GenericFunctions;
 
-public interface IThrowable {
-	void FlyFree(Vector2 throwDir);
-}
+public class Spear : Weapon, IUsable {
 
-public class SpearItems{
-	public SpearItems(Collider2D spearCollider, Vector2 spearVelocity, int birdsHit){
-		this.spearCollider = spearCollider;
-		this.spearVelocity = spearVelocity;
-		this.birdsHit = birdsHit;
-	}
-	public SpearItems(){}
-	Collider2D spearCollider; public Collider2D SpearCollider{get{return spearCollider;}}
-	Vector2 spearVelocity; public Vector2 SpearVelocity{get{return spearVelocity;}}
-	int birdsHit; public int BirdsHit {get{return birdsHit;}}
-}
-
-public class Spear : MonoBehaviour, IThrowable {
-
-	private static int totalSpearCount;
-	private int mySpearNumber;
-	private int birdsHit;
-	private SpearItems myItems;
-
+    int spearNumber;
+    protected override int weaponNumber {get {return spearNumber; } }
 	private Rigidbody2D rigbod; //the spear's rigidbody, created only upon throwing
-	[SerializeField] private PixelRotation pixelRotationScript; //allows for pixel perfect sprite rotations
-	[SerializeField] private PixelPerfectSprite pixelPerfectSpriteScript;
+	[SerializeField] PixelRotation pixelRotationScript; //allows for pixel perfect sprite rotations
+	[SerializeField] PixelPerfectSprite pixelPerfectSpriteScript;
 
-	[SerializeField] private Transform spearTipParentTransform;
-	[SerializeField] private Transform spearTipTransform;
-	[SerializeField] private CircleCollider2D spearTipCollider;
+	[SerializeField] Transform spearTipParentTransform;
+	[SerializeField] Transform spearTipTransform;
 
 	private Vector2[] throwAdjustmentVector = new Vector2[]{ 
 		new Vector2 (0f, .085f*4f),
@@ -40,26 +20,15 @@ public class Spear : MonoBehaviour, IThrowable {
 	};
 
 	const float bounceForce = 5f; //force at which the spear bounces back from the bird
+    const float throwForce = 1400f; //Force with which Jai throws the spear
 
-	void Start () {
-		mySpearNumber=totalSpearCount;
-		totalSpearCount++;
-		SetSpearAngle(Vector2.up);
+    protected override Vector2 MyVelocity { get { return rigbod.velocity; } }
+
+    void Start () {
+        spearNumber = timesUsed;
+        SetSpearAngle(Vector2.up);
 		transform.parent = Constants.jaiTransform.parent;
 	}
-
-	#region IThrowable
-	void IThrowable.FlyFree(Vector2 throwVec){
-		transform.parent = null;
-		transform.position = (Vector2)Constants.jaiTransform.position + throwAdjustmentVector[0];
-		SetSpearAngle(throwVec);
-		spearTipCollider.enabled = true;
-		rigbod = gameObject.AddComponent<Rigidbody2D> ();
-		rigbod.AddForce (throwVec);
-		StartCoroutine (TiltAround());
-		Destroy (gameObject, 3f);
-	}
-	#endregion
 
 	void SetSpearAngle(Vector2 direction){
 		int theSetAngle = ConvertAnglesAndVectors.ConvertVector2SpearAngle(direction);
@@ -76,27 +45,29 @@ public class Spear : MonoBehaviour, IThrowable {
 		}
 	}
 
-	void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.layer == Constants.birdLayer){
-			DeliverDamage(col);
-		}
+    protected override void UseMe(PointVector2 spotSwipe){
+        base.UseMe(spotSwipe);
+
+        transform.parent = null;
+		transform.position = (Vector2)Constants.jaiTransform.position + throwAdjustmentVector[0];
+		SetSpearAngle(spotSwipe.vector);
+		attackCollider.enabled = true;
+		rigbod = gameObject.AddComponent<Rigidbody2D> ();
+		rigbod.AddForce (spotSwipe.vector * throwForce);
+		StartCoroutine (TiltAround());
+		Destroy (gameObject, 3f);
 	}
 
-	void DeliverDamage(Collider2D col){
-		birdsHit++;
-		myItems = new SpearItems(spearTipCollider, rigbod.velocity, birdsHit);
-		ScoreSheet.Streaker.ReportHit(mySpearNumber);
+	protected override void DeliverDamage(Collider2D col){
+        base.DeliverDamage(col);
 
-		IHurtable hurtInterface = col.GetComponent<IHurtable> ();
-		hurtInterface.GetHurt(ref myItems);
-
-		Bird bird = col.GetComponent<Bird>();
+        Bird bird = col.GetComponent<Bird>();
 		//Deliver damage and redirect the spear as a bounce
 		rigbod.velocity = bird.MyBirdStats.Health>0 ? 
-			Vector2.Reflect(myItems.SpearVelocity,(transform.position-col.bounds.ClosestPoint (transform.position))) * 0.2f :
-			myItems.SpearVelocity * .8f;
+			Vector2.Reflect(MyWeaponStats.Velocity,(transform.position-col.bounds.ClosestPoint (transform.position))) * 0.2f :
+			MyWeaponStats.Velocity * .8f;
 
-		Physics2D.IgnoreCollision(spearTipCollider, col);
+		Physics2D.IgnoreCollision(attackCollider, col);
 	}
 
 	void OnDestroy (){

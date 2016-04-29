@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
+public interface IDisplayable{
+	void DisplayPoints(int points);
+}
 public abstract class PointDisplay : MonoBehaviour, IDisplayable {
 
 	[SerializeField] protected Text myText;

@@ -29,19 +29,21 @@ public class Crow : Bird, IMurderToCrow {
 		Gliding = 1
 	}
 			
-	private Vector2 startPosition;
-	private Vector2 targetPosition;
-	private Vector2 moveDir;
+	Vector2 startPosition;
+	Vector2 targetPosition;
+	Vector2 moveDir;
 
-	private float moveSpeed = 4.5f;
-	private float turnDistance = 2.5f;
-	private float commitDistance = 4f;
-	private float resetDistance = 15f;
-	private float requestNextCrowDistance = 4.5f;
-	private float currentDistance;
+	float moveSpeed = 4.5f;
+	float turnDistance = 2.5f;
+	float commitDistance = 4f;
+	float resetDistance = 15f;
+	float requestNextCrowDistance = 4.5f;
+	float currentDistance;
 
 	bool isKiller;
 	bool readyToFly = true;
+    bool hasRequestedNext;
+    public int myCrowNum;
 	#endregion
 
 	#region IMurderToCrow Interface
@@ -49,10 +51,12 @@ public class Crow : Bird, IMurderToCrow {
 		startPosition = crowPosition;
 		transform.position = crowPosition;
 		isKiller = crowNum == 5 ? true : false;
-		commitDistance = isKiller ? commitDistance : 3f;
+        myCrowNum = crowNum;
+        commitDistance = isKiller ? commitDistance : 3f;
 	}
 	void IMurderToCrow.TakeFlight(){
-		readyToFly = false;
+        hasRequestedNext = false;
+        readyToFly = false;
 		birdCollider.enabled = true;
 		StartCoroutine ( TargetBalloons() );
 		StartCoroutine ( RequestNextCrow());
@@ -66,6 +70,7 @@ public class Crow : Bird, IMurderToCrow {
 		}
 		yield return null;
 		murderInterface.SendNextCrow();
+        hasRequestedNext = true;
 	}
 
 	IEnumerator TargetBalloons(){
@@ -126,6 +131,9 @@ public class Crow : Bird, IMurderToCrow {
 
 	protected override void DieUniquely(){
 		murderInterface.ReportCrowDown((IMurderToCrow)this);
+        if (!hasRequestedNext) {
+            murderInterface.SendNextCrow();
+        }
 		base.DieUniquely();
 	}
 }

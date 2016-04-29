@@ -3,13 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using GenericFunctions;
 using System;
-using System.Linq;
+
 public interface IWaveRunnable{
 	IEnumerator RunWave();
+    WaveName MyWave { get; }
 }
+
 public delegate void SpawnDelegate();
+
 public abstract class Wave : MonoBehaviour, IWaveRunnable{
 
+    [SerializeField] WaveName MyWaveName;
+    WaveName IWaveRunnable.MyWave {get { return MyWaveName; } }
+    
 	protected BirdWaiter allDead = new BirdWaiter(CounterType.Alive,false, 0, BirdType.All);
 	protected BirdWaiter allDeadExceptTentacles = new BirdWaiter(CounterType.Alive,true, 0, BirdType.Tentacles);
 
@@ -20,52 +26,66 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 	protected static float[] heights;
 	protected Vector2[] duckSpawnPoints;
 
+    const float wavePauseTime = 10f;
 	protected const bool right = true;
 	protected const bool left = false;
 	#region SpawnDelegates
-	SpawnDelegate SpawnAtRandom(BirdType birdType){
+	protected SpawnDelegate SpawnAtRandom(BirdType birdType){
 		return ()=>{
-			SpawnBirds(birdType, SpawnPoint(Bool.TossCoin(),lowHeight,highHeight));
+            Vector2 spawnPoint;
+            if (birdType == BirdType.DuckLeader) {
+                spawnPoint= SpawnPoint(Bool.TossCoin(), .5f *lowHeight, .5f *highHeight);
+            }
+            else if (birdType == BirdType.Tentacles || birdType == BirdType.Crow) {
+                spawnPoint = Vector2.zero;
+            }
+            else {
+                spawnPoint = SpawnPoint(Bool.TossCoin(), lowHeight, highHeight);
+            }
+            SpawnBirds(birdType, spawnPoint, (DuckDirection)UnityEngine.Random.Range(0, Enum.GetNames(typeof(DuckDirection)).Length));
 		};
 	}
-	protected SpawnDelegate SpawnPigeon;
-	protected SpawnDelegate SpawnDuckLeader;
-	protected SpawnDelegate SpawnSeagull;
-	protected SpawnDelegate SpawnPelican;
-	protected SpawnDelegate SpawnAlbatross;
-	protected SpawnDelegate SpawnBabyCrow;
-	protected SpawnDelegate SpawnBat;
-	protected SpawnDelegate SpawnTentacles;
-	protected SpawnDelegate SpawnCrows;
-	protected SpawnDelegate SpawnShoebill;
-	#endregion
 
-	void Awake(){
+    protected Dictionary<BirdType, SpawnDelegate> BirdSpawnDelegates = new Dictionary<BirdType, SpawnDelegate>();
+    #endregion
+
+    void OnLevelWasLoaded(int level) {
+        if (level == (int)Scenes.Menu) {
+            StopAllCoroutines();
+        }
+    }
+    IWaveUI waveUI;
+    void Awake(){
 		heights = new float[]{lowHeight, medHeight, highHeight};
 		duckSpawnPoints = new Vector2[6];
 		for (int i=0; i<6; i++){
 			duckSpawnPoints[i] = SpawnPoint(i%2==0,heights[Mathf.FloorToInt(i/2)]);
 		}
-		SpawnPigeon = SpawnAtRandom(BirdType.Pigeon);
-		SpawnDuckLeader = ()=>SpawnBirds(BirdType.DuckLeader, SpawnPoint(Bool.TossCoin(),lowHeight*.5f,highHeight*.5f));
-		SpawnSeagull = SpawnAtRandom(BirdType.Seagull);
-		SpawnPelican = SpawnAtRandom(BirdType.Pelican);
-		SpawnAlbatross = SpawnAtRandom(BirdType.Albatross);
-		SpawnTentacles = ()=> SpawnBirds(BirdType.Tentacles,Vector2.zero);
-		SpawnShoebill = SpawnAtRandom(BirdType.Shoebill);
-		SpawnBat = SpawnAtRandom(BirdType.Bat);
-		SpawnBabyCrow = SpawnAtRandom(BirdType.BabyCrow);
-		SpawnCrows = ()=> SpawnBirds(BirdType.Crow,Vector2.zero);
-	}
+
+        for (int i = 0; i < Enum.GetNames(typeof(BirdType)).Length - 1; i++) {
+            BirdSpawnDelegates.Add((BirdType)i, SpawnAtRandom((BirdType)i));
+        }
+        waveUI = FindObjectOfType<WaveUI>().GetComponent<IWaveUI>();
+    }
 
 	IEnumerator IWaveRunnable.RunWave(){
-		yield return StartCoroutine (RunWave());
+        yield return StartCoroutine (StartWave());
+		yield return StartCoroutine (GenerateBirds());
+		yield return StartCoroutine (FinishWave());
 	}
 
-	protected virtual IEnumerator RunWave(){
-		//override with specific wave content here
-		yield return StartCoroutine (FinishTheWave());
-	} 
+    IEnumerator StartWave() {
+        yield return StartCoroutine(waveUI.AnimateWaveStart(MyWaveName));
+    }
+    protected virtual IEnumerator GenerateBirds() { yield return null; }
+    IEnumerator FinishWave(){
+		yield return new WaitForSeconds(2f);
+		SpawnBirds (BirdType.BirdOfParadise, SpawnPoint(right,lowHeight));
+		yield return StartCoroutine(WaitFor(allDeadExceptTentacles,true));
+        yield return StartCoroutine(waveUI.AnimateWaveEnd(MyWaveName));
+		waveNumber++;
+		ScoreSheet.Resetter.ResetWaveCounters();
+	}
 
 	/// <summary> Spawn Birds
 	/// </summary>
@@ -103,14 +123,16 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 		}
 	}
 
-	protected IEnumerator ProduceDucks(int number){
+	protected IEnumerator ProduceDucks(int numDucks){
 		List<Vector2> duckSpawnList = new List<Vector2>(duckSpawnPoints);
-		for (int i=0; i<number; i++){
+		for (int i=0; i<numDucks; i++){
 			yield return new WaitForSeconds(1f);
 			int chosenPoint = UnityEngine.Random.Range(0,duckSpawnList.Count);
 			SpawnBirds(BirdType.Duck,duckSpawnList[chosenPoint], DuckDirectionGenerator(duckSpawnList[chosenPoint]));
 			duckSpawnList.RemoveAt(chosenPoint);
-			if (duckSpawnList.Count==0) duckSpawnList = new List<Vector2>(duckSpawnPoints);
+            if (duckSpawnList.Count == 0) {
+                duckSpawnList = new List<Vector2>(duckSpawnPoints);
+            }
 		}
 	}
 
@@ -154,7 +176,9 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 			yield return null;
 		}
 		FinishWaiting(birdWaiter);
-		if (waitExtra) yield return StartCoroutine (WaitUntilTimeRange());
+		if (waitExtra) {
+            yield return StartCoroutine (WaitUntilTimeRange());
+        }
 	}
 
 	/// <summary> Wait between minTime and maxTime seconds
@@ -185,13 +209,5 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 				birdWaiter.Spawn();
 			}
 		}
-	}
-
-	protected IEnumerator FinishTheWave(){
-		yield return new WaitForSeconds(2f);
-		SpawnBirds (BirdType.BirdOfParadise, SpawnPoint(right,lowHeight));
-		yield return StartCoroutine(WaitFor(allDeadExceptTentacles,true));
-		waveNumber++;
-		ScoreSheet.Resetter.ResetWaveCounters();
 	}
 }

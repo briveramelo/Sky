@@ -32,17 +32,14 @@ namespace GenericFunctions{
 			}
 		}
 
-		public static void FaceForward(this Transform trans, bool forward){
+        public static void FaceForward(this Transform trans, bool forward){
 			trans.localScale = new Vector3 ((forward ? 1:-1) * Mathf.Abs(trans.localScale.x), trans.localScale.y, trans.localScale.z);
 		}
 			
-		static Vector2 screenDimensions = new Vector2 (Screen.width, Screen.height);
+		static Vector2 screenDimensions = new Vector2(1136, 640);  //new Vector2 (Screen.width, Screen.height);
 		public static Vector2 ScreenDimensions{get{return screenDimensions;}}
 		static Vector2 worldDimensions = ScreenDimensions /200f;
 		public static Vector2 WorldDimensions{get{return worldDimensions;}}
-
-		public static Vector2 correctionPixels = new Vector2 (Screen.width/2,(-3*Screen.height/2));
-		public static float correctionPixelFactor = WorldDimensions.y * 2 / Screen.height;
 
 		public const int basketLayer = 8;
 		public const int spearLayer = 9;
@@ -56,12 +53,12 @@ namespace GenericFunctions{
 		public const int teleporterLayer = 17;
 		public const int worldBoundsLayer = 18;
 		public const int pooNuggetLayer = 19;
-		public const int balloonBoundsLayer = 20;
+	    public const int balloonBoundsLayer = 20;
+        public const int shoebillHornLayer = 21;
+        public const int collectableWeaponLayer = 22;
 
-		public static Vector2 stockSpearPosition = new Vector3 (0.14f, 0.12f);
-		public static Vector2 balloonOffset = new Vector2 (0f, 1.6f);
-		public static Vector2 seagullOffset = balloonOffset + Vector2.up * 1.25f;
 		public const float time2Destroy = 2f;
 		public const float time2ThrowSpear = 0.333333f;
+        public const float time2StrikeLightning = 0.5f;
 	}
 }

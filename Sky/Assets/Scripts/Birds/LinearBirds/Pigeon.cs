@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using GenericFunctions;
-
-public class Pigeon : LinearBird {
+﻿public class Pigeon : LinearBird {
 
 	protected override void Awake () {
 		moveSpeed =2f;

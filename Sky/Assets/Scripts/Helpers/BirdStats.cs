@@ -1,41 +1,40 @@
 ﻿using UnityEngine;
-using System.Collections;
 using GenericFunctions;
 
 public class BirdStats {
 
 	private BirdType myBirdType;		public BirdType MyBirdType{get{return myBirdType;}}
 	private int health;					public int Health{get{return health;} set{health = value;}}
+    public int DamageTaken;
 
-	private int killPointValueBase;		public int KillPointValueBase{get{return killPointValueBase;} set{killPointValueBase = value;}}
-	private int damagePointValueBase;	public int DamagePointValueBase{get{return damagePointValueBase;}}
-	private int killPointValue;			public int KillPointValue{get{return killPointValue;} set{killPointValue = value;}}
+    int killPointValueBase;
+    public int KillPointValueBase{get{return killPointValueBase;}
+        set {
+            killPointValueBase = killPointValue = value;
+        }
+    }
+    int streakPoints; public int StreakPoints { get { return streakPoints * basePointMultiplier; } }
+    int comboPoints; public int ComboPoints { get { return comboPoints * basePointMultiplier; } }
+
+	readonly int damagePointValueBase;	public int DamagePointValueBase{get{return damagePointValueBase;}}
+	private int killPointValue;			public int KillPointValue{get{return killPointValue;}}
 	private int damagePointValue;		public int DamagePointValue{get{return damagePointValue;}}
 
-	private float killPointMultiplier;	public float KillPointMultiplier{get{return killPointMultiplier;}}
 	private int damageGutValue;			public int DamageGutValue{get{return damageGutValue;}}
 	private int killGutValue;			public int KillGutValue{get{return killGutValue;}}
-	private Vector2 birdPosition;
-	public Vector2 BirdPosition{get{return birdPosition;}
-		set{
-			birdPosition = value;
-			if (Mathf.Abs(value.x)>(Constants.WorldDimensions.x)*.9f){
-				birdPosition = new Vector2(Mathf.Sign(birdPosition.x) * Constants.WorldDimensions.x*.9f,birdPosition.y);
-			}
-			if (Mathf.Abs(value.y)>(Constants.WorldDimensions.y)*.9f){
-				birdPosition = new Vector2(birdPosition.x,Mathf.Sign(birdPosition.y) *Constants.WorldDimensions.y * 0.9f);
-			}
-		}
-	}
+	private Vector2 birdPosition;   	public Vector2 BirdPosition{get{return birdPosition;} set { birdPosition = value; } }
 
 	const int basePointMultiplier =10;
 	public int TotalThreatValue{
-		get{return ( (health-1) * damagePointValueBase + killPointValueBase);}
+		get{return ( Mathf.Clamp((health-1),0,100) * damagePointValueBase + killPointValueBase);}
 	}
-	public int ThreatToSubtract{
-		get{return ( health<=0 ? killPointValueBase : damagePointValueBase);}
-	}
-	public int TotalPointValue{
+    public int ThreatRemoved{
+        get {
+            return health > 0 ? DamageTaken * damagePointValueBase : ((DamageTaken-1) * damagePointValueBase + killPointValueBase);
+        }
+    }
+
+    public int TotalPointValue{
 		get{return ( basePointMultiplier * ((health-1) * damagePointValueBase + killPointValueBase));}
 	}
 	public int PointsToAdd{
@@ -46,25 +45,15 @@ public class BirdStats {
 	}
 
 	public void ModifyForStreak(int birdStreak){
-		killPointValue = killPointValueBase + birdStreak-1;
-		damagePointValue = damagePointValueBase + birdStreak-1;
+        streakPoints = birdStreak-1;
+        killPointValue = killPointValueBase + streakPoints;
+		damagePointValue = damagePointValueBase + streakPoints;
 	}
 	public void ModifyForCombo(int birdsHit){
-		killPointValue *=birdsHit;
+        comboPoints = health<=0 ? killPointValue : damagePointValue;
+        killPointValue *=birdsHit;
 		damagePointValue *=birdsHit;
-	}
-	public void ModifyForMultiplier(){
-		int totalFromMultiplier = 0;
-		if (Health<=0){
-			if (MyBirdType == BirdType.Seagull || MyBirdType == BirdType.Tentacles){ 
-				foreach (Bird bird in MonoBehaviour.FindObjectsOfType<Bird>()){
-					if (!(bird.MyBirdStats.MyBirdType==BirdType.Seagull || bird.MyBirdStats.MyBirdType==BirdType.Tentacles)){
-						totalFromMultiplier += (int)(bird.MyBirdStats.TotalPointValue * KillPointMultiplier);
-					}
-				}
-			}
-		}
-		killPointValue += totalFromMultiplier;
+        comboPoints = (health<=0 ? killPointValue : damagePointValue) - comboPoints;
 	}
 
 	public BirdStats(BirdType birdType){
@@ -72,7 +61,6 @@ public class BirdStats {
 		health = 1;
 		killPointValue =1;
 		damagePointValue=1;
-		killPointMultiplier=0;
 		damageGutValue=1;
 		killGutValue=1;
 
@@ -106,14 +94,12 @@ public class BirdStats {
 		case BirdType.Seagull:
 			killGutValue = 4;
 			killPointValue = 2;
-			killPointMultiplier = 2;
 			break;
 		case BirdType.Tentacles:
 			killGutValue = 80;
 			killPointValue = 10;
 			health = 25;
 			damageGutValue = 4;
-			killPointMultiplier = 1.5f;
 			break;
 		case BirdType.Pelican:
 			killGutValue = 10;
@@ -131,9 +117,9 @@ public class BirdStats {
 			killPointValue = 2;
 			break;
 		case BirdType.Eagle:
-			killGutValue = 80;
-			killPointValue = 50;
-			health = 5;
+			killGutValue = 160;
+			killPointValue = 100;
+			health = 30;
 			damageGutValue = 4;
 			damagePointValue = 5;
 			break;
@@ -143,7 +129,7 @@ public class BirdStats {
 			break;
 		}
 
-		killPointValueBase = killPointValue;
 		damagePointValueBase = damagePointValue;
+		killPointValueBase = killPointValue;
 	}
 }

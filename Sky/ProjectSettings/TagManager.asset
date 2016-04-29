@@ -16,7 +16,7 @@ TagManager:
   - 
   - 
   - Basket
-  - Spear
+  - Weapon
   - Bird
   - Balloon
   - FloatingBalloon
@@ -29,8 +29,8 @@ TagManager:
   - PooNugget
   - BalloonBounds
   - ShoeBillHorn
-  - 
-  - 
+  - CollectableWeapon
+  - WeaponCollector
   - 
   - 
   - 

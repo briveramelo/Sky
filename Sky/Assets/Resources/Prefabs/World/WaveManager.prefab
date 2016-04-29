@@ -70,14 +70,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c31b992501ef44f7ca4d8ca39e989902, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allWaves:
-  - {fileID: 11481640}
+  storyWaves:
+  - {fileID: 11482402}
   - {fileID: 11482602}
   - {fileID: 11480006}
   - {fileID: 11459324}
   - {fileID: 11410064}
   - {fileID: 11403650}
   - {fileID: 11436782}
+  endlessWave: {fileID: 11481640}
 --- !u!114 &11436782
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -100,6 +101,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1677720698b14efda8bb4819c1f5190, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  editorIntensity:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11459324
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -133,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d46309452fb5a4e549160530ac9a6192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Toughness: 1
 --- !u!114 &11482402
 MonoBehaviour:
   m_ObjectHideFlags: 1

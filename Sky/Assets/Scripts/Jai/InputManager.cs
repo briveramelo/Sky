@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using GenericFunctions;
 using System.Collections.Generic;
 
@@ -32,15 +31,22 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
 	[SerializeField] Jai jai;
 	[SerializeField] Joyfulstick joyfulstick;
 	[SerializeField] Pauser pauser;
+    [SerializeField] Selector[] selectors;
+
 	List<IBegin> beginners;
 	List<IHold> holders;
+    List<IEnd> enders;
 	IEnd stickEnd;
 	IEnd jaiEnd;
+	#endregion
 
 	int stickEngineFinger =-1;
 	int jaiFinger =-1;
 
-	void Awake(){
+    Vector2 correctionPixels;
+    float correctionPixelFactor;
+
+    void Awake(){
 		beginners = new List<IBegin>(new IBegin[]{
 			(IBegin)joyfulstick,
 			(IBegin)jai,
@@ -50,13 +56,17 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
 			(IHold)basketEngine,
 			(IHold)joyfulstick,
 		});
+        enders = new List<IEnd>((IEnd[])selectors);
 		stickEnd = (IEnd)joyfulstick;
 		jaiEnd = (IEnd)jai;
-	}
-	#endregion
 
-	#region IFreezable
-	bool isFrozen; bool IFreezable.IsFrozen{get{return isFrozen;}set{isFrozen = value;}}
+        Corrections pixelFix = new Corrections(true);
+        correctionPixels = pixelFix.correctionPixels;
+        correctionPixelFactor = pixelFix.correctionPixelFactor;
+    }
+
+    #region IFreezable
+    bool isFrozen; bool IFreezable.IsFrozen{get{return isFrozen;}set{isFrozen = value;}}
 	#endregion
 
 	#region ISetIDs
@@ -71,26 +81,27 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
 	void Update () {
 		if (Input.touchCount>0){
 			foreach (Touch finger in Input.touches){
-				touchSpot = (finger.position + Constants.correctionPixels) * Constants.correctionPixelFactor;
+                touchSpot = (finger.position + correctionPixels) * correctionPixelFactor;
 				if (finger.phase == TouchPhase.Began){
 					beginners.ForEach(beginner=> beginner.OnTouchBegin(finger.fingerId));
 				}
-				if(!isFrozen){
-					if (finger.phase == TouchPhase.Moved || finger.phase == TouchPhase.Stationary){
-						if (finger.fingerId == stickEngineFinger){
-							holders.ForEach(holder=> holder.OnTouchHeld());
-						}
+				else if (finger.phase == TouchPhase.Moved || finger.phase == TouchPhase.Stationary){
+					if (finger.fingerId == stickEngineFinger && !isFrozen){
+						holders.ForEach(holder=> holder.OnTouchHeld());
 					}
-					else if (finger.phase == TouchPhase.Ended){
-						if (finger.fingerId == stickEngineFinger){
-							stickEnd.OnTouchEnd();
-							stickEngineFinger =-1;
-						}
-						else if (finger.fingerId == jaiFinger){
-							jaiEnd.OnTouchEnd();
-							jaiFinger =-1;
-						}
+				}
+				else if (finger.phase == TouchPhase.Ended){
+					if (finger.fingerId == stickEngineFinger && !isFrozen){
+						stickEnd.OnTouchEnd();
+						stickEngineFinger =-1;
 					}
+					else if (finger.fingerId == jaiFinger && !isFrozen){
+						jaiEnd.OnTouchEnd();
+						jaiFinger =-1;
+					}
+                    else {
+                        enders.ForEach(ender=> ender.OnTouchEnd());
+                    }
 				}
 			}
 		}

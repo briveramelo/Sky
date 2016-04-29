@@ -12,10 +12,15 @@ public interface ISensorToTentacle {
 public interface ITipToTentacle{
 	IEnumerator PullDownTheKill();
 }
+public interface IReleasable {
+    void ReleaseJai();
+}
 
-public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
+public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IReleasable {
 
+    public static Tentacles Instance;
 	public static IStabbable StabbableTentacle;
+    public static IReleasable Releaser;
 	private ISensorToTentacle me; //just because I wanted to use ResetPosition locally with less mess...
 	[SerializeField] private TentaclesSensor ts; private IToggleable sensor; private IJaiDetected sensorOnJai;
 	IFreezable inputManager;
@@ -23,7 +28,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 
 	[SerializeField] private Transform tipTransform;
 	[SerializeField] private Collider2D tipCollider;
-	private SpearItems fakeSpear;
+	private WeaponStats fakeWeapon = new WeaponStats();
 
 	private Vector2 homeSpot = new Vector2 (0f,-.75f - Constants.WorldDimensions.y);
 	
@@ -40,7 +45,9 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 	private bool holdingJai;
 
 	protected override void Awake(){
-		StabbableTentacle = (IStabbable)this;
+        Instance = this;
+        StabbableTentacle = (IStabbable)this;
+        Releaser = (IReleasable)this;
 		me = (ISensorToTentacle)this;
 		sensor = (IToggleable)ts;
 		sensorOnJai = (IJaiDetected)ts;
@@ -85,10 +92,11 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 		stabsTaken = 0;
 		holdingJai = true;
 		inputManager.IsFrozen = true;
-		jai.IsFrozen = false;
+		jai.IsFrozen = true;
 		Basket.TentacleToBasket.AttachToTentacles(transform);
+        ScoreSheet.Tallier.TallyThreat(Threat.BasketGrabbed);
 
-		GameClock.Instance.SlowTime (0.4f, 0.5f);
+        GameClock.Instance.SlowTime (0.4f, 0.5f);
 		GameCamera.Instance.ShakeTheCamera();
 		Constants.bottomOfTheWorldCollider.enabled = false;
 
@@ -106,20 +114,31 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 
 	#region IStabbable
 	void IStabbable.GetStabbed(){
-		stabsTaken++;
-		TakeDamage(ref fakeSpear);
+        stabsTaken++;
+		TakeDamage(ref fakeWeapon);
 		if (stabsTaken>=stabs2Retreat){
-			holdingJai = false;
-			inputManager.IsFrozen = false;
-			jai.IsFrozen = false;
-			sensor.ToggleSensor(false);
-			StartCoroutine ( DisableTentacles());
-			StartCoroutine ( me.ResetPosition(true));
-			Basket.TentacleToBasket.DetachFromTentacles();
-			Basket.TentacleToBasket.KnockDown(5f);
-		}
+            ReleaseBasket();
+        }
 	}
-	#endregion
+    #endregion
+
+    void IReleasable.ReleaseJai() {
+        if (holdingJai) {
+            ReleaseBasket();
+        }
+    }
+
+    void ReleaseBasket() {
+        holdingJai = false;
+        inputManager.IsFrozen = false;
+        jai.IsFrozen = false;
+        Basket.TentacleToBasket.DetachFromTentacles();
+        Basket.TentacleToBasket.KnockDown(5f);
+
+        sensor.ToggleSensor(false);
+        StartCoroutine(DisableTentacles());
+        StartCoroutine(me.ResetPosition(true));
+    }
 
 	IEnumerator DisableTentacles(){
 		tipCollider.enabled = false;
@@ -128,20 +147,25 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 	}
 
 	#region TakeDamage
-	protected override void TakeDamage(ref SpearItems spearItems){
-		bool holding = spearItems.SpearVelocity.x==0;
+	protected override int TakeDamage(ref WeaponStats weaponStats){
+		bool holding = weaponStats.Velocity.x==0;
 		Vector2 spawnSpot;
 		Vector2 gutVel;
+        int damageDealt;
 		if (holding){
 			gutVel = new Vector2 (-Mathf.Sign(transform.localScale.x) * Random.value, Random.value).normalized;
 			spawnSpot = tipTransform.position;
-		}
+            damageDealt = 0;
+        }
 		else{
-			gutVel = spearItems.SpearVelocity;
-			spawnSpot = birdCollider.bounds.ClosestPoint(spearItems.SpearCollider.transform.position);
-			birdStats.Health--;
+			gutVel = weaponStats.Velocity;
+			spawnSpot = birdCollider.bounds.ClosestPoint(weaponStats.WeaponCollider.transform.position);
+            damageDealt = weaponStats.Damage;
 		}
+
+        birdStats.Health -= damageDealt;
 		(Instantiate (guts, spawnSpot, Quaternion.identity) as GameObject).GetComponent<IBleedable>().GenerateGuts(ref birdStats, gutVel);
+        return damageDealt;
 	}
 	#endregion
 
@@ -149,6 +173,9 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle {
 		if (Constants.bottomOfTheWorldCollider!=null){
 			Constants.bottomOfTheWorldCollider.enabled = true;
 		}
+        if (holdingJai) {
+            ReleaseBasket();
+        }
 		Destroy(transform.parent.gameObject);
 	}
 }

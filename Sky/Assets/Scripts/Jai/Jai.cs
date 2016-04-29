@@ -2,73 +2,149 @@
 using System.Collections;
 using GenericFunctions;
 
+public enum WeaponType {
+    Spear =0,
+    Lightning=1,
+    Flail=2,
+    None=3
+}
+
 public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
 
-	[SerializeField] GameObject spear;
-	[SerializeField] private Animator jaiAnimator;
-	[SerializeField] private Spear mySpear; IThrowable mySpearHandle;
-	private IJaiID inputManager;
+	[SerializeField] GameObject[] weaponPrefabs = new GameObject[3];
+	[SerializeField] Animator jaiAnimator;
+	Weapon myWeapon; IUsable weaponTrigger;
+    WeaponType MyWeaponType;
+	IJaiID inputManager;
 
-	const float throwForce = 1400f; //Force with which Jai throws the spear
-	const float distToThrow = .03f;
-	bool throwing, stabbing, beingHeld;
+    const float distToThrow = .03f;
+	bool attacking, stabbing, beingHeld;
 	bool IFreezable.IsFrozen{get{return beingHeld;}set{beingHeld = value;}}
-	private enum Throw{
-		Idle=0,
-		Down=1,
-		Up=2,
-	}
-	Vector2 startingTouchPoint; Tentacles tent;
+	
+	Vector2 startingTouchPoint;
 
 	void Awake(){
 		Constants.jaiTransform = transform;
 		inputManager = FindObjectOfType<InputManager>().GetComponent<IJaiID>();
-		mySpearHandle = (IThrowable)mySpear;
 	}
+
+    Vector3[] spawnSpots = new Vector3[] {
+        new Vector3 (0.14f, 0.12f,0f),
+        Vector3.zero,
+        Vector3.zero
+    };
+    public IEnumerator CollectNewWeapon(ICollectable collectableWeapon) {
+        MyWeaponType = collectableWeapon.GetCollected();
+        GenerateNewWeapon(MyWeaponType);
+
+        switch (MyWeaponType) {
+            case WeaponType.None:
+                break;
+            case WeaponType.Spear:
+                yield return StartCoroutine(AnimateCollectSpear());
+                break;
+            case WeaponType.Lightning:
+                yield return StartCoroutine(AnimateCollectLightning());
+                break;
+            case WeaponType.Flail:
+                yield return StartCoroutine(AnimateCollectFlail());
+                break;
+        }
+    }
+
+    IEnumerator AnimateCollectSpear() {
+        Debug.Log("Collected A Spear!");
+        yield return null;
+    }
+    IEnumerator AnimateCollectLightning() {
+        Debug.Log("Collected Lightning!");
+        yield return null;
+    }
+    IEnumerator AnimateCollectFlail() {
+        Debug.Log("Collected A Flail!");
+        yield return null;
+    }
 
 	void IBegin.OnTouchBegin(int fingerID){
-		if (!beingHeld){
-			float distFromStick = Vector2.Distance(InputManager.touchSpot,Joyfulstick.startingJoystickSpot);
-			float distFromPause = Vector2.Distance(InputManager.touchSpot,Pauser.pauseSpot);
-			if (distFromStick>Joyfulstick.joystickMaxStartDist && distFromPause > Pauser.pauseRadius){
-				if (Input.touchCount<3){
-					startingTouchPoint = InputManager.touchSpot;
-					inputManager.SetJaiID(fingerID);
-				}
-			}
-		}
-		else{
-			if (!stabbing){
-				StartCoroutine(StabTheBeast());
-			}
-		}
-	}
-	void IEnd.OnTouchEnd(){
-		Vector2 releaseTouchPoint = InputManager.touchSpot;
-		Vector2 attackDir = (releaseTouchPoint - startingTouchPoint).normalized;
-		float releaseDist = Vector2.Distance (releaseTouchPoint,startingTouchPoint);
-		if (!throwing){
-			if ( releaseDist > distToThrow ){ //throw the spear
-				StartCoroutine(ThrowSpear(attackDir));
-				StartCoroutine(PullOutNewSpear());
-			}
-		}
+        if (!Pauser.Paused) {
+            if (!beingHeld){
+			    float distFromStick = Vector2.Distance(InputManager.touchSpot,Joyfulstick.startingJoystickSpot);
+			    float distFromPause = Vector2.Distance(InputManager.touchSpot,Pauser.PauseSpot);
+			    if (distFromStick>Joyfulstick.joystickMaxStartDist && distFromPause > Pauser.pauseRadius){
+				    if (Input.touchCount<3){
+					    startingTouchPoint = InputManager.touchSpot;
+					    inputManager.SetJaiID(fingerID);
+				    }
+			    }
+		    }
+		    else{
+			    if (!stabbing){
+				    StartCoroutine(StabTheBeast());
+			    }
+		    }
+        }
 	}
 
-	IEnumerator ThrowSpear(Vector2 throwDir){
-		throwing = true;
+	void IEnd.OnTouchEnd(){
+        if (!Pauser.Paused) {
+            Vector2 releaseTouchPoint = InputManager.touchSpot;
+		    float releaseDist = Vector2.Distance (releaseTouchPoint,startingTouchPoint);
+            PointVector2 spotSwipe = new PointVector2(startingTouchPoint, releaseTouchPoint);
+		    if (!attacking){
+			    if ( releaseDist > distToThrow && myWeapon!=null){
+                    weaponTrigger.UseMe(spotSwipe);
+                    StartCoroutine (AnimateUseWeapon(spotSwipe.vector));
+			    }
+		    }
+        }
+	}
+
+    IEnumerator AnimateUseWeapon(Vector2 attackDir) {
+        attacking = true;
+        switch (MyWeaponType) {
+            case WeaponType.None:
+                break;
+            case WeaponType.Spear:
+				StartCoroutine(PullOutNewSpear(Constants.time2ThrowSpear));
+                yield return StartCoroutine(AnimateThrowSpear(attackDir));
+                break;
+            case WeaponType.Lightning:
+                yield return StartCoroutine(AnimateCastLightning(attackDir));
+                break;
+            case WeaponType.Flail:
+                yield return StartCoroutine(AnimateSwingFlail(attackDir));
+                break;
+        }
+        attacking = false;
+    }
+
+    enum Throw{
+		Idle=0,
+		Down=1,
+		Up=2,
+	}
+	IEnumerator AnimateThrowSpear(Vector2 throwDir){
 		Throw ThrowState = throwDir.y<=.2f ? Throw.Down : Throw.Up;
-		transform.FaceForward(throwDir.x>0);
-		mySpearHandle.FlyFree(throwDir * throwForce);
+        transform.FaceForward(throwDir.x > 0);
 
 		jaiAnimator.SetInteger("AnimState",(int)ThrowState);
 		yield return new WaitForSeconds (Constants.time2ThrowSpear);
 		jaiAnimator.SetInteger("AnimState",(int)Throw.Idle);
-		throwing = false;
 	}
 
+    IEnumerator AnimateCastLightning(Vector2 swipeDir) {
+        Debug.Log("Animating Lightning Strike!");
+        yield return new WaitForSeconds(Constants.time2StrikeLightning);
+    }
+
+    IEnumerator AnimateSwingFlail(Vector2 swipeDir) {
+        Debug.Log("Swing Mace for now");
+        yield return null;
+    }
+
+
 	IEnumerator StabTheBeast(){
-		stabbing = true;
+        stabbing = true;
 		//jaiAnimator.SetInteger("AnimState",5);
 		Tentacles.StabbableTentacle.GetStabbed(); //stab the tentacle!
 		yield return new WaitForSeconds (.1f);
@@ -76,8 +152,13 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
 		//jaiAnimator.SetInteger("AnimState",0);
 	}
 
-	IEnumerator PullOutNewSpear(){
-		yield return new WaitForSeconds (Constants.time2ThrowSpear);
-		mySpearHandle = (Instantiate (spear, transform.position + (Vector3)Constants.stockSpearPosition, Quaternion.identity) as GameObject).GetComponent<IThrowable>();
+	IEnumerator PullOutNewSpear(float time2Wait){
+		yield return new WaitForSeconds (time2Wait);
+        GenerateNewWeapon(WeaponType.Spear);
 	}
+
+    void GenerateNewWeapon(WeaponType weaponType) {
+        myWeapon = (Instantiate (weaponPrefabs[(int)weaponType], transform.position + spawnSpots[(int)weaponType], Quaternion.identity) as GameObject).GetComponent<Weapon>();
+        weaponTrigger = myWeapon;
+    }
 }

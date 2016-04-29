@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GenericFunctions;
 
 public class TeleportSideToSide : MonoBehaviour {
 
