@@ -6,8 +6,8 @@ public abstract class LinearBird : Bird{
 	protected float moveSpeed;
 
 	protected override void Awake () {
-		SetVelocity (Vector2.right);
 		base.Awake();
+		SetVelocity (Vector2.right);
 	}
 
 	public void SetVelocity(Vector2 desiredDirection){

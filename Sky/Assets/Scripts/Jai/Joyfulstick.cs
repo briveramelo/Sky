@@ -29,7 +29,7 @@ public class Joyfulstick : MonoBehaviour, IBegin, IHold, IEnd {
 		transform.position = startingJoystickSpot;
 	}
 
-	Vector2 SetStickPosition(){
+	static Vector2 SetStickPosition(){
 		return startingJoystickSpot + Vector2.ClampMagnitude(InputManager.touchSpot - startingJoystickSpot, joystickMaxMoveDistance);
 	}
 }

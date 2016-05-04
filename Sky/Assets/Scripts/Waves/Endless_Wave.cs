@@ -16,14 +16,14 @@ public struct Range
         this.max = max;
     }
 }
-
+public enum Difficulty{
+    Easy = 1,
+    Medium = 3,
+    Hard = 5
+}
 public class Endless_Wave : Wave {
 
-    public enum Difficulty{
-        Easy = 1,
-        Medium = 3,
-        Hard = 5
-    }
+    
     [SerializeField] Difficulty Toughness;
 
     void OnLevelWasLoaded(int level) {

@@ -4,34 +4,32 @@ using GenericFunctions;
 
 public class Seagull : Bird {
 
-	[SerializeField] private GameObject pooNugget;
+	[SerializeField] GameObject pooNugget;
 
-	private Vector2 targetPosition;
-	private Vector2 orbVec;
+	Vector2 targetPosition;
+	Vector2 orbVec;
 
-	private Vector2 pooDistanceRange = new Vector2 (1f,1.5f);
+	Vector2 pooDistanceRange = new Vector2 (1f,1.5f);
 
-	private float minMoveSpeed = 1.5f;
-	private float moveSpeedHeight = 4f;
-	private float swoopFocus = 2.5f;
-	private float verticalOffset = 1.2f;
-	private float swoopSpread;
-	private float swoopHeight;
-	private float orbAng;
-	private float nextDistance;
-	private float nextDistanceHeight;
-	private float minNextDistance = 0.2f;
-	private float lastTimePooped;
+	float minMoveSpeed = 1.5f;
+	float moveSpeedHeight = 4f;
+	float swoopFocus = 2.5f;
+	float verticalOffset = 1.2f;
+	float swoopSpread;
+	float swoopHeight;
+	float orbAng;
+	float nextDistance;
+	float nextDistanceHeight;
+	float minNextDistance = 0.2f;
+	float lastTimePooped;
 
 	protected override void Awake () {
-		birdStats = new BirdStats(BirdType.Seagull);
+		base.Awake();
 
-		nextDistanceHeight = .3f;
-
+        nextDistanceHeight = .3f;
 		nextDistance = 0.2f;
 		StartCoroutine (GetIntoPlace ());
 		StartCoroutine (Poop ());
-		base.Awake();
 	}
 
 	IEnumerator GetIntoPlace(){
@@ -56,7 +54,7 @@ public class Seagull : Bird {
 		orbVec = new Vector2 (swoopSpread,swoopHeight);
 	}
 
-	float RaisedCos(float minSpeed, float height, float ang){
+	static float RaisedCos(float minSpeed, float height, float ang){
 		return height / 2f * Mathf.Cos (2f * Mathf.Deg2Rad * (ang + 90f)) + (minSpeed + height / 2f);
 	}
 

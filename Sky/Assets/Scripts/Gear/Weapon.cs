@@ -3,30 +3,20 @@ using System.Collections;
 using GenericFunctions;
 
 public interface IUsable {
-	void UseMe(PointVector2 spotSwipe);
-}
-public struct PointVector2 {
-    public Vector2 origin;
-    public Vector2 destination;
-    public Vector2 vector;
-    public PointVector2(Vector2 origin, Vector2 destination){
-        this.origin = origin;
-        this.destination = destination;
-        this.vector = (destination - origin).normalized;
-    }
+	void UseMe(Vector2 spotSwipe);
 }
 
 public abstract class Weapon : MonoBehaviour, IUsable {
 
+    [SerializeField] WeaponType MyWeaponType;
     [SerializeField] protected Collider2D attackCollider;
     [SerializeField] AudioClip useSound;
-    [SerializeField] WeaponType MyWeaponType;
     protected WeaponStats MyWeaponStats = new WeaponStats();
     protected int birdsHit;
     protected static int timesUsed;
     protected abstract int weaponNumber {get; }
 
-    void IUsable.UseMe(PointVector2 spotSwipe) { UseMe(spotSwipe); }
+    void IUsable.UseMe(Vector2 spotSwipe) { UseMe(spotSwipe); }
 
     void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.layer == Constants.birdLayer){
@@ -51,7 +41,7 @@ public abstract class Weapon : MonoBehaviour, IUsable {
     /// <summary>
     /// increments "timesUsed" and plays audio clip
     /// </summary>
-    protected virtual void UseMe(PointVector2 spotSwipe) {
+    protected virtual void UseMe(Vector2 swipeDir) {
         timesUsed++;
         AudioManager.PlayAudio(useSound);
     }

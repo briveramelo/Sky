@@ -62,6 +62,8 @@ public class WaveUI : MonoBehaviour, IWaveUI {
         PointTotal.text = "";
         Streak.text = "";
         Combo.text = "";
+        joystickHelp.SetActive(false);
+        swipeHelp.SetActive(false);
     }
     #endregion
 

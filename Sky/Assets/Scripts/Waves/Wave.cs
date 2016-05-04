@@ -30,7 +30,7 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 	protected const bool right = true;
 	protected const bool left = false;
 	#region SpawnDelegates
-	protected SpawnDelegate SpawnAtRandom(BirdType birdType){
+	protected static SpawnDelegate SpawnAtRandom(BirdType birdType){
 		return ()=>{
             Vector2 spawnPoint;
             if (birdType == BirdType.DuckLeader) {
@@ -89,7 +89,7 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 
 	/// <summary> Spawn Birds
 	/// </summary>
-	public void SpawnBirds(BirdType birdType, Vector2 spawnPoint, DuckDirection duckDir = DuckDirection.UpRight){ 
+	protected static void SpawnBirds(BirdType birdType, Vector2 spawnPoint, DuckDirection duckDir = DuckDirection.UpRight){ 
 		int direction = spawnPoint.x<0 ? 1 : -1;
 
 		if (birdType == BirdType.Eagle){

@@ -9,12 +9,14 @@ public abstract class Bird : MonoBehaviour, IHurtable {
 
 	protected BirdStats birdStats; public BirdStats MyBirdStats{get{return birdStats;}}
 
+    [SerializeField] BirdType myBirdType;
 	[SerializeField] protected Rigidbody2D rigbod;
 	[SerializeField] protected Collider2D birdCollider;
 	[SerializeField] protected GameObject guts;
 
 	protected virtual void Awake(){
-		ScoreSheet.Tallier.TallyBirth(ref birdStats);
+        birdStats = new BirdStats(myBirdType);
+        ScoreSheet.Tallier.TallyBirth(ref birdStats);
         ScoreSheet.Tallier.TallyBirdThreat(ref birdStats, BirdThreat.Spawn);
     }
 

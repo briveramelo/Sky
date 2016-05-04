@@ -40,12 +40,10 @@ public class BabyCrow : Bird {
 		Flying=0,
 		Looking=1
 	}
-	bool killedYoung;
 
 	protected override void Awake () {
-		birdStats = new BirdStats(BirdType.BabyCrow);
-		StartCoroutine(ApproachShifts());
 		base.Awake();
+		StartCoroutine(ApproachShifts());
 	}
 
 	IEnumerator ApproachShifts(){

@@ -21,30 +21,31 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
     public static Tentacles Instance;
 	public static IStabbable StabbableTentacle;
     public static IReleasable Releaser;
-	private ISensorToTentacle me; //just because I wanted to use ResetPosition locally with less mess...
-	[SerializeField] private TentaclesSensor ts; private IToggleable sensor; private IJaiDetected sensorOnJai;
+	ISensorToTentacle me; //just because I wanted to use ResetPosition locally with less mess...
+	[SerializeField] TentaclesSensor ts; private IToggleable sensor; private IJaiDetected sensorOnJai;
 	IFreezable inputManager;
 	IFreezable jai;
 
-	[SerializeField] private Transform tipTransform;
-	[SerializeField] private Collider2D tipCollider;
-	private WeaponStats fakeWeapon = new WeaponStats();
+	[SerializeField] Transform tipTransform;
+	[SerializeField] Collider2D tipCollider;
+	WeaponStats fakeWeapon = new WeaponStats();
 
-	private Vector2 homeSpot = new Vector2 (0f,-.75f - Constants.WorldDimensions.y);
+	Vector2 homeSpot = new Vector2 (0f,-.75f - Constants.WorldDimensions.y);
 	
-	private float descendSpeed = 1f;
-	private float attackSpeed = 1.5f;
-	private float resetSpeed = 1f;
-	private float defeatedHeight;
-	private float resetHeight;
+	float descendSpeed = 1f;
+	float attackSpeed = 1.5f;
+	float resetSpeed = 1f;
+	float defeatedHeight;
+	float resetHeight;
 
-	private int stabsTaken;
+	int stabsTaken;
 	const int stabs2Retreat = 4;
 
-	private bool tentaclesDisabled;
 	private bool holdingJai;
 
 	protected override void Awake(){
+		base.Awake();
+
         Instance = this;
         StabbableTentacle = (IStabbable)this;
         Releaser = (IReleasable)this;
@@ -54,11 +55,8 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 		inputManager = FindObjectOfType<InputManager>().GetComponent<IFreezable>();
 		jai = FindObjectOfType<Jai>().GetComponent<IFreezable>();
 
-		birdStats = new BirdStats(BirdType.Tentacles);
-
 		resetHeight = .5f + homeSpot.y;
 		defeatedHeight = .25f + homeSpot.y;
-		base.Awake();
 	}
 
 	void FaceTowardYou(bool toward){
@@ -148,7 +146,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 
 	#region TakeDamage
 	protected override int TakeDamage(ref WeaponStats weaponStats){
-		bool holding = weaponStats.Velocity.x==0;
+        bool holding = weaponStats.Velocity == Vector2.zero;
 		Vector2 spawnSpot;
 		Vector2 gutVel;
         int damageDealt;

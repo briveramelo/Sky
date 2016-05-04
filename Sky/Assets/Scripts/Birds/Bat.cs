@@ -40,10 +40,9 @@ public class Bat : Bird {
 	#endregion
 
 	protected override void Awake () {
-		birdStats = new BirdStats(BirdType.Bat);
+		base.Awake();
 		targetPositions = new Vector2[positionWindowLength];
 		StartCoroutine (Approach ());
-		base.Awake();
 	}
 
 	// Flap straight towards the first point on the elliptical perimeter

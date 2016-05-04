@@ -4,12 +4,7 @@ using GenericFunctions;
 
 public class Albatross : Bird {
 
-	private float moveSpeed = .71f;
-
-	protected override void Awake(){
-		birdStats = new BirdStats(BirdType.Albatross);
-		base.Awake();
-	}
+	const float moveSpeed = .71f;
 
 	void Update () {
 		rigbod.velocity = (Constants.balloonCenter.position - transform.position).normalized * moveSpeed;

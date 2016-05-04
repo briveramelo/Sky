@@ -2,9 +2,7 @@
 
 public class GameManager : MonoBehaviour {
 
-    public static GameManager Instance;
-
-    [SerializeField] WaveManager waveManager;
+    GameManager Instance;
 
     void Awake() {
         if (Instance == null) {

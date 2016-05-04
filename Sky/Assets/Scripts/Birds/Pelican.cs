@@ -5,35 +5,32 @@ using GenericFunctions;
 
 public class Pelican : Bird {
 
-	[SerializeField] private Animator pelicanAnimator;
-	[SerializeField] private Collider2D pelicanCollider;
+	//[SerializeField] Animator pelicanAnimator;
 
-	private Vector2[] setPositions = new Vector2[]{
+	Vector2[] setPositions = new Vector2[]{
 		new Vector2 (0f, -.8f),
 		new Vector2 (.3f, .1f),
 		new Vector2 (-.3f, .1f),
 		new Vector2 (0f, .5f)
 	};
 
-	private Vector2 targetPosition;
-	private Vector2 moveDir;
+	Vector2 targetPosition;
 	
-	private float[] moveSpeeds = new float[]{
+	float[] moveSpeeds = new float[]{
 		2.5f, 2.5f, 2.5f, 2.5f, 9f
 	};
-	private float[] curveAngles = new float[]{
+	float[] curveAngles = new float[]{
 		20f, 30f, 30f, 5f
 	};
 
 	const float distanceThreshold = 0.25f;
-	private float angleDelta;
 
-	private enum PP{  //pelican positions
+	enum PP{  //pelican positions
 		Below =0, Right =1, Left =2, Above=3, End=4
 	}
-	private Dictionary<PP, Vector2> pelPosts; //pelican positions
-	private PP pelPost;
-	private PP PelPost {
+	Dictionary<PP, Vector2> pelPosts; //pelican positions
+	PP pelPost;
+	PP PelPost {
 		get{return pelPost;}
 		set{
 			if (pelPost== PP.Right && value == PP.Left){
@@ -48,19 +45,17 @@ public class Pelican : Bird {
 		}
 	}
 
-	private bool[] spotsHit = new bool[4];
-	private bool[] clockwiseSteps = new bool[4];
+	bool[] spotsHit = new bool[4];
+	bool[] clockwiseSteps = new bool[4];
 
 	protected override void Awake () {
-		birdStats = new BirdStats(BirdType.Pelican);
-
+		base.Awake();
 		pelPosts = new Dictionary<PP, Vector2>();
 		for (int i=0; i<setPositions.Length; i++){
 			setPositions[i] = new Vector2 (setPositions[i].x * Constants.WorldDimensions.x, setPositions[i].y * Constants.WorldDimensions.y);
 			pelPosts.Add((PP)i, setPositions[i]);
 		}
 		StartCoroutine(SwoopAround());
-		base.Awake();
 	}
 		
 	//Move from one checkpoint to another
@@ -71,9 +66,8 @@ public class Pelican : Bird {
 		while ((int)PelPost<setPositions.Length){	
 			while (!spotsHit[(int)PelPost]) {
 				targetPosition = (Vector2)Constants.balloonCenter.position + pelPosts[PelPost];
-				CheckToMoveOn();
-				moveDir = CurveItIn();
-				rigbod.velocity = moveDir * moveSpeeds[(int)PelPost];
+				spotsHit[(int)PelPost] = ShouldIMoveToNextPost();
+				rigbod.velocity = GetDirection() * moveSpeeds[(int)PelPost];
 				yield return null;
 			}
 			PelPost++;
@@ -106,10 +100,10 @@ public class Pelican : Bird {
 	}
 
 	//bring in that nice curve to his flight pattern
-	Vector2 CurveItIn(){
+	Vector2 GetDirection(){
 		Vector2 initialMoveDir = (targetPosition - (Vector2)transform.position).normalized;
 		float inputAngle = ConvertAnglesAndVectors.ConvertVector2FloatAngle (initialMoveDir);
-		angleDelta = curveAngles[(int)PelPost];
+		float angleDelta = curveAngles[(int)PelPost];
 		if (!clockwiseSteps[(int)PelPost]){
 			angleDelta = -angleDelta;
 		}
@@ -119,17 +113,18 @@ public class Pelican : Bird {
 	}
 		
 	//determine if he should move on to the next checkpoint in his flight
-	void CheckToMoveOn(){
+	bool ShouldIMoveToNextPost(){
 		if (PelPost == PP.Below || PelPost == PP.Above){
 			if (Mathf.Abs (transform.position.x-targetPosition.x)<distanceThreshold){
-				spotsHit[(int)PelPost] = true;
+				return true;
 			}
 		}
 		else if (PelPost == PP.Left || PelPost == PP.Right){
 			if (transform.position.y>targetPosition.y-.1f){
-				spotsHit[(int)PelPost] = true;
+				return true;
 			}
 		}
+        return false;
 	}
 
 	//plunge to (un)certain balloon-popping glory
@@ -140,12 +135,12 @@ public class Pelican : Bird {
 		}
 		//pelicanAnimator.SetInteger("AnimState",0);
 		rigbod.velocity = Vector2.zero;
-		pelicanCollider.enabled = false;
+		birdCollider.enabled = false;
 		yield return new WaitForSeconds (2f);
 		StartCoroutine (SwoopAround ());
 		while (transform.position.y<-Constants.WorldDimensions.y){
 			yield return null;
 		}
-		pelicanCollider.enabled = true;
+		birdCollider.enabled = true;
 	}
 }

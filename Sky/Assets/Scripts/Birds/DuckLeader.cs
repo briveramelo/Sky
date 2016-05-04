@@ -12,17 +12,16 @@ public class DuckLeader : Bird, IDuckToLeader {
 	// The DuckLeader ensures all ducks follow as closely behind in an evenly distributed Flying V Formation
 	// The DuckLeader will fly linearly across the screen
 
-	[SerializeField] private Duck[] duckScripts; private List<ILeaderToDuck> ducks;
-	[SerializeField] private Transform[] formationTransforms;
+	[SerializeField] Duck[] duckScripts; List<ILeaderToDuck> ducks;
+	[SerializeField] Transform[] formationTransforms;
 
 	protected override void Awake () {
-		birdStats = new BirdStats(BirdType.DuckLeader);
+		base.Awake();
 		ducks = new List<ILeaderToDuck>((ILeaderToDuck[])duckScripts);
 		bool goLeft = transform.position.x > 0;
 		transform.FaceForward(goLeft);
 		rigbod.velocity = new Vector2 (goLeft ? -1 : 1, 0) * 2.5f;
 		SetDuckFormation (goLeft);
-		base.Awake();
 	}
 
 	// Set ducks into the "Flying V" Formation, like so:

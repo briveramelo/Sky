@@ -32,12 +32,11 @@ public class Shoebill : Bird {
 	float sinPeriodShift;
 
 	protected override void Awake(){
+		base.Awake();
 		basket =FindObjectOfType<BasketEngine>().GetComponent<IBumpable>();
 		sinPeriodShift = Random.Range(0,5f);
         movingRight = transform.position.x < Constants.jaiTransform.position.x;
         rigbod.velocity = Vector2.right * movingSign * 0.01f;
-		birdStats = new BirdStats(BirdType.Shoebill);
-		base.Awake();
 	}
 	
 	void Update () {

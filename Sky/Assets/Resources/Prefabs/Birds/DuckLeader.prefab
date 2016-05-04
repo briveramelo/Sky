@@ -770,6 +770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f061d6ff1cc794296a229a8432680d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBirdType: 1
   rigbod: {fileID: 5030544}
   birdCollider: {fileID: 6128474}
   guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
@@ -839,6 +840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f061d6ff1cc794296a229a8432680d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBirdType: 1
   rigbod: {fileID: 5030112}
   birdCollider: {fileID: 6189800}
   guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
@@ -872,6 +874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f43a49c362294dbc9edefb79cb00588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBirdType: 2
   rigbod: {fileID: 5083870}
   birdCollider: {fileID: 5859988}
   guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
@@ -900,6 +903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f061d6ff1cc794296a229a8432680d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBirdType: 1
   rigbod: {fileID: 5017912}
   birdCollider: {fileID: 6182596}
   guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
@@ -951,6 +955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f061d6ff1cc794296a229a8432680d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBirdType: 1
   rigbod: {fileID: 5086104}
   birdCollider: {fileID: 6120180}
   guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
@@ -966,6 +971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f061d6ff1cc794296a229a8432680d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBirdType: 1
   rigbod: {fileID: 5025746}
   birdCollider: {fileID: 6141638}
   guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
@@ -981,6 +987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f061d6ff1cc794296a229a8432680d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBirdType: 1
   rigbod: {fileID: 5013130}
   birdCollider: {fileID: 6183854}
   guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}

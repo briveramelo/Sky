@@ -56,7 +56,7 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 	static int hitStreak;
 	static int tempStreak;
 	static int lastHitWeaponNumber;
-    void ResetHitStreak() {
+    static void ResetHitStreak() {
         hitStreak = 0;
         tempStreak = 0;
         lastHitWeaponNumber = 0;
@@ -137,7 +137,7 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 	#endregion
 	const bool increase = true;
 	const bool decrease = false;
-    decimal startTime;
+    float startTime;
 	void Awake(){
         Instance = this;
         scoreBoard = FindObjectOfType<ScoreBoard>();
@@ -160,7 +160,7 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
         for (int i=0; i<Enum.GetNames(typeof(ScoreType)).Length; i++) {
             scoreCounters.Add((ScoreType)i, new PointCounter(CounterType.Scored));
         }
-        startTime = (decimal)Time.time;
+        startTime = Time.time;
 	}
 
 	#region IResetable
@@ -190,7 +190,7 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
     }
     void IReportable.ReportScores() {
         if (WaveManager.CurrentWave == WaveName.Endless) {
-            decimal duration = (decimal)Time.time - startTime;
+            float duration = Time.time - startTime;
             EndlessScore MyEndlessScore = new EndlessScore(scoreCounters[ScoreType.Total].GetCount(BirdType.All, false), duration);
             FindObjectOfType<SaveLoadData>().PromptSave(MyEndlessScore);
         }

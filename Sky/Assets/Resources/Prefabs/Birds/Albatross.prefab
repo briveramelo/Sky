@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0008b561d48a49c1a46d2597d0945af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBirdType: 3
   rigbod: {fileID: 5006164}
   birdCollider: {fileID: 6143880}
   guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
