@@ -18,6 +18,7 @@ public class Incubator : BaseBehaviour {
     [Show] void Seagull() {SpawnNextBird(BirdType.Seagull); }
     [Show] void Pelican() {SpawnNextBird(BirdType.Pelican); }
     [Show] void Shoebill() {SpawnNextBird(BirdType.Shoebill); }
+    [Show] void Bat() {SpawnNextBird(BirdType.Bat); }
     [Show] void Eagle() {SpawnNextBird(BirdType.Eagle); }
     [Show] void BirdOfParadise() {SpawnNextBird(BirdType.BirdOfParadise); }
 

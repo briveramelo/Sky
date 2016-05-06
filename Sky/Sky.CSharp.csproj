@@ -93,6 +93,7 @@
     <Compile Include="Assets\Scripts\Birds\LinearBirds\TeleportSideToSide.cs" />
     <Compile Include="Assets\Scripts\Birds\Pelican.cs" />
     <Compile Include="Assets\Scripts\Birds\Seagull.cs" />
+    <Compile Include="Assets\Scripts\Birds\SeagullSyncer.cs" />
     <Compile Include="Assets\Scripts\Birds\Shoebill.cs" />
     <Compile Include="Assets\Scripts\Birds\Tentacles.cs" />
     <Compile Include="Assets\Scripts\Birds\TentaclesSensor.cs" />

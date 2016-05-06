@@ -2,43 +2,51 @@
 using System.Collections;
 using GenericFunctions;
 
-public class Seagull : Bird {
+public interface ISeagull {
+    void UpdateSeagullNumber(int seagullNumber, int totalSeagulls);
+}
+
+public class Seagull : Bird, ISeagull {
+
+    float periodLength = 3f;
+    float sinPeriodShift;
+    int seagullNumber;
+    Vector2 targetPosition {
+        get {
+            //logic about gullNum?
+            return new Vector2(0f,2.25f);
+        }
+    }
+
+    void ISeagull.UpdateSeagullNumber(int seagullNumber, int totalSeagulls) {
+        this.seagullNumber = seagullNumber;
+        sinPeriodShift = 1;
+        
+
+        //do something with that other totalSeagulls number
+    }
 
 	[SerializeField] GameObject pooNugget;
+    bool movingRight;
+    int movingSign{get{return movingRight ? 1 :-1;}}
 
-	Vector2 targetPosition;
-	Vector2 orbVec;
-
-	Vector2 pooDistanceRange = new Vector2 (1f,1.5f);
-
-	float minMoveSpeed = 1.5f;
-	float moveSpeedHeight = 4f;
-	float swoopFocus = 2.5f;
-	float verticalOffset = 1.2f;
-	float swoopSpread;
-	float swoopHeight;
-	float orbAng;
-	float nextDistance;
-	float nextDistanceHeight;
-	float minNextDistance = 0.2f;
+	const float moveSpeed = 3f;
 	float lastTimePooped;
 
 	protected override void Awake () {
 		base.Awake();
 
-        nextDistanceHeight = .3f;
-		nextDistance = 0.2f;
+        seagullNumber = FindObjectOfType<SeagullSyncer>().GetComponent<ISeagullSyncer>().RecordNewSeagull(this);
+        movingRight = transform.position.x < targetPosition.x;
+        transform.FaceForward(!movingRight);
 		StartCoroutine (GetIntoPlace ());
 		StartCoroutine (Poop ());
 	}
 
 	IEnumerator GetIntoPlace(){
-		float placeSpeed = 3f;
-		FindStartTarget ();
 		while (true){
-			targetPosition = orbVec + (Vector2)Constants.balloonCenter.position + Vector2.up*verticalOffset;
-			rigbod.velocity = (targetPosition-(Vector2)transform.position).normalized * placeSpeed;
-			if (Vector2.Distance(targetPosition,transform.position)<nextDistance){
+			rigbod.velocity = (targetPosition-(Vector2)transform.position).normalized * moveSpeed;
+			if (Vector2.Distance(targetPosition,transform.position)<0.2f){
 				StartCoroutine (SwoopOverhead());
 				break;
 			}
@@ -46,47 +54,33 @@ public class Seagull : Bird {
 		}
 	}
 
-	void FindStartTarget(){
-		orbAng = ConvertAnglesAndVectors.ConvertVector3Angle (transform.position - (Constants.balloonCenter.position + Vector3.up*verticalOffset));
-		swoopSpread = swoopFocus * Mathf.Cos(Mathf.Deg2Rad * orbAng) / (Mathf.Sin(Mathf.Deg2Rad * orbAng) *  Mathf.Sin(Mathf.Deg2Rad * orbAng) + 1f);
-		swoopHeight = swoopSpread * Mathf.Sin(Mathf.Deg2Rad * orbAng) /2f;
-		nextDistance = RaisedCos(minNextDistance,nextDistanceHeight,orbAng);
-		orbVec = new Vector2 (swoopSpread,swoopHeight);
-	}
-
-	static float RaisedCos(float minSpeed, float height, float ang){
-		return height / 2f * Mathf.Cos (2f * Mathf.Deg2Rad * (ang + 90f)) + (minSpeed + height / 2f);
-	}
-
 	IEnumerator SwoopOverhead(){
-		float currentSpeed = minMoveSpeed;
-		float targetAng = 0;
-		float angleStep = 4f;
-		float minBoostDistance = 0.6f;
-		float speedBoostFactor = 1f;
 		bool clockwise = Bool.TossCoin();
 		while (true){
-			float distanceAway = Vector2.Distance(targetPosition,transform.position);
-			if (distanceAway<nextDistance){
-				targetAng = clockwise ? orbAng+90f : orbAng-90f;
-				orbAng = Mathf.LerpAngle(orbAng,targetAng,Time.deltaTime*angleStep);
-				swoopSpread = swoopFocus * Mathf.Cos(Mathf.Deg2Rad * orbAng) / (Mathf.Sin(Mathf.Deg2Rad * orbAng) *  Mathf.Sin(Mathf.Deg2Rad * orbAng) + 1f);
-				swoopHeight = swoopSpread * Mathf.Sin(Mathf.Deg2Rad * orbAng) /2f;
-				currentSpeed = RaisedCos(minMoveSpeed,moveSpeedHeight,orbAng);
-				nextDistance = RaisedCos(minNextDistance,nextDistanceHeight,orbAng);
-				orbVec = new Vector2 (swoopSpread,swoopHeight);
-				targetPosition = orbVec + (Vector2)Constants.balloonCenter.position + Vector2.up * verticalOffset;
-			}
-			else if (distanceAway>minBoostDistance){
-				currentSpeed += distanceAway * speedBoostFactor;
-			}
-			rigbod.velocity = (targetPosition-(Vector2)transform.position).normalized * currentSpeed;
+			rigbod.velocity = new Vector2(FindXVelocity(), FindYVelocity());
 			yield return null;
 		}
 	}
 
+    float FindYVelocity(){
+		return 1.5f * Mathf.Sin(2*Mathf.PI * (1/(periodLength)) * (Time.timeSinceLevelLoad + sinPeriodShift));
+	}
+
+    float xSpread = 4;
+	float FindXVelocity(){
+        float distFromEdge = Mathf.Abs(transform.position.x - (targetPosition.x + movingSign * xSpread));
+        if (distFromEdge<0.1f){
+			movingRight = !movingRight;
+            transform.FaceForward(!movingRight);
+		}
+        float distSurrogate = Mathf.Clamp(distFromEdge, 0.4f, 1);
+        float targetSpeed = distSurrogate * movingSign * moveSpeed;
+		return Mathf.Lerp(rigbod.velocity.x, targetSpeed,Time.deltaTime);
+	}
+
 	IEnumerator Poop(){
 		float minPoopTimeDelay = 4f;
+        Vector2 pooDistanceRange = new Vector2 (1f,1.5f);
 		yield return new WaitForSeconds (minPoopTimeDelay);
 		while (true){
 			float xDist = Mathf.Abs (transform.position.x-Constants.jaiTransform.position.x);
@@ -108,4 +102,9 @@ public class Seagull : Bird {
 		}
 		StartCoroutine (Poop ());
 	}
+
+    protected override void DieUniquely() {
+        FindObjectOfType<SeagullSyncer>().GetComponent<ISeagullSyncer>().ReportSeagullDown(this);
+        base.DieUniquely();
+    }
 }
