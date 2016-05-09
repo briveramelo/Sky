@@ -1,84 +1,96 @@
 ﻿using UnityEngine;
 using System.Collections;
 using GenericFunctions;
+using System.Collections.Generic;
 
 public interface ISeagull {
-    void UpdateSeagullNumber(int seagullNumber, int totalSeagulls);
+    void UpdateSeagullNumber(int seagullNumber);
 }
 
 public class Seagull : Bird, ISeagull {
 
-    float periodLength = 3f;
-    float sinPeriodShift;
-    int seagullNumber;
-    Vector2 targetPosition {
-        get {
-            //logic about gullNum?
-            return new Vector2(0f,2.25f);
-        }
-    }
+    [SerializeField] GameObject pooNugget;
 
-    void ISeagull.UpdateSeagullNumber(int seagullNumber, int totalSeagulls) {
-        this.seagullNumber = seagullNumber;
-        sinPeriodShift = 1;
-        
-
-        //do something with that other totalSeagulls number
-    }
-
-	[SerializeField] GameObject pooNugget;
     bool movingRight;
-    int movingSign{get{return movingRight ? 1 :-1;}}
+    float sinPeriodShift = Random.Range(0f,5f);
 
+    int seagullNumber;
 	const float moveSpeed = 3f;
 	float lastTimePooped;
+    Vector2 TargetCenterPosition;
+    float xSpread = 4;
 
-	protected override void Awake () {
+    Vector2[] targetPositions = new Vector2[] {
+        new Vector2 (0f,2.25f),
+        new Vector2 (.25f,2.35f),
+        new Vector2 (-.5f,2.25f),
+        new Vector2 (.5f,2.25f),
+        new Vector2 (-.25f,2.35f),
+        new Vector2 (0f,2.35f),
+    };
+
+    #region WakeUp
+    protected override void Awake () {
 		base.Awake();
 
-        seagullNumber = FindObjectOfType<SeagullSyncer>().GetComponent<ISeagullSyncer>().RecordNewSeagull(this);
-        movingRight = transform.position.x < targetPosition.x;
-        transform.FaceForward(!movingRight);
+        FindObjectOfType<SeagullSyncer>().GetComponent<ISeagullSyncer>().RecordNewSeagull(this);
 		StartCoroutine (GetIntoPlace ());
 		StartCoroutine (Poop ());
 	}
 
-	IEnumerator GetIntoPlace(){
+    void ISeagull.UpdateSeagullNumber(int seagullNumber) {
+        this.seagullNumber = seagullNumber;
+        TargetCenterPosition = targetPositions[seagullNumber % targetPositions.Length];
+        movingRight = transform.position.x < TargetCenterPosition.x;
+        transform.FaceForward(!movingRight);
+    }
+    #endregion
+
+    IEnumerator GetIntoPlace(){
 		while (true){
-			rigbod.velocity = (targetPosition-(Vector2)transform.position).normalized * moveSpeed;
-			if (Vector2.Distance(targetPosition,transform.position)<0.2f){
-				StartCoroutine (SwoopOverhead());
+			rigbod.velocity = (TargetCenterPosition-(Vector2)transform.position).normalized * moveSpeed;
+			if (Vector2.Distance(TargetCenterPosition,transform.position)<0.2f){
+                StartCoroutine (SwoopOverhead());
 				break;
 			}
-			yield return null;
+			yield return new WaitForFixedUpdate();
 		}
 	}
 
-	IEnumerator SwoopOverhead(){
-		bool clockwise = Bool.TossCoin();
+    #region SwoopOverhead
+    IEnumerator SwoopOverhead(){
+        rigbod.velocity = Vector2.zero;
+        startTime = Time.time;
+        StartCoroutine(LerpShift());
 		while (true){
-			rigbod.velocity = new Vector2(FindXVelocity(), FindYVelocity());
-			yield return null;
+            transform.position = new Vector2 (FindXPosition(), FindYPosition());
+            yield return new WaitForFixedUpdate();
 		}
 	}
 
-    float FindYVelocity(){
-		return 1.5f * Mathf.Sin(2*Mathf.PI * (1/(periodLength)) * (Time.timeSinceLevelLoad + sinPeriodShift));
+    float shift;
+    float startTime;
+    const float targetShift = -22.5f;
+    IEnumerator LerpShift() {
+        float xVel=0;
+        while (Mathf.Abs(shift - targetShift)>0.1f) {
+            shift = Mathf.SmoothDamp(shift, targetShift, ref xVel, 1.5f);
+            yield return new WaitForEndOfFrame();
+        }
+        shift = targetShift;
+    }
+
+    float FindYPosition(){
+        return (0.6f) * Mathf.Sin(2*Mathf.PI/(5f) * (Time.time - startTime)) + TargetCenterPosition.y;
 	}
 
-    float xSpread = 4;
-	float FindXVelocity(){
-        float distFromEdge = Mathf.Abs(transform.position.x - (targetPosition.x + movingSign * xSpread));
-        if (distFromEdge<0.1f){
-			movingRight = !movingRight;
-            transform.FaceForward(!movingRight);
-		}
-        float distSurrogate = Mathf.Clamp(distFromEdge, 0.4f, 1);
-        float targetSpeed = distSurrogate * movingSign * moveSpeed;
-		return Mathf.Lerp(rigbod.velocity.x, targetSpeed,Time.deltaTime);
+	float FindXPosition(){
+        return xSpread * Mathf.Sin(2*Mathf.PI/(5f*2f) * (Time.time - startTime) +Mathf.Deg2Rad * shift) + TargetCenterPosition.x;
 	}
+    #endregion
 
-	IEnumerator Poop(){
+
+    IEnumerator Poop(){
 		float minPoopTimeDelay = 4f;
         Vector2 pooDistanceRange = new Vector2 (1f,1.5f);
 		yield return new WaitForSeconds (minPoopTimeDelay);

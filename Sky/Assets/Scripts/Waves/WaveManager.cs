@@ -41,8 +41,10 @@ public class WaveManager : MonoBehaviour {
     IEnumerator RunStoryWaves() {
         yield return StartCoroutine(StartStoryMode());
         foreach (IWaveRunnable wave in storyWaveCalls){
-            currentWave = wave.MyWave;
-            yield return StartCoroutine (wave.RunWave());
+            if (wave.MyWave == WaveName.Eagle) {
+                currentWave = wave.MyWave;
+                yield return StartCoroutine (wave.RunWave());
+            }
 		}
         yield return StartCoroutine(FinishStoryMode());
     }
