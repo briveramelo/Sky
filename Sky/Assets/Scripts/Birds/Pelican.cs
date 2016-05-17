@@ -6,100 +6,77 @@ public class Pelican : Bird {
 
 	[SerializeField] Animator pelicanAnimator;
 
-    Vector2[] setPositions;
+    int currentTarIn;
+    Vector3[] setPositions;
 
-	Vector2 targetPosition { get { return (Vector2)Constants.balloonCenter.position + setPositions[(int)pelPost]; } }
-
-	enum PP{Below =0, Right =1, Left =2, Above=3, End=4}
-    PP pelPost;
-
+	Vector3 targetPosition { get { return Constants.balloonCenter.position + Vector3.right * setPositions[currentTarIn].x * sideMultiplier + Vector3.up * setPositions[currentTarIn].y ; } }
 	protected override void Awake () {
         pelicanAnimator.SetInteger("AnimState", Random.Range(0, 2));
 		base.Awake();
-        float periodLength = 2f;
-        setPositions = new Vector2[]{
-		    new Vector2 (0f, -2.2f),
-		    new Vector2 (periodLength, -.8f),
-		    new Vector2 (-periodLength, -.8f),
-		    new Vector2 (0f, 2f)
-	    };
-		
+        float yAbove = 2;
+        float yBelow = -2.2f;
+        float resolution = 0.1f;
+        int totalPoints = (int)((yAbove - yBelow) / resolution);
+        float startTime = Time.time;
+        setPositions = new Vector3[totalPoints];
+        for (int i = 0; i < totalPoints; i++) {
+            float iFloat = i;
+            float xPoint = -1 *    Mathf.Cos(2f * Mathf.PI * ((iFloat/(totalPoints)))) + 1f;
+            float yPoint = -2.1f * Mathf.Cos(2f * Mathf.PI * ((iFloat/(totalPoints*2))));
+            Vector3 thisVector = new Vector3(xPoint, yPoint, 0f);
+            setPositions[i] = thisVector;
+        }
+
 		StartCoroutine(SwoopAround());
 	}
 
-    const float moveSpeed = 2f;
-    float timeSinceStartedDiving =0;
+    bool isDiving;
+    int sideMultiplier;
+    float moveSpeed = 2f;
+    float heightTrigger = 1.6f;
 	//Move from one checkpoint to another
 	IEnumerator SwoopAround(){
         pelicanAnimator.SetInteger("AnimState", (int)PelAnimState.Flapping);
-        pelPost = 0;
-        timeSinceStartedDiving = 0;
-		bool[] spotsHit = new bool[4];
-		while ((int)pelPost<setPositions.Length){
-            if (pelPost == PP.Right) {
-                bool goRight = transform.position.x > Constants.balloonCenter.position.x;
-                if (goRight) {
-                    pelPost = PP.Left;
+        currentTarIn = 0;
+        sideMultiplier = transform.position.x < 0 ? 1 : -1;
+
+		while (currentTarIn<setPositions.Length){
+            
+            rigbod.velocity = GetVelocity();
+            float xFromJai = Constants.jaiTransform.position.x - transform.position.x;
+            transform.FaceForward(xFromJai > 0);
+
+            if (Vector3.Distance(transform.position, targetPosition)<0.2f) {
+			    currentTarIn++;
+                if (pelicanAnimator.GetInteger("AnimState") == (int)PelAnimState.Flapping && setPositions[currentTarIn].y>1.2f) {
+                    StartCoroutine(TriggerDiveAnimation());
+                }
+                if (currentTarIn>setPositions.Length) {
+                    break;
                 }
             }
-            while (!spotsHit[(int)pelPost]) {
-                if (pelPost == PP.Above) {
-                    CheckToAnimateDive();
-                    if (pelicanAnimator.GetInteger("AnimState") == (int)PelAnimState.Diving) {
-                        if (Time.time - timeSinceStartedDiving > 1f) {
-                            break;
-                        }
-                    };
-                }
-                rigbod.velocity = GetVelocity().normalized * moveSpeed;
-                transform.FaceForward(rigbod.velocity.x > 0);
-				spotsHit[(int)pelPost] = ShouldIMoveToNextPost();
-				yield return null;
-			}
-			pelPost++;
 			yield return null;
 		}
-        bool rightSide = Bool.TossCoin();
-		StartCoroutine (DiveBomb (rightSide));
+
+		StartCoroutine (DiveBomb (sideMultiplier<0));
 	}
 
-    float distanceToAnimateDive = 1.4f;
-    void CheckToAnimateDive() {
-        float distanceAway = Vector3.Distance(transform.position, targetPosition);
-        if (distanceAway < distanceToAnimateDive && pelicanAnimator.GetInteger("AnimState")==(int)PelAnimState.Flapping) {
-            pelicanAnimator.SetInteger("AnimState", (int)PelAnimState.Diving);
-            timeSinceStartedDiving = Time.time;
+    IEnumerator TriggerDiveAnimation() {
+        float timeSinceStartedDiving = 0;
+        pelicanAnimator.SetInteger("AnimState", (int)PelAnimState.Diving);
+        timeSinceStartedDiving = Time.time;
+        while (true) {
+            if (Time.time - timeSinceStartedDiving > 1f) {
+                currentTarIn = setPositions.Length+1;
+                break;
+            }
+            yield return new WaitForEndOfFrame();
         }
     }
 
     Vector2 GetVelocity() {
-        Vector2 moveDir = targetPosition - (Vector2)transform.position;
-        if (pelPost == PP.Right || pelPost == PP.Left) {
-            moveDir.x = Mathf.Clamp(moveDir.x * moveDir.x, moveDir.x * .2f, moveDir.x);
-            moveDir.y = Mathf.Clamp( 1f/ moveDir.y , moveDir.y * .2f, moveDir.y);
-        }
-        else if (pelPost == PP.Above) {
-            moveDir.x = Mathf.Clamp( 1f/ (moveDir.x) , moveDir.x * .2f, moveDir.x);
-            moveDir.y = Mathf.Clamp(moveDir.y * moveDir.y, moveDir.y * .2f, moveDir.y);
-        }
-        return Vector2.Lerp(rigbod.velocity, moveDir, Time.deltaTime * 10f);
+        return (targetPosition - transform.position).normalized * moveSpeed;
     }
-	
-    const float distanceThreshold = 0.25f;
-	//determine if he should move on to the next checkpoint in his flight
-	bool ShouldIMoveToNextPost(){
-		if (pelPost == PP.Below || pelPost == PP.Above){
-			if (Mathf.Abs (transform.position.x-targetPosition.x)<distanceThreshold){
-				return true;
-			}
-		}
-		else if (pelPost == PP.Left || pelPost == PP.Right){
-			if (transform.position.y>targetPosition.y-.1f){
-				return true;
-			}
-		}
-        return false;
-	}
 
 	//plunge to (un)certain balloon-popping glory
 	IEnumerator DiveBomb(bool goingRight){

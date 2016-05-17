@@ -62,9 +62,9 @@ public class Spear : Weapon, IUsable {
 
         Bird bird = col.GetComponent<Bird>();
 		//Deliver damage and redirect the spear as a bounce
-		rigbod.velocity = bird.MyBirdStats.Health>0 ? 
-			Vector2.Reflect(MyWeaponStats.Velocity,(transform.position-col.bounds.ClosestPoint (transform.position))) * 0.2f :
-			MyWeaponStats.Velocity * .8f;
+		//rigbod.velocity = bird.MyBirdStats.Health>0 ? 
+		//	Vector2.Reflect(MyWeaponStats.Velocity,(transform.position-col.bounds.ClosestPoint (transform.position))) * 0.2f :
+		//	MyWeaponStats.Velocity * .8f;
 
 		Physics2D.IgnoreCollision(attackCollider, col);
 	}

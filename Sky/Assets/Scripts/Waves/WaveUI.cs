@@ -40,12 +40,17 @@ public enum PointAnimState {
     Shine =1,
     Poof =2
 }
+enum PointBackDrop {
+    IdleOffScreen=0,
+    ComeIn =1,
+    GetOut =2
+}
 #endregion
 
 public class WaveUI : MonoBehaviour, IWaveUI {
 
 	[SerializeField] Text Title, SubTitle, PointTotal, Streak, Combo;
-    [SerializeField] Animator TitleA, SubTitleA, PointTotalA, StreakA, ComboA;
+    [SerializeField] Animator TitleA, SubTitleA, PointTotalA, StreakA, ComboA, ScoreBackDrop;
     [SerializeField] GameObject joystickHelp, swipeHelp;
 
     #region Load Level
@@ -106,14 +111,14 @@ public class WaveUI : MonoBehaviour, IWaveUI {
     #endregion
 
     IEnumerator IWaveUI.AnimateWaveStart(WaveName waveName) {
-        yield return StartCoroutine(DisplayTip());
-        yield return null;
         yield return StartCoroutine(DisplayWaveName(waveName));
     }
     IEnumerator IWaveUI.AnimateWaveEnd(WaveName waveName) {
         yield return StartCoroutine (DisplayWaveComplete());
         yield return null;
         yield return StartCoroutine (DisplayPoints(true));
+        yield return null;
+        yield return StartCoroutine(DisplayTip());
     }
 
     #region AnimateWaveStart
@@ -159,16 +164,19 @@ public class WaveUI : MonoBehaviour, IWaveUI {
         Streak.text = "Streaks: " + ScoreSheet.Reporter.GetScore(ScoreType.Streak, isWaveScore, BirdType.All).ToString();
         Combo.text = "Combos: " + ScoreSheet.Reporter.GetScore(ScoreType.Combo, isWaveScore, BirdType.All).ToString();
 
+        ScoreBackDrop.SetInteger("AnimState", (int)PointBackDrop.ComeIn);
         PointTotalA.SetInteger("AnimState", (int)PointAnimState.Shine);
         StreakA.SetInteger("AnimState", (int)PointAnimState.Shine);
         ComboA.SetInteger("AnimState", (int)PointAnimState.Shine);
 
         yield return new WaitForSeconds(4f);
 
+        ScoreBackDrop.SetInteger("AnimState", (int)PointBackDrop.GetOut);
         PointTotalA.SetInteger("AnimState", (int)PointAnimState.Poof);
         StreakA.SetInteger("AnimState", (int)PointAnimState.Poof);
         ComboA.SetInteger("AnimState", (int)PointAnimState.Poof);
         yield return new WaitForSeconds(2f);
+        ScoreBackDrop.SetInteger("AnimState", (int)PointBackDrop.IdleOffScreen);
     }
     #endregion
 

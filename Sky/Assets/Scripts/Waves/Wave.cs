@@ -112,7 +112,9 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 	/// Multiplies these input numbers by worldDimensions
 	/// </summary>
 	protected static Vector2 SpawnPoint(bool startOnRight, float y1, float y2=-1337f){
-		y2 = y2==-1337f ? y1 : y2; 
+		y2 = y2==-1337f ? y1 : y2;
+        y1 = Mathf.Clamp(y1, -1f, 1f);
+        y2 = Mathf.Clamp(y2, -1f, 1f); 
 		return new Vector2 (((startOnRight ? 1:-1) * Constants.WorldDimensions.x), UnityEngine.Random.Range (y1, y2) * Constants.WorldDimensions.y);
 	}
 
@@ -138,7 +140,7 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 
 	/// <summary> Will output DuckDirection based on duck's spawning position
 	/// </summary>
-	DuckDirection DuckDirectionGenerator(Vector2 spawnPoint){
+	protected DuckDirection DuckDirectionGenerator(Vector2 spawnPoint){
 		if (spawnPoint.y==0){
 			bool goUp = Bool.TossCoin();
 			return spawnPoint.x>0 ? (goUp ? DuckDirection.UpLeft : DuckDirection.DownLeft) :

@@ -6,7 +6,7 @@ public class Albatross : Bird {
     bool shouldWaitToTurn;
 	const float moveSpeed = 1.065f;
 
-	void FixedUpdate () {
+	void Update () {
         Vector2 moveDir = Constants.balloonCenter.position - transform.position;
         if (Vector2.Distance(moveDir, Vector2.zero)>0.1f) {
             rigbod.velocity = (moveDir).normalized * moveSpeed;
@@ -33,6 +33,7 @@ public class Albatross : Bird {
         }
         birdStats.Health -= damageDealt;
         (Instantiate(guts, transform.position, Quaternion.identity) as GameObject).GetComponent<IBleedable>().GenerateGuts(ref birdStats, weaponStats.Velocity);
+        Debug.Log(damageDealt);
         return damageDealt;
 	}
 }

@@ -22,13 +22,13 @@ namespace GenericFunctions{
 		public static Collider2D worldBoundsCollider;
 		public static Collider2D bottomOfTheWorldCollider;
 
-		public static int poosOnJaisFace;
 		static int targetPooInt;
 		public static int TargetPooInt {
 			get{return targetPooInt;}
 			set{ targetPooInt = value;
-				if (targetPooInt>4)
+				if (targetPooInt>4) {
 					targetPooInt =0;
+                }
 			}
 		}
 

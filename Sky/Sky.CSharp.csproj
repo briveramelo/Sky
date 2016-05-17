@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>iOS:9</UnityBuildTarget>
     <UnityVersion>5.3.4f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -87,19 +85,19 @@
     <Compile Include="Assets\Scripts\Birds\Crows\Crow.cs" />
     <Compile Include="Assets\Scripts\Birds\Crows\Murder.cs" />
     <Compile Include="Assets\Scripts\Birds\Duck.cs" />
-    <Compile Include="Assets\Scripts\Birds\DuckLeader.cs" />
     <Compile Include="Assets\Scripts\Birds\Eagle.cs" />
+    <Compile Include="Assets\Scripts\Birds\LeadDuck.cs" />
     <Compile Include="Assets\Scripts\Birds\LinearBirds\BirdOfParadise.cs" />
     <Compile Include="Assets\Scripts\Birds\LinearBirds\LinearBird.cs" />
     <Compile Include="Assets\Scripts\Birds\LinearBirds\Pigeon.cs" />
     <Compile Include="Assets\Scripts\Birds\LinearBirds\TeleportSideToSide.cs" />
     <Compile Include="Assets\Scripts\Birds\Pelican.cs" />
     <Compile Include="Assets\Scripts\Birds\Seagull.cs" />
-    <Compile Include="Assets\Scripts\Birds\SeagullSyncer.cs" />
     <Compile Include="Assets\Scripts\Birds\Shoebill.cs" />
     <Compile Include="Assets\Scripts\Birds\Tentacles.cs" />
     <Compile Include="Assets\Scripts\Birds\TentaclesSensor.cs" />
     <Compile Include="Assets\Scripts\Birds\TentaclesTip.cs" />
+    <Compile Include="Assets\Scripts\Buildings\ParalaxChildren.cs" />
     <Compile Include="Assets\Scripts\Gear\Balloon.cs" />
     <Compile Include="Assets\Scripts\Gear\Basket.cs" />
     <Compile Include="Assets\Scripts\Gear\BasketEngine.cs" />
@@ -294,6 +292,7 @@
     <Compile Include="Assets\Scripts\VisualEffects\MaskCamera.cs" />
     <Compile Include="Assets\Scripts\VisualEffects\PooNugget.cs" />
     <Compile Include="Assets\Scripts\VisualEffects\PooSlide.cs" />
+    <Compile Include="Assets\Scripts\Waves\BackgroundManager.cs" />
     <Compile Include="Assets\Scripts\Waves\EagleFriends.cs" />
     <Compile Include="Assets\Scripts\Waves\EmotionalIntensity.cs" />
     <Compile Include="Assets\Scripts\Waves\Endless_Wave.cs" />

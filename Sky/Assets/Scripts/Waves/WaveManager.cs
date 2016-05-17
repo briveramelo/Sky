@@ -39,9 +39,9 @@ public class WaveManager : MonoBehaviour {
 
     #region StoryWaves
     IEnumerator RunStoryWaves() {
-        yield return StartCoroutine(StartStoryMode());
+        //yield return StartCoroutine(StartStoryMode());
         foreach (IWaveRunnable wave in storyWaveCalls){
-            if (wave.MyWave == WaveName.Eagle) {
+            if (wave.MyWave == WaveName.Pigeon) {
                 currentWave = wave.MyWave;
                 yield return StartCoroutine (wave.RunWave());
             }

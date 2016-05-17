@@ -84,6 +84,7 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
 		if (Input.touchCount>0){
 			foreach (Touch finger in Input.touches){
                 touchSpot = (finger.position + correctionPixels) * correctionPixelFactor;
+                //Debug.Log(touchSpot);
 				if (finger.phase == TouchPhase.Began){
 					beginners.ForEach(beginner=> beginner.OnTouchBegin(finger.fingerId));
 				}

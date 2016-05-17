@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using GenericFunctions;
 
 public struct Corrections
@@ -17,7 +16,8 @@ public struct Corrections
         }
         else
         {
-            correctionPixels = -Constants.ScreenDimensions / 2;
+            //correctionPixels = -Constants.ScreenDimensions / 2;
+            correctionPixels = new Vector2(-Constants.ScreenDimensions.x / 2, (-3 * Constants.ScreenDimensions.y / 2));
             correctionPixelFactor = .01f;
         }
     }

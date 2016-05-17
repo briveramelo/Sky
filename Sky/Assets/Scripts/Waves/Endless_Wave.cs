@@ -12,6 +12,11 @@ public struct Range
     public float max;
     public Range(float min, float max)
     {
+        if (min>max) {
+            float tempMax = max;
+            max = min;
+            min = tempMax;
+        }
         this.min = min;
         this.max = max;
     }

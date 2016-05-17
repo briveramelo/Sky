@@ -1,22 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using GenericFunctions;
-using System.Collections.Generic;
 
-public interface ISeagull {
-    void UpdateSeagullNumber(int seagullNumber);
-}
-
-public class Seagull : Bird, ISeagull {
+public class Seagull : Bird {
 
     [SerializeField] GameObject pooNugget;
 
     bool movingRight;
     float sinPeriodShift = Random.Range(0f,5f);
 
-    int seagullNumber;
+    int mySeagullNumber;
+    static int totalSeagulls;
 	const float moveSpeed = 3f;
-	float lastTimePooped;
     Vector2 TargetCenterPosition;
     float xSpread = 4;
 
@@ -33,15 +28,16 @@ public class Seagull : Bird, ISeagull {
     protected override void Awake () {
 		base.Awake();
 
-        FindObjectOfType<SeagullSyncer>().GetComponent<ISeagullSyncer>().RecordNewSeagull(this);
+        InitializeThisSeagull();
 		StartCoroutine (GetIntoPlace ());
 		StartCoroutine (Poop ());
 	}
 
-    void ISeagull.UpdateSeagullNumber(int seagullNumber) {
-        this.seagullNumber = seagullNumber;
-        TargetCenterPosition = targetPositions[seagullNumber % targetPositions.Length];
+    void InitializeThisSeagull() {
+        mySeagullNumber = totalSeagulls;
+        TargetCenterPosition = targetPositions[mySeagullNumber % targetPositions.Length];
         movingRight = transform.position.x < TargetCenterPosition.x;
+        startedMovingRight = movingRight;
         transform.FaceForward(!movingRight);
     }
     #endregion
@@ -49,74 +45,76 @@ public class Seagull : Bird, ISeagull {
     IEnumerator GetIntoPlace(){
 		while (true){
 			rigbod.velocity = (TargetCenterPosition-(Vector2)transform.position).normalized * moveSpeed;
-			if (Vector2.Distance(TargetCenterPosition,transform.position)<0.2f){
+			if (Vector2.Distance(TargetCenterPosition,transform.position)<0.1f){
                 StartCoroutine (SwoopOverhead());
 				break;
 			}
-			yield return new WaitForFixedUpdate();
+			yield return null;
 		}
 	}
 
     #region SwoopOverhead
+    bool startedMovingRight;
     IEnumerator SwoopOverhead(){
         rigbod.velocity = Vector2.zero;
+        rigbod.isKinematic = true;
         startTime = Time.time;
-        StartCoroutine(LerpShift());
+        StartCoroutine(LerpShift(startedMovingRight));
 		while (true){
-            transform.position = new Vector2 (FindXPosition(), FindYPosition());
-            yield return new WaitForFixedUpdate();
+            transform.FaceForward(GetXVelocity()<0);
+            transform.position = new Vector2 (GetXPosition(), GetYPosition());
+            yield return null;
 		}
 	}
-
     float shift;
     float startTime;
-    const float targetShift = -22.5f;
-    IEnumerator LerpShift() {
+    IEnumerator LerpShift(bool startedGoingRight) {
+        float targetShift = -22.5f;
         float xVel=0;
         while (Mathf.Abs(shift - targetShift)>0.1f) {
-            shift = Mathf.SmoothDamp(shift, targetShift, ref xVel, 1.5f);
+            shift = Mathf.SmoothDamp(shift, targetShift, ref xVel, 2f);
             yield return new WaitForEndOfFrame();
         }
         shift = targetShift;
     }
 
-    float FindYPosition(){
-        return (0.6f) * Mathf.Sin(2*Mathf.PI/(5f) * (Time.time - startTime)) + TargetCenterPosition.y;
+    float GetYPosition(){
+        return (0.6f) * Mathf.Sin(2f*Mathf.PI/(5f) * (Time.time - startTime)) + TargetCenterPosition.y;
+	}
+    float GetYVelocity(){
+        return (0.6f) * 2f*Mathf.PI/(5f) * Mathf.Sin(2f*Mathf.PI/(5f) * (Time.time - startTime)) + TargetCenterPosition.y;
 	}
 
-	float FindXPosition(){
-        return xSpread * Mathf.Sin(2*Mathf.PI/(5f*2f) * (Time.time - startTime) +Mathf.Deg2Rad * shift) + TargetCenterPosition.x;
+    float GetXPosition(){
+        return (startedMovingRight ? 1 :-1) * xSpread * Mathf.Sin(2f*Mathf.PI/(5f*2f) * (Time.time - startTime) + Mathf.Deg2Rad * shift) + TargetCenterPosition.x;
 	}
+    float GetXVelocity() {
+        return (startedMovingRight ? 1 :-1) * 2f*Mathf.PI/(5f*2f) * xSpread * Mathf.Sign(Mathf.Cos(2f*Mathf.PI/(5f*2f) * (Time.time - startTime) + Mathf.Deg2Rad * shift));
+    }
     #endregion
 
-
+    static int activePooCams;
+    public static void LogPooCam(bool hit) {
+        activePooCams+= hit ?1:-1;
+    }
     IEnumerator Poop(){
-		float minPoopTimeDelay = 4f;
-        Vector2 pooDistanceRange = new Vector2 (1f,1.5f);
+		float minPoopTimeDelay = 1f;
+        Vector2 pooDistanceRange = new Vector2 (1f,1.5f) * 0.8f;
 		yield return new WaitForSeconds (minPoopTimeDelay);
 		while (true){
 			float xDist = Mathf.Abs (transform.position.x-Constants.jaiTransform.position.x);
-			if (xDist>pooDistanceRange[0] && xDist<pooDistanceRange[1] && Mathf.Sign(rigbod.velocity.x)==Mathf.Sign(-transform.position.x+Constants.jaiTransform.position.x)){
-				float actualLastPoopTime = 30f;
-				foreach (Seagull seagullScript in FindObjectsOfType<Seagull>()){
-					float lastGuysPooTime = Time.realtimeSinceStartup-seagullScript.lastTimePooped;
-					if (lastGuysPooTime<actualLastPoopTime){
-						actualLastPoopTime = lastGuysPooTime;
-					}
-				}
-				if (Constants.poosOnJaisFace<3 && actualLastPoopTime>minPoopTimeDelay){
-					(Instantiate (pooNugget,transform.position,Quaternion.identity) as GameObject).GetComponent<PooNugget>().InitializePooNugget(rigbod.velocity);
-					lastTimePooped = Time.realtimeSinceStartup;
-					break;
-				}
+            float lastTimePooped=0f;
+			if (xDist > pooDistanceRange[0] && xDist < pooDistanceRange[1] && Mathf.Sign(GetXVelocity())==Mathf.Sign(-transform.position.x+Constants.jaiTransform.position.x)){
+                if (activePooCams<5) {
+                    if (Time.time>(lastTimePooped + minPoopTimeDelay)){
+					    (Instantiate (pooNugget,transform.position,Quaternion.identity) as GameObject).GetComponent<PooNugget>().InitializePooNugget(new Vector2 (GetXVelocity(), GetYVelocity()));
+                        lastTimePooped = Time.time;
+					    break;
+				    }
+                }
 			}
 			yield return null;
 		}
 		StartCoroutine (Poop ());
 	}
-
-    protected override void DieUniquely() {
-        FindObjectOfType<SeagullSyncer>().GetComponent<ISeagullSyncer>().ReportSeagullDown(this);
-        base.DieUniquely();
-    }
 }

@@ -22,7 +22,7 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 	// The Duck will follow his/her DuckLeader, until the DuckLeader dies. 
 	// Then, the Duck will aimlessly bounce around the screen until killed
 
-	[SerializeField] DuckLeader leaderScript; IDuckToLeader leader;
+	[SerializeField] LeadDuck leaderScript; IDuckToLeader leader;
 	Transform myFormationTransform;
 
 	Vector2[] scatterDir = new Vector2[]{
@@ -47,7 +47,7 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 	protected override void Awake () {
 		base.Awake();
 		if (transform.parent) {
-			leader = (IDuckToLeader)leaderScript;
+			leader = leaderScript;
 		}
 		else{
 			Scatter();

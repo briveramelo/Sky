@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 2cfd27f5162310b40a700bbc57e939cc
-timeCreated: 1462515608
+guid: 9c4fbaa471b194841bbc74166814f4d9
+timeCreated: 1463340575
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -10,7 +10,6 @@ TextureImporter:
     21300006: Seagull_3
     21300008: Seagull_4
     21300010: Seagull_5
-    21300012: Seagull_6
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -60,10 +59,10 @@ TextureImporter:
     - name: Seagull_0
       rect:
         serializedVersion: 2
-        x: 15
-        y: 11
-        width: 16
-        height: 20
+        x: 11
+        y: 6
+        width: 20
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -71,10 +70,10 @@ TextureImporter:
     - name: Seagull_1
       rect:
         serializedVersion: 2
-        x: 55
-        y: 11
-        width: 16
-        height: 20
+        x: 51
+        y: 6
+        width: 20
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -82,10 +81,10 @@ TextureImporter:
     - name: Seagull_2
       rect:
         serializedVersion: 2
-        x: 95
-        y: 11
-        width: 16
-        height: 20
+        x: 91
+        y: 6
+        width: 20
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -93,10 +92,10 @@ TextureImporter:
     - name: Seagull_3
       rect:
         serializedVersion: 2
-        x: 135
-        y: 11
-        width: 16
-        height: 20
+        x: 131
+        y: 6
+        width: 20
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -104,10 +103,10 @@ TextureImporter:
     - name: Seagull_4
       rect:
         serializedVersion: 2
-        x: 175
-        y: 11
-        width: 16
-        height: 20
+        x: 171
+        y: 6
+        width: 20
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,21 +114,10 @@ TextureImporter:
     - name: Seagull_5
       rect:
         serializedVersion: 2
-        x: 215
-        y: 11
-        width: 16
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: Seagull_6
-      rect:
-        serializedVersion: 2
-        x: 255
-        y: 11
-        width: 16
-        height: 20
+        x: 211
+        y: 6
+        width: 20
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

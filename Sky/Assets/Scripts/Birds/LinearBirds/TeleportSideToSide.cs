@@ -3,10 +3,10 @@ using System.Collections;
 
 public class TeleportSideToSide : MonoBehaviour {
 
-	[SerializeField] private Collider2D buddyCollider;
-	[SerializeField] private Teleporter TeleporterType;
-	private Vector2 destination;
-	private enum Teleporter{
+	[SerializeField] Collider2D buddyCollider;
+	[SerializeField] Teleporter TeleporterType;
+	Vector2 destination;
+	enum Teleporter{
 		Pigeon,
 		DuckLeader
 	}
@@ -22,7 +22,7 @@ public class TeleportSideToSide : MonoBehaviour {
 			}
 		}
 		if (TeleporterType == Teleporter.DuckLeader){
-			if (col.gameObject.GetComponent<DuckLeader>()){//teleport duck squads across sides
+			if (col.gameObject.GetComponent<LeadDuck>()){//teleport duck squads across sides
 				StartCoroutine (TemporaryTeleport(col));
 			}
 		}

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 16c290a640fe8664c8380ef5c48bcb7f
-timeCreated: 1462737165
+guid: 33a51b06a7bab2e41932a0fd32ce7a11
+timeCreated: 1462826640
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -13,7 +13,6 @@ TextureImporter:
     21300012: albatross_6
     21300014: albatross_7
     21300016: albatross_8
-    21300018: albatross_9
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -63,203 +62,181 @@ TextureImporter:
     - name: albatross_0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 6
+        x: 7
+        y: 7
         width: 48
         height: 68
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -14, y: -34}
+      - - {x: 12, y: 11}
+        - {x: -20, y: 11}
+        - {x: -24, y: 10}
+        - {x: -24, y: -5}
+        - {x: -4, y: -34}
         - {x: 3, y: -34}
-        - {x: 22, y: -12}
-        - {x: 22, y: 9}
-        - {x: 18, y: 11}
-        - {x: -15, y: 11}
-        - {x: -23, y: 5}
-        - {x: -23, y: -9}
+        - {x: 24, y: 2}
+        - {x: 24, y: 7}
     - name: albatross_1
       rect:
         serializedVersion: 2
-        x: 68
-        y: 6
+        x: 67
+        y: 7
         width: 48
         height: 68
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -15, y: 11}
-        - {x: -24, y: 2}
-        - {x: -24, y: -13}
-        - {x: -14, y: -29}
-        - {x: 2, y: -29}
-        - {x: 23, y: -9}
-        - {x: 23, y: 4}
-        - {x: 22, y: 5}
-        - {x: 2, y: 11}
+      - - {x: -19, y: 11}
+        - {x: -24, y: 7}
+        - {x: -24, y: -1}
+        - {x: -23, y: -1}
+        - {x: -7, y: -25}
+        - {x: -4, y: -29}
+        - {x: -2, y: -29}
+        - {x: 4, y: -24}
+        - {x: 24, y: 0}
+        - {x: 24, y: 8}
+        - {x: 1, y: 11}
     - name: albatross_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 6
+        x: 127
+        y: 7
         width: 48
         height: 68
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 24, y: 8}
-        - {x: 8, y: 16}
-        - {x: -10, y: 16}
-        - {x: -12, y: 15}
-        - {x: -24, y: 4}
-        - {x: -24, y: -3}
-        - {x: -3, y: -17}
-        - {x: 2, y: -17}
-        - {x: 5, y: -13}
-        - {x: 23, y: -2}
-        - {x: 24, y: -1}
+      - - {x: -10, y: 16}
+        - {x: -24, y: 9}
+        - {x: -24, y: -2}
+        - {x: 0, y: -17}
+        - {x: 21, y: -17}
+        - {x: 24, y: -8}
+        - {x: 24, y: 16}
     - name: albatross_3
       rect:
         serializedVersion: 2
-        x: 188
-        y: 6
+        x: 187
+        y: 7
         width: 48
         height: 68
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -17, y: 17}
-        - {x: -20, y: 14}
-        - {x: -24, y: 5}
-        - {x: -24, y: -3}
-        - {x: 9, y: -3}
-        - {x: 19, y: -2}
-        - {x: 24, y: 2}
-        - {x: 24, y: 8}
-        - {x: 3, y: 17}
+      - - {x: 9, y: 31}
+        - {x: -1, y: 31}
+        - {x: -24, y: 11}
+        - {x: -24, y: 0}
+        - {x: -23, y: -1}
+        - {x: -8, y: -2}
+        - {x: 11, y: -2}
+        - {x: 24, y: 0}
+        - {x: 24, y: 11}
+        - {x: 12, y: 30}
     - name: albatross_4
       rect:
         serializedVersion: 2
-        x: 248
-        y: 6
+        x: 247
+        y: 7
         width: 48
         height: 68
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 2, y: 31}
-        - {x: -6, y: 23}
-        - {x: -24, y: 2}
-        - {x: -24, y: -3}
-        - {x: -1, y: -3}
-        - {x: 21, y: -1}
+      - - {x: -24, y: -2}
+        - {x: 18, y: -2}
         - {x: 24, y: 0}
-        - {x: 24, y: 15}
-        - {x: 16, y: 31}
+        - {x: 24, y: 8}
+        - {x: 9, y: 34}
+        - {x: -4, y: 34}
+        - {x: -24, y: 5}
     - name: albatross_5
       rect:
         serializedVersion: 2
-        x: 308
-        y: 6
+        x: 307
+        y: 7
         width: 48
         height: 68
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 0, y: 34}
-        - {x: -6, y: 22}
-        - {x: -24, y: 1}
-        - {x: -24, y: -3}
-        - {x: 15, y: -3}
-        - {x: 24, y: -1}
-        - {x: 24, y: 9}
-        - {x: 6, y: 34}
+      - - {x: -3, y: 31}
+        - {x: -24, y: 11}
+        - {x: -24, y: -2}
+        - {x: 24, y: -2}
+        - {x: 24, y: 4}
+        - {x: 9, y: 31}
     - name: albatross_6
       rect:
         serializedVersion: 2
-        x: 368
-        y: 6
+        x: 367
+        y: 7
         width: 48
         height: 68
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 24, y: 6}
-        - {x: 8, y: 31}
-        - {x: -3, y: 31}
-        - {x: -24, y: 8}
-        - {x: -24, y: -2}
-        - {x: 12, y: -2}
-        - {x: 18, y: -1}
-        - {x: 24, y: 2}
+      - - {x: -24, y: 0}
+        - {x: -23, y: -1}
+        - {x: -12, y: -11}
+        - {x: -4, y: -11}
+        - {x: 24, y: -1}
+        - {x: 24, y: 4}
+        - {x: 22, y: 7}
+        - {x: 8, y: 17}
+        - {x: -11, y: 17}
+        - {x: -24, y: 10}
     - name: albatross_7
       rect:
         serializedVersion: 2
-        x: 428
-        y: 6
+        x: 427
+        y: 7
         width: 48
         height: 68
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -24, y: -9}
-        - {x: -23, y: -10}
-        - {x: 8, y: -10}
-        - {x: 24, y: 1}
-        - {x: 24, y: 6}
-        - {x: 6, y: 18}
-        - {x: -9, y: 18}
-        - {x: -24, y: 11}
+      - - {x: 22, y: 7}
+        - {x: 5, y: 11}
+        - {x: -16, y: 11}
+        - {x: -22, y: 6}
+        - {x: -24, y: 4}
+        - {x: -24, y: -6}
+        - {x: -14, y: -27}
+        - {x: -8, y: -27}
+        - {x: 0, y: -18}
+        - {x: 24, y: -1}
+        - {x: 24, y: 5}
     - name: albatross_8
       rect:
         serializedVersion: 2
-        x: 488
-        y: 6
+        x: 487
+        y: 7
         width: 48
         height: 68
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -19, y: 12}
-        - {x: -24, y: 10}
-        - {x: -24, y: -26}
-        - {x: -5, y: -26}
-        - {x: 24, y: -1}
-        - {x: 24, y: 8}
-        - {x: 14, y: 12}
-    - name: albatross_9
-      rect:
-        serializedVersion: 2
-        x: 548
-        y: 6
-        width: 48
-        height: 68
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -24, y: 3}
-        - {x: -24, y: 0}
-        - {x: -23, y: -3}
-        - {x: -20, y: -2}
-        - {x: -15, y: -33}
-        - {x: -14, y: -34}
-        - {x: -4, y: -34}
-        - {x: 24, y: -4}
-        - {x: 24, y: 7}
-        - {x: 23, y: 8}
-        - {x: 7, y: 12}
-        - {x: -11, y: 12}
-        - {x: -17, y: 11}
+      - - {x: -17, y: 11}
+        - {x: -24, y: 7}
+        - {x: -24, y: -7}
+        - {x: -12, y: -34}
+        - {x: -6, y: -34}
+        - {x: 0, y: -22}
+        - {x: 24, y: 0}
+        - {x: 24, y: 6}
+        - {x: 7, y: 11}
     outline: []
   spritePackingTag: 
   userData: 

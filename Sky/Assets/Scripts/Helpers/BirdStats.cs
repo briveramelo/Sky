@@ -82,7 +82,7 @@ public class BirdStats {
 		        break;
 	        case BirdType.Albatross:
 		        health = 7;
-		        guts.Redefine(4, 25);
+		        guts.Redefine(10, 60);
                 threat.Redefine(1, 3);
                 pointsToGive.Redefine(2, 20);
 		        break;

@@ -36,6 +36,9 @@ public class Incubator : BaseBehaviour {
 		else if (birdType == BirdType.Eagle){
 			xSpot= -Constants.WorldDimensions.x *5f;
 		}
+        else if (birdType == BirdType.Seagull){
+			xSpot= Constants.WorldDimensions.x * (Bool.TossCoin() ? 1:-1);
+		}
 		Instantiate (birds [(int)birdType], new Vector3(xSpot,ySpot,0f), Quaternion.identity);
 	}
 }
