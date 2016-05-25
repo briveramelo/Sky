@@ -16,14 +16,13 @@ public class Eagle : Bird {
 	private Vector2[] moveDir;
 		
 	protected override void Awake () {
-		birdStats = new BirdStats(BirdType.Eagle);
-		myEagleFriends = (ITriggerSpawnable)eagleFriends;
+		base.Awake();
+		myEagleFriends = eagleFriends;
 		moveDir = new Vector2[]{
 			Constants.ScreenDimensions.normalized,
 			new Vector2(-Constants.ScreenDimensions.x,Constants.ScreenDimensions.y).normalized,
 		};
 		StartCoroutine (InitiateAttack (1f));
-		base.Awake();
 	}
 
 	IEnumerator InitiateAttack(float waitTime){

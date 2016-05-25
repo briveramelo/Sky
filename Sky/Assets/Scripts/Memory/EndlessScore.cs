@@ -6,9 +6,9 @@ using System;
 public class EndlessScore : IComparable<EndlessScore> {
 
 	int score;          public int Score {get { return score; } }
-	decimal duration; public decimal Duration {get { return duration; } }
+	float duration; public float Duration {get { return duration; } }
 
-	public EndlessScore (int score, decimal duration){
+	public EndlessScore (int score, float duration){
 		this.score = score;
 		this.duration = duration;
 	}

@@ -13,11 +13,13 @@ public class Joyfulstick : MonoBehaviour, IBegin, IHold, IEnd {
 	void Awake () {
         stickBase.position = startingJoystickSpot;
 		inputManager = FindObjectOfType<InputManager>().GetComponent<IStickEngineID>();
+        Debug.Log("Joy here");
 	}
 
 	void IBegin.OnTouchBegin(int fingerID){
-		float distFromStick = Vector2.Distance(InputManager.touchSpot,startingJoystickSpot);
+        float distFromStick = Vector2.Distance(InputManager.touchSpot,startingJoystickSpot);
 		if (distFromStick<joystickMaxStartDist){
+            Debug.LogWarning("Joy here");
 			inputManager.SetStickEngineID(fingerID);
             transform.position = SetStickPosition();
 		}
@@ -29,7 +31,7 @@ public class Joyfulstick : MonoBehaviour, IBegin, IHold, IEnd {
 		transform.position = startingJoystickSpot;
 	}
 
-	Vector2 SetStickPosition(){
+	static Vector2 SetStickPosition(){
 		return startingJoystickSpot + Vector2.ClampMagnitude(InputManager.touchSpot - startingJoystickSpot, joystickMaxMoveDistance);
 	}
 }

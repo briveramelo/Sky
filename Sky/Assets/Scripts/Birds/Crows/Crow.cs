@@ -5,23 +5,22 @@ using PixelArtRotation;
 using GenericFunctions;
 
 public interface IMurderToCrow{
-	void InitializeCrow(int crowNum, Vector2 crowPosition);
-	void TakeFlight();
+	void InitializeCrow(int crowNum);
+	void TakeFlight(Vector2 crowPosition);
 	bool ReadyToFly{get;}
 }
 
 public class Crow : Bird, IMurderToCrow {
 
 	#region Initialize Variables
-	private ICrowToMurder murderInterface;
-	[SerializeField] private Murder murder;
-	[SerializeField] private PixelRotation pixelRotationScript;
-	[SerializeField] private Animator crowAnimator;
+	ICrowToMurder murderInterface;
+	[SerializeField] Murder murder;
+	[SerializeField] PixelRotation pixelRotationScript;
+	[SerializeField] Animator crowAnimator;
 
 	protected override void Awake(){
-		birdStats = new BirdStats(BirdType.Crow);
-		murderInterface = (ICrowToMurder)murder;
 		base.Awake();
+		murderInterface = (ICrowToMurder)murder;
 	}
 
 	private enum CrowStates{
@@ -30,7 +29,6 @@ public class Crow : Bird, IMurderToCrow {
 	}
 			
 	Vector2 startPosition;
-	Vector2 targetPosition;
 	Vector2 moveDir;
 
 	float moveSpeed = 4.5f;
@@ -47,14 +45,13 @@ public class Crow : Bird, IMurderToCrow {
 	#endregion
 
 	#region IMurderToCrow Interface
-	void IMurderToCrow.InitializeCrow(int crowNum, Vector2 crowPosition){
-		startPosition = crowPosition;
-		transform.position = crowPosition;
+	void IMurderToCrow.InitializeCrow(int crowNum){
 		isKiller = crowNum == 5 ? true : false;
         myCrowNum = crowNum;
         commitDistance = isKiller ? commitDistance : 3f;
 	}
-	void IMurderToCrow.TakeFlight(){
+	void IMurderToCrow.TakeFlight(Vector2 crowPosition){
+        SetPosition(crowPosition);
         hasRequestedNext = false;
         readyToFly = false;
 		birdCollider.enabled = true;
@@ -62,6 +59,10 @@ public class Crow : Bird, IMurderToCrow {
 		StartCoroutine ( RequestNextCrow());
 	}
 	bool IMurderToCrow.ReadyToFly{get{return readyToFly;}}
+    void SetPosition(Vector2 crowPosition) {
+        startPosition = crowPosition;
+		transform.position = crowPosition;
+    }
 	#endregion
 
 	IEnumerator RequestNextCrow(){

@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Continuer : MonoBehaviour {
 
-    [SerializeField] Pauser pauser;
     [SerializeField] GameObject continueMenu, joystick, pauseButtonGroup;
     [SerializeField] InputManager inputManager;
 

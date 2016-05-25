@@ -100,7 +100,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 122662}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.01442194, y: -3.5768757, z: 0}
+  m_LocalPosition: {x: -0.017410994, y: -3.5056415, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children:
   - {fileID: 434578}
@@ -113,7 +113,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 136588}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.8544216, y: -1.7431241, z: 0}
+  m_LocalPosition: {x: -0.54258895, y: -2.4143581, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 464294}
@@ -174,7 +174,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   t: {fileID: 11474652}
-  myCol: {fileID: 6183822}
+  myTipCol: {fileID: 6183822}
 --- !u!114 &11467712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -221,6 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ade72a0ebc9241f19a4405cb22e882e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBirdType: 7
   rigbod: {fileID: 5020316}
   birdCollider: {fileID: 6182394}
   guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}

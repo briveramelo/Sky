@@ -87,13 +87,12 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
 
 	void IEnd.OnTouchEnd(){
         if (!Pauser.Paused) {
-            Vector2 releaseTouchPoint = InputManager.touchSpot;
-		    float releaseDist = Vector2.Distance (releaseTouchPoint,startingTouchPoint);
-            PointVector2 spotSwipe = new PointVector2(startingTouchPoint, releaseTouchPoint);
+            Vector2 swipeDir = InputManager.touchSpot- startingTouchPoint;
+            float releaseDist = swipeDir.magnitude;
 		    if (!attacking){
 			    if ( releaseDist > distToThrow && myWeapon!=null){
-                    weaponTrigger.UseMe(spotSwipe);
-                    StartCoroutine (AnimateUseWeapon(spotSwipe.vector));
+                    weaponTrigger.UseMe(swipeDir);
+                    StartCoroutine (AnimateUseWeapon(swipeDir));
 			    }
 		    }
         }

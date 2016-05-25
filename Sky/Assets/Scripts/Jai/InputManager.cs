@@ -37,6 +37,7 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
 	List<IHold> holders;
     List<IEnd> enders;
 	IEnd stickEnd;
+    IEnd basketEnd;
 	IEnd jaiEnd;
 	#endregion
 
@@ -48,17 +49,18 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
 
     void Awake(){
 		beginners = new List<IBegin>(new IBegin[]{
-			(IBegin)joyfulstick,
-			(IBegin)jai,
-			(IBegin)pauser
+			joyfulstick,
+			jai,
+			pauser
 		});
 		holders = new List<IHold>(new IHold[]{
-			(IHold)basketEngine,
-			(IHold)joyfulstick,
+			basketEngine,
+			joyfulstick,
 		});
-        enders = new List<IEnd>((IEnd[])selectors);
-		stickEnd = (IEnd)joyfulstick;
-		jaiEnd = (IEnd)jai;
+        enders = new List<IEnd>(selectors);
+		stickEnd = joyfulstick;
+		jaiEnd = jai;
+        basketEnd = basketEngine;
 
         Corrections pixelFix = new Corrections(true);
         correctionPixels = pixelFix.correctionPixels;
@@ -82,6 +84,7 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
 		if (Input.touchCount>0){
 			foreach (Touch finger in Input.touches){
                 touchSpot = (finger.position + correctionPixels) * correctionPixelFactor;
+                //Debug.Log(touchSpot);
 				if (finger.phase == TouchPhase.Began){
 					beginners.ForEach(beginner=> beginner.OnTouchBegin(finger.fingerId));
 				}
@@ -93,6 +96,7 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
 				else if (finger.phase == TouchPhase.Ended){
 					if (finger.fingerId == stickEngineFinger && !isFrozen){
 						stickEnd.OnTouchEnd();
+                        basketEnd.OnTouchEnd();
 						stickEngineFinger =-1;
 					}
 					else if (finger.fingerId == jaiFinger && !isFrozen){

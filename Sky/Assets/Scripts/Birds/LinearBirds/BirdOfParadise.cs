@@ -7,9 +7,8 @@ public class BirdOfParadise : LinearBird {
 
 	protected override void Awake () {
 		moveSpeed = 3f;
-		birdStats = new BirdStats(BirdType.BirdOfParadise);
-		Destroy (gameObject, 10f);
 		base.Awake();
+		Destroy (gameObject, 10f);
 	}
 
 	protected override void DieUniquely(){

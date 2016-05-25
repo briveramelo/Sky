@@ -12,18 +12,23 @@ public struct Range
     public float max;
     public Range(float min, float max)
     {
+        if (min>max) {
+            float tempMax = max;
+            max = min;
+            min = tempMax;
+        }
         this.min = min;
         this.max = max;
     }
 }
-
+public enum Difficulty{
+    Easy = 1,
+    Medium = 3,
+    Hard = 5
+}
 public class Endless_Wave : Wave {
 
-    public enum Difficulty{
-        Easy = 1,
-        Medium = 3,
-        Hard = 5
-    }
+    
     [SerializeField] Difficulty Toughness;
 
     void OnLevelWasLoaded(int level) {

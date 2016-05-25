@@ -4,23 +4,22 @@ using GenericFunctions;
 
 public class PooSlide : MonoBehaviour {
 
-	[SerializeField] private GameObject maskCamera;
-	[SerializeField] private Rigidbody2D rigbod;
-	[SerializeField] private SpriteRenderer mySpriteRenderer;
-	[SerializeField] private Animator pooAnimator;
+	[SerializeField] GameObject maskCamera;
+	[SerializeField] SpriteRenderer mySpriteRenderer;
+	[SerializeField] Animator pooAnimator;
+    [SerializeField] Material[] pooMaterials;
 
-	[SerializeField] private Sprite[] lastPooSprites;
-
-	private float slideSpeed = .72f;
+	[SerializeField] Sprite[] lastPooSprites;
 
 	void Awake(){
-		StartCoroutine (AnimateSplat (Constants.TargetPooInt));
+        mySpriteRenderer.material = pooMaterials[Constants.TargetPooInt];
+        StartCoroutine (AnimateSplat (Constants.TargetPooInt));
 		StartCoroutine (SlideDown ());
 		Destroy (transform.parent.gameObject,15f);
         ScoreSheet.Tallier.TallyThreat(Threat.Poop);
 
         Constants.TargetPooInt++;
-		Constants.poosOnJaisFace++;
+        Seagull.LogPooCam(true);
 	}
 
 	IEnumerator AnimateSplat(int pooCount){
@@ -28,20 +27,21 @@ public class PooSlide : MonoBehaviour {
 			yield return null;
 		}
 		Destroy (pooAnimator);
-		//int i = ((pooCount+2) % 2) == 0 ? 0 :1;
+		int i = ((pooCount+2) % 2) == 0 ? 0 :1;
 		mySpriteRenderer.sprite = lastPooSprites[1];
 	}
 
+    float slideSpeed = .08f;
 	IEnumerator SlideDown(){
 		while (true){
-			rigbod.velocity = Vector2.down * slideSpeed;
-			yield return null;
+			transform.position += Vector3.down * slideSpeed;
+            yield return new WaitForSeconds(Random.Range(0.3f, 0.6f));
 		}
 	}
 
 	void OnDestroy(){
 		StopAllCoroutines ();
-		Constants.poosOnJaisFace--;
+        Seagull.LogPooCam(false);
         ScoreSheet.Tallier.TallyThreat(Threat.PoopCleaned);
     }
 }

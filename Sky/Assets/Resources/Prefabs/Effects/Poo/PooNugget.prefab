@@ -9,10 +9,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 445226}
   - 114: {fileID: 11447584}
-  - 58: {fileID: 5872974}
   - 50: {fileID: 5095544}
   - 114: {fileID: 11451030}
   - 212: {fileID: 21201314}
+  - 95: {fileID: 9571952}
+  - 60: {fileID: 6075254}
   m_Layer: 19
   m_Name: PooNugget
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 173546}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.16, y: -4.5899997, z: 0}
+  m_LocalPosition: {x: -1.4799999, y: 3.77, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -43,14 +44,14 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0.2
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &5872974
-CircleCollider2D:
+--- !u!60 &6075254
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -58,11 +59,32 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.04
+  m_Points:
+    m_Paths:
+    - - {x: -0.08167359, y: 0.098713756}
+      - {x: 0.025698513, y: -0.06875515}
+      - {x: 0.08041954, y: -0.068722844}
+      - {x: 0.06858465, y: 0.104527354}
+--- !u!95 &9571952
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173546}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5ff315f0ad1fa0949ae788ffffab56a7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11447584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,7 +142,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 7991a4a2d75154a418b5a6b174f3e818, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b09a4ae428e5fc14bad6d235c7be1a77, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

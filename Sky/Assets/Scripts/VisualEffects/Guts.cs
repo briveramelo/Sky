@@ -33,7 +33,7 @@ public class Guts : MonoBehaviour, IBleedable {
 		}
 	}
 
-	int ConvertGutValueToIndex(int subGutValue){
+	static int ConvertGutValueToIndex(int subGutValue){
 		switch (subGutValue){
 		case 1:
 			return 0;

@@ -22,10 +22,10 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 	// The Duck will follow his/her DuckLeader, until the DuckLeader dies. 
 	// Then, the Duck will aimlessly bounce around the screen until killed
 
-	[SerializeField] private DuckLeader leaderScript; private IDuckToLeader leader;
-	private Transform myFormationTransform;
+	[SerializeField] LeadDuck leaderScript; IDuckToLeader leader;
+	Transform myFormationTransform;
 
-	private Vector2[] scatterDir = new Vector2[]{
+	Vector2[] scatterDir = new Vector2[]{
 		new Vector2 (1,1).normalized,
 		new Vector2 (-1,1).normalized,
 		new Vector2 (1,-1).normalized,
@@ -39,21 +39,19 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 			transform.FaceForward(rigbod.velocity.x<0);
 		}
 	}
-	private const float moveSpeed = 2.5f;
-	private const float maxSpeed = 4f;
-	private int formationIndex;
-	private bool bouncing;
+	const float moveSpeed = 2.5f;
+	const float maxSpeed = 4f;
+	int formationIndex;
+	bool bouncing;
 
 	protected override void Awake () {
-		birdStats = new BirdStats(BirdType.Duck);
-
+		base.Awake();
 		if (transform.parent) {
-			leader = (IDuckToLeader)leaderScript;
+			leader = leaderScript;
 		}
 		else{
 			Scatter();
 		}
-		base.Awake();
 	}
 
 	void Update(){
@@ -100,7 +98,7 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 	}
     void Scatter() {
         CurrentVelocity = scatterDir[formationIndex] * moveSpeed;
-        birdStats.KillPointValueBase = 3;
+        birdStats.ModifyForEvent(3);
         bouncing = true;
     }
 	int ILeaderToDuck.FormationIndex {

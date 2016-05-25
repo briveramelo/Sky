@@ -32,7 +32,7 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 
     [SerializeField] BasketEngine basketEngine;
 
-	private Vector2[] relativeBalloonPositions;
+	Vector2[] relativeBalloonPositions;
     int continuesRemaining =1;
     const float invincibleTime = 1.5f;
 

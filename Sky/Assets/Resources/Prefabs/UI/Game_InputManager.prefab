@@ -477,7 +477,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162448}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.4399998, y: -1.1999999, z: 0}
+  m_LocalPosition: {x: -3.44, y: -1.2, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children:
   - {fileID: 435326}
@@ -697,7 +697,7 @@ MonoBehaviour:
   pixelPerfectCamera: {fileID: 0}
   fitType: 0
   parallaxLayer: 0
-  pixelScale: 1
+  pixelScale: 4
   runContinously: 0
   useParentTransform: 0
   displayGrid: 0
@@ -791,7 +791,6 @@ MonoBehaviour:
   buttonPress: {fileID: 8300000, guid: 9a254ed0f883042ef93c6df9f2cbf93a, type: 3}
   buttonRadius: 1.3
   continuer: {fileID: 11469820}
-  continueMenu: {fileID: 154424}
 --- !u!114 &11459926
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -902,7 +901,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a24a62691abd6947870f4ee1147c9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauser: {fileID: 11476154}
   continueMenu: {fileID: 154424}
   joystick: {fileID: 162448}
   pauseButtonGroup: {fileID: 113144}
@@ -930,7 +928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 194fd3945ccbc4ee08377e7ff3e8fa14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pause: {fileID: 8300000, guid: 9a254ed0f883042ef93c6df9f2cbf93a, type: 3}
+  pause: {fileID: 8300000, guid: b357caddb32f63643880763c4f33680d, type: 3}
   unPause: {fileID: 8300000, guid: d9ac686a9258c48b3ba27c2266e035f2, type: 3}
   joystick: {fileID: 162448}
   pauseMenu: {fileID: 166502}
@@ -982,7 +980,7 @@ MonoBehaviour:
   pixelPerfectCamera: {fileID: 0}
   fitType: 0
   parallaxLayer: 0
-  pixelScale: 0
+  pixelScale: 4
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
@@ -1285,7 +1283,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_TargetDisplay: 0
 --- !u!223 &22383670
 Canvas:
@@ -1304,7 +1302,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_TargetDisplay: 0
 --- !u!223 &22392084
 Canvas:

@@ -22,17 +22,17 @@ public class WeaponStats {
     Vector2 velocity; public Vector2 Velocity { get { return velocity; } }
     int birdsHit; public int BirdsHit { get { return birdsHit; } }
 
-    protected int damage; public int Damage {
+    public int Damage {
         get {
             switch (MyWeaponType) {
-                case WeaponType.None:
-                    return 0;
                 case WeaponType.Spear:
                     return 1;
                 case WeaponType.Lightning:
                     return 2;
                 case WeaponType.Flail:
                     return 1;
+                case WeaponType.None:
+                    return 0;
             }
             return 0;
         }

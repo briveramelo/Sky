@@ -12,7 +12,6 @@ public class Spear : Weapon, IUsable {
 	[SerializeField] PixelPerfectSprite pixelPerfectSpriteScript;
 
 	[SerializeField] Transform spearTipParentTransform;
-	[SerializeField] Transform spearTipTransform;
 
 	private Vector2[] throwAdjustmentVector = new Vector2[]{ 
 		new Vector2 (0f, .085f*4f),
@@ -45,15 +44,15 @@ public class Spear : Weapon, IUsable {
 		}
 	}
 
-    protected override void UseMe(PointVector2 spotSwipe){
-        base.UseMe(spotSwipe);
-
+    protected override void UseMe(Vector2 swipeDir){
+        base.UseMe(swipeDir);
+        swipeDir = swipeDir.normalized;
         transform.parent = null;
 		transform.position = (Vector2)Constants.jaiTransform.position + throwAdjustmentVector[0];
-		SetSpearAngle(spotSwipe.vector);
+		SetSpearAngle(swipeDir);
 		attackCollider.enabled = true;
 		rigbod = gameObject.AddComponent<Rigidbody2D> ();
-		rigbod.AddForce (spotSwipe.vector * throwForce);
+		rigbod.AddForce (swipeDir * throwForce);
 		StartCoroutine (TiltAround());
 		Destroy (gameObject, 3f);
 	}
@@ -63,9 +62,9 @@ public class Spear : Weapon, IUsable {
 
         Bird bird = col.GetComponent<Bird>();
 		//Deliver damage and redirect the spear as a bounce
-		rigbod.velocity = bird.MyBirdStats.Health>0 ? 
-			Vector2.Reflect(MyWeaponStats.Velocity,(transform.position-col.bounds.ClosestPoint (transform.position))) * 0.2f :
-			MyWeaponStats.Velocity * .8f;
+		//rigbod.velocity = bird.MyBirdStats.Health>0 ? 
+		//	Vector2.Reflect(MyWeaponStats.Velocity,(transform.position-col.bounds.ClosestPoint (transform.position))) * 0.2f :
+		//	MyWeaponStats.Velocity * .8f;
 
 		Physics2D.IgnoreCollision(attackCollider, col);
 	}

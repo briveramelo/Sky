@@ -8,10 +8,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 460306}
-  - 212: {fileID: 21225570}
-  - 50: {fileID: 5057238}
-  - 114: {fileID: 11492870}
   - 114: {fileID: 11490458}
+  - 212: {fileID: 21225570}
+  - 114: {fileID: 11492870}
   - 95: {fileID: 9506126}
   m_Layer: 0
   m_Name: PooSplat
@@ -85,7 +84,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 139452}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.119999886, y: -0.15999985, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 427834}
@@ -107,14 +106,14 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 11
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 3.2
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 534c4fc2d899dab49b99d1773684b580, type: 2}
   m_TargetDisplay: 0
@@ -124,23 +123,6 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
---- !u!50 &5057238
-Rigidbody2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 139452}
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!95 &9506126
 Animator:
   serializedVersion: 3
@@ -190,9 +172,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maskCamera: {fileID: 140860}
-  rigbod: {fileID: 5057238}
   mySpriteRenderer: {fileID: 21225570}
   pooAnimator: {fileID: 9506126}
+  pooMaterials:
+  - {fileID: 2100000, guid: 1bf9013730e0fde4f8db69b8f839b299, type: 2}
+  - {fileID: 2100000, guid: 17ebeb71f5bad4a1dbf0d3ba18ac1f5a, type: 2}
+  - {fileID: 2100000, guid: 1ebf8bfc9b7a04bb9814e5893024adf1, type: 2}
+  - {fileID: 2100000, guid: 6f8aeb0264d6e466d85c9bf8b57656c3, type: 2}
+  - {fileID: 2100000, guid: 9b4b14defb68547cb86449208210b0d7, type: 2}
   lastPooSprites:
   - {fileID: 21300000, guid: 7259a09e810a6460b805377d386c0f82, type: 3}
   - {fileID: 21300000, guid: d7ed63ed2beaa44d5aa2c5c35d40eef8, type: 3}

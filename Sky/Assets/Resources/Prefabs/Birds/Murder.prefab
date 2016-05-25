@@ -569,12 +569,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d15e464747ef47a6b4c3a7a8ebdc7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBirdType: 5
   rigbod: {fileID: 5017164}
   birdCollider: {fileID: 5843878}
   guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
   murder: {fileID: 11432032}
   pixelRotationScript: {fileID: 11446158}
   crowAnimator: {fileID: 9532648}
+  myCrowNum: 0
 --- !u!114 &11412672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -600,12 +602,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d15e464747ef47a6b4c3a7a8ebdc7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBirdType: 5
   rigbod: {fileID: 5094354}
   birdCollider: {fileID: 5843710}
   guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
   murder: {fileID: 11432032}
   pixelRotationScript: {fileID: 11442652}
   crowAnimator: {fileID: 9541660}
+  myCrowNum: 0
 --- !u!114 &11424776
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -663,12 +667,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d15e464747ef47a6b4c3a7a8ebdc7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBirdType: 5
   rigbod: {fileID: 5036326}
   birdCollider: {fileID: 5817314}
   guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
   murder: {fileID: 11432032}
   pixelRotationScript: {fileID: 11405566}
   crowAnimator: {fileID: 9575412}
+  myCrowNum: 0
 --- !u!114 &11434816
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -762,12 +768,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d15e464747ef47a6b4c3a7a8ebdc7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBirdType: 5
   rigbod: {fileID: 5040474}
   birdCollider: {fileID: 5838224}
   guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
   murder: {fileID: 11432032}
   pixelRotationScript: {fileID: 11424776}
   crowAnimator: {fileID: 9519378}
+  myCrowNum: 0
 --- !u!114 &11462290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -779,12 +787,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d15e464747ef47a6b4c3a7a8ebdc7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBirdType: 5
   rigbod: {fileID: 5035420}
   birdCollider: {fileID: 5859636}
   guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
   murder: {fileID: 11432032}
   pixelRotationScript: {fileID: 11412672}
   crowAnimator: {fileID: 9590738}
+  myCrowNum: 0
 --- !u!114 &11469546
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -832,12 +842,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d15e464747ef47a6b4c3a7a8ebdc7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBirdType: 5
   rigbod: {fileID: 5025048}
   birdCollider: {fileID: 5873774}
   guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 2}
   murder: {fileID: 11432032}
   pixelRotationScript: {fileID: 11433144}
   crowAnimator: {fileID: 9594594}
+  myCrowNum: 0
 --- !u!212 &21201354
 SpriteRenderer:
   m_ObjectHideFlags: 1

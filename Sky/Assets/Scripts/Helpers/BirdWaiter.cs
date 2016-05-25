@@ -37,7 +37,7 @@ public class BirdWaiter{
 			Wait = (int mover)=> mover<this.numberToWaitFor;
 		} 
 	}
-	BirdType[] InvertBirdTypes(params BirdType[] birdTypes){
+	static BirdType[] InvertBirdTypes(params BirdType[] birdTypes){
 		List<BirdType> birdsToWaitFor = Enum.GetValues(typeof(BirdType)).Cast<BirdType>().ToList();
 		birdsToWaitFor.Remove(BirdType.All);
 		foreach (BirdType birdType in birdTypes){

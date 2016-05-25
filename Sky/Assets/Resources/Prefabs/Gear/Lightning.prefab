@@ -26,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 151960}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.039874, y: -3.115153, z: 0}
+  m_LocalPosition: {x: -3.9794133, y: -4.791885, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -59,9 +59,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 6}
   serializedVersion: 2
-  m_Size: {x: 0.25, y: 11.4}
+  m_Size: {x: 0.25, y: 12}
 --- !u!114 &11404210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -73,9 +73,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61fe7b481eea2bd48a65e51639925cc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MyWeaponType: 1
   attackCollider: {fileID: 6190398}
   useSound: {fileID: 8300000, guid: a4a2ce1eb17e0c941831305d851257be, type: 3}
-  MyWeaponType: 1
   myLineRenderer: {fileID: 12091122}
 --- !u!120 &12091122
 LineRenderer:
@@ -104,8 +104,8 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 0, y: 10, z: -0.1}
-  - {x: 0, y: -10, z: -0.1}
+  - {x: 0, y: 12, z: -0.1}
+  - {x: 0, y: 0, z: -0.1}
   m_Parameters:
     startWidth: 0.25
     endWidth: 0.25

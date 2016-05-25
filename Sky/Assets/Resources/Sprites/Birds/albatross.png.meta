@@ -1,0 +1,244 @@
+fileFormatVersion: 2
+guid: 33a51b06a7bab2e41932a0fd32ce7a11
+timeCreated: 1462826640
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: albatross_0
+    21300002: albatross_1
+    21300004: albatross_2
+    21300006: albatross_3
+    21300008: albatross_4
+    21300010: albatross_5
+    21300012: albatross_6
+    21300014: albatross_7
+    21300016: albatross_8
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: albatross_0
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 7
+        width: 48
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 12, y: 11}
+        - {x: -20, y: 11}
+        - {x: -24, y: 10}
+        - {x: -24, y: -5}
+        - {x: -4, y: -34}
+        - {x: 3, y: -34}
+        - {x: 24, y: 2}
+        - {x: 24, y: 7}
+    - name: albatross_1
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 7
+        width: 48
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -19, y: 11}
+        - {x: -24, y: 7}
+        - {x: -24, y: -1}
+        - {x: -23, y: -1}
+        - {x: -7, y: -25}
+        - {x: -4, y: -29}
+        - {x: -2, y: -29}
+        - {x: 4, y: -24}
+        - {x: 24, y: 0}
+        - {x: 24, y: 8}
+        - {x: 1, y: 11}
+    - name: albatross_2
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 7
+        width: 48
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -10, y: 16}
+        - {x: -24, y: 9}
+        - {x: -24, y: -2}
+        - {x: 0, y: -17}
+        - {x: 21, y: -17}
+        - {x: 24, y: -8}
+        - {x: 24, y: 16}
+    - name: albatross_3
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 7
+        width: 48
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 9, y: 31}
+        - {x: -1, y: 31}
+        - {x: -24, y: 11}
+        - {x: -24, y: 0}
+        - {x: -23, y: -1}
+        - {x: -8, y: -2}
+        - {x: 11, y: -2}
+        - {x: 24, y: 0}
+        - {x: 24, y: 11}
+        - {x: 12, y: 30}
+    - name: albatross_4
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 7
+        width: 48
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -24, y: -2}
+        - {x: 18, y: -2}
+        - {x: 24, y: 0}
+        - {x: 24, y: 8}
+        - {x: 9, y: 34}
+        - {x: -4, y: 34}
+        - {x: -24, y: 5}
+    - name: albatross_5
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 7
+        width: 48
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -3, y: 31}
+        - {x: -24, y: 11}
+        - {x: -24, y: -2}
+        - {x: 24, y: -2}
+        - {x: 24, y: 4}
+        - {x: 9, y: 31}
+    - name: albatross_6
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 7
+        width: 48
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -24, y: 0}
+        - {x: -23, y: -1}
+        - {x: -12, y: -11}
+        - {x: -4, y: -11}
+        - {x: 24, y: -1}
+        - {x: 24, y: 4}
+        - {x: 22, y: 7}
+        - {x: 8, y: 17}
+        - {x: -11, y: 17}
+        - {x: -24, y: 10}
+    - name: albatross_7
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 7
+        width: 48
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 22, y: 7}
+        - {x: 5, y: 11}
+        - {x: -16, y: 11}
+        - {x: -22, y: 6}
+        - {x: -24, y: 4}
+        - {x: -24, y: -6}
+        - {x: -14, y: -27}
+        - {x: -8, y: -27}
+        - {x: 0, y: -18}
+        - {x: 24, y: -1}
+        - {x: 24, y: 5}
+    - name: albatross_8
+      rect:
+        serializedVersion: 2
+        x: 487
+        y: 7
+        width: 48
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -17, y: 11}
+        - {x: -24, y: 7}
+        - {x: -24, y: -7}
+        - {x: -12, y: -34}
+        - {x: -6, y: -34}
+        - {x: 0, y: -22}
+        - {x: 24, y: 0}
+        - {x: 24, y: 6}
+        - {x: 7, y: 11}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
