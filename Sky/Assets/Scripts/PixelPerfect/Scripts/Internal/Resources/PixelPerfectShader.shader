@@ -24,7 +24,6 @@ Shader "Pixelatto/PixelPerfect" {
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #define UNITY_PASS_FORWARDBASE
             #include "UnityCG.cginc"
             #pragma multi_compile_fwdbase_fullshadows
             #pragma multi_compile_fog
