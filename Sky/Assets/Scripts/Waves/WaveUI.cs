@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public interface IWaveUI {
     IEnumerator AnimateWaveStart(WaveName waveName);
@@ -54,8 +55,8 @@ public class WaveUI : MonoBehaviour, IWaveUI {
     [SerializeField] GameObject joystickHelp, swipeHelp;
 
     #region Load Level
-    void OnLevelWasLoaded(int level) {
-        if (level == (int)Scenes.Menu) {
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+        if (scene.name ==Scenes.Menu) {
             StopAllCoroutines();
             ClearText();
         }

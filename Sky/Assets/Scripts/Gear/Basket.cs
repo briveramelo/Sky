@@ -147,7 +147,7 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
     IEnumerator FinishPlay() {
 		ScoreSheet.Reporter.ReportScores ();
         yield return StartCoroutine (ScoreSheet.Reporter.DisplayTotal());
-		SceneManager.LoadScene((int)Scenes.Menu);
+		SceneManager.LoadScene(Scenes.Menu);
     }
 
     IEnumerator FallToDeath(){

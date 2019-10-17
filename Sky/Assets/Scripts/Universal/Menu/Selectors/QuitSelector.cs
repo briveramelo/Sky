@@ -18,7 +18,7 @@ public class QuitSelector : Selector {
         if (shouldSaveScore) {
             ScoreSheet.Reporter.ReportScores();
         }
-        SceneManager.LoadScene((int)Scenes.Menu);
+        SceneManager.LoadScene(Scenes.Menu);
         yield return null;
     }
 }

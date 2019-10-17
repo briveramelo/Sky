@@ -8,7 +8,7 @@ public class BackSelector : Selector {
 
     protected override IEnumerator PressButton() {
         AudioManager.PlayAudio(buttonPress);
-        SceneManager.LoadScene((int)Scenes.Menu);
+        SceneManager.LoadScene(Scenes.Menu);
         yield return null;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum Threat{
 	BalloonPopped = 25,
@@ -50,7 +51,7 @@ public class EmotionalIntensity : MonoBehaviour, IThreat{
     public static BirdType[] ThreateningBirds { get { return threateningBirds; } }
     #endregion
 
-    void OnLevelWasLoaded(int level) {
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
         intensity = 0;
         timeIntensity = new AnimationCurve();
         editorIntensity = timeIntensity;
@@ -75,7 +76,7 @@ public class EmotionalIntensity : MonoBehaviour, IThreat{
     public static AnimationCurve TimeIntensity { get { return timeIntensity; } }
 
     void Update() {
-        if (level!= (int)Scenes.Menu) {
+        if (SceneManager.GetActiveScene().name != Scenes.Menu) {
             timeIntensity.AddKey(Time.time, Intensity);
         }
     }

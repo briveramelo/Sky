@@ -1,7 +1,9 @@
-﻿public class ScoreBoard : PointDisplay {
+﻿using UnityEngine.SceneManagement;
 
-    void OnLevelWasLoaded(int level) {
-        if (level == (int)Scenes.Menu) {
+public class ScoreBoard : PointDisplay {
+
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+        if (scene.name == Scenes.Menu) {
             myText.text = "";
         }
     }

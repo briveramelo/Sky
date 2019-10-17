@@ -9,8 +9,8 @@ public class WaveManager : MonoBehaviour {
     [SerializeField] Wave endlessWave;      IWaveRunnable endlessWaveCall;
     static WaveName currentWave;            public static WaveName CurrentWave {get { return currentWave; } }
 
-    void OnLevelWasLoaded(int level) {
-        ChooseMode((Scenes)level);
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+        ChooseMode(scene.name);
     }
 
 	void Awake(){
@@ -18,10 +18,10 @@ public class WaveManager : MonoBehaviour {
         endlessWaveCall = endlessWave;
         myWaveUI = waveUI;
         StopAllCoroutines();
-        ChooseMode((Scenes)SceneManager.GetActiveScene().buildIndex);
+        ChooseMode(SceneManager.GetActiveScene().name);
 	}
 
-    void ChooseMode(Scenes loadedScene) {
+    void ChooseMode(string loadedScene) {
         switch (loadedScene) {
             case Scenes.Menu:
                 StopAllCoroutines();
@@ -59,7 +59,7 @@ public class WaveManager : MonoBehaviour {
         ScoreSheet.Reporter.ReportScores();
         yield return StartCoroutine(myWaveUI.AnimateStoryEnd());
 
-        SceneManager.LoadScene((int)Scenes.Menu);
+        SceneManager.LoadScene(Scenes.Menu);
     }
     #endregion
 

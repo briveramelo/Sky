@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System;
 using System.Linq;
 using GenericFunctions;
+using UnityEngine.SceneManagement;
 
 public struct Range
 {
@@ -31,8 +32,8 @@ public class Endless_Wave : Wave {
     
     [SerializeField] Difficulty Toughness;
 
-    void OnLevelWasLoaded(int level) {
-        if (level != (int)Scenes.Endless) {
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+        if (scene.name !=Scenes.Endless) {
             StopAllCoroutines();
         }
     }

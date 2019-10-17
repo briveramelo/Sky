@@ -9,6 +9,6 @@ public class ScoreSceneSelector : Selector {
     protected override IEnumerator PressButton() {
         AudioManager.PlayAudio(buttonPress);
         yield return null;
-        SceneManager.LoadScene((int)Scenes.Scores);
+        SceneManager.LoadScene(Scenes.Scores);
     }
 }

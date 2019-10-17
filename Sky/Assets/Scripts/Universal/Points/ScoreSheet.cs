@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 using GenericFunctions;
+using UnityEngine.SceneManagement;
 
 #region Interfaces
 public interface ITallyable {
@@ -46,8 +47,8 @@ public enum ScoreType {
 
 public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IStreakable {
 
-    void OnLevelWasLoaded(int level) {
-        if (level == (int)Scenes.Story || level == (int)Scenes.Endless) {
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+        if (scene.name == Scenes.Story || scene.name == Scenes.Endless) {
             ResetHitStreak();
         }
     }

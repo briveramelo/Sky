@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GenericFunctions;
 using System;
+using UnityEngine.SceneManagement;
 
 public interface IWaveRunnable{
 	IEnumerator RunWave();
@@ -49,8 +50,8 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
     protected Dictionary<BirdType, SpawnDelegate> BirdSpawnDelegates = new Dictionary<BirdType, SpawnDelegate>();
     #endregion
 
-    void OnLevelWasLoaded(int level) {
-        if (level == (int)Scenes.Menu) {
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+        if (scene.name == Scenes.Menu) {
             StopAllCoroutines();
         }
     }

@@ -2,12 +2,13 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public enum Scenes {
-    Menu = 0,
-    Intro =1,
-    Story =2,
-    Endless =3,
-    Scores =4,
+public static class Scenes
+{
+    public const string Menu = "Menu";
+    public const string Intro = "Intro";
+    public const string Story = "Story";
+    public const string Endless = "Endless";
+    public const string Scores = "Scores";
 }
 public enum WaveType {
     Story = 2,
