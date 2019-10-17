@@ -1,26 +1,26 @@
 ﻿using UnityEngine;
 using GenericFunctions;
-using Vexe.Runtime.Types;
+//using Vexe.Runtime.Types;
 
-public class Incubator : BaseBehaviour {
+public class Incubator : MonoBehaviour {
 
 	public static Incubator Instance;
 
 	[SerializeField] GameObject[] birds; public GameObject[] Birds{get{return birds;}}
 
-    [Show] void Pigeon() {SpawnNextBird(BirdType.Pigeon); }
-    [Show] void Duck() {SpawnNextBird(BirdType.Duck); }
-    [Show] void DuckLeader() {SpawnNextBird(BirdType.DuckLeader); }
-    [Show] void Albatross() {SpawnNextBird(BirdType.Albatross); }
-    [Show] void BabyCrow() {SpawnNextBird(BirdType.BabyCrow); }
-    [Show] void Crow() {SpawnNextBird(BirdType.Crow); }
-    [Show] void Tentacles() {SpawnNextBird(BirdType.Tentacles); }
-    [Show] void Seagull() {SpawnNextBird(BirdType.Seagull); }
-    [Show] void Pelican() {SpawnNextBird(BirdType.Pelican); }
-    [Show] void Shoebill() {SpawnNextBird(BirdType.Shoebill); }
-    [Show] void Bat() {SpawnNextBird(BirdType.Bat); }
-    [Show] void Eagle() {SpawnNextBird(BirdType.Eagle); }
-    [Show] void BirdOfParadise() {SpawnNextBird(BirdType.BirdOfParadise); }
+    void Pigeon() {SpawnNextBird(BirdType.Pigeon); }
+    void Duck() {SpawnNextBird(BirdType.Duck); }
+    void DuckLeader() {SpawnNextBird(BirdType.DuckLeader); }
+    void Albatross() {SpawnNextBird(BirdType.Albatross); }
+    void BabyCrow() {SpawnNextBird(BirdType.BabyCrow); }
+    void Crow() {SpawnNextBird(BirdType.Crow); }
+    void Tentacles() {SpawnNextBird(BirdType.Tentacles); }
+    void Seagull() {SpawnNextBird(BirdType.Seagull); }
+    void Pelican() {SpawnNextBird(BirdType.Pelican); }
+    void Shoebill() {SpawnNextBird(BirdType.Shoebill); }
+    void Bat() {SpawnNextBird(BirdType.Bat); }
+    void Eagle() {SpawnNextBird(BirdType.Eagle); }
+    void BirdOfParadise() {SpawnNextBird(BirdType.BirdOfParadise); }
 
 	void Awake(){
 		Instance = this;

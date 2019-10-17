@@ -3,9 +3,10 @@
 # =============== #
 Temp/
 Library/
-
+Jetbrains/
+JetBrains.meta
 # ===================================== #
-# Visual Studio / MonoDevelop generated #
+# Jetbrains Rider / Visual Studio / MonoDevelop generated #
 # ===================================== #
 ExportedObj/
 obj/
@@ -18,6 +19,7 @@ obj/
 *.user
 *.unityproj
 *.booproj
+*/.idea
 
 # ============ #
 # OS generated #

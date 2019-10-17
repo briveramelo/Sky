@@ -7,8 +7,7 @@ public class Seagull : Bird {
     [SerializeField] GameObject pooNugget;
 
     bool movingRight;
-    float sinPeriodShift = Random.Range(0f,5f);
-
+    
     int mySeagullNumber;
     static int totalSeagulls;
 	const float moveSpeed = 3f;
