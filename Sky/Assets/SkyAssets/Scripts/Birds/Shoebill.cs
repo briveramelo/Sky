@@ -3,14 +3,13 @@ using System.Collections;
 using GenericFunctions;
 
 public class Shoebill : Bird {
-
-	IBumpable basket;
-	bool canHitBasket = true;
-	bool flying = true;
-    bool rightIsTarget;
-    bool movingRight;
-	int movingSign => movingRight ? 1 :-1;
-	float sinPeriodShift;
+	private IBumpable basket;
+	private bool canHitBasket = true;
+	private bool flying = true;
+	private bool rightIsTarget;
+	private bool movingRight;
+	private int movingSign => movingRight ? 1 :-1;
+	private float sinPeriodShift;
 
 	protected override void Awake(){
 		base.Awake();
@@ -19,29 +18,31 @@ public class Shoebill : Bird {
         movingRight = transform.position.x < Constants.jaiTransform.position.x;
         rigbod.velocity = Vector2.right * movingSign * 0.01f;
 	}
-	
-	void Update () {
+
+	private void Update () {
 		if (flying){
 			rigbod.velocity = (Vector2.up * FindYVelocity() + Vector2.right * FindXVelocity());
 		}
 	}
 
-	float FindYVelocity(){
+	private float FindYVelocity(){
 		float yDistAway = transform.position.y-Constants.basketTransform.position.y;
 		float periodLength = 4f;
 		float sinOffset = 1f * Mathf.Sin(2*Mathf.PI * (1/(periodLength)) * (Time.timeSinceLevelLoad + sinPeriodShift));
 		return Mathf.Clamp(-yDistAway,-1,1) + sinOffset;
 	}
 
-    float moveSpeed {
+	private float moveSpeed {
 		get{
             float xDist = Mathf.Abs(( rightIsTarget ? xEdge : -xEdge) - transform.position.x);
             return Mathf.Clamp(xDist, Mathf.Sign(xDist)*.5f, Mathf.Sign(xDist) * 5f);
 		}
 	}
-    float lastXPosition;
-    float xEdge = Constants.WorldDimensions.x * 1.2f;
-	float FindXVelocity(){
+
+	private float lastXPosition;
+	private float xEdge = Constants.WorldDimensions.x * 1.2f;
+
+	private float FindXVelocity(){
 		bool outOfBounds = Mathf.Abs(transform.position.x)>xEdge;
 		bool movingAway = movingSign == ((int)Mathf.Sign(rigbod.velocity.x));
 		bool properSide = movingSign == ((int)Mathf.Sign(transform.position.x));
@@ -66,7 +67,7 @@ public class Shoebill : Bird {
 	}
 
 	//for basket collision only
-	void OnTriggerEnter2D(Collider2D col){
+	private void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.layer == Constants.jaiLayer){
 			if(canHitBasket){
 				GameCamera.Instance.ShakeTheCamera();
@@ -77,7 +78,7 @@ public class Shoebill : Bird {
 		}
 	}
 
-	IEnumerator Fall(){
+	private IEnumerator Fall(){
 		StartCoroutine(Bool.Toggle(boolState=>flying=boolState,2f));
         rigbod.velocity = new Vector2 (-rigbod.velocity.x, -Mathf.Abs(rigbod.velocity.y)).normalized * 2.5f;
 		while (!flying){

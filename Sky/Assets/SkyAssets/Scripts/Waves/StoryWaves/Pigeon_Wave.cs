@@ -100,7 +100,7 @@ public class Pigeon_Wave : Wave {
      * ->
      *         <-
      */
-    IEnumerator AlternatingPigeons(int numPigeons) {
+    private IEnumerator AlternatingPigeons(int numPigeons) {
         float[] spawnOpts = new float[] {
             .9f, 0.85f, .8f, 0.75f, .7f, 0.65f, .6f, 0.55f, .5f, 0.45f, .4f, 0.35f, .3f, 0.25f, 0.2f, 0.15f, .1f, 0.05f, 0f,
             -.9f, -0.85f, -.8f, -0.75f, -.7f, -0.65f, -.6f, -0.55f, -.5f, -0.45f, -.4f, -0.35f, -.3f, -0.25f, -0.2f, -0.15f, -.1f, -0.05f
@@ -128,7 +128,7 @@ public class Pigeon_Wave : Wave {
       0 0
        0
     */
-    IEnumerator PigeonMeatball(bool startOnRight, float midPoint) {
+    private IEnumerator PigeonMeatball(bool startOnRight, float midPoint) {
         float waitTime = 0.205f;
         float hexHeight = 0.075f;
         SpawnBirds(BirdType.Pigeon, SpawnPoint(startOnRight, midPoint+hexHeight));
@@ -149,7 +149,7 @@ public class Pigeon_Wave : Wave {
     -
     -
     */
-    IEnumerator PigeonWall(bool startOnRight, Range heightRange) {
+    private IEnumerator PigeonWall(bool startOnRight, Range heightRange) {
         heightRange.max = Mathf.Clamp(heightRange.max, -1f, 1f);
         heightRange.min = Mathf.Clamp(heightRange.min, -1f, 1f);
         float separationHeight = 0.075f;
@@ -168,7 +168,7 @@ public class Pigeon_Wave : Wave {
      *  -
      * -
      */
-    IEnumerator PigeonSlantWall(bool startOnRight, bool leadOnBottom, Range heightRange, float waitTime) {
+    private IEnumerator PigeonSlantWall(bool startOnRight, bool leadOnBottom, Range heightRange, float waitTime) {
         heightRange.min = Mathf.Clamp(heightRange.min, -1f, 1f);
         heightRange.max = Mathf.Clamp(heightRange.max, -1f, 1f);
         float separationHeight = 0.075f;
@@ -199,17 +199,18 @@ public class Pigeon_Wave : Wave {
      */
 
 
-    static class PigeonTeethStats {
+    private static class PigeonTeethStats {
         public const float separationHeight = 0.075f;
         public const float teethSeparationHeight = separationHeight * 6f;
     }
-    IEnumerator PigeonBite(float midSpawnHeight) {
+
+    private IEnumerator PigeonBite(float midSpawnHeight) {
         bool onRight = Bool.TossCoin();
         StartCoroutine (PigeonTeeth(onRight, midSpawnHeight+PigeonTeethStats.teethSeparationHeight));
         yield return StartCoroutine (PigeonTeeth(!onRight, midSpawnHeight-PigeonTeethStats.teethSeparationHeight));
     }
 
-    IEnumerator PigeonTeeth(bool onRight, float spawnHeight) {
+    private IEnumerator PigeonTeeth(bool onRight, float spawnHeight) {
         float waitTime = 0.175f;
         float topStart = spawnHeight + PigeonTeethStats.teethSeparationHeight / 2;
         float botStart = spawnHeight - PigeonTeethStats.teethSeparationHeight / 2;
@@ -241,8 +242,9 @@ public class Pigeon_Wave : Wave {
      *   -   -   -
      *         -  
      */
-    float pigSinPeriod = 6.13f;
-    IEnumerator PigeonSine(bool onRight, float sineAmp, float midPoint) {
+    private float pigSinPeriod = 6.13f;
+
+    private IEnumerator PigeonSine(bool onRight, float sineAmp, float midPoint) {
         int numPigeons = 20;
         float waitTime = pigSinPeriod / numPigeons;
         float ySpawnHeight=0f;
@@ -259,7 +261,7 @@ public class Pigeon_Wave : Wave {
     /*
      * ----------------------
      */
-    IEnumerator PigeonLine(bool onRight, float height, int numPigeons, float waitTime) {
+    private IEnumerator PigeonLine(bool onRight, float height, int numPigeons, float waitTime) {
         for (int i=0; i<numPigeons; i++) {
             SpawnBirds(BirdType.Pigeon, SpawnPoint(onRight, height));
             yield return new WaitForSeconds(waitTime);
@@ -269,7 +271,8 @@ public class Pigeon_Wave : Wave {
 
     #region Graveyard
         #region Pigeon 1 Wait 3 top mid bot
-    IEnumerator Pigeon3() {
+
+        private IEnumerator Pigeon3() {
         float[] bottomHeights = { lowHeight, lowHeight, medHeight };
         float[] topHeights = { medHeight, highHeight, highHeight };
 
@@ -284,8 +287,9 @@ public class Pigeon_Wave : Wave {
         }
     }
 
-	delegate void PigeonDelegate(int i);
-	PigeonDelegate AtHeight(float[] myHeights){
+        private delegate void PigeonDelegate(int i);
+
+        private PigeonDelegate AtHeight(float[] myHeights){
 		return i =>{
 			SpawnBirds(BirdType.Pigeon,SpawnPoint(right,myHeights[i]));
 		};

@@ -7,10 +7,10 @@ public interface IBleedable{
 }
 public class Guts : MonoBehaviour, IBleedable {
 
-	[SerializeField] GameObject[] gutSplosions;
-    [SerializeField] AudioClip gutSound;
+	[SerializeField] private GameObject[] gutSplosions;
+    [SerializeField] private AudioClip gutSound;
 
-	void Awake(){
+    private void Awake(){
         AudioManager.PlayAudio(gutSound);
         Destroy(gameObject,Constants.time2Destroy);
 	}
@@ -33,7 +33,7 @@ public class Guts : MonoBehaviour, IBleedable {
 		}
 	}
 
-	static int ConvertGutValueToIndex(int subGutValue){
+	private static int ConvertGutValueToIndex(int subGutValue){
 		switch (subGutValue){
 		case 1:
 			return 0;

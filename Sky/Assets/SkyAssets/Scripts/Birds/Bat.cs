@@ -17,11 +17,11 @@ public class Bat : Bird {
 	private Vector2 moveDir;
 	private Vector2 batPos;
 
-	float[] orbitalRadii = new float[]{1.25f, 1.5f, 1.75f};
+	private float[] orbitalRadii = new float[]{1.25f, 1.5f, 1.75f};
 
-	const float approachSpeed = 2.8f;
-	const float orbitDistance = 1.5f;
-	const float stepDistance = 0.4f;
+	private const float approachSpeed = 2.8f;
+	private const float orbitDistance = 1.5f;
+	private const float stepDistance = 0.4f;
 
 	private float dist2Target;
 	private float ellipseTilt;
@@ -29,14 +29,14 @@ public class Bat : Bird {
 	private float ellipseAng;
 	private float curvature;
 
-	const int positionWindowLength = 20;
+	private const int positionWindowLength = 20;
 	private int realTimeIndex;
 	private int targetIndex;
 	private int xRadiusIndex;
 	private int yRadiusIndex;
 
 	private bool clockwise;
-    bool orbiting;
+	private bool orbiting;
 	#endregion
 
 	protected override void Awake () {
@@ -69,7 +69,7 @@ public class Bat : Bird {
 		}
 	}
 
-	void UpdatePositionIndices(){
+	private void UpdatePositionIndices(){
 		realTimeIndex++;
 		targetIndex++;
 		if (realTimeIndex >= positionWindowLength)
@@ -79,8 +79,9 @@ public class Bat : Bird {
 	// Overwrite the first few frames of the bat's positional-targetting array with the last few
 	// Set the targetIndex "frameDelay" #frames before the realTime Index
 	// In effect, create a following delay to allow for bat/balloon collision
-	const int frameDelay=2;
-	void ResetTargetPositionWindow(){
+	private const int frameDelay=2;
+
+	private void ResetTargetPositionWindow(){
 		for (int i = 0; i<frameDelay; i++)
 			targetPositions[i] = targetPositions[positionWindowLength-frameDelay-1+i];
 		
@@ -122,7 +123,7 @@ public class Bat : Bird {
 
 	// Set properties of the ellipse
 	// Randomize these properties periodically for erratic flight
-	void ShuffleOrbitalPhase(){
+	private void ShuffleOrbitalPhase(){
 		ellipseTilt = Random.Range (-30f,30f);
 		speedPhaseShift = ellipseTilt * 2f / 3f;
 		xRadiusIndex = Random.Range (0,3);
@@ -132,7 +133,7 @@ public class Bat : Bird {
 	}
 
 	// Help define the elliptical pattern
-	float FindTargetAngle(){
+	private float FindTargetAngle(){
 		float angleStep = 4f;
 		float targetAng = clockwise ? ellipseAng+90f : ellipseAng-90f;
 		return Mathf.LerpAngle( ellipseAng, targetAng, Time.deltaTime * angleStep);
@@ -140,7 +141,7 @@ public class Bat : Bird {
 
 	// Set an elliptical pattern around the balloons
 	// Update position indices & ensure the Bat is facing the player
-	Vector2 FindEllipsePosition(){
+	private Vector2 FindEllipsePosition(){
 		ellipseTrace = new Vector2 ( orbitalRadii[xRadiusIndex] * Mathf.Cos((ellipseAng+ellipseTilt) * Mathf.Deg2Rad),
 			orbitalRadii[yRadiusIndex] * Mathf.Sin(ellipseAng * Mathf.Deg2Rad));
 		return (Vector2)Constants.balloonCenter.position + ellipseTrace;

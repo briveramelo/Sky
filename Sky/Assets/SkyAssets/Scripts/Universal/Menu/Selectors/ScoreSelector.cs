@@ -3,8 +3,8 @@ using System.Collections;
 
 public class ScoreSelector : Selector{
 
-    [SerializeField] GameMode MyGameMode;
-    [SerializeField] ScoreDisplayer theScoreDisplayer;
+    [SerializeField] private GameMode MyGameMode;
+    [SerializeField] private ScoreDisplayer theScoreDisplayer;
 
     protected override Vector2 TouchSpot => MenuInputHandler.touchSpot;
 

@@ -3,10 +3,10 @@ using GenericFunctions;
 
 public class PooNugget : MonoBehaviour {
 
-	[SerializeField] Rigidbody2D softbody;
-	[SerializeField] GameObject pooSplat;
+	[SerializeField] private Rigidbody2D softbody;
+	[SerializeField] private GameObject pooSplat;
 
-	void Awake(){
+	private void Awake(){
 		Destroy (gameObject, 3f);
 	}
 
@@ -14,14 +14,14 @@ public class PooNugget : MonoBehaviour {
         softbody.velocity = new Vector2(0.5f * vel.x, 0f);
         transform.FaceForward(vel.x > 0);
 	}
-		
-	void OnTriggerEnter2D(Collider2D col){
+
+	private void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.layer == Constants.faceLayer){
 			SplatterPoo();
 		}
 	}
 
-	void SplatterPoo(){
+	private void SplatterPoo(){
 		Instantiate (pooSplat, Vector3.zero, Quaternion.identity);
 		Destroy(gameObject);
 	}

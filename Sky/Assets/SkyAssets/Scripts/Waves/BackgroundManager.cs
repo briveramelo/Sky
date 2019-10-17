@@ -4,7 +4,7 @@ public interface ISwitchBackgrounds {
     void UpdateBackground();
 }
 
-enum Background{
+internal enum Background{
     City=0,
     Sea=1,
     Mountain=2,
@@ -13,8 +13,8 @@ enum Background{
 
 public class BackgroundManager : MonoBehaviour, ISwitchBackgrounds {
 
-    [SerializeField] GameObject[] backgrounds;
-    Background currentBackground = Background.City;
+    [SerializeField] private GameObject[] backgrounds;
+    private Background currentBackground = Background.City;
 
 	void ISwitchBackgrounds.UpdateBackground() {
         backgrounds[(int)currentBackground].SetActive(false);

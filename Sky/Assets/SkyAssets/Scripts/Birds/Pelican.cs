@@ -4,12 +4,12 @@ using GenericFunctions;
 
 public class Pelican : Bird {
 
-	[SerializeField] Animator pelicanAnimator;
+	[SerializeField] private Animator pelicanAnimator;
 
-    int currentTarIn;
-    Vector3[] setPositions;
+	private int currentTarIn;
+	private Vector3[] setPositions;
 
-	Vector3 targetPosition => Constants.balloonCenter.position + Vector3.right * setPositions[currentTarIn].x * sideMultiplier + Vector3.up * setPositions[currentTarIn].y;
+	private Vector3 targetPosition => Constants.balloonCenter.position + Vector3.right * setPositions[currentTarIn].x * sideMultiplier + Vector3.up * setPositions[currentTarIn].y;
 
 	protected override void Awake () {
         pelicanAnimator.SetInteger("AnimState", Random.Range(0, 2));
@@ -30,12 +30,13 @@ public class Pelican : Bird {
 		StartCoroutine(SwoopAround());
 	}
 
-    bool isDiving;
-    int sideMultiplier;
-    float moveSpeed = 2f;
-    float heightTrigger = 1.6f;
+	private bool isDiving;
+	private int sideMultiplier;
+	private float moveSpeed = 2f;
+
+	private float heightTrigger = 1.6f;
 	//Move from one checkpoint to another
-	IEnumerator SwoopAround(){
+	private IEnumerator SwoopAround(){
         pelicanAnimator.SetInteger("AnimState", (int)PelAnimState.Flapping);
         currentTarIn = 0;
         sideMultiplier = transform.position.x < 0 ? 1 : -1;
@@ -61,7 +62,7 @@ public class Pelican : Bird {
 		StartCoroutine (DiveBomb (sideMultiplier<0));
 	}
 
-    IEnumerator TriggerDiveAnimation() {
+	private IEnumerator TriggerDiveAnimation() {
         float timeSinceStartedDiving = 0;
         pelicanAnimator.SetInteger("AnimState", (int)PelAnimState.Diving);
         timeSinceStartedDiving = Time.time;
@@ -74,12 +75,12 @@ public class Pelican : Bird {
         }
     }
 
-    Vector2 GetVelocity() {
+	private Vector2 GetVelocity() {
         return (targetPosition - transform.position).normalized * moveSpeed;
     }
 
 	//plunge to (un)certain balloon-popping glory
-	IEnumerator DiveBomb(bool goingRight){
+	private IEnumerator DiveBomb(bool goingRight){
         pelicanAnimator.SetInteger("AnimState", (int)PelAnimState.Down);
         float diveAngle = goingRight ? -80f : 260f;
         rigbod.velocity = ConvertAnglesAndVectors.ConvertAngleToVector2(diveAngle) * 6f;
@@ -96,7 +97,8 @@ public class Pelican : Bird {
 		}
 		birdCollider.enabled = true;
 	}
-    enum PelAnimState {
+
+	private enum PelAnimState {
         Flapping =0,
         Diving= 1,
         Down=2

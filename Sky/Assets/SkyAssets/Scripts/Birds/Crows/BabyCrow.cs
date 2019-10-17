@@ -14,12 +14,12 @@ public class BabyCrow : Bird {
 	private Vector2 moveDir;
 	private float dist2Target;
 
-	const float triggerShiftDistance = 0.3f;
-	const float moveSpeed = 2f;
+	private const float triggerShiftDistance = 0.3f;
+	private const float moveSpeed = 2f;
 
 	private int currentShift;
 	private int shiftsHit;
-	const int maxShifts = 5;
+	private const int maxShifts = 5;
 	private int basketOffsetIndex;
 	private int BasketOffsetIndex{
 		get => basketOffsetIndex;
@@ -30,7 +30,8 @@ public class BabyCrow : Bird {
 			}
 		}
 	}
-	float CorrectSpeed => dist2Target<0.4f? Mathf.Lerp(rigbod.velocity.magnitude,0f,Time.deltaTime *2f) : moveSpeed;
+
+	private float CorrectSpeed => dist2Target<0.4f? Mathf.Lerp(rigbod.velocity.magnitude,0f,Time.deltaTime *2f) : moveSpeed;
 
 	private enum AnimState{
 		Flying=0,
@@ -42,7 +43,7 @@ public class BabyCrow : Bird {
 		StartCoroutine(ApproachShifts());
 	}
 
-	IEnumerator ApproachShifts(){
+	private IEnumerator ApproachShifts(){
 		transform.FaceForward(transform.position.x<Constants.balloonCenter.position.x);
 		while (currentShift<maxShifts){
 			dist2Target = Vector2.Distance(Constants.jaiTransform.position + (Vector3)basketOffsets [BasketOffsetIndex],transform.position);
@@ -58,7 +59,7 @@ public class BabyCrow : Bird {
 		StartCoroutine (FlyAway());
 	}
 
-	IEnumerator ShiftSpots(){
+	private IEnumerator ShiftSpots(){
 		shiftsHit++;
 		babyCrowAnimator.SetInteger("AnimState",(int)AnimState.Looking);
 		yield return StartCoroutine (LookBackAndForth(transform.position.x<Constants.balloonCenter.position.x));
@@ -67,7 +68,7 @@ public class BabyCrow : Bird {
 		BasketOffsetIndex++;
 	}
 
-	IEnumerator FlyAway(){
+	private IEnumerator FlyAway(){
 		dist2Target = Vector2.Distance(Vector3.right * Constants.WorldDimensions.x * 1.2f, transform.position);
 
 		while (dist2Target > triggerShiftDistance){
@@ -79,7 +80,7 @@ public class BabyCrow : Bird {
 		Destroy(gameObject);
 	}
 
-	IEnumerator LookBackAndForth(bool faceDir){
+	private IEnumerator LookBackAndForth(bool faceDir){
 		for (int i=0; i<7; i++){
 			transform.FaceForward(faceDir);
 			yield return new WaitForSeconds (Random.Range(0.33f,.75f));

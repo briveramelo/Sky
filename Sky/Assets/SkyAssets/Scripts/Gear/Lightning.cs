@@ -4,9 +4,9 @@ using GenericFunctions;
 
 public class Lightning : Weapon {
 
-    [SerializeField] LineRenderer myLineRenderer;
+    [SerializeField] private LineRenderer myLineRenderer;
 
-    Vector2 strikeDir;
+    private Vector2 strikeDir;
     protected override int weaponNumber => timesUsed;
     protected override Vector2 MyVelocity => strikeDir.normalized * 2f;
 
@@ -18,7 +18,7 @@ public class Lightning : Weapon {
     }
 
 
-    void Awake() {
+    private void Awake() {
         transform.parent = Constants.jaiTransform.parent;
     }
     protected override void UseMe(Vector2 swipeDir) {
@@ -27,7 +27,7 @@ public class Lightning : Weapon {
         StartCoroutine(Strike(swipeDir));
     }
 
-    IEnumerator Strike(Vector2 swipeDir) {
+    private IEnumerator Strike(Vector2 swipeDir) {
         birdsHit = 0;
         myLineRenderer.enabled = true;
         attackCollider.enabled = true;        

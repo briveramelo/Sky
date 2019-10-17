@@ -14,7 +14,7 @@ public delegate void SpawnDelegate();
 
 public abstract class Wave : MonoBehaviour, IWaveRunnable{
 
-    [SerializeField] WaveName MyWaveName;
+    [SerializeField] private WaveName MyWaveName;
     WaveName IWaveRunnable.MyWave => MyWaveName;
 
     protected BirdWaiter allDead = new BirdWaiter(CounterType.Alive,false, 0, BirdType.All);
@@ -52,13 +52,16 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
     {
 	    SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
-    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+
+    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
         if (scene.name == Scenes.Menu) {
             StopAllCoroutines();
         }
     }
-    IWaveUI waveUI;
-    void Awake(){
+
+    private IWaveUI waveUI;
+
+    private void Awake(){
 	    SceneManager.sceneLoaded += OnLevelFinishedLoading;
 		heights = new []{lowHeight, medHeight, highHeight};
 		duckSpawnPoints = new Vector2[6];
@@ -78,11 +81,12 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 		yield return StartCoroutine (FinishWave());
 	}
 
-    IEnumerator StartWave() {
+	private IEnumerator StartWave() {
         yield return StartCoroutine(waveUI.AnimateWaveStart(MyWaveName));
     }
     protected virtual IEnumerator GenerateBirds() { yield return null; }
-    IEnumerator FinishWave(){
+
+    private IEnumerator FinishWave(){
 		yield return new WaitForSeconds(2f);
 		SpawnBirds (BirdType.BirdOfParadise, SpawnPoint(right,lowHeight));
 		yield return StartCoroutine(WaitFor(allDeadExceptTentacles,true));
@@ -204,7 +208,7 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 		}
 	}
 
-	void FinishWaiting(BirdWaiter birdWaiter){
+	private void FinishWaiting(BirdWaiter birdWaiter){
 		if (birdWaiter.Perform!=null){
 			StartCoroutine (birdWaiter.Perform);
 		}

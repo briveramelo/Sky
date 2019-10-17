@@ -32,43 +32,39 @@ public class BirdStats {
 
     public int DamageTaken;
 
-	const int basePointMultiplier =10;
-	BirdType myBirdType;		        public BirdType MyBirdType => myBirdType;
-	Vector2 birdPosition;   	        public Vector2 BirdPosition{get => birdPosition;
-		set => birdPosition = value;
-	}
-	int health;					        public int Health{get => health;
-		set => health = value;
-	}
+    private const int basePointMultiplier =10;
+	public BirdType MyBirdType { get; }
+	public Vector2 BirdPosition { get; set; }
+	public int Health { get; set; }
 
-    int streakPoints;                   public int StreakPoints => streakPoints * basePointMultiplier;
-    int comboPoints;                    public int ComboPoints => comboPoints * basePointMultiplier;
+	private int streakPoints;                   public int StreakPoints => streakPoints * basePointMultiplier;
+	private int comboPoints;                    public int ComboPoints => comboPoints * basePointMultiplier;
 
-    DamageKill pointBase, pointsToGive, threat, guts;
+	private DamageKill pointBase, pointsToGive, threat, guts;
 
-    public int TotalThreatValue => threat.Total(health);
-    public int TotalPointValue => pointBase.Total(health) * basePointMultiplier;
+    public int TotalThreatValue => threat.Total(Health);
+    public int TotalPointValue => pointBase.Total(Health) * basePointMultiplier;
 
-    public int GutsToSpill => guts.GetDeathOrDamage(health<=0, DamageTaken+1);
-    public int PointsToAdd => pointsToGive.GetDeathOrDamage(health<=0, DamageTaken) * basePointMultiplier;
-    public int ThreatRemoved => threat.GetDeathOrDamage(health<=0, DamageTaken);
+    public int GutsToSpill => guts.GetDeathOrDamage(Health<=0, DamageTaken+1);
+    public int PointsToAdd => pointsToGive.GetDeathOrDamage(Health<=0, DamageTaken) * basePointMultiplier;
+    public int ThreatRemoved => threat.GetDeathOrDamage(Health<=0, DamageTaken);
 
     public void ModifyForStreak(int birdStreak){
         streakPoints = birdStreak-1;
         pointsToGive.Redefine(pointBase.Damage + streakPoints, pointBase.Kill + streakPoints);
 	}
 	public void ModifyForCombo(int birdsHit){
-        comboPoints = health<=0 ? pointsToGive.Kill : pointsToGive.Damage;
+        comboPoints = Health<=0 ? pointsToGive.Kill : pointsToGive.Damage;
         pointsToGive.Multiply(birdsHit);
-        comboPoints = (health<=0 ? pointsToGive.Kill : pointsToGive.Damage) - comboPoints;
+        comboPoints = (Health<=0 ? pointsToGive.Kill : pointsToGive.Damage) - comboPoints;
 	}
     public void ModifyForEvent(int newKillPoint) {
         pointBase.kill = pointsToGive.kill = threat.kill = newKillPoint;
     }
 
 	public BirdStats(BirdType birdType){
-		myBirdType = birdType;
-		health = 1;
+		MyBirdType = birdType;
+		Health = 1;
         pointsToGive = guts = threat = new DamageKill(1, 1);
 
         switch (birdType){
@@ -86,7 +82,7 @@ public class BirdStats {
 		        pointsToGive.kill = 2;
 		        break;
 	        case BirdType.Albatross:
-		        health = 7;
+		        Health = 7;
 		        guts.Redefine(10, 60);
                 threat.Redefine(1, 3);
                 pointsToGive.Redefine(2, 20);
@@ -107,13 +103,13 @@ public class BirdStats {
 		        pointsToGive.kill = 2;
 		        break;
 	        case BirdType.Tentacles:
-		        health = 25;
+		        Health = 25;
 		        guts.Redefine(4, 80);
                 threat.Redefine(0, 15);
                 pointsToGive.Redefine(1, 15);
 		        break;
 	        case BirdType.Pelican:
-		        health = 2;
+		        Health = 2;
                 guts.Redefine(4, 10);
                 threat.Redefine(2, 4);
 		        pointsToGive.Redefine(2, 5);
@@ -129,7 +125,7 @@ public class BirdStats {
 		        pointsToGive.kill = 2;
 		        break;
 	        case BirdType.Eagle:
-		        health = 30;
+		        Health = 30;
 		        guts.Redefine (4, 160);
                 threat.Redefine(0,50);
 		        pointsToGive.Redefine(5, 100);

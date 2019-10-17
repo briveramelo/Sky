@@ -7,9 +7,9 @@ public interface IUsable {
 
 public abstract class Weapon : MonoBehaviour, IUsable {
 
-    [SerializeField] WeaponType MyWeaponType;
+    [SerializeField] private WeaponType MyWeaponType;
     [SerializeField] protected Collider2D attackCollider;
-    [SerializeField] AudioClip useSound;
+    [SerializeField] private AudioClip useSound;
     protected WeaponStats MyWeaponStats = new WeaponStats();
     protected int birdsHit;
     protected static int timesUsed;
@@ -17,7 +17,7 @@ public abstract class Weapon : MonoBehaviour, IUsable {
 
     void IUsable.UseMe(Vector2 spotSwipe) { UseMe(spotSwipe); }
 
-    void OnTriggerEnter2D(Collider2D col){
+    private void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.layer == Constants.birdLayer){
             Hit();
             DeliverDamage(col);
@@ -27,12 +27,14 @@ public abstract class Weapon : MonoBehaviour, IUsable {
             PopBalloon(col);
         }
 	}
-    void Hit() {
+
+    private void Hit() {
 		birdsHit++;
         MyWeaponStats.ReDefineWeapon(attackCollider, MyVelocity, birdsHit, MyWeaponType);
 		ScoreSheet.Streaker.ReportHit(timesUsed);
     }
-    void PopBalloon(Collider2D col) {
+
+    private void PopBalloon(Collider2D col) {
         col.GetComponent<Balloon>().Pop();
     }
 

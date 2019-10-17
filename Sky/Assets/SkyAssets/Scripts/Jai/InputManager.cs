@@ -27,27 +27,27 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
 	public static Vector2 touchSpot;
 
 	#region Touch Handlers
-	[SerializeField] BasketEngine basketEngine;
-	[SerializeField] Jai jai;
-	[SerializeField] Joyfulstick joyfulstick;
-	[SerializeField] Pauser pauser;
-    [SerializeField] Selector[] selectors;
+	[SerializeField] private BasketEngine basketEngine;
+	[SerializeField] private Jai jai;
+	[SerializeField] private Joyfulstick joyfulstick;
+	[SerializeField] private Pauser pauser;
+    [SerializeField] private Selector[] selectors;
 
-	List<IBegin> beginners;
-	List<IHold> holders;
-    List<IEnd> enders;
-	IEnd stickEnd;
-    IEnd basketEnd;
-	IEnd jaiEnd;
+    private List<IBegin> beginners;
+    private List<IHold> holders;
+    private List<IEnd> enders;
+    private IEnd stickEnd;
+    private IEnd basketEnd;
+    private IEnd jaiEnd;
 	#endregion
 
-	int stickEngineFinger =-1;
-	int jaiFinger =-1;
+	private int stickEngineFinger =-1;
+	private int jaiFinger =-1;
 
-    Vector2 correctionPixels;
-    float correctionPixelFactor;
+	private Vector2 correctionPixels;
+	private float correctionPixelFactor;
 
-    void Awake(){
+	private void Awake(){
 		beginners = new List<IBegin>(new IBegin[]{
 			joyfulstick,
 			jai,
@@ -68,7 +68,8 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
     }
 
     #region IFreezable
-    bool isFrozen; bool IFreezable.IsFrozen{get => isFrozen;
+
+    private bool isFrozen; bool IFreezable.IsFrozen{get => isFrozen;
 	    set => isFrozen = value;
     }
 	#endregion
@@ -82,7 +83,7 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
 	}
 	#endregion
 
-	void Update () {
+	private void Update () {
 		if (Input.touchCount>0){
 			foreach (Touch finger in Input.touches){
                 touchSpot = (finger.position + correctionPixels) * correctionPixelFactor;

@@ -12,10 +12,11 @@ public interface IMurderToCrow{
 public class Crow : Bird, IMurderToCrow {
 
 	#region Initialize Variables
-	ICrowToMurder murderInterface;
-	[SerializeField] Murder murder;
-	[SerializeField] PixelRotation pixelRotationScript;
-	[SerializeField] Animator crowAnimator;
+
+	private ICrowToMurder murderInterface;
+	[SerializeField] private Murder murder;
+	[SerializeField] private PixelRotation pixelRotationScript;
+	[SerializeField] private Animator crowAnimator;
 
 	protected override void Awake(){
 		base.Awake();
@@ -26,20 +27,20 @@ public class Crow : Bird, IMurderToCrow {
 		Flapping = 0,
 		Gliding = 1
 	}
-			
-	Vector2 startPosition;
-	Vector2 moveDir;
 
-	float moveSpeed = 4.5f;
-	float turnDistance = 2.5f;
-	float commitDistance = 4f;
-	float resetDistance = 15f;
-	float requestNextCrowDistance = 4.5f;
-	float currentDistance;
+	private Vector2 startPosition;
+	private Vector2 moveDir;
 
-	bool isKiller;
-	bool readyToFly = true;
-    bool hasRequestedNext;
+	private float moveSpeed = 4.5f;
+	private float turnDistance = 2.5f;
+	private float commitDistance = 4f;
+	private float resetDistance = 15f;
+	private float requestNextCrowDistance = 4.5f;
+	private float currentDistance;
+
+	private bool isKiller;
+	private bool readyToFly = true;
+	private bool hasRequestedNext;
     public int myCrowNum;
 	#endregion
 
@@ -59,13 +60,13 @@ public class Crow : Bird, IMurderToCrow {
 	}
 	bool IMurderToCrow.ReadyToFly => readyToFly;
 
-	void SetPosition(Vector2 crowPosition) {
+	private void SetPosition(Vector2 crowPosition) {
         startPosition = crowPosition;
 		transform.position = crowPosition;
     }
 	#endregion
 
-	IEnumerator RequestNextCrow(){
+	private IEnumerator RequestNextCrow(){
 		while (currentDistance > requestNextCrowDistance){
 			yield return null;
 		}
@@ -74,7 +75,7 @@ public class Crow : Bird, IMurderToCrow {
         hasRequestedNext = true;
 	}
 
-	IEnumerator TargetBalloons(){
+	private IEnumerator TargetBalloons(){
 		currentDistance=10f;
 		while (currentDistance > commitDistance){
 			currentDistance = Vector3.Distance(Constants.balloonCenter.position,transform.position);
@@ -89,14 +90,14 @@ public class Crow : Bird, IMurderToCrow {
 		}
 	}
 
-	IEnumerator BeeLine(){
+	private IEnumerator BeeLine(){
 		while (currentDistance > turnDistance){
 			currentDistance = Vector3.Distance(Constants.balloonCenter.position,transform.position);
 			yield return null;
 		}
 	}
 
-	IEnumerator TurnAwayFromBalloons(){
+	private IEnumerator TurnAwayFromBalloons(){
 		crowAnimator.SetInteger("AnimState",(int)CrowStates.Gliding);
 		int rotationSpeed = Bool.TossCoin() ? 4  : -4;
 		int angleDelta = 0;
@@ -111,13 +112,14 @@ public class Crow : Bird, IMurderToCrow {
 	}
 
 	#region Swoop Helper Functions
-	void Swoop(){
+
+	private void Swoop(){
 		rigbod.velocity = moveDir * moveSpeed;
 		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle(rigbod.velocity);
 		transform.FaceForward(rigbod.velocity.x>0);
 	}
 
-	IEnumerator TriggerReset(){
+	private IEnumerator TriggerReset(){
 		while (currentDistance < resetDistance){
 			currentDistance = Vector3.Distance(Constants.balloonCenter.position,transform.position);
 			yield return null;

@@ -2,11 +2,10 @@
 using GenericFunctions;
 
 public class Albatross : Bird {
+    private bool shouldWaitToTurn;
+    private const float moveSpeed = 1.065f;
 
-    bool shouldWaitToTurn;
-	const float moveSpeed = 1.065f;
-
-	void Update () {
+    private void Update () {
         Vector2 moveDir = Constants.balloonCenter.position - transform.position;
         if (Vector2.Distance(moveDir, Vector2.zero)>0.1f) {
             rigbod.velocity = (moveDir).normalized * moveSpeed;

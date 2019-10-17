@@ -4,7 +4,7 @@ using System.Collections;
 public class ContinueSelector : Selector {
 
 	protected override Vector2 TouchSpot => InputManager.touchSpot;
-    [SerializeField] Continuer continuer;
+    [SerializeField] private Continuer continuer;
 
     protected override IEnumerator PressButton() {
         yield return StartCoroutine(AdDisplayer.DisplayAd());

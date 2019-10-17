@@ -52,7 +52,7 @@ public class Duck_Wave : Wave {
      * ->
      *         <-
      */
-    IEnumerator AlternatingDucks(int numDucks) {
+    private IEnumerator AlternatingDucks(int numDucks) {
         float[] spawnOpts = {
             .9f, 0.85f, .8f, 0.75f, .7f, 0.65f, .6f, 0.55f, .5f, 0.45f, .4f, 0.35f, .3f, 0.25f, 0.2f, 0.15f, .1f, 0.05f, 0f,
             -.9f, -0.85f, -.8f, -0.75f, -.7f, -0.65f, -.6f, -0.55f, -.5f, -0.45f, -.4f, -0.35f, -.3f, -0.25f, -0.2f, -0.15f, -.1f, -0.05f
@@ -79,7 +79,7 @@ public class Duck_Wave : Wave {
       0 0 0
        0 0
     */
-    IEnumerator DuckMeatball(bool startOnRight, float midPoint, DuckDirection duckDir) {
+    private IEnumerator DuckMeatball(bool startOnRight, float midPoint, DuckDirection duckDir) {
         float waitTime = 0.285f;
         float hexHeight = 0.17f;
         float waitedTime = 0f;
@@ -108,7 +108,7 @@ public class Duck_Wave : Wave {
     -
     -
     */
-    IEnumerator DuckWall(bool startOnRight, Range heightRange, DuckDirection duckDir) {
+    private IEnumerator DuckWall(bool startOnRight, Range heightRange, DuckDirection duckDir) {
         heightRange.max = Mathf.Clamp(heightRange.max, -1f, 1f);
         heightRange.min = Mathf.Clamp(heightRange.min, -1f, 1f);
         float separationHeight = 0.075f;
@@ -127,7 +127,7 @@ public class Duck_Wave : Wave {
      *  -
      * -
      */
-    IEnumerator DuckSlantWall(bool startOnRight, bool leadOnBottom, Range heightRange, float waitTime, DuckDirection duckDir) {
+    private IEnumerator DuckSlantWall(bool startOnRight, bool leadOnBottom, Range heightRange, float waitTime, DuckDirection duckDir) {
         heightRange.min = Mathf.Clamp(heightRange.min, -1f, 1f);
         heightRange.max = Mathf.Clamp(heightRange.max, -1f, 1f);
         float separationHeight = 0.075f;
@@ -152,8 +152,9 @@ public class Duck_Wave : Wave {
      *   -   -   -
      *         -  
      */
-    float duckSinPeriod = Constants.WorldDimensions.x*2f;
-    IEnumerator DuckSine(bool onRight, float sineAmp, float midPoint, DuckDirection duckDir) {
+    private float duckSinPeriod = Constants.WorldDimensions.x*2f;
+
+    private IEnumerator DuckSine(bool onRight, float sineAmp, float midPoint, DuckDirection duckDir) {
         int numDucks = 20;
         float waitTime = duckSinPeriod / numDucks;
         for (int i=0; i<numDucks; i++) {
@@ -168,7 +169,7 @@ public class Duck_Wave : Wave {
     /*
      * ----------------------
      */
-    IEnumerator DuckLine(bool onRight, float height, int numDucks, float waitTime, DuckDirection duckDir) {
+    private IEnumerator DuckLine(bool onRight, float height, int numDucks, float waitTime, DuckDirection duckDir) {
         for (int i=0; i<numDucks; i++) {
             SpawnBirds(BirdType.Duck, SpawnPoint(onRight, height), duckDir);
             yield return new WaitForSeconds(waitTime);
@@ -185,7 +186,7 @@ public class Duck_Wave : Wave {
      * o         o
      */
 
-     IEnumerator DuckVV(int numDucks) {
+    private IEnumerator DuckVV(int numDucks) {
         float waitTime = 0.2f;
         StartCoroutine(DuckLine(right, 1, numDucks, waitTime, DuckDirection.DownLeft));
         StartCoroutine(DuckLine(right, -1, numDucks, waitTime, DuckDirection.UpLeft));
@@ -196,7 +197,8 @@ public class Duck_Wave : Wave {
     #endregion
 
     #region Graveyard
-    IEnumerator OldWave() {
+
+    private IEnumerator OldWave() {
         float[] heights = {-1,1};
 		DuckDirection[] directions = {DuckDirection.UpLeft, DuckDirection.DownLeft};
 
@@ -209,18 +211,20 @@ public class Duck_Wave : Wave {
 		yield return MirrorDucks(new float[]{0,0}, directions);
     }
 
-    IEnumerator MirrorDucks(float[] heights, DuckDirection[] directions){
+    private IEnumerator MirrorDucks(float[] heights, DuckDirection[] directions){
 		SpawnDelegate SpawnDucks = AtHeights(heights, directions);
 		yield return StartCoroutine(Produce1Wait3(SpawnDucks));
 	}
 
 	public delegate void DuckDelegate(int i);
-	DuckDelegate AtHeight(float[] myHeights, DuckDirection[] myDirections){
+
+    private DuckDelegate AtHeight(float[] myHeights, DuckDirection[] myDirections){
 		return i =>{
 			SpawnBirds (BirdType.Duck, SpawnPoint(right,myHeights[i]),myDirections[i]);
 		};
 	}
-	SpawnDelegate AtHeights(float[] myHeights, DuckDirection[] myDirections){
+
+    private SpawnDelegate AtHeights(float[] myHeights, DuckDirection[] myDirections){
 		return ()=>{
 			for (int i=0; i<myHeights.Length; i++){
 				SpawnBirds (BirdType.Duck, SpawnPoint(right,myHeights[i]),myDirections[i]);

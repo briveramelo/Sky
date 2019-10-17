@@ -4,17 +4,17 @@ using GenericFunctions;
 
 public class Seagull : Bird {
 
-    [SerializeField] GameObject pooNugget;
+    [SerializeField] private GameObject pooNugget;
 
-    bool movingRight;
-    
-    int mySeagullNumber;
-    static int totalSeagulls = 0;
-	const float moveSpeed = 3f;
-    Vector2 TargetCenterPosition;
-    float xSpread = 4;
+    private bool movingRight;
 
-    Vector2[] targetPositions = new Vector2[] {
+    private int mySeagullNumber;
+    private static int totalSeagulls = 0;
+    private const float moveSpeed = 3f;
+    private Vector2 TargetCenterPosition;
+    private float xSpread = 4;
+
+    private Vector2[] targetPositions = new Vector2[] {
         new Vector2 (0f,2.25f),
         new Vector2 (.25f,2.35f),
         new Vector2 (-.5f,2.25f),
@@ -32,7 +32,7 @@ public class Seagull : Bird {
 		StartCoroutine (Poop ());
 	}
 
-    void InitializeThisSeagull() {
+    private void InitializeThisSeagull() {
         mySeagullNumber = totalSeagulls;
         TargetCenterPosition = targetPositions[mySeagullNumber % targetPositions.Length];
         movingRight = transform.position.x < TargetCenterPosition.x;
@@ -41,7 +41,7 @@ public class Seagull : Bird {
     }
     #endregion
 
-    IEnumerator GetIntoPlace(){
+    private IEnumerator GetIntoPlace(){
 		while (true){
 			rigbod.velocity = (TargetCenterPosition-(Vector2)transform.position).normalized * moveSpeed;
 			if (Vector2.Distance(TargetCenterPosition,transform.position)<0.1f){
@@ -53,8 +53,10 @@ public class Seagull : Bird {
 	}
 
     #region SwoopOverhead
-    bool startedMovingRight;
-    IEnumerator SwoopOverhead(){
+
+    private bool startedMovingRight;
+
+    private IEnumerator SwoopOverhead(){
         rigbod.velocity = Vector2.zero;
         rigbod.isKinematic = true;
         startTime = Time.time;
@@ -65,9 +67,11 @@ public class Seagull : Bird {
             yield return null;
 		}
 	}
-    float shift;
-    float startTime;
-    IEnumerator LerpShift() {
+
+    private float shift;
+    private float startTime;
+
+    private IEnumerator LerpShift() {
         float targetShift = -22.5f;
         float xVel=0;
         while (Mathf.Abs(shift - targetShift)>0.1f) {
@@ -77,26 +81,29 @@ public class Seagull : Bird {
         shift = targetShift;
     }
 
-    float GetYPosition(){
+    private float GetYPosition(){
         return (0.6f) * Mathf.Sin(2f*Mathf.PI/(5f) * (Time.time - startTime)) + TargetCenterPosition.y;
 	}
-    float GetYVelocity(){
+
+    private float GetYVelocity(){
         return (0.6f) * 2f*Mathf.PI/(5f) * Mathf.Sin(2f*Mathf.PI/(5f) * (Time.time - startTime)) + TargetCenterPosition.y;
 	}
 
-    float GetXPosition(){
+    private float GetXPosition(){
         return (startedMovingRight ? 1 :-1) * xSpread * Mathf.Sin(2f*Mathf.PI/(5f*2f) * (Time.time - startTime) + Mathf.Deg2Rad * shift) + TargetCenterPosition.x;
 	}
-    float GetXVelocity() {
+
+    private float GetXVelocity() {
         return (startedMovingRight ? 1 :-1) * 2f*Mathf.PI/(5f*2f) * xSpread * Mathf.Sign(Mathf.Cos(2f*Mathf.PI/(5f*2f) * (Time.time - startTime) + Mathf.Deg2Rad * shift));
     }
     #endregion
 
-    static int activePooCams;
+    private static int activePooCams;
     public static void LogPooCam(bool hit) {
         activePooCams+= hit ?1:-1;
     }
-    IEnumerator Poop(){
+
+    private IEnumerator Poop(){
 		float minPoopTimeDelay = 1f;
         Vector2 pooDistanceRange = new Vector2 (1f,1.5f) * 0.8f;
 		yield return new WaitForSeconds (minPoopTimeDelay);

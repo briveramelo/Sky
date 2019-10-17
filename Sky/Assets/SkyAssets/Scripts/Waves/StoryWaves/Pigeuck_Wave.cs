@@ -32,14 +32,16 @@ public class Pigeuck_Wave : Wave {
 		yield return StartCoroutine (WaitFor (allDead, true));
 	}
 
-	delegate void PigeuckDelegate(int i);
-	PigeuckDelegate AtHeight(float[] pigeonHeights, float[] duckHeights, DuckDirection[] directions){
+	private delegate void PigeuckDelegate(int i);
+
+	private PigeuckDelegate AtHeight(float[] pigeonHeights, float[] duckHeights, DuckDirection[] directions){
 		return i =>{
 			SpawnBirds(BirdType.Pigeon,SpawnPoint(right,pigeonHeights[i]));
 			SpawnBirds (BirdType.Duck, SpawnPoint(right,duckHeights[i]), directions[i]);
 		};
 	}
-	SpawnDelegate AtHeights(float[] myHeights){
+
+	private SpawnDelegate AtHeights(float[] myHeights){
 		return ()=>{
 			for (int i=0; i<myHeights.Length; i++){
 				SpawnBirds (BirdType.Pigeon, SpawnPoint(right,myHeights[i]));

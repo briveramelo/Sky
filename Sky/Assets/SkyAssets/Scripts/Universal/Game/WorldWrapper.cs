@@ -5,7 +5,7 @@ public class WorldWrapper : MonoBehaviour {
 
 	[SerializeField] private BoxCollider2D[] worldBoundsForcePushers;
 
-	void Awake () {
+	private void Awake () {
 		worldBoundsForcePushers [0].offset = new Vector2 (0f, Constants.WorldDimensions.y);
 		worldBoundsForcePushers [1].offset = new Vector2 (Constants.WorldDimensions.x, 0f);
 		worldBoundsForcePushers [2].offset = new Vector2 (0f, -Constants.WorldDimensions.y);

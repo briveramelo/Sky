@@ -2,9 +2,9 @@
 
 public class AnimationHelper : MonoBehaviour {
 
-	[SerializeField] Animator myAnimator;
+	[SerializeField] private Animator myAnimator;
 
-    void SetAnimState(TextAnimState MyAnim) {
+    private void SetAnimState(TextAnimState MyAnim) {
         myAnimator.SetInteger("AnimState", (int)MyAnim);
     }
 }

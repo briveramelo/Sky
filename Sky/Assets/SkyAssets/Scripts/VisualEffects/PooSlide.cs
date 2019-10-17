@@ -4,14 +4,14 @@ using GenericFunctions;
 
 public class PooSlide : MonoBehaviour {
 
-	[SerializeField] GameObject maskCamera;
-	[SerializeField] SpriteRenderer mySpriteRenderer;
-	[SerializeField] Animator pooAnimator;
-    [SerializeField] Material[] pooMaterials;
+	[SerializeField] private GameObject maskCamera;
+	[SerializeField] private SpriteRenderer mySpriteRenderer;
+	[SerializeField] private Animator pooAnimator;
+    [SerializeField] private Material[] pooMaterials;
 
-	[SerializeField] Sprite[] lastPooSprites;
+	[SerializeField] private Sprite[] lastPooSprites;
 
-	void Awake(){
+	private void Awake(){
         mySpriteRenderer.material = pooMaterials[Constants.TargetPooInt];
         StartCoroutine (AnimateSplat (Constants.TargetPooInt));
 		StartCoroutine (SlideDown ());
@@ -22,7 +22,7 @@ public class PooSlide : MonoBehaviour {
         Seagull.LogPooCam(true);
 	}
 
-	IEnumerator AnimateSplat(int pooCount){
+	private IEnumerator AnimateSplat(int pooCount){
 		while (pooAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime<1f){
 			yield return null;
 		}
@@ -31,15 +31,16 @@ public class PooSlide : MonoBehaviour {
 		mySpriteRenderer.sprite = lastPooSprites[1];
 	}
 
-    float slideSpeed = .08f;
-	IEnumerator SlideDown(){
+	private float slideSpeed = .08f;
+
+	private IEnumerator SlideDown(){
 		while (true){
 			transform.position += Vector3.down * slideSpeed;
             yield return new WaitForSeconds(Random.Range(0.3f, 0.6f));
 		}
 	}
 
-	void OnDestroy(){
+	private void OnDestroy(){
 		StopAllCoroutines ();
         Seagull.LogPooCam(false);
         ScoreSheet.Tallier.TallyThreat(Threat.PoopCleaned);

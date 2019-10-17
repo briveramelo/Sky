@@ -13,8 +13,7 @@ public enum Tip {
 }
 
 public static class Tips {
-
-    static readonly Dictionary<Tip, string> JustTheTips = new Dictionary<Tip, string>() {
+    private static readonly Dictionary<Tip, string> JustTheTips = new Dictionary<Tip, string>() {
         {Tip.Streaks, "Go for big hit streaks to maximize your points" },
         {Tip.Combos, "Hit multiple birds with one spear for big point bonuses" },
         {Tip.Crows, "Crows protect their young, viciously" },

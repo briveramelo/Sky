@@ -7,14 +7,14 @@ public interface ICollectable {
 
 public class CollectionHandle : MonoBehaviour, ICollectable {
 
-    [SerializeField] WeaponType MyWeaponType;
+    [SerializeField] private WeaponType MyWeaponType;
 
 	WeaponType ICollectable.GetCollected() {
         StartCoroutine(DestroySelf());
         return MyWeaponType;
     }
 
-    IEnumerator DestroySelf() {
+    private IEnumerator DestroySelf() {
         yield return null;
         Destroy(transform.parent.gameObject);
     }

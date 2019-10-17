@@ -3,15 +3,15 @@
 public class Pauser : MonoBehaviour, IBegin {
 
     public static bool Paused => paused;
-    static bool paused;
+    private static bool paused;
     public static Vector2 PauseSpot => pauseSpot;
-    static Vector2 pauseSpot;   
+    private static Vector2 pauseSpot;   
 	public static readonly float pauseRadius = 0.5f;
 
-	[SerializeField] AudioClip pause, unPause;
-    [SerializeField] GameObject joystick, pauseMenu, pauseButtonCanvas;
+	[SerializeField] private AudioClip pause, unPause;
+    [SerializeField] private GameObject joystick, pauseMenu, pauseButtonCanvas;
 
-	void Awake(){
+    private void Awake(){
         pauseSpot = transform.position;
 	}
 
@@ -24,7 +24,7 @@ public class Pauser : MonoBehaviour, IBegin {
         }
     }
 
-    void Pause() {
+    private void Pause() {
         paused = true;
         AudioManager.PlayAudio(pause);
         Time.timeScale = 0f;
@@ -43,7 +43,7 @@ public class Pauser : MonoBehaviour, IBegin {
         Time.timeScale = 1f;
     }
 
-    void ShowPauseMenu(bool setActive) {
+    private void ShowPauseMenu(bool setActive) {
         pauseMenu.SetActive(setActive);
         joystick.SetActive(!setActive);
         pauseButtonCanvas.SetActive(!setActive);

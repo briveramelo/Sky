@@ -3,14 +3,14 @@ using GenericFunctions;
 
 public class Joyfulstick : MonoBehaviour, IBegin, IHold, IEnd {
 
-    [SerializeField] Transform stickBase;
+    [SerializeField] private Transform stickBase;
 
 	public readonly static Vector2 startingJoystickSpot = new Vector2 (-Constants.WorldDimensions.x * (2f/3f),-Constants.WorldDimensions.y * (2f/5f));
 	public const float joystickMaxStartDist = 1.25f;
 	public const float joystickMaxMoveDistance = .75f; //maximum distance you can move the joystick
 	private IStickEngineID inputManager;
 
-	void Awake () {
+	private void Awake () {
         stickBase.position = startingJoystickSpot;
 		inputManager = FindObjectOfType<InputManager>().GetComponent<IStickEngineID>();
         Debug.Log("Joy here");
@@ -31,7 +31,7 @@ public class Joyfulstick : MonoBehaviour, IBegin, IHold, IEnd {
 		transform.position = startingJoystickSpot;
 	}
 
-	static Vector2 SetStickPosition(){
+	private static Vector2 SetStickPosition(){
 		return startingJoystickSpot + Vector2.ClampMagnitude(InputManager.touchSpot - startingJoystickSpot, joystickMaxMoveDistance);
 	}
 }

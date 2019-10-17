@@ -30,9 +30,9 @@ public enum Difficulty{
 public class Endless_Wave : Wave {
 
     
-    [SerializeField] Difficulty Toughness;
+    [SerializeField] private Difficulty Toughness;
 
-    void Awake()
+    private void Awake()
     {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
     }
@@ -41,7 +41,8 @@ public class Endless_Wave : Wave {
     {
         SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
-    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+
+    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
         if (scene.name !=Scenes.Endless) {
             StopAllCoroutines();
         }
@@ -55,7 +56,7 @@ public class Endless_Wave : Wave {
         yield return StartCoroutine(SpawnBirdies(SelectBossBirds, new Range(30f, 45f)));
     }
 
-    BirdType[] SelectStandardBirds() {
+    private BirdType[] SelectStandardBirds() {
         if (unlockedStandardBirds.Count > 0){
             BirdType[] birdTypes = new BirdType[(int)Toughness];
             for (int i = 0; i < (int)Toughness; i++){
@@ -66,7 +67,7 @@ public class Endless_Wave : Wave {
         return new[] { BirdType.All };
     }
 
-    BirdType[] SelectBossBirds() {
+    private BirdType[] SelectBossBirds() {
         if (unlockedBossBirds.Count > 0){
             return new[] { unlockedBossBirds[UnityEngine.Random.Range(0, unlockedBossBirds.Count)] };
         }
@@ -75,7 +76,7 @@ public class Endless_Wave : Wave {
         }
     }
 
-    IEnumerator UnlockBirdies(OrderedDictionary lockedBirds, List<BirdType> unlockedBirds) {
+    private IEnumerator UnlockBirdies(OrderedDictionary lockedBirds, List<BirdType> unlockedBirds) {
         for (int i = 0; i < lockedBirds.Count; i++) {
             yield return new WaitForSeconds((float)lockedBirds.Cast<DictionaryEntry>().ElementAt(i).Value);
             BirdType unlockedBird = (BirdType)lockedBirds.Cast<DictionaryEntry>().ElementAt(i).Key;
@@ -84,9 +85,10 @@ public class Endless_Wave : Wave {
         }
     }
 
-    float emotionalCap = 50f;
-    float emotionalSafePoint = 10f;
-    IEnumerator SpawnBirdies(Func<BirdType[]> SelectBirds, Range timeRange) {
+    private float emotionalCap = 50f;
+    private float emotionalSafePoint = 10f;
+
+    private IEnumerator SpawnBirdies(Func<BirdType[]> SelectBirds, Range timeRange) {
         while (true) {
             while (EmotionalIntensity.Intensity < emotionalCap) {
                 yield return StartCoroutine(WaitUntilTimeRange(timeRange.min, timeRange.max));
@@ -106,7 +108,8 @@ public class Endless_Wave : Wave {
     }
 
 	#region BirdType Collections
-	OrderedDictionary lockedStandardBirds = new OrderedDictionary(){
+
+    private OrderedDictionary lockedStandardBirds = new OrderedDictionary(){
 		{BirdType.Pigeon, 		0f * 60f},
 		{BirdType.Albatross,    .5f * 60f},
 		{BirdType.Seagull,      1f * 60f},
@@ -115,14 +118,16 @@ public class Endless_Wave : Wave {
 		{BirdType.Shoebill,		2.5f * 60f},
 		{BirdType.Bat,          3f * 60f}
 	};
-	List<BirdType> unlockedStandardBirds = new List<BirdType>();
 
-    OrderedDictionary lockedBossBirds = new OrderedDictionary(){
+    private List<BirdType> unlockedStandardBirds = new List<BirdType>();
+
+    private OrderedDictionary lockedBossBirds = new OrderedDictionary(){
 		{BirdType.DuckLeader,   3.5f * 60f },
         {BirdType.Tentacles,    4f * 60f },
 		{BirdType.BabyCrow,     4.5f * 60f },
         {BirdType.Eagle,        5f * 60f }
     };
-    List<BirdType> unlockedBossBirds = new List<BirdType>();
+
+    private List<BirdType> unlockedBossBirds = new List<BirdType>();
     #endregion
 }

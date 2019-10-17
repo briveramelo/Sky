@@ -12,9 +12,9 @@ public interface IDie {
 
 public class BasketEngine : MonoBehaviour, IBumpable, IHold, IEnd, IDie {
 
-	[SerializeField] Rigidbody2D rigbod;
-	const float moveSpeed = 2.7f;
-	bool movingEnabled =true;
+	[SerializeField] private Rigidbody2D rigbod;
+	private const float moveSpeed = 2.7f;
+	private bool movingEnabled =true;
 
 	void IHold.OnTouchHeld(){
 		if (movingEnabled){
@@ -35,7 +35,7 @@ public class BasketEngine : MonoBehaviour, IBumpable, IHold, IEnd, IDie {
         Invoke("StabilizeBumpThreat", 2f);
     }
 
-    void StabilizeBumpThreat() {
+	private void StabilizeBumpThreat() {
         ScoreSheet.Tallier.TallyThreat(Threat.BasketStabilized);
     }
 

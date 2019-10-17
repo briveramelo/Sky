@@ -13,13 +13,12 @@ public interface ICrowToMurder {
 public class Murder : MonoBehaviour, ICrowToMurder {
 
 	[SerializeField] private Crow[] crows;
-	List<IMurderToCrow> crowsAlive, crowsToSwoop;
-    List<Vector2> availableCrowPositions;
-	ICrowToMurder me;
+	private List<IMurderToCrow> crowsAlive, crowsToSwoop;
+	private List<Vector2> availableCrowPositions;
+	private ICrowToMurder me;
 
 
-
-	Vector2[] crowPositions  = new Vector2[]{
+	private Vector2[] crowPositions  = new Vector2[]{
 		new Vector2(0f  					  			,  Constants.WorldDimensions.y * 1.4f),
 		new Vector2(Constants.WorldDimensions.x * 1.08f ,  Constants.WorldDimensions.y * 1.2f),
 		new Vector2(Constants.WorldDimensions.x * 1.08f , -Constants.WorldDimensions.y * 1.2f),
@@ -28,10 +27,10 @@ public class Murder : MonoBehaviour, ICrowToMurder {
 		new Vector2(-Constants.WorldDimensions.x * 1.08f,  Constants.WorldDimensions.y * 1.2f)
 	};
 
-	int maxCycles = 10;
-	int cycle =1;
+	private int maxCycles = 10;
+	private int cycle =1;
 
-	void Awake () {
+	private void Awake () {
 		crowsAlive = new List<IMurderToCrow>(crows);
 		crowsToSwoop = new List<IMurderToCrow>(crowsAlive);
         availableCrowPositions = new List<Vector2>(crowPositions);
@@ -68,8 +67,8 @@ public class Murder : MonoBehaviour, ICrowToMurder {
 	int ICrowToMurder.Cycle => cycle;
 
 	#endregion
-	
-	IEnumerator ResetTheCycle(){
+
+	private IEnumerator ResetTheCycle(){
 		while (!crowsAlive.Any(crow => crow.ReadyToFly)){
 			yield return null;	
 		}

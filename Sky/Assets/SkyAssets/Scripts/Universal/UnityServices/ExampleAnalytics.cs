@@ -4,8 +4,7 @@ using UnityEngine.Analytics;
 using UnityEngine.Advertisements;
 
 public class ExampleAnalytics : MonoBehaviour {
-
-	void CustomEvents() {
+    private void CustomEvents() {
         Debug.Log("Achieved!");
         Analytics.CustomEvent("gameOver", new Dictionary<string, object>{
         { "potions", 1 },
@@ -14,12 +13,12 @@ public class ExampleAnalytics : MonoBehaviour {
       });
     }
 
-    void Transactions() {
+    private void Transactions() {
         Debug.Log("Transacted!");
         Analytics.Transaction("Take MY MONEY", 0.99m, "USD", null, null);
     }
 
-    void Demographics() {
+    private void Demographics() {
         Debug.Log("Demographed!");
         Gender gender = Gender.Male;
         Analytics.SetUserGender(gender);
@@ -27,7 +26,7 @@ public class ExampleAnalytics : MonoBehaviour {
         Analytics.SetUserBirthYear(birthYear);
     }
 
-    void ShowAchievementButton (){
+    private void ShowAchievementButton (){
         Rect buttonRect = new Rect (500, 500, 150, 50);
 
         if (GUI.Button (buttonRect, "Achieve")) {
@@ -40,7 +39,7 @@ public class ExampleAnalytics : MonoBehaviour {
     public string zoneId = "1065731";
     public int rewardQty = 250;
 
-    void OnGUI (){
+    private void OnGUI (){
         ShowAchievementButton();
         if (string.IsNullOrEmpty (zoneId)) {
             zoneId = null;
@@ -57,7 +56,7 @@ public class ExampleAnalytics : MonoBehaviour {
         }
     }
 
-    void HandleShowResult (ShowResult result){
+    private void HandleShowResult (ShowResult result){
         switch (result){
         case ShowResult.Finished:
             Debug.Log ("Video completed. User rewarded " + rewardQty + " credits.");

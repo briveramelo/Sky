@@ -2,8 +2,7 @@
 using UnityEngine.SceneManagement;
 
 public class ScoreBoard : PointDisplay {
-
-    void Awake()
+    private void Awake()
     {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
     }
@@ -13,7 +12,7 @@ public class ScoreBoard : PointDisplay {
         SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
 
-    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
         if (scene.name == Scenes.Menu) {
             myText.text = "";
         }

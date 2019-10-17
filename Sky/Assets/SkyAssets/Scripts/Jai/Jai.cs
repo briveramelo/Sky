@@ -11,26 +11,27 @@ public enum WeaponType {
 
 public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
 
-	[SerializeField] GameObject[] weaponPrefabs = new GameObject[3];
-	[SerializeField] Animator jaiAnimator;
-	Weapon myWeapon; IUsable weaponTrigger;
-    WeaponType MyWeaponType;
-	IJaiID inputManager;
+	[SerializeField] private GameObject[] weaponPrefabs = new GameObject[3];
+	[SerializeField] private Animator jaiAnimator;
+	private Weapon myWeapon;
+	private IUsable weaponTrigger;
+	private WeaponType MyWeaponType;
+	private IJaiID inputManager;
 
-    const float distToThrow = .03f;
-	bool attacking, stabbing, beingHeld;
+	private const float distToThrow = .03f;
+	private bool attacking, stabbing, beingHeld;
 	bool IFreezable.IsFrozen{get => beingHeld;
 		set => beingHeld = value;
 	}
-	
-	Vector2 startingTouchPoint;
 
-	void Awake(){
+	private Vector2 startingTouchPoint;
+
+	private void Awake(){
 		Constants.jaiTransform = transform;
 		inputManager = FindObjectOfType<InputManager>().GetComponent<IJaiID>();
 	}
 
-    Vector3[] spawnSpots = new Vector3[] {
+	private Vector3[] spawnSpots = new Vector3[] {
         new Vector3 (0.14f, 0.12f,0f),
         Vector3.zero,
         Vector3.zero
@@ -54,15 +55,17 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
         }
     }
 
-    IEnumerator AnimateCollectSpear() {
+    private IEnumerator AnimateCollectSpear() {
         Debug.Log("Collected A Spear!");
         yield return null;
     }
-    IEnumerator AnimateCollectLightning() {
+
+    private IEnumerator AnimateCollectLightning() {
         Debug.Log("Collected Lightning!");
         yield return null;
     }
-    IEnumerator AnimateCollectFlail() {
+
+    private IEnumerator AnimateCollectFlail() {
         Debug.Log("Collected A Flail!");
         yield return null;
     }
@@ -100,7 +103,7 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
         }
 	}
 
-    IEnumerator AnimateUseWeapon(Vector2 attackDir) {
+	private IEnumerator AnimateUseWeapon(Vector2 attackDir) {
         attacking = true;
         switch (MyWeaponType) {
             case WeaponType.None:
@@ -119,12 +122,13 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
         attacking = false;
     }
 
-    enum Throw{
+	private enum Throw{
 		Idle=0,
 		Down=1,
 		Up=2,
 	}
-	IEnumerator AnimateThrowSpear(Vector2 throwDir){
+
+	private IEnumerator AnimateThrowSpear(Vector2 throwDir){
 		Throw ThrowState = throwDir.y<=.2f ? Throw.Down : Throw.Up;
         transform.FaceForward(throwDir.x > 0);
 
@@ -133,18 +137,18 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
 		jaiAnimator.SetInteger("AnimState",(int)Throw.Idle);
 	}
 
-    IEnumerator AnimateCastLightning(Vector2 swipeDir) {
+	private IEnumerator AnimateCastLightning(Vector2 swipeDir) {
         Debug.Log("Animating Lightning Strike!");
         yield return new WaitForSeconds(Constants.time2StrikeLightning);
     }
 
-    IEnumerator AnimateSwingFlail(Vector2 swipeDir) {
+	private IEnumerator AnimateSwingFlail(Vector2 swipeDir) {
         Debug.Log("Swing Mace for now");
         yield return null;
     }
 
 
-	IEnumerator StabTheBeast(){
+	private IEnumerator StabTheBeast(){
         stabbing = true;
 		//jaiAnimator.SetInteger("AnimState",5);
 		Tentacles.StabbableTentacle.GetStabbed(); //stab the tentacle!
@@ -153,12 +157,12 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
 		//jaiAnimator.SetInteger("AnimState",0);
 	}
 
-	IEnumerator PullOutNewSpear(float time2Wait){
+	private IEnumerator PullOutNewSpear(float time2Wait){
 		yield return new WaitForSeconds (time2Wait);
         GenerateNewWeapon(WeaponType.Spear);
 	}
 
-    void GenerateNewWeapon(WeaponType weaponType) {
+	private void GenerateNewWeapon(WeaponType weaponType) {
         myWeapon = Instantiate (weaponPrefabs[(int)weaponType], transform.position + spawnSpots[(int)weaponType], Quaternion.identity).GetComponent<Weapon>();
         weaponTrigger = myWeapon;
     }

@@ -31,9 +31,10 @@ public interface IThreat {
 public class EmotionalIntensity : MonoBehaviour, IThreat{
 
     public static IThreat ThreatTracker;
-    int level;
+    private int level;
     #region ThreateningBirds
-    static BirdType[] threateningBirds = new BirdType[]{
+
+    private static BirdType[] threateningBirds = new BirdType[]{
         BirdType.Pigeon,
         BirdType.Duck,
         BirdType.DuckLeader,
@@ -55,30 +56,32 @@ public class EmotionalIntensity : MonoBehaviour, IThreat{
     {
         SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
-    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+
+    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
         intensity = 0;
         timeIntensity = new AnimationCurve();
         editorIntensity = timeIntensity;
         this.level = level;
     }
 
-    void Awake() {
+    private void Awake() {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
         ThreatTracker = this;
         editorIntensity = timeIntensity;
         Decay();
     }
-    static float intensity;
+
+    private static float intensity;
     public static float Intensity { get => intensity;
         private set => intensity = Mathf.Clamp(value, 0, 1000);
     }
 
 
-    static AnimationCurve timeIntensity = new AnimationCurve();
+    private static AnimationCurve timeIntensity = new AnimationCurve();
     public AnimationCurve editorIntensity;
     public static AnimationCurve TimeIntensity => timeIntensity;
 
-    void Update() {
+    private void Update() {
         if (SceneManager.GetActiveScene().name != Scenes.Menu) {
             timeIntensity.AddKey(Time.time, Intensity);
         }
@@ -104,8 +107,9 @@ public class EmotionalIntensity : MonoBehaviour, IThreat{
         Intensity += (int)MyThreat;
     }
 
-	float repeatTime;
-	void Decay(){
+    private float repeatTime;
+
+    private void Decay(){
 		bool decay = Intensity > 0 && ScoreSheet.Reporter.GetCount(CounterType.Alive, true, BirdType.All)<5;
 		if (decay){
             Intensity -= 3;

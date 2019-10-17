@@ -6,26 +6,26 @@ public class MenuInputHandler : MonoBehaviour, IFreezable {
 
     public static Vector2 touchSpot;
 
-    [SerializeField] Selector[] selectors;
-    List<IEnd> enders;
+    [SerializeField] private Selector[] selectors;
+    private List<IEnd> enders;
 
-    Vector2 correctionPixels;
-    float correctionPixelFactor;
-    bool isFrozen;
+    private Vector2 correctionPixels;
+    private float correctionPixelFactor;
+    private bool isFrozen;
     bool IFreezable.IsFrozen {
         get => isFrozen;
 
         set => isFrozen = value;
     }
 
-    void Awake() {
+    private void Awake() {
         enders = new List<IEnd>(selectors);
         Corrections pixelFix = new Corrections(false);
         correctionPixels = pixelFix.correctionPixels;
         correctionPixelFactor = pixelFix.correctionPixelFactor;
     }
 
-    void Update() {
+    private void Update() {
         if (!isFrozen) {
             if (Input.touchCount > 0) {
                 foreach (Touch finger in Input.touches) {

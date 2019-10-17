@@ -8,7 +8,7 @@ public abstract class Selector : MonoBehaviour, IEnd {
     [SerializeField, Range(0,2)] protected float buttonRadius;
     abstract protected Vector2 TouchSpot {get;}
 
-    void OnDrawGizmosSelected() {
+    private void OnDrawGizmosSelected() {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, buttonRadius);
     }

@@ -11,22 +11,22 @@ public interface IBasketToBalloon {
 }
 public class Balloon : MonoBehaviour, IBasketToBalloon{
 
-	[SerializeField] GameObject rope;
-	[SerializeField] PixelPerfectSprite pixelPerfect;
-	[SerializeField] SpriteRenderer mySprite;
-	[SerializeField] Sprite[] balloonSprites;
-	[SerializeField] RuntimeAnimatorController[] balloonAnimators;
-	[SerializeField] CircleCollider2D balloonCollider;
-	[SerializeField] CircleCollider2D boundsCollider;
-	[SerializeField] Animator balloonAnimator;
-    [SerializeField] List<SpriteRenderer> mySprites;
-    [SerializeField] AudioClip pop;
+	[SerializeField] private GameObject rope;
+	[SerializeField] private PixelPerfectSprite pixelPerfect;
+	[SerializeField] private SpriteRenderer mySprite;
+	[SerializeField] private Sprite[] balloonSprites;
+	[SerializeField] private RuntimeAnimatorController[] balloonAnimators;
+	[SerializeField] private CircleCollider2D balloonCollider;
+	[SerializeField] private CircleCollider2D boundsCollider;
+	[SerializeField] private Animator balloonAnimator;
+    [SerializeField] private List<SpriteRenderer> mySprites;
+    [SerializeField] private AudioClip pop;
 
-	int balloonNumber;
-	const float moveSpeed = 0.75f;
-	const float popTime = 30f;
+    private int balloonNumber;
+    private const float moveSpeed = 0.75f;
+    private const float popTime = 30f;
 
-	void Awake () {
+    private void Awake () {
 		int randomBalloon = Random.Range(0,balloonSprites.Length);
 		mySprite.sprite = balloonSprites[randomBalloon];
 		balloonAnimator.runtimeAnimatorController = balloonAnimators[randomBalloon];
@@ -63,7 +63,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 		balloonCollider.enabled = true;
 	}
 
-    IEnumerator FlashColor(float invincibleTime) {
+	private IEnumerator FlashColor(float invincibleTime) {
         bool isVisible = false;
         Color invisible = Color.clear;
         Color visible = Color.white;
@@ -81,7 +81,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
     } 
 	#endregion
 
-	IEnumerator FloatUp(){
+	private IEnumerator FloatUp(){
 		float startTime = Time.time;
 		while (true){
 			transform.position += Vector3.up * moveSpeed * Time.deltaTime;
@@ -92,7 +92,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 		}
 	}
 
-	void OnTriggerEnter2D(Collider2D col){
+	private void OnTriggerEnter2D(Collider2D col){
 		if (balloonCollider.isActiveAndEnabled && col.gameObject.layer == Constants.birdLayer){//bird layer pops free balloon
 			Pop();
 		}
@@ -118,7 +118,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 		Destroy (gameObject,Constants.time2Destroy);
 	}
 
-	void OnDestroy(){
+	private void OnDestroy(){
 		StopAllCoroutines ();
 	}
 }

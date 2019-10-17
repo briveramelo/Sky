@@ -3,21 +3,21 @@ using GenericFunctions;
 
 public class MaskCamera : MonoBehaviour{
 
-	[SerializeField] Transform pooSliderTransform;
-	[SerializeField] Material eraserMaterial;
-	[SerializeField] Camera myCam;
-	[SerializeField] RenderTexture[] rts;
-	Vector3 startingPoint;
-	bool firstFrame;
-    Vector2? newHolePosition;
+	[SerializeField] private Transform pooSliderTransform;
+	[SerializeField] private Material eraserMaterial;
+	[SerializeField] private Camera myCam;
+	[SerializeField] private RenderTexture[] rts;
+	private Vector3 startingPoint;
+	private bool firstFrame;
+	private Vector2? newHolePosition;
 
-	void Awake(){
+	private void Awake(){
 		startingPoint = pooSliderTransform.transform.position;
 		myCam.targetTexture = rts[Constants.TargetPooInt];
 		firstFrame = true;
 	}
 
-    void Update(){
+	private void Update(){
         newHolePosition = null;
 		Vector2 touchSpot = InputManager.touchSpot;
 		Rect worldRect = new Rect(-Constants.WorldDimensions.x + pooSliderTransform.position.x - startingPoint.x, -Constants.WorldDimensions.y + pooSliderTransform.position.y - startingPoint.y, Constants.WorldDimensions.x*2f, Constants.WorldDimensions.y*2f);
@@ -26,7 +26,7 @@ public class MaskCamera : MonoBehaviour{
 		}
     }
 
-	void OnPostRender(){
+	private void OnPostRender(){
 	    if (firstFrame){
 	        firstFrame = false;
             GL.Clear(false, true, new Color(0.0f, 0.0f, 0.0f, 0.0f));
@@ -36,7 +36,7 @@ public class MaskCamera : MonoBehaviour{
 		}
 	}
 
-	void CutHole(Vector2 imageSize, Vector2 imageLocalPosition){
+	private void CutHole(Vector2 imageSize, Vector2 imageLocalPosition){
 		Rect textureRect = new Rect(0.0f, 0.0f, 1.0f, 1.0f);
 		Rect positionRect = new Rect(
 			(imageLocalPosition.x - 0.5f * eraserMaterial.mainTexture.width) / imageSize.x,

@@ -4,9 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class QuitSelector : Selector {
 
-    [SerializeField] Pauser pauser;
+    [SerializeField] private Pauser pauser;
     protected override Vector2 TouchSpot => InputManager.touchSpot;
-    [SerializeField] bool shouldSaveScore;
+    [SerializeField] private bool shouldSaveScore;
 
     protected override IEnumerator PressButton() {
         AudioManager.PlayAudio(buttonPress);

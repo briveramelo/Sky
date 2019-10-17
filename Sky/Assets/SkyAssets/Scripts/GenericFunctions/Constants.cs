@@ -22,7 +22,7 @@ namespace GenericFunctions{
 		public static Collider2D worldBoundsCollider;
 		public static Collider2D bottomOfTheWorldCollider;
 
-		static int targetPooInt;
+		private static int targetPooInt;
 		public static int TargetPooInt {
 			get => targetPooInt;
 			set{ targetPooInt = value;
@@ -35,10 +35,10 @@ namespace GenericFunctions{
         public static void FaceForward(this Transform trans, bool forward){
 			trans.localScale = new Vector3 ((forward ? 1:-1) * Mathf.Abs(trans.localScale.x), trans.localScale.y, trans.localScale.z);
 		}
-			
-		static Vector2 screenDimensions = new Vector2(1136, 640);  //new Vector2 (Screen.width, Screen.height);
+
+        private static Vector2 screenDimensions = new Vector2(1136, 640);  //new Vector2 (Screen.width, Screen.height);
 		public static Vector2 ScreenDimensions => screenDimensions;
-		static Vector2 worldDimensions = ScreenDimensions /200f;
+		private static Vector2 worldDimensions = ScreenDimensions /200f;
 		public static Vector2 WorldDimensions => worldDimensions;
 
 		public const int basketLayer = 8;

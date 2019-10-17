@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 
 public class GameManager : MonoBehaviour {
+    private GameManager Instance;
 
-    GameManager Instance;
-
-    void Awake() {
+    private void Awake() {
         if (Instance == null) {
             Instance = this;
             DontDestroyOnLoad(gameObject);

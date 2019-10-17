@@ -51,17 +51,20 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 	{
 		SceneManager.sceneLoaded -= OnLevelFinishedLoading;
 	}
-    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+
+	private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
         if (scene.name == Scenes.Story || scene.name == Scenes.Endless) {
             ResetHitStreak();
         }
     }
 
 	#region IStreakable
-	static int hitStreak;
-	static int tempStreak;
-	static int lastHitWeaponNumber;
-    static void ResetHitStreak() {
+
+	private static int hitStreak;
+	private static int tempStreak;
+	private static int lastHitWeaponNumber;
+
+	private static void ResetHitStreak() {
         hitStreak = 0;
         tempStreak = 0;
         lastHitWeaponNumber = 0;
@@ -99,11 +102,12 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 	public static IReportable Reporter;
 	public static IStreakable Streaker;
 
-	[SerializeField] GameObject points; 
-	[SerializeField] ScoreBoard scoreBoard;
+	[SerializeField] private GameObject points; 
+	[SerializeField] private ScoreBoard scoreBoard;
 
 	#region BirdCounters
-	class Counter{
+
+	private class Counter{
 		protected CounterType counterType;
 		protected int[] currentCount = new int[Enum.GetNames(typeof(BirdType)).Length];
 		protected int[] cummulativeCount = new int[Enum.GetNames(typeof(BirdType)).Length];
@@ -126,24 +130,27 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 		}
 	}
 
-	class BirdCounter : Counter{
+	private class BirdCounter : Counter{
 		public BirdCounter(CounterType counterType) : base(counterType){}
 		public void SetCount(BirdType birdType, bool increase) {
 			int change = increase ? 1 : -1;
 			base.SetCount(birdType, change);
 		}
 	}
-	class PointCounter : Counter{
+
+	private class PointCounter : Counter{
 		public PointCounter(CounterType counterType) : base(counterType){}
 	}
 
-    static Dictionary<CounterType, Counter> allCounters;
-    static Dictionary<ScoreType, PointCounter> scoreCounters;
+	private static Dictionary<CounterType, Counter> allCounters;
+	private static Dictionary<ScoreType, PointCounter> scoreCounters;
 	#endregion
-	const bool increase = true;
-	const bool decrease = false;
-    float startTime;
-	void Awake(){
+
+	private const bool increase = true;
+	private const bool decrease = false;
+	private float startTime;
+
+	private void Awake(){
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
         Instance = this;
         scoreBoard = FindObjectOfType<ScoreBoard>();
@@ -240,7 +247,8 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 
         DisplayPoints(balloonPosition, balloonPoints);
     }
-    void DisplayPoints(Vector2 position, int pointsToAdd) {
+
+    private void DisplayPoints(Vector2 position, int pointsToAdd) {
         float xClamp = Constants.WorldDimensions.x * .9f;
         float yClamp = Constants.WorldDimensions.y * .9f;
         Vector2 spawnPosition = new Vector2 (Mathf.Clamp(position.x, -xClamp, xClamp), Mathf.Clamp(position.y, -yClamp, yClamp));

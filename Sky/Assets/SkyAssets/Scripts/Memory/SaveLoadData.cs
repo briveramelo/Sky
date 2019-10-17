@@ -10,14 +10,14 @@ public class SaveLoadData : MonoBehaviour {
         return new DataSave(currentDataSave);
     }
 
-    DataSave currentDataSave;
-    const int maxScores = 5;
+    private DataSave currentDataSave;
+    private const int maxScores = 5;
 
-	void Awake(){
+    private void Awake(){
 		Load ();
 	}
 
-	void Load(){
+    private void Load(){
 		if (File.Exists(Application.dataPath + "/SaveData/savefile.dat")){
 			BinaryFormatter bf = new BinaryFormatter ();
 			FileStream fileStream = File.Open(Application.dataPath + "/SaveData/savefile.dat",FileMode.Open);
@@ -40,7 +40,7 @@ public class SaveLoadData : MonoBehaviour {
         AddNewHighScore(ref currentDataSave.endlessScores, NewEndlessScore, isNewEndless);
 	}
 
-    void AddNewHighScore<T>(ref List<T> MyList, T NewEntry, bool isNewHighScore) {
+    private void AddNewHighScore<T>(ref List<T> MyList, T NewEntry, bool isNewHighScore) {
         if (MyList.Count<maxScores) {
             MyList.Add(NewEntry);
             MyList.Sort();
@@ -54,8 +54,8 @@ public class SaveLoadData : MonoBehaviour {
         }
 		Save();
     }
-	
-	void Save(){
+
+    private void Save(){
 		BinaryFormatter bf = new BinaryFormatter ();
 		FileStream fileStream = File.Create(Application.dataPath + "/SaveData/savefile.dat");
 

@@ -41,7 +41,8 @@ public enum PointAnimState {
     Shine =1,
     Poof =2
 }
-enum PointBackDrop {
+
+internal enum PointBackDrop {
     IdleOffScreen=0,
     ComeIn =1,
     GetOut =2
@@ -50,12 +51,13 @@ enum PointBackDrop {
 
 public class WaveUI : MonoBehaviour, IWaveUI {
 
-	[SerializeField] Text Title, SubTitle, PointTotal, Streak, Combo;
-    [SerializeField] Animator TitleA, SubTitleA, PointTotalA, StreakA, ComboA, ScoreBackDrop;
-    [SerializeField] GameObject joystickHelp, swipeHelp;
+	[SerializeField] private Text Title, SubTitle, PointTotal, Streak, Combo;
+    [SerializeField] private Animator TitleA, SubTitleA, PointTotalA, StreakA, ComboA, ScoreBackDrop;
+    [SerializeField] private GameObject joystickHelp, swipeHelp;
 
     #region Load Level
-    void Awake()
+
+    private void Awake()
     {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
     }
@@ -64,13 +66,15 @@ public class WaveUI : MonoBehaviour, IWaveUI {
     {
         SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
-    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+
+    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
         if (scene.name ==Scenes.Menu) {
             StopAllCoroutines();
             ClearText();
         }
     }
-    void ClearText() {
+
+    private void ClearText() {
         TitleA.SetInteger("AnimState", (int)TextAnimState.Idle_Offscreen);
         SubTitleA.SetInteger("AnimState", (int)TextAnimState.Idle_Offscreen);
 
@@ -83,7 +87,8 @@ public class WaveUI : MonoBehaviour, IWaveUI {
     #endregion
 
     #region Wave Subtitles
-    Dictionary<WaveName, string> WaveSubtitles = new Dictionary<WaveName, string>() {
+
+    private Dictionary<WaveName, string> WaveSubtitles = new Dictionary<WaveName, string>() {
         {WaveName.Intro,        "Rescue your son!" },
         {WaveName.Pigeon,       "Clear out the sky rats" },
         {WaveName.Duck,         "Carve through these meatsacks" },
@@ -98,7 +103,8 @@ public class WaveUI : MonoBehaviour, IWaveUI {
     #endregion
 
     #region Animate Story Start
-    bool hasWeapon;
+
+    private bool hasWeapon;
     void IWaveUI.GrabbedWeapon() {
         hasWeapon = true;
     }
@@ -113,7 +119,7 @@ public class WaveUI : MonoBehaviour, IWaveUI {
         }
     }
 
-    IEnumerator ShowHelpTip(System.Action<bool> lambda) {
+    private IEnumerator ShowHelpTip(System.Action<bool> lambda) {
         lambda(true);
         yield return new WaitForSeconds(5.5f);
         lambda(false);
@@ -132,8 +138,10 @@ public class WaveUI : MonoBehaviour, IWaveUI {
     }
 
     #region AnimateWaveStart
-    List<Tip> NewTips = System.Enum.GetValues(typeof(Tip)).Cast<Tip>().ToList();
-    IEnumerator DisplayTip() {
+
+    private List<Tip> NewTips = System.Enum.GetValues(typeof(Tip)).Cast<Tip>().ToList();
+
+    private IEnumerator DisplayTip() {
         int nextTip = Random.Range(0, NewTips.Count);
         Title.text = "Tip: " + NewTips[nextTip].ToString();
         SubTitle.text = Tips.GetTip(NewTips[nextTip]);
@@ -148,7 +156,8 @@ public class WaveUI : MonoBehaviour, IWaveUI {
         TitleA.SetInteger("AnimState", (int)TextAnimState.Idle_Offscreen);
         SubTitleA.SetInteger("AnimState", (int)TextAnimState.Idle_Offscreen);
     }
-    IEnumerator DisplayWaveName(WaveName waveName) {
+
+    private IEnumerator DisplayWaveName(WaveName waveName) {
         Title.text = waveName.ToString() + " Wave";
         SubTitle.text = WaveSubtitles[waveName];
         TitleA.SetInteger("AnimState", (int)TextAnimState.RightAcross);
@@ -160,7 +169,8 @@ public class WaveUI : MonoBehaviour, IWaveUI {
     #endregion
 
     #region AnimateWaveEnd
-    IEnumerator DisplayWaveComplete() {
+
+    private IEnumerator DisplayWaveComplete() {
         Title.text += " Complete";
         TitleA.SetInteger("AnimState", (int)TextAnimState.RightCenter);
         //move progress sprites to the center 

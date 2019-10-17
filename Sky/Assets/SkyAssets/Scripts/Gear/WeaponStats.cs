@@ -16,10 +16,10 @@ public class WeaponStats {
     }
     public WeaponStats() { }
 
-    WeaponType myWeaponType; public WeaponType MyWeaponType => myWeaponType;
-    Collider2D myCollider; public Collider2D WeaponCollider => myCollider;
-    Vector2 velocity; public Vector2 Velocity => velocity;
-    int birdsHit; public int BirdsHit => birdsHit;
+    private WeaponType myWeaponType; public WeaponType MyWeaponType => myWeaponType;
+    private Collider2D myCollider; public Collider2D WeaponCollider => myCollider;
+    private Vector2 velocity; public Vector2 Velocity => velocity;
+    private int birdsHit; public int BirdsHit => birdsHit;
 
     public int Damage {
         get {

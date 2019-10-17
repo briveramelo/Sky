@@ -20,23 +20,23 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 	public static IBalloonToBasket BalloonToBasket;
 	public static ITentacleToBasket TentacleToBasket;
 
-	[SerializeField] Rigidbody2D rigbod;
-	[SerializeField] Transform balloonCenter;
-	[SerializeField] Transform basketCenter;
-	[SerializeField] Balloon[] balloonScripts; private List<IBasketToBalloon> balloons;
-	[SerializeField] BoxCollider2D basketCollider;
-    [SerializeField] Collider2D[] boundingColliders;
-    [SerializeField] GameObject balloonReplacement;
-    [SerializeField] List<SpriteRenderer> mySprites;
-    [SerializeField] AudioClip invincible, ready, rebirth;
+	[SerializeField] private Rigidbody2D rigbod;
+	[SerializeField] private Transform balloonCenter;
+	[SerializeField] private Transform basketCenter;
+	[SerializeField] private Balloon[] balloonScripts; private List<IBasketToBalloon> balloons;
+	[SerializeField] private BoxCollider2D basketCollider;
+    [SerializeField] private Collider2D[] boundingColliders;
+    [SerializeField] private GameObject balloonReplacement;
+    [SerializeField] private List<SpriteRenderer> mySprites;
+    [SerializeField] private AudioClip invincible, ready, rebirth;
 
-    [SerializeField] BasketEngine basketEngine;
+    [SerializeField] private BasketEngine basketEngine;
 
-	Vector2[] relativeBalloonPositions;
-    int continuesRemaining =1;
-    const float invincibleTime = 1.5f;
+    private Vector2[] relativeBalloonPositions;
+    private int continuesRemaining =1;
+    private const float invincibleTime = 1.5f;
 
-	void Awake () {
+    private void Awake () {
 		Instance = this;
 		BalloonToBasket = this;
 		TentacleToBasket = this;
@@ -62,21 +62,21 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 	}
 	#endregion
 
-	void GrantBalloonInvincibility(){
+	private void GrantBalloonInvincibility(){
 		for (int i=0; i<balloons.Count; i++){
 			StartCoroutine (balloons[i].BecomeInvincible());
 		}
         StartCoroutine(FlashColor(invincibleTime));
 	}
 
-    void PlayRecoverySounds() {
+	private void PlayRecoverySounds() {
         AudioManager.PlayAudio(invincible);
         if (balloons.Count>=1) {
             AudioManager.PlayReadyDelayed(invincible.length);
         }
     }
 
-    IEnumerator FlashColor(float invincibleTime) {
+	private IEnumerator FlashColor(float invincibleTime) {
         bool isVisible = false;
         Color invisible = Color.clear;
         Color visible = Color.white;
@@ -94,7 +94,7 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
         
     }
 
-	void OnTriggerEnter2D(Collider2D col){
+	private void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.layer == Constants.balloonFloatingLayer){
 			if (balloons.Count<3){
 				CollectNewBalloon(col.gameObject.GetComponent<IBasketToBalloon>());
@@ -102,7 +102,7 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 		}
 	}
 
-	void CollectNewBalloon(IBasketToBalloon newBalloon){
+	private void CollectNewBalloon(IBasketToBalloon newBalloon){
         List<int> balloonNumbers = new List<int>(new[] { 0, 1, 2 });
         balloons.ForEach(balloon => balloonNumbers.Remove(balloon.BalloonNumber));
         int newBalloonNumber= balloonNumbers[0];
@@ -144,13 +144,13 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
     }
 	#endregion
 
-    IEnumerator FinishPlay() {
+	private IEnumerator FinishPlay() {
 		ScoreSheet.Reporter.ReportScores ();
         yield return StartCoroutine (ScoreSheet.Reporter.DisplayTotal());
 		SceneManager.LoadScene(Scenes.Menu);
     }
 
-    IEnumerator FallToDeath(){
+	private IEnumerator FallToDeath(){
         rigbod.gravityScale = 1;
         ((IDie)basketEngine).Die();
         boundingColliders.ToList().ForEach(col => col.enabled = false);
@@ -180,7 +180,7 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
         GrantBalloonInvincibility();
     }
 
-    void PlayRebirthSounds() {
+    private void PlayRebirthSounds() {
         AudioManager.PlayAudio(rebirth);
     }
 }

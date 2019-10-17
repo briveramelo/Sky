@@ -21,25 +21,25 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
     public static Tentacles Instance;
 	public static IStabbable StabbableTentacle;
     public static IReleasable Releaser;
-	ISensorToTentacle me; //just because I wanted to use ResetPosition locally with less mess...
-	[SerializeField] TentaclesSensor ts; private IToggleable sensor; private IJaiDetected sensorOnJai;
-	IFreezable inputManager;
-	IFreezable jai;
+    private ISensorToTentacle me; //just because I wanted to use ResetPosition locally with less mess...
+	[SerializeField] private TentaclesSensor ts; private IToggleable sensor; private IJaiDetected sensorOnJai;
+	private IFreezable inputManager;
+	private IFreezable jai;
 
-	[SerializeField] Transform tipTransform;
-	[SerializeField] Collider2D tipCollider;
-	WeaponStats fakeWeapon = new WeaponStats();
+	[SerializeField] private Transform tipTransform;
+	[SerializeField] private Collider2D tipCollider;
+	private WeaponStats fakeWeapon = new WeaponStats();
 
-	Vector2 homeSpot = new Vector2 (0f,-.75f - Constants.WorldDimensions.y);
-	
-	float descendSpeed = 1f;
-	float attackSpeed = 1.5f;
-	float resetSpeed = 1f;
-	float defeatedHeight;
-	float resetHeight;
+	private Vector2 homeSpot = new Vector2 (0f,-.75f - Constants.WorldDimensions.y);
 
-	int stabsTaken;
-	const int stabs2Retreat = 4;
+	private float descendSpeed = 1f;
+	private float attackSpeed = 1.5f;
+	private float resetSpeed = 1f;
+	private float defeatedHeight;
+	private float resetHeight;
+
+	private int stabsTaken;
+	private const int stabs2Retreat = 4;
 
 	private bool holdingJai;
 
@@ -59,7 +59,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 		defeatedHeight = .25f + homeSpot.y;
 	}
 
-	void FaceTowardYou(bool toward){
+	private void FaceTowardYou(bool toward){
 		transform.FaceForward (toward ? (Constants.basketTransform.position.x - transform.position.x) > 0 : (Constants.basketTransform.position.x - transform.position.x) < 0);
 	}
 
@@ -126,7 +126,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
         }
     }
 
-    void ReleaseBasket() {
+    private void ReleaseBasket() {
         holdingJai = false;
         inputManager.IsFrozen = false;
         jai.IsFrozen = false;
@@ -138,7 +138,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
         StartCoroutine(me.ResetPosition(true));
     }
 
-	IEnumerator DisableTentacles(){
+    private IEnumerator DisableTentacles(){
 		tipCollider.enabled = false;
 		yield return new WaitForSeconds (1.5f);
 		tipCollider.enabled = true;

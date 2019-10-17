@@ -5,9 +5,10 @@ using GenericFunctions;
 
 public class Eagle : Bird {
 
-    [SerializeField] EagleFriends eagleFriends; ITriggerSpawnable myEagleFriends;
-	[SerializeField] PixelRotation pixelRotationScript;
-	Vector3 attackDir;
+    [SerializeField] private EagleFriends eagleFriends;
+    private ITriggerSpawnable myEagleFriends;
+	[SerializeField] private PixelRotation pixelRotationScript;
+	private Vector3 attackDir;
 
 	private Vector2[] startPos = new Vector2[]{
 		new Vector2(-Constants.WorldDimensions.x,-Constants.WorldDimensions.y) * 1.2f,
@@ -25,14 +26,14 @@ public class Eagle : Bird {
 		StartCoroutine (InitiateAttack (1f));
 	}
 
-	IEnumerator InitiateAttack(float waitTime){
+	private IEnumerator InitiateAttack(float waitTime){
         yield return null;
         myEagleFriends.TriggerSpawnEvent();
 		yield return new WaitForSeconds(waitTime);
 		StartCoroutine (SweepUp (true));
 	}
 
-	IEnumerator SweepUp(bool first){
+	private IEnumerator SweepUp(bool first){
 		float moveSpeed = 5f;
 		transform.FaceForward(first);
 		transform.position = startPos [first ? 0 : 1];
@@ -47,8 +48,8 @@ public class Eagle : Bird {
 			Strike ();
 		}
 	}
-		
-	void Strike(){
+
+	private void Strike(){
 		float xStartPoint = 20f;
 		while (Mathf.Abs(xStartPoint)>Constants.WorldDimensions.x){
 			xStartPoint = Constants.balloonCenter.position.x + Random.Range (-Constants.WorldDimensions.x, Constants.WorldDimensions.x) * .15f;

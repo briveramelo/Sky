@@ -12,8 +12,9 @@ public class LeadDuck : Bird, IDuckToLeader {
 	// The DuckLeader ensures all ducks follow as closely behind in an evenly distributed Flying V Formation
 	// The DuckLeader will fly linearly across the screen
 
-	[SerializeField] Duck[] duckScripts; List<ILeaderToDuck> ducks;
-	[SerializeField] Transform[] formationTransforms;
+	[SerializeField] private Duck[] duckScripts;
+	private List<ILeaderToDuck> ducks;
+	[SerializeField] private Transform[] formationTransforms;
 
 	protected override void Awake () {
 		base.Awake();
@@ -33,7 +34,7 @@ public class LeadDuck : Bird, IDuckToLeader {
 	//		[3]
 	//	  [5]
 
-	void SetDuckFormation(bool goLeft){
+	private void SetDuckFormation(bool goLeft){
 		Vector2 topSide = ConvertAnglesAndVectors.ConvertAngleToVector2 (goLeft ? 30 : 150);
 		Vector2 bottomSide = ConvertAnglesAndVectors.ConvertAngleToVector2 (goLeft ? -30 : 210);
 
@@ -82,7 +83,7 @@ public class LeadDuck : Bird, IDuckToLeader {
 		base.DieUniquely();
 	}
 
-	void BreakTheV(){
+	private void BreakTheV(){
 		transform.DetachChildren ();
 		ducks.ForEach(duck => duck.Scatter());
 		for (int i=0; i<formationTransforms.Length; i++){

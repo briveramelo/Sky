@@ -5,9 +5,9 @@ public class GameCamera : MonoBehaviour {
 
 	public static GameCamera Instance;
 	private bool shaking;
-    Vector3 startSpot;
+	private Vector3 startSpot;
 
-	void Awake(){
+	private void Awake(){
 		if (Instance == null) {
             Instance = this;
         }
@@ -21,13 +21,13 @@ public class GameCamera : MonoBehaviour {
 		StartCoroutine (TriggerShake());
 	}
 
-	IEnumerator TriggerShake(){
+	private IEnumerator TriggerShake(){
 		StartCoroutine (ShakeIt ());
 		yield return new WaitForSeconds (.1f);
 		shaking = false;
 	}
-	
-	IEnumerator ShakeIt(){
+
+	private IEnumerator ShakeIt(){
 		shaking = true;
 		while (shaking) {
 			Vector3 shift = new Vector3( Random.insideUnitCircle.x * .2f,Random.insideUnitCircle.y * .2f,0f);

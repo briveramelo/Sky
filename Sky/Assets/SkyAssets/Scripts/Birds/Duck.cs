@@ -22,10 +22,11 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 	// The Duck will follow his/her DuckLeader, until the DuckLeader dies. 
 	// Then, the Duck will aimlessly bounce around the screen until killed
 
-	[SerializeField] LeadDuck leaderScript; IDuckToLeader leader;
-	Transform myFormationTransform;
+	[SerializeField] private LeadDuck leaderScript;
+	private IDuckToLeader leader;
+	private Transform myFormationTransform;
 
-	Vector2[] scatterDir = new Vector2[]{
+	private Vector2[] scatterDir = new Vector2[]{
 		new Vector2 (1,1).normalized,
 		new Vector2 (-1,1).normalized,
 		new Vector2 (1,-1).normalized,
@@ -39,10 +40,11 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 			transform.FaceForward(rigbod.velocity.x<0);
 		}
 	}
-	const float moveSpeed = 2.5f;
-	const float maxSpeed = 4f;
-	int formationIndex;
-	bool bouncing;
+
+	private const float moveSpeed = 2.5f;
+	private const float maxSpeed = 4f;
+	private int formationIndex;
+	private bool bouncing;
 
 	protected override void Awake () {
 		base.Awake();
@@ -54,7 +56,7 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 		}
 	}
 
-	void Update(){
+	private void Update(){
 		if (bouncing){
 			BounceOnTheWalls ();
 		}
@@ -69,7 +71,7 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 	// In that scenario, the duck often travels far beyond the WorldDimension, reversing direction and velocity,
 	// only to be trapped flipping its velocity each frame for some time. 
 	// This solution eliminates that concern.
-	void BounceOnTheWalls(){
+	private void BounceOnTheWalls(){
 		bool overX = transform.position.x> Constants.WorldDimensions.x;
 		bool underX= transform.position.x<-Constants.WorldDimensions.x;
 		bool overY = transform.position.y> Constants.WorldDimensions.y;
@@ -81,7 +83,7 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 		}
 	}
 
-	void StayInFormation(){
+	private void StayInFormation(){
 		transform.position = Vector3.MoveTowards(transform.position, myFormationTransform.position, maxSpeed * Time.deltaTime);
 	}
 
@@ -96,7 +98,8 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
         ScoreSheet.Tallier.TallyThreat(Threat.FreeDuck);
         Scatter();
 	}
-    void Scatter() {
+
+	private void Scatter() {
         CurrentVelocity = scatterDir[formationIndex] * moveSpeed;
         birdStats.ModifyForEvent(3);
         bouncing = true;

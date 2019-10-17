@@ -6,23 +6,23 @@ public class Incubator : MonoBehaviour {
 
 	public static Incubator Instance;
 
-	[SerializeField] GameObject[] birds; public GameObject[] Birds => birds;
+	[SerializeField] private GameObject[] birds; public GameObject[] Birds => birds;
 
-	void Pigeon() {SpawnNextBird(BirdType.Pigeon); }
-    void Duck() {SpawnNextBird(BirdType.Duck); }
-    void DuckLeader() {SpawnNextBird(BirdType.DuckLeader); }
-    void Albatross() {SpawnNextBird(BirdType.Albatross); }
-    void BabyCrow() {SpawnNextBird(BirdType.BabyCrow); }
-    void Crow() {SpawnNextBird(BirdType.Crow); }
-    void Tentacles() {SpawnNextBird(BirdType.Tentacles); }
-    void Seagull() {SpawnNextBird(BirdType.Seagull); }
-    void Pelican() {SpawnNextBird(BirdType.Pelican); }
-    void Shoebill() {SpawnNextBird(BirdType.Shoebill); }
-    void Bat() {SpawnNextBird(BirdType.Bat); }
-    void Eagle() {SpawnNextBird(BirdType.Eagle); }
-    void BirdOfParadise() {SpawnNextBird(BirdType.BirdOfParadise); }
+	private void Pigeon() {SpawnNextBird(BirdType.Pigeon); }
+	private void Duck() {SpawnNextBird(BirdType.Duck); }
+	private void DuckLeader() {SpawnNextBird(BirdType.DuckLeader); }
+	private void Albatross() {SpawnNextBird(BirdType.Albatross); }
+	private void BabyCrow() {SpawnNextBird(BirdType.BabyCrow); }
+	private void Crow() {SpawnNextBird(BirdType.Crow); }
+	private void Tentacles() {SpawnNextBird(BirdType.Tentacles); }
+	private void Seagull() {SpawnNextBird(BirdType.Seagull); }
+	private void Pelican() {SpawnNextBird(BirdType.Pelican); }
+	private void Shoebill() {SpawnNextBird(BirdType.Shoebill); }
+	private void Bat() {SpawnNextBird(BirdType.Bat); }
+	private void Eagle() {SpawnNextBird(BirdType.Eagle); }
+	private void BirdOfParadise() {SpawnNextBird(BirdType.BirdOfParadise); }
 
-	void Awake(){
+	private void Awake(){
 		Instance = this;
 	}
 

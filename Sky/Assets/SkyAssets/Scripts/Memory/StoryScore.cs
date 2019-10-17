@@ -2,9 +2,8 @@
 
 [Serializable]
 public class StoryScore : IComparable<StoryScore> {
-
-	int score;          public int Score => score;
-	WaveName finalWave; public WaveName FinalWave => finalWave;
+	private int score;          public int Score => score;
+	private WaveName finalWave; public WaveName FinalWave => finalWave;
 
 	public StoryScore (int score, WaveName finalWave){
 		this.score = score;

@@ -17,12 +17,12 @@ public enum WaveType {
 
 public class WaveSelector : Selector {
 
-    [SerializeField] WaveType MyWaveType;
-    IFreezable inputManager;
+    [SerializeField] private WaveType MyWaveType;
+    private IFreezable inputManager;
 
     protected override Vector2 TouchSpot => MenuInputHandler.touchSpot;
 
-    void Awake() {
+    private void Awake() {
         inputManager = FindObjectOfType<MenuInputHandler>().GetComponent<IFreezable>();
     }
 

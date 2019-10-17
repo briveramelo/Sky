@@ -2,9 +2,8 @@
 
 [Serializable]
 public class EndlessScore : IComparable<EndlessScore> {
-
-	int score;          public int Score => score;
-	float duration; public float Duration => duration;
+	private int score;          public int Score => score;
+	private float duration; public float Duration => duration;
 
 	public EndlessScore (int score, float duration){
 		this.score = score;

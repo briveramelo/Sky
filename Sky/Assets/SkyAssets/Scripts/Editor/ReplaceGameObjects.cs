@@ -10,12 +10,11 @@ public class ReplaceGameObjects : ScriptableWizard {
 	public GameObject useGameObject;
 
 	[MenuItem("Custom/Replace GameObjects")]
-
-	static void CreateWizard(){
+	private static void CreateWizard(){
 		ScriptableWizard.DisplayWizard("Replace GameObjects", typeof(ReplaceGameObjects), "Replace");
 	}
 
-	void OnWizardCreate(){
+	private void OnWizardCreate(){
 		foreach (Transform t in Selection.transforms){
 			GameObject newObject = (GameObject) PrefabUtility.InstantiatePrefab(useGameObject);
 			Undo.RegisterCreatedObjectUndo(newObject, "created prefab");

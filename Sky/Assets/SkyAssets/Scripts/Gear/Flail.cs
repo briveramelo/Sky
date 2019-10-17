@@ -3,7 +3,7 @@
 public class Flail : Weapon {
 
     protected override int weaponNumber => timesUsed;
-    [SerializeField] Rigidbody2D rigbod;
+    [SerializeField] private Rigidbody2D rigbod;
     protected override Vector2 MyVelocity => rigbod.velocity;
 
     protected override void DeliverDamage(Collider2D col) {

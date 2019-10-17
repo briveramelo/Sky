@@ -10,8 +10,9 @@ public class BirdWaiter{
 	protected int movingNumber => ScoreSheet.Reporter.GetCounts(counterType,true,birdTypes);
 	public bool wait => Wait(movingNumber);
 
-	delegate bool BoolDelegate(int mover);
-	BoolDelegate Wait;
+	private delegate bool BoolDelegate(int mover);
+
+	private BoolDelegate Wait;
 	public IEnumerator Perform;
 	public SpawnDelegate Spawn;
 
@@ -27,7 +28,7 @@ public class BirdWaiter{
 		Initialize(counterType, invertBirdTypes, numberToWaitFor, birdTypes);
 	}
 
-	void Initialize(CounterType counterType, bool invertBirdTypes, int numberToWaitFor, params BirdType[] birdTypes){
+	private void Initialize(CounterType counterType, bool invertBirdTypes, int numberToWaitFor, params BirdType[] birdTypes){
 		this.counterType = counterType;
 		this.birdTypes = invertBirdTypes ? InvertBirdTypes(birdTypes) : birdTypes;
 		this.numberToWaitFor = numberToWaitFor;
@@ -37,7 +38,8 @@ public class BirdWaiter{
 			Wait = mover => mover < this.numberToWaitFor;
 		} 
 	}
-	static BirdType[] InvertBirdTypes(params BirdType[] birdTypes){
+
+	private static BirdType[] InvertBirdTypes(params BirdType[] birdTypes){
 		List<BirdType> birdsToWaitFor = Enum.GetValues(typeof(BirdType)).Cast<BirdType>().ToList();
 		birdsToWaitFor.Remove(BirdType.All);
 		foreach (BirdType birdType in birdTypes){
