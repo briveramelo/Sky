@@ -17,7 +17,7 @@ public struct Corrections
         else
         {
             //correctionPixels = -Constants.ScreenDimensions / 2;
-            correctionPixels = new Vector2(-Constants.ScreenDimensions.x / 2, (-3 * Constants.ScreenDimensions.y / 2));
+            correctionPixels = new Vector2(-Constants.ScreenDimensions.x / 2, (-1 * Constants.ScreenDimensions.y / 2));
             correctionPixelFactor = .01f;
         }
     }
