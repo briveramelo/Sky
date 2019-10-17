@@ -1,4 +1,6 @@
-﻿Shader "TextureMasking" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "TextureMasking" {
     Properties {
         _MainTex ("Main", 2D) = "white" {}
         _MaskTex ("Mask", 2D) = "white" {}
@@ -36,7 +38,7 @@
             vert2frag vert(app2vert input)
             {
                 vert2frag output;
-                output.position = mul(UNITY_MATRIX_MVP, input.position);
+                output.position = UnityObjectToClipPos(input.position);
                 output.texcoord = TRANSFORM_TEX(input.texcoord, _MainTex);
                 return output;
             }
