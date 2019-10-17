@@ -63,8 +63,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Editor\EagleFriends_Editor.cs" />
-    <Compile Include="Assets\Scripts\Editor\ReplaceGameObjects.cs" />
+    <Compile Include="Assets\SkyAssets\Scripts\Editor\EagleFriends_Editor.cs" />
+    <Compile Include="Assets\SkyAssets\Scripts\Editor\ReplaceGameObjects.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
