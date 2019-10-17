@@ -25,7 +25,7 @@ public class Guts : MonoBehaviour, IBleedable {
 			subGutValue = Mathf.Clamp(Random.Range(1,4),1,totalGutValue-gutValue);
 			gutValue += subGutValue;
 
-			gut = Instantiate (gutSplosions[ConvertGutValueToIndex(subGutValue)],Random.insideUnitCircle.normalized * .2f + (Vector2)transform.position,Quaternion.identity) as GameObject;
+			gut = Instantiate (gutSplosions[ConvertGutValueToIndex(subGutValue)],Random.insideUnitCircle.normalized * .2f + (Vector2)transform.position,Quaternion.identity);
 			gut.GetComponent<Rigidbody2D>().velocity = new Vector2 (Random.Range(gutDirection.x * .1f,gutDirection.x * .4f),Random.Range(3f,8f));
 			gut.transform.parent = transform;
 

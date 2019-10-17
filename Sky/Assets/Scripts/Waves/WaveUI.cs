@@ -55,6 +55,15 @@ public class WaveUI : MonoBehaviour, IWaveUI {
     [SerializeField] GameObject joystickHelp, swipeHelp;
 
     #region Load Level
+    void Awake()
+    {
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
         if (scene.name ==Scenes.Menu) {
             StopAllCoroutines();
@@ -89,7 +98,7 @@ public class WaveUI : MonoBehaviour, IWaveUI {
     #endregion
 
     #region Animate Story Start
-    bool hasWeapon = false;
+    bool hasWeapon;
     void IWaveUI.GrabbedWeapon() {
         hasWeapon = true;
     }
@@ -127,7 +136,7 @@ public class WaveUI : MonoBehaviour, IWaveUI {
     IEnumerator DisplayTip() {
         int nextTip = Random.Range(0, NewTips.Count);
         Title.text = "Tip: " + NewTips[nextTip].ToString();
-        SubTitle.text = Tips.GetTip(NewTips[nextTip]);;
+        SubTitle.text = Tips.GetTip(NewTips[nextTip]);
         NewTips.RemoveAt(nextTip);
         if (NewTips.Count==0) {
             NewTips = System.Enum.GetValues(typeof(Tip)).Cast<Tip>().ToList();

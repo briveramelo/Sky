@@ -52,7 +52,7 @@ public class Bat : Bird {
 
 		while (true){
 			UpdatePositionIndices();
-			batPos = (Vector2)transform.position;
+			batPos = transform.position;
 			targetPositions[realTimeIndex] = (Vector2)Constants.balloonCenter.position - orbitDistance * rigbod.velocity.normalized;
 			dist2Target = Vector2.Distance(targetPositions[targetIndex], batPos);
 
@@ -98,7 +98,7 @@ public class Bat : Bird {
 		targetPositions[realTimeIndex] = FindEllipsePosition();
 
 		while (true) {
-			batPos = (Vector2)transform.position;
+			batPos = transform.position;
 			dist2Target = Vector2.Distance(targetPositions[targetIndex], batPos);
 			if (dist2Target<stepDistance){
 				UpdatePositionIndices();

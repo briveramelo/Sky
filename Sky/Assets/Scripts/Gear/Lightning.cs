@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using GenericFunctions;
-using System.Collections.Generic;
 
 public class Lightning : Weapon {
 

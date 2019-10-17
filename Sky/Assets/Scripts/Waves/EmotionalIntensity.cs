@@ -50,7 +50,10 @@ public class EmotionalIntensity : MonoBehaviour, IThreat{
     };
     public static BirdType[] ThreateningBirds { get { return threateningBirds; } }
     #endregion
-
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
         intensity = 0;
         timeIntensity = new AnimationCurve();
@@ -59,7 +62,8 @@ public class EmotionalIntensity : MonoBehaviour, IThreat{
     }
 
     void Awake() {
-        ThreatTracker = (IThreat)this;
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
+        ThreatTracker = this;
         editorIntensity = timeIntensity;
         Decay();
     }

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Linq;
 using PixelArtRotation;
 using GenericFunctions;
 
@@ -20,7 +19,7 @@ public class Crow : Bird, IMurderToCrow {
 
 	protected override void Awake(){
 		base.Awake();
-		murderInterface = (ICrowToMurder)murder;
+		murderInterface = murder;
 	}
 
 	private enum CrowStates{
@@ -46,7 +45,7 @@ public class Crow : Bird, IMurderToCrow {
 
 	#region IMurderToCrow Interface
 	void IMurderToCrow.InitializeCrow(int crowNum){
-		isKiller = crowNum == 5 ? true : false;
+		isKiller = crowNum == 5;
         myCrowNum = crowNum;
         commitDistance = isKiller ? commitDistance : 3f;
 	}
@@ -131,7 +130,7 @@ public class Crow : Bird, IMurderToCrow {
 	#endregion
 
 	protected override void DieUniquely(){
-		murderInterface.ReportCrowDown((IMurderToCrow)this);
+		murderInterface.ReportCrowDown(this);
         if (!hasRequestedNext) {
             murderInterface.SendNextCrow();
         }

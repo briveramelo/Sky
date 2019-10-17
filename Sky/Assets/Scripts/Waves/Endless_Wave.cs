@@ -32,6 +32,15 @@ public class Endless_Wave : Wave {
     
     [SerializeField] Difficulty Toughness;
 
+    void Awake()
+    {
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
         if (scene.name !=Scenes.Endless) {
             StopAllCoroutines();
@@ -54,17 +63,15 @@ public class Endless_Wave : Wave {
             }
             return birdTypes;
         }
-        else{
-            return new BirdType[] { BirdType.All };
-        }
+        return new[] { BirdType.All };
     }
 
     BirdType[] SelectBossBirds() {
         if (unlockedBossBirds.Count > 0){
-            return new BirdType[] { unlockedBossBirds[UnityEngine.Random.Range(0, unlockedBossBirds.Count)] };
+            return new[] { unlockedBossBirds[UnityEngine.Random.Range(0, unlockedBossBirds.Count)] };
         }
         else{
-            return new BirdType[] { BirdType.All };
+            return new[] { BirdType.All };
         }
     }
 

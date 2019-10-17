@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public interface IHurtable {
 	void GetHurt(ref WeaponStats weaponStats);
@@ -37,7 +36,7 @@ public abstract class Bird : MonoBehaviour, IHurtable {
 	protected virtual int TakeDamage(ref WeaponStats weaponStats){
         int damageDealt = Mathf.Clamp(weaponStats.Damage, 0, birdStats.Health);
         birdStats.Health -= damageDealt;
-		(Instantiate (guts, transform.position, Quaternion.identity) as GameObject).GetComponent<IBleedable>().GenerateGuts(ref birdStats, weaponStats.Velocity);
+		Instantiate (guts, transform.position, Quaternion.identity).GetComponent<IBleedable>().GenerateGuts(ref birdStats, weaponStats.Velocity);
         return damageDealt;
     }
 

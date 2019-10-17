@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System.Collections;
+﻿using UnityEditor;
 
 [CustomEditor(typeof(EagleFriends)), CanEditMultipleObjects]
 public class EagleFriends_Editor : Editor {

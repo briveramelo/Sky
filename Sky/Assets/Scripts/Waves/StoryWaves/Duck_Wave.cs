@@ -53,7 +53,7 @@ public class Duck_Wave : Wave {
      *         <-
      */
     IEnumerator AlternatingDucks(int numDucks) {
-        float[] spawnOpts = new float[] {
+        float[] spawnOpts = {
             .9f, 0.85f, .8f, 0.75f, .7f, 0.65f, .6f, 0.55f, .5f, 0.45f, .4f, 0.35f, .3f, 0.25f, 0.2f, 0.15f, .1f, 0.05f, 0f,
             -.9f, -0.85f, -.8f, -0.75f, -.7f, -0.65f, -.6f, -0.55f, -.5f, -0.45f, -.4f, -0.35f, -.3f, -0.25f, -0.2f, -0.15f, -.1f, -0.05f
         };
@@ -197,8 +197,8 @@ public class Duck_Wave : Wave {
 
     #region Graveyard
     IEnumerator OldWave() {
-        float[] heights = new float[]{-1,1};
-		DuckDirection[] directions = new DuckDirection[]{DuckDirection.UpLeft, DuckDirection.DownLeft};
+        float[] heights = {-1,1};
+		DuckDirection[] directions = {DuckDirection.UpLeft, DuckDirection.DownLeft};
 
 		DuckDelegate SpawnDucks = AtHeight(heights, directions);
 
@@ -216,7 +216,7 @@ public class Duck_Wave : Wave {
 
 	public delegate void DuckDelegate(int i);
 	DuckDelegate AtHeight(float[] myHeights, DuckDirection[] myDirections){
-		return (int i)=>{
+		return i =>{
 			SpawnBirds (BirdType.Duck, SpawnPoint(right,myHeights[i]),myDirections[i]);
 		};
 	}

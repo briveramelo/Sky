@@ -9,7 +9,7 @@ public class Seagull : Bird {
     bool movingRight;
     
     int mySeagullNumber;
-    static int totalSeagulls;
+    static int totalSeagulls = 0;
 	const float moveSpeed = 3f;
     Vector2 TargetCenterPosition;
     float xSpread = 4;
@@ -58,7 +58,7 @@ public class Seagull : Bird {
         rigbod.velocity = Vector2.zero;
         rigbod.isKinematic = true;
         startTime = Time.time;
-        StartCoroutine(LerpShift(startedMovingRight));
+        StartCoroutine(LerpShift());
 		while (true){
             transform.FaceForward(GetXVelocity()<0);
             transform.position = new Vector2 (GetXPosition(), GetYPosition());
@@ -67,7 +67,7 @@ public class Seagull : Bird {
 	}
     float shift;
     float startTime;
-    IEnumerator LerpShift(bool startedGoingRight) {
+    IEnumerator LerpShift() {
         float targetShift = -22.5f;
         float xVel=0;
         while (Mathf.Abs(shift - targetShift)>0.1f) {
@@ -106,7 +106,7 @@ public class Seagull : Bird {
 			if (xDist > pooDistanceRange[0] && xDist < pooDistanceRange[1] && Mathf.Sign(GetXVelocity())==Mathf.Sign(-transform.position.x+Constants.jaiTransform.position.x)){
                 if (activePooCams<5) {
                     if (Time.time>(lastTimePooped + minPoopTimeDelay)){
-					    (Instantiate (pooNugget,transform.position,Quaternion.identity) as GameObject).GetComponent<PooNugget>().InitializePooNugget(new Vector2 (GetXVelocity(), GetYVelocity()));
+					    Instantiate (pooNugget,transform.position,Quaternion.identity).GetComponent<PooNugget>().InitializePooNugget(new Vector2 (GetXVelocity(), GetYVelocity()));
                         lastTimePooped = Time.time;
 					    break;
 				    }

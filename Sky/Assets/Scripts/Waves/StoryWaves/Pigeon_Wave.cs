@@ -270,8 +270,8 @@ public class Pigeon_Wave : Wave {
     #region Graveyard
         #region Pigeon 1 Wait 3 top mid bot
     IEnumerator Pigeon3() {
-        float[] bottomHeights = new float[] { lowHeight, lowHeight, medHeight };
-        float[] topHeights = new float[] { medHeight, highHeight, highHeight };
+        float[] bottomHeights = { lowHeight, lowHeight, medHeight };
+        float[] topHeights = { medHeight, highHeight, highHeight };
 
         PigeonDelegate[] SpawnPigeons = new PigeonDelegate[]{
             AtHeight(heights),
@@ -286,7 +286,7 @@ public class Pigeon_Wave : Wave {
 
 	delegate void PigeonDelegate(int i);
 	PigeonDelegate AtHeight(float[] myHeights){
-		return (int i)=>{
+		return i =>{
 			SpawnBirds(BirdType.Pigeon,SpawnPoint(right,myHeights[i]));
 		};
 	}

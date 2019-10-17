@@ -18,7 +18,7 @@ public class Eagle : Bird {
 	protected override void Awake () {
 		base.Awake();
 		myEagleFriends = eagleFriends;
-		moveDir = new Vector2[]{
+		moveDir = new[]{
 			Constants.ScreenDimensions.normalized,
 			new Vector2(-Constants.ScreenDimensions.x,Constants.ScreenDimensions.y).normalized,
 		};

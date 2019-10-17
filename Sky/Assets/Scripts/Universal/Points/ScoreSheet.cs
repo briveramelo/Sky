@@ -47,6 +47,10 @@ public enum ScoreType {
 
 public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IStreakable {
 
+	private void OnDestroy()
+	{
+		SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+	}
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
         if (scene.name == Scenes.Story || scene.name == Scenes.Endless) {
             ResetHitStreak();
@@ -140,13 +144,14 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
 	const bool decrease = false;
     float startTime;
 	void Awake(){
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
         Instance = this;
         scoreBoard = FindObjectOfType<ScoreBoard>();
 
-		Tallier = (ITallyable)this;
-		Resetter = (IResetable)this;
-		Reporter = (IReportable)this;
-		Streaker = (IStreakable)this;
+		Tallier = this;
+		Resetter = this;
+		Reporter = this;
+		Streaker = this;
 
         allCounters = new Dictionary<CounterType, Counter>();
 		for (int i=0; i<Enum.GetNames(typeof(CounterType)).Length; i++){
@@ -240,7 +245,7 @@ public class ScoreSheet : MonoBehaviour, ITallyable, IResetable, IReportable, IS
         float yClamp = Constants.WorldDimensions.y * .9f;
         Vector2 spawnPosition = new Vector2 (Mathf.Clamp(position.x, -xClamp, xClamp), Mathf.Clamp(position.y, -yClamp, yClamp));
 
-        (Instantiate(points, spawnPosition, Quaternion.identity) as GameObject).GetComponent<IDisplayable>().DisplayPoints(pointsToAdd);
+        (Instantiate(points, spawnPosition, Quaternion.identity)).GetComponent<IDisplayable>().DisplayPoints(pointsToAdd);
 		((IDisplayable)scoreBoard).DisplayPoints(((PointCounter)(allCounters[CounterType.Scored])).GetCount(BirdType.All, false));
     }
 

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Flail : Weapon {
 
@@ -9,7 +8,7 @@ public class Flail : Weapon {
 
     protected override void DeliverDamage(Collider2D col) {
         base.DeliverDamage(col);
-        //code here
+        //todo: add code here
 
     }
 

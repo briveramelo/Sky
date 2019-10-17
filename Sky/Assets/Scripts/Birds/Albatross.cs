@@ -32,7 +32,7 @@ public class Albatross : Bird {
             damageDealt = weaponStats.Damage;
         }
         birdStats.Health -= damageDealt;
-        (Instantiate(guts, transform.position, Quaternion.identity) as GameObject).GetComponent<IBleedable>().GenerateGuts(ref birdStats, weaponStats.Velocity);
+        Instantiate(guts, transform.position, Quaternion.identity).GetComponent<IBleedable>().GenerateGuts(ref birdStats, weaponStats.Velocity);
         Debug.Log(damageDealt);
         return damageDealt;
 	}

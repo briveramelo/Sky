@@ -15,7 +15,6 @@ public class BabyCrow : Bird {
 	private float dist2Target;
 
 	const float triggerShiftDistance = 0.3f;
-	const float minSpeed = 0.71f;
 	const float moveSpeed = 2f;
 
 	private int currentShift;

@@ -38,11 +38,11 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 
 	void Awake () {
 		Instance = this;
-		BalloonToBasket = (IBalloonToBasket)this;
-		TentacleToBasket = (ITentacleToBasket)this;
+		BalloonToBasket = this;
+		TentacleToBasket = this;
 		Constants.balloonCenter = balloonCenter;
 		Constants.basketTransform = basketCenter;
-		balloons = new List<IBasketToBalloon>((IBasketToBalloon[])balloonScripts);
+		balloons = new List<IBasketToBalloon>(balloonScripts);
 		relativeBalloonPositions = new Vector2[3];
         for (int i=0; i<balloons.Count; i++){
 			balloons[i].BalloonNumber = i;
@@ -103,7 +103,7 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 	}
 
 	void CollectNewBalloon(IBasketToBalloon newBalloon){
-        List<int> balloonNumbers = new List<int>(new int[] { 0, 1, 2 });
+        List<int> balloonNumbers = new List<int>(new[] { 0, 1, 2 });
         balloons.ForEach(balloon => balloonNumbers.Remove(balloon.BalloonNumber));
         int newBalloonNumber= balloonNumbers[0];
 
@@ -174,7 +174,7 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
         boundingColliders.ToList().ForEach(col => col.enabled = true);
         IBasketToBalloon newBalloon;
         for (int i=0; i<3; i++) {
-            newBalloon = (Instantiate(balloonReplacement, Vector3.zero, Quaternion.identity) as GameObject).GetComponent<IBasketToBalloon>();
+            newBalloon = Instantiate(balloonReplacement, Vector3.zero, Quaternion.identity).GetComponent<IBasketToBalloon>();
             CollectNewBalloon(newBalloon);
         }
         GrantBalloonInvincibility();

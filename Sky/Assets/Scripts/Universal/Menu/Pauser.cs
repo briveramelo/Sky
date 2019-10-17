@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
-using GenericFunctions;
 
 public class Pauser : MonoBehaviour, IBegin {
 
-	static bool paused = false; public static bool Paused { get { return paused; } }
-    static Vector2 pauseSpot;   public static Vector2 PauseSpot {get { return pauseSpot; } }
+    public static bool Paused => paused;
+    static bool paused;
+    public static Vector2 PauseSpot => pauseSpot;
+    static Vector2 pauseSpot;   
 	public static readonly float pauseRadius = 0.5f;
 
 	[SerializeField] AudioClip pause, unPause;

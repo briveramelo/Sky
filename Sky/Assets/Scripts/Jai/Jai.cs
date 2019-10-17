@@ -157,7 +157,7 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
 	}
 
     void GenerateNewWeapon(WeaponType weaponType) {
-        myWeapon = (Instantiate (weaponPrefabs[(int)weaponType], transform.position + spawnSpots[(int)weaponType], Quaternion.identity) as GameObject).GetComponent<Weapon>();
+        myWeapon = Instantiate (weaponPrefabs[(int)weaponType], transform.position + spawnSpots[(int)weaponType], Quaternion.identity).GetComponent<Weapon>();
         weaponTrigger = myWeapon;
     }
 }

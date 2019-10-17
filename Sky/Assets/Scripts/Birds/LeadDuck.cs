@@ -17,7 +17,7 @@ public class LeadDuck : Bird, IDuckToLeader {
 
 	protected override void Awake () {
 		base.Awake();
-		ducks = new List<ILeaderToDuck>((ILeaderToDuck[])duckScripts);
+		ducks = new List<ILeaderToDuck>(duckScripts);
 		bool goLeft = transform.position.x > 0;
 		transform.FaceForward(goLeft);
 		rigbod.velocity = new Vector2 (goLeft ? -1 : 1, 0) * 2.5f;

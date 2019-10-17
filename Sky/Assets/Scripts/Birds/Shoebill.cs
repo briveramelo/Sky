@@ -72,12 +72,12 @@ public class Shoebill : Bird {
 				GameCamera.Instance.ShakeTheCamera();
                 basket.Bump(1.5f * new Vector2 (rigbod.velocity.x,rigbod.velocity.y * 5f).normalized);
 				StartCoroutine (Bool.Toggle(boolState=>canHitBasket=boolState,4f));
-				StartCoroutine(Fall(col));
+				StartCoroutine(Fall());
 			}
 		}
 	}
 
-	IEnumerator Fall(Collider2D col){
+	IEnumerator Fall(){
 		StartCoroutine(Bool.Toggle(boolState=>flying=boolState,2f));
         rigbod.velocity = new Vector2 (-rigbod.velocity.x, -Mathf.Abs(rigbod.velocity.y)).normalized * 2.5f;
 		while (!flying){

@@ -17,7 +17,6 @@ public class Pelican : Bird {
         float yBelow = -2.2f;
         float resolution = 0.1f;
         int totalPoints = (int)((yAbove - yBelow) / resolution);
-        float startTime = Time.time;
         setPositions = new Vector3[totalPoints];
         for (int i = 0; i < totalPoints; i++) {
             float iFloat = i;

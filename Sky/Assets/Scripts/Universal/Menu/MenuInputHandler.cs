@@ -11,7 +11,7 @@ public class MenuInputHandler : MonoBehaviour, IFreezable {
 
     Vector2 correctionPixels;
     float correctionPixelFactor;
-    bool isFrozen = false;
+    bool isFrozen;
     bool IFreezable.IsFrozen {
         get {
             return isFrozen;

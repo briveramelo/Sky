@@ -3,7 +3,7 @@ using System.Collections;
 using PixelArtRotation;
 using GenericFunctions;
 
-public class Spear : Weapon, IUsable {
+public class Spear : Weapon {
 
     int spearNumber;
     protected override int weaponNumber {get {return spearNumber; } }
@@ -13,7 +13,7 @@ public class Spear : Weapon, IUsable {
 
 	[SerializeField] Transform spearTipParentTransform;
 
-	private Vector2[] throwAdjustmentVector = new Vector2[]{ 
+	private Vector2[] throwAdjustmentVector = { 
 		new Vector2 (0f, .085f*4f),
 		new Vector2 (0f, .085f*4f)
 	};

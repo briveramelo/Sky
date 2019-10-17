@@ -9,11 +9,16 @@ public class WaveManager : MonoBehaviour {
     [SerializeField] Wave endlessWave;      IWaveRunnable endlessWaveCall;
     static WaveName currentWave;            public static WaveName CurrentWave {get { return currentWave; } }
 
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
         ChooseMode(scene.name);
     }
 
 	void Awake(){
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
         storyWaveCalls = storyWaves;
         endlessWaveCall = endlessWave;
         myWaveUI = waveUI;

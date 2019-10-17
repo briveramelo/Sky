@@ -15,9 +15,9 @@ public delegate void SpawnDelegate();
 public abstract class Wave : MonoBehaviour, IWaveRunnable{
 
     [SerializeField] WaveName MyWaveName;
-    WaveName IWaveRunnable.MyWave {get { return MyWaveName; } }
-    
-	protected BirdWaiter allDead = new BirdWaiter(CounterType.Alive,false, 0, BirdType.All);
+    WaveName IWaveRunnable.MyWave => MyWaveName;
+
+    protected BirdWaiter allDead = new BirdWaiter(CounterType.Alive,false, 0, BirdType.All);
 	protected BirdWaiter allDeadExceptTentacles = new BirdWaiter(CounterType.Alive,true, 0, BirdType.Tentacles);
 
 	protected static int waveNumber;
@@ -27,7 +27,6 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 	protected static float[] heights;
 	protected Vector2[] duckSpawnPoints;
 
-    const float wavePauseTime = 10f;
 	protected const bool right = true;
 	protected const bool left = false;
 	#region SpawnDelegates
@@ -49,7 +48,10 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 
     protected Dictionary<BirdType, SpawnDelegate> BirdSpawnDelegates = new Dictionary<BirdType, SpawnDelegate>();
     #endregion
-
+    private void OnDestroy()
+    {
+	    SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
         if (scene.name == Scenes.Menu) {
             StopAllCoroutines();
@@ -57,7 +59,8 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
     }
     IWaveUI waveUI;
     void Awake(){
-		heights = new float[]{lowHeight, medHeight, highHeight};
+	    SceneManager.sceneLoaded += OnLevelFinishedLoading;
+		heights = new []{lowHeight, medHeight, highHeight};
 		duckSpawnPoints = new Vector2[6];
 		for (int i=0; i<6; i++){
 			duckSpawnPoints[i] = SpawnPoint(i%2==0,heights[Mathf.FloorToInt(i/2)]);
@@ -97,7 +100,7 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 			spawnPoint= new Vector2(-Constants.WorldDimensions.x *5f,0f);
 		}
 
-		Bird bird = (Instantiate (Incubator.Instance.Birds[(int)birdType], spawnPoint, Quaternion.identity) as GameObject).GetComponent<Bird>();
+		Bird bird = Instantiate (Incubator.Instance.Birds[(int)birdType], spawnPoint, Quaternion.identity).GetComponent<Bird>();
 
 		if (birdType == BirdType.Pigeon || birdType == BirdType.BirdOfParadise){
 			LinearBird linearBirdScript = (LinearBird)bird;
@@ -147,12 +150,10 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable{
 			return spawnPoint.x>0 ? (goUp ? DuckDirection.UpLeft : DuckDirection.DownLeft) :
 				(goUp ? DuckDirection.UpRight : DuckDirection.DownRight);
 		}
-		else if (spawnPoint.y>0){
+		if (spawnPoint.y>0){
 			return spawnPoint.x>0 ? DuckDirection.DownLeft : DuckDirection.DownRight;
 		}
-		else{
-			return spawnPoint.x>0 ? DuckDirection.UpLeft : DuckDirection.UpRight;
-		}
+		return spawnPoint.x>0 ? DuckDirection.UpLeft : DuckDirection.UpRight;
 	}
 
 	protected IEnumerator FlyPigeonsAsDuckLeader(){

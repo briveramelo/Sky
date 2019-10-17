@@ -8,12 +8,15 @@ public interface IJaiDetected{
 }
 public class TentaclesSensor : MonoBehaviour, IToggleable, IJaiDetected {
 
-	[SerializeField] Tentacles tentaclesScript; ISensorToTentacle tentacle;
+	[SerializeField] Tentacles tentaclesScript; 
 	[SerializeField] Collider2D sensor;
-	private bool jaiInRange; bool IJaiDetected.JaiInRange{get{return jaiInRange;}}
+	ISensorToTentacle tentacle;
+	
+	private bool jaiInRange; 
+	bool IJaiDetected.JaiInRange => jaiInRange;
 
 	void Awake () {
-		tentacle = (ISensorToTentacle)tentaclesScript;
+		tentacle = tentaclesScript;
 	}
 		
 	void OnTriggerEnter2D(){

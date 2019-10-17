@@ -17,7 +17,7 @@ public class ReplaceGameObjects : ScriptableWizard {
 
 	void OnWizardCreate(){
 		foreach (Transform t in Selection.transforms){
-			GameObject newObject = PrefabUtility.InstantiatePrefab(useGameObject) as GameObject;
+			GameObject newObject = (GameObject) PrefabUtility.InstantiatePrefab(useGameObject);
 			Undo.RegisterCreatedObjectUndo(newObject, "created prefab");
 			Transform newT = newObject.transform;
 

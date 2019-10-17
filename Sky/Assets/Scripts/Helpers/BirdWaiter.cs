@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using System;
@@ -31,10 +30,10 @@ public class BirdWaiter{
 		this.counterType = counterType;
 		this.birdTypes = invertBirdTypes ? InvertBirdTypes(birdTypes) : birdTypes;
 		this.numberToWaitFor = numberToWaitFor;
-		Wait = (int mover)=> mover>this.numberToWaitFor;
+		Wait = mover => mover>this.numberToWaitFor;
 		if (counterType == CounterType.Spawned || counterType == CounterType.Killed){
 			this.numberToWaitFor +=ScoreSheet.Reporter.GetCounts(counterType,true, birdTypes);
-			Wait = (int mover)=> mover<this.numberToWaitFor;
+			Wait = mover => mover < this.numberToWaitFor;
 		} 
 	}
 	static BirdType[] InvertBirdTypes(params BirdType[] birdTypes){

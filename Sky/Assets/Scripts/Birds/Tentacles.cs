@@ -47,11 +47,11 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 		base.Awake();
 
         Instance = this;
-        StabbableTentacle = (IStabbable)this;
-        Releaser = (IReleasable)this;
-		me = (ISensorToTentacle)this;
-		sensor = (IToggleable)ts;
-		sensorOnJai = (IJaiDetected)ts;
+        StabbableTentacle = this;
+        Releaser = this;
+		me = this;
+		sensor = ts;
+		sensorOnJai = ts;
 		inputManager = FindObjectOfType<InputManager>().GetComponent<IFreezable>();
 		jai = FindObjectOfType<Jai>().GetComponent<IFreezable>();
 
@@ -162,7 +162,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 		}
 
         birdStats.Health -= damageDealt;
-		(Instantiate (guts, spawnSpot, Quaternion.identity) as GameObject).GetComponent<IBleedable>().GenerateGuts(ref birdStats, gutVel);
+		(Instantiate (guts, spawnSpot, Quaternion.identity)).GetComponent<IBleedable>().GenerateGuts(ref birdStats, gutVel);
         return damageDealt;
 	}
 	#endregion

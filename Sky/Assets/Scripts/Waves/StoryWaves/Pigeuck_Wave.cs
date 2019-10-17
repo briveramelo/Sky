@@ -10,9 +10,9 @@ public class Pigeuck_Wave : Wave {
 		yield return StartCoroutine (WaitFor (allDead, true));
 		
 		//PIGEONS + DUCKS SWEEP TOGETHER 2x1, + 2x3
-		float[] pigeonHeights = new float[]{lowHeight,highHeight};
-		float[] duckHeights = new float[]{-1,1};
-		DuckDirection[] duckDirections = new DuckDirection[]{DuckDirection.UpLeft, DuckDirection.DownLeft};
+		float[] pigeonHeights = {lowHeight,highHeight};
+		float[] duckHeights = {-1,1};
+		DuckDirection[] duckDirections = {DuckDirection.UpLeft, DuckDirection.DownLeft};
 		PigeuckDelegate SpawnPigeucks = AtHeight(pigeonHeights,duckHeights, duckDirections);
 		for (int i=0; i<pigeonHeights.Length; i++){
 			yield return StartCoroutine(Produce1Wait3(()=>SpawnPigeucks(i)));
@@ -34,7 +34,7 @@ public class Pigeuck_Wave : Wave {
 
 	delegate void PigeuckDelegate(int i);
 	PigeuckDelegate AtHeight(float[] pigeonHeights, float[] duckHeights, DuckDirection[] directions){
-		return (int i)=>{
+		return i =>{
 			SpawnBirds(BirdType.Pigeon,SpawnPoint(right,pigeonHeights[i]));
 			SpawnBirds (BirdType.Duck, SpawnPoint(right,duckHeights[i]), directions[i]);
 		};
