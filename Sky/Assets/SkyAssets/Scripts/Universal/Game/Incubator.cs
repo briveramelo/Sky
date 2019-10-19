@@ -1,74 +1,20 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using GenericFunctions;
 
 public class Incubator : Singleton<Incubator>
 {
     [SerializeField] private GameObject[] _birds;
-    public GameObject[] Birds => _birds;
+    public Dictionary<BirdType, GameObject> BirdPrefabs { get; private set; }
 
-    private void Pigeon()
+    protected override void Awake()
     {
-        SpawnNextBird(BirdType.Pigeon);
-    }
-
-    private void Duck()
-    {
-        SpawnNextBird(BirdType.Duck);
-    }
-
-    private void DuckLeader()
-    {
-        SpawnNextBird(BirdType.DuckLeader);
-    }
-
-    private void Albatross()
-    {
-        SpawnNextBird(BirdType.Albatross);
-    }
-
-    private void BabyCrow()
-    {
-        SpawnNextBird(BirdType.BabyCrow);
-    }
-
-    private void Crow()
-    {
-        SpawnNextBird(BirdType.Crow);
-    }
-
-    private void Tentacles()
-    {
-        SpawnNextBird(BirdType.Tentacles);
-    }
-
-    private void Seagull()
-    {
-        SpawnNextBird(BirdType.Seagull);
-    }
-
-    private void Pelican()
-    {
-        SpawnNextBird(BirdType.Pelican);
-    }
-
-    private void Shoebill()
-    {
-        SpawnNextBird(BirdType.Shoebill);
-    }
-
-    private void Bat()
-    {
-        SpawnNextBird(BirdType.Bat);
-    }
-
-    private void Eagle()
-    {
-        SpawnNextBird(BirdType.Eagle);
-    }
-
-    private void BirdOfParadise()
-    {
-        SpawnNextBird(BirdType.BirdOfParadise);
+        base.Awake();
+        BirdPrefabs = new Dictionary<BirdType, GameObject>();
+        foreach (var prefab in _birds)
+        {
+            BirdPrefabs.Add(prefab.GetComponent<Bird>().MyBirdStats.MyBirdType, prefab);
+        }
     }
 
     public void SpawnNextBird(BirdType birdType)
@@ -89,6 +35,6 @@ public class Incubator : Singleton<Incubator>
             xSpot = Constants.WorldDimensions.x * (Bool.TossCoin() ? 1 : -1);
         }
 
-        Instantiate(_birds[(int) birdType], new Vector3(xSpot, ySpot, 0f), Quaternion.identity);
+        Instantiate(BirdPrefabs[birdType], new Vector3(xSpot, ySpot, 0f), Quaternion.identity);
     }
 }

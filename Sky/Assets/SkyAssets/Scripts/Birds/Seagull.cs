@@ -6,6 +6,7 @@ public class Seagull : Bird
 {
     [SerializeField] private GameObject _pooNugget;
 
+    protected override BirdType _myBirdType => BirdType.Seagull;
     private bool _movingRight;
 
     private const float _moveSpeed = 3f;

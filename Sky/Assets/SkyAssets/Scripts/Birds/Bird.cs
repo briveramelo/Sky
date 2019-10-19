@@ -10,7 +10,7 @@ public abstract class Bird : MonoBehaviour, IHurtable
     protected BirdStats BirdStats;
     public BirdStats MyBirdStats => BirdStats;
 
-    [SerializeField] private BirdType _myBirdType;
+    protected abstract BirdType _myBirdType { get; }
     [SerializeField] protected Rigidbody2D _rigbod;
     [SerializeField] protected Collider2D _birdCollider;
     [SerializeField] protected GameObject _guts;

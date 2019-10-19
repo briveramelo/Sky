@@ -3,6 +3,7 @@ using GenericFunctions;
 
 public class Albatross : Bird
 {
+    protected override BirdType _myBirdType => BirdType.Albatross;
     private bool _shouldWaitToTurn;
     private const float _moveSpeed = 1.065f;
 

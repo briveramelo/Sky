@@ -15,8 +15,9 @@ public class LeadDuck : Bird, IDuckToLeader
     // The DuckLeader will fly linearly across the screen
 
     [SerializeField] private Duck[] _duckScripts;
-    private List<ILeaderToDuck> ducks;
     [SerializeField] private Transform[] _formationTransforms;
+    protected override BirdType _myBirdType => BirdType.DuckLeader;
+    private List<ILeaderToDuck> ducks;
 
     protected override void Awake()
     {

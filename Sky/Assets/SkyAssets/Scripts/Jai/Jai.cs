@@ -155,11 +155,11 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable
         _attacking = false;
     }
 
-    private enum Throw
+    private static class Throw
     {
-        Idle = 0,
-        Down = 1,
-        Up = 2,
+        public const int Idle = 0;
+        public const int Down = 1;
+        public const int Up = 2;
     }
 
     private IEnumerator AnimateThrowSpear(Vector2 throwDir)
@@ -167,9 +167,9 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable
         var throwState = throwDir.y <= .2f ? Throw.Down : Throw.Up;
         transform.FaceForward(throwDir.x > 0);
 
-        _jaiAnimator.SetInteger(0, (int) throwState);
+        _jaiAnimator.SetInteger(0, throwState);
         yield return new WaitForSeconds(Constants.Time2ThrowSpear);
-        _jaiAnimator.SetInteger(0, (int) Throw.Idle);
+        _jaiAnimator.SetInteger(0, Throw.Idle);
     }
 
     private IEnumerator AnimateCastLightning(Vector2 swipeDir)

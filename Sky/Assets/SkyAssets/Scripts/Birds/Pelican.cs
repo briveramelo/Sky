@@ -6,6 +6,7 @@ public class Pelican : Bird
 {
     [SerializeField] private Animator _pelicanAnimator;
 
+    protected override BirdType _myBirdType => BirdType.Pelican;
     private int _currentTarIn;
     private Vector3[] _setPositions;
 
@@ -39,7 +40,7 @@ public class Pelican : Bird
     //Move from one checkpoint to another
     private IEnumerator SwoopAround()
     {
-        _pelicanAnimator.SetInteger(0, (int) PelAnimState.Flapping);
+        _pelicanAnimator.SetInteger(0, PelAnimState.Flapping);
         _currentTarIn = 0;
         _sideMultiplier = transform.position.x < 0 ? 1 : -1;
 
@@ -52,7 +53,7 @@ public class Pelican : Bird
             if (Vector3.Distance(transform.position, TargetPosition) < 0.2f)
             {
                 _currentTarIn++;
-                if (_pelicanAnimator.GetInteger(0) == (int) PelAnimState.Flapping && _setPositions[_currentTarIn].y > 1.2f)
+                if (_pelicanAnimator.GetInteger(0) == PelAnimState.Flapping && _setPositions[_currentTarIn].y > 1.2f)
                 {
                     StartCoroutine(TriggerDiveAnimation());
                 }
@@ -72,7 +73,7 @@ public class Pelican : Bird
     private IEnumerator TriggerDiveAnimation()
     {
         float timeSinceStartedDiving = 0;
-        _pelicanAnimator.SetInteger(0, (int) PelAnimState.Diving);
+        _pelicanAnimator.SetInteger(0, PelAnimState.Diving);
         timeSinceStartedDiving = Time.time;
         while (true)
         {
@@ -94,7 +95,7 @@ public class Pelican : Bird
     //plunge to (un)certain balloon-popping glory
     private IEnumerator DiveBomb(bool goingRight)
     {
-        _pelicanAnimator.SetInteger(0, (int) PelAnimState.Down);
+        _pelicanAnimator.SetInteger(0, PelAnimState.Down);
         var diveAngle = goingRight ? -80f : 260f;
         _rigbod.velocity = ConvertAnglesAndVectors.ConvertAngleToVector2(diveAngle) * 6f;
         transform.FaceForward(_rigbod.velocity.x > 0);
@@ -115,10 +116,10 @@ public class Pelican : Bird
         _birdCollider.enabled = true;
     }
 
-    private enum PelAnimState
+    private static class PelAnimState
     {
-        Flapping = 0,
-        Diving = 1,
-        Down = 2
+        public const int Flapping = 0;
+        public const int Diving = 1;
+        public const int Down = 2;
     }
 }

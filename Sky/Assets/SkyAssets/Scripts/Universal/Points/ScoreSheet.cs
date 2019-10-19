@@ -14,7 +14,7 @@ public interface ITallyable
     void TallyDeath(ref BirdStats birdStats);
     void TallyKill(ref BirdStats birdStats);
     void TallyPoints(ref BirdStats birdStats);
-    void TallyThreat(Threat myThreat);
+    void TallyThreat(int threatLevel);
     void TallyBirdThreat(ref BirdStats birdStats, BirdThreat myThreat);
     void TallyBalloonPoints(Vector2 balloonPosition);
 }
@@ -141,30 +141,53 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
     private class Counter
     {
         protected CounterType CounterType;
-        protected int[] CurrentCount = new int[Enum.GetNames(typeof(BirdType)).Length];
-        protected int[] CummulativeCount = new int[Enum.GetNames(typeof(BirdType)).Length];
+        protected Dictionary<BirdType, int> CurrentCount;
+        protected Dictionary<BirdType, int> CummulativeCount;
 
         public Counter(CounterType counterType)
         {
             CounterType = counterType;
+            CurrentCount = GetEmptyDictionary();
+            CummulativeCount = GetEmptyDictionary();
+        }
+
+        private Dictionary<BirdType, int> GetEmptyDictionary()
+        {
+            return new Dictionary<BirdType, int>
+            {
+                {BirdType.Albatross, 0},
+                {BirdType.Bat, 0},
+                {BirdType.Crow, 0},
+                {BirdType.Duck, 0},
+                {BirdType.Eagle, 0},
+                {BirdType.Pelican, 0},
+                {BirdType.Pigeon, 0},
+                {BirdType.Seagull, 0},
+                {BirdType.Shoebill, 0},
+                {BirdType.Tentacles, 0},
+                {BirdType.BabyCrow, 0},
+                {BirdType.DuckLeader, 0},
+                {BirdType.BirdOfParadise, 0},
+                {BirdType.All, 0}
+            };
         }
 
         public void SetCount(BirdType birdType, int change)
         {
-            CurrentCount[(int) birdType] += change;
-            CurrentCount[(int) BirdType.All] += change;
-            CummulativeCount[(int) birdType] += change;
-            CummulativeCount[(int) BirdType.All] += change;
+            CurrentCount[birdType] += change;
+            CurrentCount[BirdType.All] += change;
+            CummulativeCount[birdType] += change;
+            CummulativeCount[BirdType.All] += change;
         }
 
         public int GetCount(BirdType birdType, bool currentWave)
         {
-            return currentWave ? CurrentCount[(int) birdType] : CummulativeCount[(int) birdType];
+            return currentWave ? CurrentCount[birdType] : CummulativeCount[birdType];
         }
 
         public void ResetCurrentCount()
         {
-            CurrentCount = new int[Enum.GetNames(typeof(BirdType)).Length];
+            CurrentCount = GetEmptyDictionary();
         }
     }
 
@@ -332,9 +355,9 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
         ((IDisplayable) _scoreBoard).DisplayPoints(((PointCounter) _allCounters[CounterType.Scored]).GetCount(BirdType.All, false));
     }
 
-    void ITallyable.TallyThreat(Threat myThreat)
+    void ITallyable.TallyThreat(int threatLevel)
     {
-        EmotionalIntensity.ThreatTracker.RaiseThreat(myThreat);
+        EmotionalIntensity.ThreatTracker.RaiseThreat(threatLevel);
     }
 
     void ITallyable.TallyBirdThreat(ref BirdStats birdStats, BirdThreat myThreat)

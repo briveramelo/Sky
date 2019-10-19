@@ -25,8 +25,9 @@ public class Duck : Bird, ILeaderToDuck, IDirectable
 {
     // The Duck will follow his/her DuckLeader, until the DuckLeader dies. 
     // Then, the Duck will aimlessly bounce around the screen until killed
-
     [SerializeField] private LeadDuck _leaderScript;
+
+    protected override BirdType _myBirdType => BirdType.Duck;
     private IDuckToLeader _leader;
     private Transform _myFormationTransform;
     private const float _moveSpeed = 2.5f;

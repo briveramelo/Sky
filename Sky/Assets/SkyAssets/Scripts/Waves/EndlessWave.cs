@@ -26,15 +26,15 @@ public struct Range
     }
 }
 
-public enum Difficulty
-{
-    Easy = 1,
-    Medium = 3,
-    Hard = 5
-}
 
 public class EndlessWave : Wave
 {
+    private enum Difficulty
+    {
+        Easy = 1,
+        Medium = 3,
+        Hard = 5
+    }
     [SerializeField] private Difficulty _toughness;
 
     private float _emotionalCap = 50f;
@@ -94,8 +94,9 @@ public class EndlessWave : Wave
     {
         if (_unlockedStandardBirds.Count > 0)
         {
-            var birdTypes = new BirdType[(int) _toughness];
-            for (var i = 0; i < (int) _toughness; i++)
+            var numBirds = (int) _toughness;
+            var birdTypes = new BirdType[numBirds];
+            for (var i = 0; i < numBirds; i++)
             {
                 birdTypes[i] = _unlockedStandardBirds[UnityEngine.Random.Range(0, _unlockedStandardBirds.Count)];
             }

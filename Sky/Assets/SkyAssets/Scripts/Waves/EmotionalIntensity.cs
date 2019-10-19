@@ -1,21 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum Threat
+public static class Threat
 {
-    BalloonPopped = 25,
-    BalloonGained = -25,
-    BatSurrounding = 2,
-    BatLeft = -2,
+    public const int BalloonPopped = 25;
+    public const int BalloonGained = -25;
+    public const int BatSurrounding = 2;
+    public const int BatLeft = -2;
 
-    BasketGrabbed = 15,
-    BasketReleased = -15,
-    BasketBumped = 5,
-    BasketStabilized = -5,
+    public const int BasketGrabbed = 15;
+    public const int BasketReleased = -15;
+    public const int BasketBumped = 5;
+    public const int BasketStabilized = -5;
 
-    Poop = 10,
-    PoopCleaned = -10,
-    FreeDuck = 2,
+    public const int Poop = 10;
+    public const int PoopCleaned = -10;
+    public const int FreeDuck = 2;
 }
 
 public enum BirdThreat
@@ -27,7 +27,7 @@ public enum BirdThreat
 
 public interface IThreat
 {
-    void RaiseThreat(Threat myThreat);
+    void RaiseThreat(int myThreat);
     void BirdThreat(ref BirdStats birdStats, BirdThreat myThreat);
 }
 
@@ -114,9 +114,9 @@ public class EmotionalIntensity : MonoBehaviour, IThreat
         Intensity += threat;
     }
 
-    void IThreat.RaiseThreat(Threat myThreat)
+    void IThreat.RaiseThreat(int threatLevel)
     {
-        Intensity += (int) myThreat;
+        Intensity += threatLevel;
     }
 
     private void Decay()

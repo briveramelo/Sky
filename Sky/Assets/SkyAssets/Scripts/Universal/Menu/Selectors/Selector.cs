@@ -14,10 +14,10 @@ public abstract class Selector : MonoBehaviour, IEnd
         Gizmos.DrawWireSphere(transform.position, _buttonRadius);
     }
 
-    protected enum ButtonState
+    protected static class ButtonState
     {
-        Up = 0,
-        Pressed = 1
+        public const int Up = 0;
+        public const int Pressed = 1;
     }
 
     void IEnd.OnTouchEnd()

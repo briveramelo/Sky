@@ -133,7 +133,6 @@
     <Compile Include="Assets\SkyAssets\Scripts\Universal\Points\ScoreSheet.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\Universal\UnityServices\AdDisplayer.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\Universal\UnityServices\ExampleAnalytics.cs" />
-    <Compile Include="Assets\SkyAssets\Scripts\VisualEffects\AnimationHelper.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\VisualEffects\Guts.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\VisualEffects\MaskCamera.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\VisualEffects\PooNugget.cs" />

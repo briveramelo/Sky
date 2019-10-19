@@ -132,7 +132,7 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable
             spawnPoint = new Vector2(-Constants.WorldDimensions.x * 5f, 0f);
         }
 
-        var bird = Instantiate(Incubator.Instance.Birds[(int) birdType], spawnPoint, Quaternion.identity).GetComponent<Bird>();
+        var bird = Instantiate(Incubator.Instance.BirdPrefabs[birdType], spawnPoint, Quaternion.identity).GetComponent<Bird>();
 
         if (birdType == BirdType.Pigeon || birdType == BirdType.BirdOfParadise)
         {
