@@ -2,12 +2,12 @@
 
 [Serializable]
 public class EndlessScore : IComparable<EndlessScore> {
-	private int score;          public int Score => score;
-	private float duration; public float Duration => duration;
+	public int Score;
+	public float Duration;
 
 	public EndlessScore (int score, float duration){
-		this.score = score;
-		this.duration = duration;
+		Score = score;
+		Duration = duration;
 	}
 
 	//for sorting in an organized/prioritized fashion (sort by score currently)
@@ -15,13 +15,13 @@ public class EndlessScore : IComparable<EndlessScore> {
 		if (other==null){
 			return 1;
 		}
-        int pointDif = other.Score - score;
+        int pointDif = other.Score - Score;
 
         if (pointDif!=0) {
             return pointDif;
         }
         else {
-            return (int)(other.Duration - duration);
+            return (int)(other.Duration - Duration);
         }
 	}
 }

@@ -2,51 +2,51 @@
 
 public class Pauser : MonoBehaviour, IBegin {
 
-    public static bool Paused => paused;
-    private static bool paused;
-    public static Vector2 PauseSpot => pauseSpot;
-    private static Vector2 pauseSpot;   
-	public static readonly float pauseRadius = 0.5f;
+    public static bool Paused => _paused;
+    private static bool _paused;
+    public static Vector2 PauseSpot => _pauseSpot;
+    private static Vector2 _pauseSpot;   
+	public static readonly float PauseRadius = 0.5f;
 
-	[SerializeField] private AudioClip pause, unPause;
-    [SerializeField] private GameObject joystick, pauseMenu, pauseButtonCanvas;
+	[SerializeField] private AudioClip _pause, _unPause;
+    [SerializeField] private GameObject _joystick, _pauseMenu, _pauseButtonCanvas;
 
     private void Awake(){
-        pauseSpot = transform.position;
+        _pauseSpot = transform.position;
 	}
 
-	void IBegin.OnTouchBegin(int fingerID){
-        if (!paused) {
-            float distFromStick = Vector2.Distance(InputManager.touchSpot,pauseSpot);
-		    if (distFromStick < pauseRadius) {
+	void IBegin.OnTouchBegin(int fingerId){
+        if (!_paused) {
+            float distFromStick = Vector2.Distance(InputManager.TouchSpot,_pauseSpot);
+		    if (distFromStick < PauseRadius) {
                 Pause();
             }
         }
     }
 
     private void Pause() {
-        paused = true;
-        AudioManager.PlayAudio(pause);
+        _paused = true;
+        AudioManager.PlayAudio(_pause);
         Time.timeScale = 0f;
         ShowPauseMenu(true);
     }
 
     public void UnPause() {
-        paused = false;
-        AudioManager.PlayAudio(unPause);
+        _paused = false;
+        AudioManager.PlayAudio(_unPause);
         Time.timeScale = 1f;
         ShowPauseMenu(false);
     }
 
     public void ResetPause() {
-        paused = false;
+        _paused = false;
         Time.timeScale = 1f;
     }
 
     private void ShowPauseMenu(bool setActive) {
-        pauseMenu.SetActive(setActive);
-        joystick.SetActive(!setActive);
-        pauseButtonCanvas.SetActive(!setActive);
+        _pauseMenu.SetActive(setActive);
+        _joystick.SetActive(!setActive);
+        _pauseButtonCanvas.SetActive(!setActive);
         gameObject.SetActive(!setActive);
     }
 }

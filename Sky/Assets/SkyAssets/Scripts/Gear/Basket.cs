@@ -14,65 +14,63 @@ public interface ITentacleToBasket {
 public interface IBalloonToBasket {
 	void ReportPoppedBalloon(IBasketToBalloon poppedBalloon);
 }
-public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
+public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket {
 
-	public static Basket Instance;
-	public static IBalloonToBasket BalloonToBasket;
 	public static ITentacleToBasket TentacleToBasket;
 
-	[SerializeField] private Rigidbody2D rigbod;
-	[SerializeField] private Transform balloonCenter;
-	[SerializeField] private Transform basketCenter;
-	[SerializeField] private Balloon[] balloonScripts; private List<IBasketToBalloon> balloons;
-	[SerializeField] private BoxCollider2D basketCollider;
-    [SerializeField] private Collider2D[] boundingColliders;
-    [SerializeField] private GameObject balloonReplacement;
-    [SerializeField] private List<SpriteRenderer> mySprites;
-    [SerializeField] private AudioClip invincible, ready, rebirth;
+	[SerializeField] private Rigidbody2D _rigbod;
+	[SerializeField] private Transform _balloonCenter;
+	[SerializeField] private Transform _basketCenter;
+	[SerializeField] private Balloon[] _balloonScripts; 
+	[SerializeField] private BoxCollider2D _basketCollider;
+    [SerializeField] private Collider2D[] _boundingColliders;
+    [SerializeField] private GameObject _balloonReplacement;
+    [SerializeField] private List<SpriteRenderer> _mySprites;
+    [SerializeField] private AudioClip _invincible, _ready, _rebirth;
+    [SerializeField] private BasketEngine _basketEngine;
 
-    [SerializeField] private BasketEngine basketEngine;
+    private List<IBasketToBalloon> _balloons;
+    private Vector2[] _relativeBalloonPositions;
+    private int _continuesRemaining =1;
+    private const float _invincibleTime = 1.5f;
+    protected override bool _destroyOnLoad => true;
 
-    private Vector2[] relativeBalloonPositions;
-    private int continuesRemaining =1;
-    private const float invincibleTime = 1.5f;
-
-    private void Awake () {
-		Instance = this;
-		BalloonToBasket = this;
-		TentacleToBasket = this;
-		Constants.balloonCenter = balloonCenter;
-		Constants.basketTransform = basketCenter;
-		balloons = new List<IBasketToBalloon>(balloonScripts);
-		relativeBalloonPositions = new Vector2[3];
-        for (int i=0; i<balloons.Count; i++){
-			balloons[i].BalloonNumber = i;
-			relativeBalloonPositions[i] = balloonScripts[i].transform.position - Constants.jaiTransform.position;
+    protected override void Awake () {
+		base.Awake();
+	    TentacleToBasket = this;
+		Constants.BalloonCenter = _balloonCenter;
+		Constants.BasketTransform = _basketCenter;
+		_balloons = new List<IBasketToBalloon>(_balloonScripts);
+		_relativeBalloonPositions = new Vector2[3];
+        for (int i=0; i<_balloons.Count; i++){
+			_balloons[i].BalloonNumber = i;
+			_relativeBalloonPositions[i] = _balloonScripts[i].transform.position - Constants.JaiTransform.position;
 		}
 	}
 
 	#region IBalloonToBasket
 	void IBalloonToBasket.ReportPoppedBalloon(IBasketToBalloon poppedBalloon){
-		balloons.Remove(poppedBalloon);
+		_balloons.Remove(poppedBalloon);
         ScoreSheet.Tallier.TallyThreat(Threat.BalloonPopped);
 		GrantBalloonInvincibility();
         PlayRecoverySounds();
-		if (balloons.Count<1){
+		if (_balloons.Count<1){
 			StartCoroutine (FallToDeath());
 		}
 	}
 	#endregion
 
 	private void GrantBalloonInvincibility(){
-		for (int i=0; i<balloons.Count; i++){
-			StartCoroutine (balloons[i].BecomeInvincible());
+		for (int i=0; i<_balloons.Count; i++){
+			StartCoroutine (_balloons[i].BecomeInvincible());
 		}
-        StartCoroutine(FlashColor(invincibleTime));
+        StartCoroutine(FlashColor(_invincibleTime));
 	}
 
 	private void PlayRecoverySounds() {
-        AudioManager.PlayAudio(invincible);
-        if (balloons.Count>=1) {
-            AudioManager.PlayReadyDelayed(invincible.length);
+        AudioManager.PlayAudio(_invincible);
+        if (_balloons.Count>=1) {
+            AudioManager.PlayReadyDelayed(_invincible.length);
         }
     }
 
@@ -84,19 +82,19 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
         float invisibleTime = 0.1f;
         float visibleTime = 0.2f;
         while (timePassed<invincibleTime) {
-            mySprites.ForEach(sprite => sprite.color = isVisible ? visible : invisible);
+            _mySprites.ForEach(sprite => sprite.color = isVisible ? visible : invisible);
             float timeToWait = isVisible ? visibleTime : invisibleTime;
             yield return new WaitForSeconds(timeToWait);
             timePassed += timeToWait;
             isVisible = !isVisible;
         }
-        mySprites.ForEach(sprite => sprite.color = visible);
+        _mySprites.ForEach(sprite => sprite.color = visible);
         
     }
 
 	private void OnTriggerEnter2D(Collider2D col){
-		if (col.gameObject.layer == Constants.balloonFloatingLayer){
-			if (balloons.Count<3){
+		if (col.gameObject.layer == Constants.BalloonFloatingLayer){
+			if (_balloons.Count<3){
 				CollectNewBalloon(col.gameObject.GetComponent<IBasketToBalloon>());
 			}
 		}
@@ -104,33 +102,33 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 
 	private void CollectNewBalloon(IBasketToBalloon newBalloon){
         List<int> balloonNumbers = new List<int>(new[] { 0, 1, 2 });
-        balloons.ForEach(balloon => balloonNumbers.Remove(balloon.BalloonNumber));
+        _balloons.ForEach(balloon => balloonNumbers.Remove(balloon.BalloonNumber));
         int newBalloonNumber= balloonNumbers[0];
 
-		newBalloon.AttachToBasket(relativeBalloonPositions[newBalloonNumber]);
+		newBalloon.AttachToBasket(_relativeBalloonPositions[newBalloonNumber]);
 		newBalloon.BalloonNumber = newBalloonNumber;
-		balloons.Add(newBalloon);
+		_balloons.Add(newBalloon);
         ScoreSheet.Tallier.TallyThreat(Threat.BalloonGained);
     }
 
 	#region ITentacleToBasket
 	void ITentacleToBasket.KnockDown(float downForce){
-		rigbod.AddForce(Vector2.down * downForce);
+		_rigbod.AddForce(Vector2.down * downForce);
 	}
 
 	void ITentacleToBasket.LoseAllBalloons(){
-		rigbod.velocity = Vector2.zero;
-		for (int i=0; i<balloons.Count; i++){
-			balloons[i].DetachFromBasket();
+		_rigbod.velocity = Vector2.zero;
+		for (int i=0; i<_balloons.Count; i++){
+			_balloons[i].DetachFromBasket();
 		}
-		balloons.Clear();
+		_balloons.Clear();
 		StartCoroutine(FallToDeath());
 	}
 
 	void ITentacleToBasket.AttachToTentacles(Transform tentaclesTransform){
-		rigbod.velocity = Vector2.zero;
-		rigbod.isKinematic = true;
-		basketCollider.enabled = false;
+		_rigbod.velocity = Vector2.zero;
+		_rigbod.isKinematic = true;
+		_basketCollider.enabled = false;
         ScoreSheet.Tallier.TallyThreat(Threat.BasketGrabbed);
         transform.parent = tentaclesTransform;
 	}
@@ -138,8 +136,8 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 	void ITentacleToBasket.DetachFromTentacles(){
         transform.parent = null;
 		transform.localScale = Vector3.one;
-		basketCollider.enabled = true;
-		rigbod.isKinematic = false;
+		_basketCollider.enabled = true;
+		_rigbod.isKinematic = false;
         ScoreSheet.Tallier.TallyThreat(Threat.BasketReleased);
     }
 	#endregion
@@ -151,12 +149,12 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
     }
 
 	private IEnumerator FallToDeath(){
-        rigbod.gravityScale = 1;
-        ((IDie)basketEngine).Die();
-        boundingColliders.ToList().ForEach(col => col.enabled = false);
-        yield return new WaitForSeconds (invincibleTime);
-        if (continuesRemaining>0) {
-            continuesRemaining--;
+        _rigbod.gravityScale = 1;
+        ((IDie)_basketEngine).Die();
+        _boundingColliders.ToList().ForEach(col => col.enabled = false);
+        yield return new WaitForSeconds (_invincibleTime);
+        if (_continuesRemaining>0) {
+            _continuesRemaining--;
             FindObjectOfType<Continuer>().DisplayContinueMenu(true);
         }
         else {
@@ -166,21 +164,21 @@ public class Basket : MonoBehaviour, IBalloonToBasket, ITentacleToBasket {
 	}
 
     public void ComeBackToLife() {
-        rigbod.gravityScale = 0;
-        ((IDie)basketEngine).Rebirth();
+        _rigbod.gravityScale = 0;
+        ((IDie)_basketEngine).Rebirth();
         PlayRebirthSounds();
         transform.position = Vector3.zero;
-        rigbod.velocity = Vector2.zero;
-        boundingColliders.ToList().ForEach(col => col.enabled = true);
+        _rigbod.velocity = Vector2.zero;
+        _boundingColliders.ToList().ForEach(col => col.enabled = true);
         IBasketToBalloon newBalloon;
         for (int i=0; i<3; i++) {
-            newBalloon = Instantiate(balloonReplacement, Vector3.zero, Quaternion.identity).GetComponent<IBasketToBalloon>();
+            newBalloon = Instantiate(_balloonReplacement, Vector3.zero, Quaternion.identity).GetComponent<IBasketToBalloon>();
             CollectNewBalloon(newBalloon);
         }
         GrantBalloonInvincibility();
     }
 
     private void PlayRebirthSounds() {
-        AudioManager.PlayAudio(rebirth);
+        AudioManager.PlayAudio(_rebirth);
     }
 }

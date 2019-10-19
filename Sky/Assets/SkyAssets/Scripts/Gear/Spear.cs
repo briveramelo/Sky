@@ -4,41 +4,41 @@ using PixelArtRotation;
 using GenericFunctions;
 
 public class Spear : Weapon {
-	private int spearNumber;
-    protected override int weaponNumber => spearNumber;
-    private Rigidbody2D rigbod; //the spear's rigidbody, created only upon throwing
-	[SerializeField] private PixelRotation pixelRotationScript; //allows for pixel perfect sprite rotations
-	[SerializeField] private PixelPerfectSprite pixelPerfectSpriteScript;
+	
+	[SerializeField] private PixelRotation _pixelRotationScript; //allows for pixel perfect sprite rotations
+	[SerializeField] private PixelPerfectSprite _pixelPerfectSpriteScript;
+	[SerializeField] private Transform _spearTipParentTransform;
 
-	[SerializeField] private Transform spearTipParentTransform;
-
+	private int _spearNumber;
+    protected override int WeaponNumber => _spearNumber;
+    private Rigidbody2D _rigbod; //the spear's rigidbody, created only upon throwing
 	private Vector2[] throwAdjustmentVector = { 
 		new Vector2 (0f, .085f*4f),
 		new Vector2 (0f, .085f*4f)
 	};
 
-	private const float bounceForce = 5f; //force at which the spear bounces back from the bird
-	private const float throwForce = 1400f; //Force with which Jai throws the spear
+	private const float _bounceForce = 5f; //force at which the spear bounces back from the bird
+	private const float _throwForce = 1400f; //Force with which Jai throws the spear
 
-    protected override Vector2 MyVelocity => rigbod.velocity;
+    protected override Vector2 MyVelocity => _rigbod.velocity;
 
     private void Start () {
-        spearNumber = timesUsed;
+        _spearNumber = TimesUsed;
         SetSpearAngle(Vector2.up);
-		transform.parent = Constants.jaiTransform.parent;
+		transform.parent = Constants.JaiTransform.parent;
 	}
 
     private void SetSpearAngle(Vector2 direction){
 		int theSetAngle = ConvertAnglesAndVectors.ConvertVector2SpearAngle(direction);
-		pixelRotationScript.Angle = theSetAngle;
-		spearTipParentTransform.rotation = Quaternion.Euler(0f,0f,theSetAngle);
+		_pixelRotationScript.Angle = theSetAngle;
+		_spearTipParentTransform.rotation = Quaternion.Euler(0f,0f,theSetAngle);
 	}
 
     private IEnumerator TiltAround (){
-		pixelPerfectSpriteScript.enabled = true;
+		_pixelPerfectSpriteScript.enabled = true;
 		yield return null;
 		while (true){
-			SetSpearAngle(rigbod.velocity);
+			SetSpearAngle(_rigbod.velocity);
 			yield return null;
 		}
 	}
@@ -47,11 +47,11 @@ public class Spear : Weapon {
         base.UseMe(swipeDir);
         swipeDir = swipeDir.normalized;
         transform.parent = null;
-		transform.position = (Vector2)Constants.jaiTransform.position + throwAdjustmentVector[0];
+		transform.position = (Vector2)Constants.JaiTransform.position + throwAdjustmentVector[0];
 		SetSpearAngle(swipeDir);
-		attackCollider.enabled = true;
-		rigbod = gameObject.AddComponent<Rigidbody2D> ();
-		rigbod.AddForce (swipeDir * throwForce);
+		_attackCollider.enabled = true;
+		_rigbod = gameObject.AddComponent<Rigidbody2D> ();
+		_rigbod.AddForce (swipeDir * _throwForce);
 		StartCoroutine (TiltAround());
 		Destroy (gameObject, 3f);
 	}
@@ -61,11 +61,11 @@ public class Spear : Weapon {
 
         Bird bird = col.GetComponent<Bird>();
 		//Deliver damage and redirect the spear as a bounce
-		//rigbod.velocity = bird.MyBirdStats.Health>0 ? 
+		//_rigbod.velocity = bird.MyBirdStats.Health>0 ? 
 		//	Vector2.Reflect(MyWeaponStats.Velocity,(transform.position-col.bounds.ClosestPoint (transform.position))) * 0.2f :
 		//	MyWeaponStats.Velocity * .8f;
 
-		Physics2D.IgnoreCollision(attackCollider, col);
+		Physics2D.IgnoreCollision(_attackCollider, col);
 	}
 
 	private void OnDestroy (){

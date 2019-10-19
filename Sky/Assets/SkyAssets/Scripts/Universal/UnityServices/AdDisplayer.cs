@@ -4,8 +4,9 @@ using UnityEngine.Advertisements;
 
 public class AdDisplayer : MonoBehaviour {
 
-    [SerializeField] private string iOS_GameID, android_GameID;
-    private static string gameID;
+    [SerializeField] private string _iOsGameId;
+    [SerializeField] private string _androidGameId;
+    private static string _gameId;
 
     private void Awake() {
         #if UNITY_IOS // If build platform is set to iOS...
@@ -16,13 +17,13 @@ public class AdDisplayer : MonoBehaviour {
     }
 
     public static IEnumerator DisplayAd() {
-        if (string.IsNullOrEmpty (gameID)) {
-            gameID = null;
+        if (string.IsNullOrEmpty (_gameId)) {
+            _gameId = null;
         }
 
         ShowOptions options = new ShowOptions();
         options.resultCallback = HandleShowResult;
-        Advertisement.Show (gameID, options);
+        Advertisement.Show (_gameId, options);
         while (Advertisement.isShowing) {
             yield return new WaitForSeconds(0.25f);
         }

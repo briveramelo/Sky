@@ -17,19 +17,14 @@ public enum WaveType {
 
 public class WaveSelector : Selector {
 
-    [SerializeField] private WaveType MyWaveType;
-    private IFreezable inputManager;
+    [SerializeField] private WaveType _myWaveType;
 
-    protected override Vector2 TouchSpot => MenuInputHandler.touchSpot;
-
-    private void Awake() {
-        inputManager = FindObjectOfType<MenuInputHandler>().GetComponent<IFreezable>();
-    }
+    protected override Vector2 TouchSpot => MenuInputHandler.TouchSpot;
 
     protected override IEnumerator PressButton() {
-        AudioManager.PlayAudio(buttonPress);
+        AudioManager.PlayAudio(_buttonPress);
         //inputManager.IsFrozen = true;
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene((int)MyWaveType);
+        SceneManager.LoadScene((int)_myWaveType);
     }
 }

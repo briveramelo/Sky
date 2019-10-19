@@ -36,30 +36,30 @@ public class ExampleAnalytics : MonoBehaviour {
         }
     }
 
-    public string zoneId = "1065731";
-    public int rewardQty = 250;
+    public string _zoneId = "1065731";
+    public int _rewardQty = 250;
 
     private void OnGUI (){
         ShowAchievementButton();
-        if (string.IsNullOrEmpty (zoneId)) {
-            zoneId = null;
+        if (string.IsNullOrEmpty (_zoneId)) {
+            _zoneId = null;
         }
 
         Rect buttonRect = new Rect (100, 100, 150, 50);
-        string buttonText = Advertisement.IsReady (zoneId) ? "Show Ad" : "Waiting...";
+        string buttonText = Advertisement.IsReady (_zoneId) ? "Show Ad" : "Waiting...";
 
         ShowOptions options = new ShowOptions();
         options.resultCallback = HandleShowResult;
 
         if (GUI.Button (buttonRect, buttonText)) {
-            Advertisement.Show (zoneId, options);
+            Advertisement.Show (_zoneId, options);
         }
     }
 
     private void HandleShowResult (ShowResult result){
         switch (result){
         case ShowResult.Finished:
-            Debug.Log ("Video completed. User rewarded " + rewardQty + " credits.");
+            Debug.Log ("Video completed. User rewarded " + _rewardQty + " credits.");
             break;
         case ShowResult.Skipped:
             Debug.LogWarning ("Video was skipped.");

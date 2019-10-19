@@ -12,16 +12,16 @@ public class LeadDuck : Bird, IDuckToLeader {
 	// The DuckLeader ensures all ducks follow as closely behind in an evenly distributed Flying V Formation
 	// The DuckLeader will fly linearly across the screen
 
-	[SerializeField] private Duck[] duckScripts;
+	[SerializeField] private Duck[] _duckScripts;
 	private List<ILeaderToDuck> ducks;
-	[SerializeField] private Transform[] formationTransforms;
+	[SerializeField] private Transform[] _formationTransforms;
 
 	protected override void Awake () {
 		base.Awake();
-		ducks = new List<ILeaderToDuck>(duckScripts);
+		ducks = new List<ILeaderToDuck>(_duckScripts);
 		bool goLeft = transform.position.x > 0;
 		transform.FaceForward(goLeft);
-		rigbod.velocity = new Vector2 (goLeft ? -1 : 1, 0) * 2.5f;
+		_rigbod.velocity = new Vector2 (goLeft ? -1 : 1, 0) * 2.5f;
 		SetDuckFormation (goLeft);
 	}
 
@@ -39,14 +39,14 @@ public class LeadDuck : Bird, IDuckToLeader {
 		Vector2 bottomSide = ConvertAnglesAndVectors.ConvertAngleToVector2 (goLeft ? -30 : 210);
 
 		float separationDistance = 0.15f;
-		for (int i=0; i<formationTransforms.Length; i++){
-			formationTransforms[i].localPosition = (goLeft ? 1:-1) * (i%2==0 ? topSide : bottomSide) * (Mathf.Floor(i/2)+1) * separationDistance;
+		for (int i=0; i<_formationTransforms.Length; i++){
+			_formationTransforms[i].localPosition = (goLeft ? 1:-1) * (i%2==0 ? topSide : bottomSide) * (Mathf.Floor(i/2)+1) * separationDistance;
 			ducks[i].FormationIndex = i;
 		}
 	}
 
 	#region IDuckToLeader
-	Transform[] IDuckToLeader.FormationTransforms => formationTransforms;
+	Transform[] IDuckToLeader.FormationTransforms => _formationTransforms;
 
 	// Review the above "Flying V" Formation and the attached video "FlyingV_United" to see this logic in action
 	void IDuckToLeader.OrganizeDucks(ILeaderToDuck deadDuck){
@@ -86,8 +86,8 @@ public class LeadDuck : Bird, IDuckToLeader {
 	private void BreakTheV(){
 		transform.DetachChildren ();
 		ducks.ForEach(duck => duck.Scatter());
-		for (int i=0; i<formationTransforms.Length; i++){
-			Destroy(formationTransforms[i].gameObject);
+		for (int i=0; i<_formationTransforms.Length; i++){
+			Destroy(_formationTransforms[i].gameObject);
 		}
 	}
 }

@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &105802
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 478182}
+  - 114: {fileID: 11416582}
+  m_Layer: 0
+  m_Name: GutSplosionParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &478182
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105802}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5267017, y: -2.804242, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11416582
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e483e0f7eea34e1398a02cd215cb855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gutSplosions:
+  - {fileID: 103520, guid: 798b36b5299724edca3de57ad6681071, type: 2}
+  - {fileID: 131502, guid: 3884cc8025b62493fae70464084106cf, type: 2}
+  - {fileID: 165860, guid: 385d14916b49f4746b903ddfb0e5011d, type: 2}
+  - {fileID: 117590, guid: dd396736f7cbf45db81d781cfe56e263, type: 2}
+  - {fileID: 104090, guid: 57d3b465081f644378e9fe5115987c1e, type: 2}
+  - {fileID: 176836, guid: ae5fcd224646c47ac8e44263932dcad7, type: 2}
+  - {fileID: 135472, guid: e961f21a3fdf24db29c46f5cd52bc66d, type: 2}
+  - {fileID: 141926, guid: e88bc993f5b2e493d996faa5b354fe17, type: 2}
+  _gutSound: {fileID: 8300000, guid: b673a4a7ecb9844a88d71879cffffa9b, type: 3}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 105802}
+  m_IsPrefabParent: 1

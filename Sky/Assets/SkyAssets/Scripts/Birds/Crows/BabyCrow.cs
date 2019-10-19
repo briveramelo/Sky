@@ -4,34 +4,34 @@ using GenericFunctions;
 
 public class BabyCrow : Bird {
 
-	[SerializeField] private Animator babyCrowAnimator;
+	[SerializeField] private Animator _babyCrowAnimator;
 
 	private Vector2[] basketOffsets = new Vector2[]{
 		new Vector2 (-.8f, 0.1f),
 		new Vector2 (.8f, 0.1f),
 	};
 
-	private Vector2 moveDir;
-	private float dist2Target;
+	private Vector2 _moveDir;
+	private float _dist2Target;
 
-	private const float triggerShiftDistance = 0.3f;
-	private const float moveSpeed = 2f;
+	private const float _triggerShiftDistance = 0.3f;
+	private const float _moveSpeed = 2f;
 
-	private int currentShift;
-	private int shiftsHit;
-	private const int maxShifts = 5;
-	private int basketOffsetIndex;
+	private int _currentShift;
+	private int _shiftsHit;
+	private const int _maxShifts = 5;
+	private int _basketOffsetIndex;
 	private int BasketOffsetIndex{
-		get => basketOffsetIndex;
+		get => _basketOffsetIndex;
 		set{
-			basketOffsetIndex = value;
-			if (basketOffsetIndex>1){
-				basketOffsetIndex =0;
+			_basketOffsetIndex = value;
+			if (_basketOffsetIndex>1){
+				_basketOffsetIndex =0;
 			}
 		}
 	}
 
-	private float CorrectSpeed => dist2Target<0.4f? Mathf.Lerp(rigbod.velocity.magnitude,0f,Time.deltaTime *2f) : moveSpeed;
+	private float CorrectSpeed => _dist2Target<0.4f? Mathf.Lerp(_rigbod.velocity.magnitude,0f,Time.deltaTime *2f) : _moveSpeed;
 
 	private enum AnimState{
 		Flying=0,
@@ -44,37 +44,37 @@ public class BabyCrow : Bird {
 	}
 
 	private IEnumerator ApproachShifts(){
-		transform.FaceForward(transform.position.x<Constants.balloonCenter.position.x);
-		while (currentShift<maxShifts){
-			dist2Target = Vector2.Distance(Constants.jaiTransform.position + (Vector3)basketOffsets [BasketOffsetIndex],transform.position);
-			moveDir = (Constants.jaiTransform.position + (Vector3)basketOffsets [BasketOffsetIndex] - transform.position).normalized;
-			rigbod.velocity = moveDir * CorrectSpeed;
+		transform.FaceForward(transform.position.x<Constants.BalloonCenter.position.x);
+		while (_currentShift<_maxShifts){
+			_dist2Target = Vector2.Distance(Constants.JaiTransform.position + (Vector3)basketOffsets [BasketOffsetIndex],transform.position);
+			_moveDir = (Constants.JaiTransform.position + (Vector3)basketOffsets [BasketOffsetIndex] - transform.position).normalized;
+			_rigbod.velocity = _moveDir * CorrectSpeed;
 
-			if (dist2Target<triggerShiftDistance && shiftsHit == currentShift){
+			if (_dist2Target<_triggerShiftDistance && _shiftsHit == _currentShift){
 				StartCoroutine (ShiftSpots());
 			}
 			yield return null;
 		}
-		rigbod.velocity = Vector2.zero;
+		_rigbod.velocity = Vector2.zero;
 		StartCoroutine (FlyAway());
 	}
 
 	private IEnumerator ShiftSpots(){
-		shiftsHit++;
-		babyCrowAnimator.SetInteger("AnimState",(int)AnimState.Looking);
-		yield return StartCoroutine (LookBackAndForth(transform.position.x<Constants.balloonCenter.position.x));
-		babyCrowAnimator.SetInteger("AnimState",(int)AnimState.Flying);
-		currentShift++;
+		_shiftsHit++;
+		_babyCrowAnimator.SetInteger("AnimState",(int)AnimState.Looking);
+		yield return StartCoroutine (LookBackAndForth(transform.position.x<Constants.BalloonCenter.position.x));
+		_babyCrowAnimator.SetInteger("AnimState",(int)AnimState.Flying);
+		_currentShift++;
 		BasketOffsetIndex++;
 	}
 
 	private IEnumerator FlyAway(){
-		dist2Target = Vector2.Distance(Vector3.right * Constants.WorldDimensions.x * 1.2f, transform.position);
+		_dist2Target = Vector2.Distance(Vector3.right * Constants.WorldDimensions.x * 1.2f, transform.position);
 
-		while (dist2Target > triggerShiftDistance){
-			dist2Target = Vector2.Distance(Vector3.right * Constants.WorldDimensions.x * 1.2f, transform.position);
-			moveDir = (Vector3.right * Constants.WorldDimensions.x * 1.2f - transform.position).normalized;
-			rigbod.velocity = moveDir * moveSpeed;
+		while (_dist2Target > _triggerShiftDistance){
+			_dist2Target = Vector2.Distance(Vector3.right * Constants.WorldDimensions.x * 1.2f, transform.position);
+			_moveDir = (Vector3.right * Constants.WorldDimensions.x * 1.2f - transform.position).normalized;
+			_rigbod.velocity = _moveDir * _moveSpeed;
 			yield return null;
 		}
 		Destroy(gameObject);

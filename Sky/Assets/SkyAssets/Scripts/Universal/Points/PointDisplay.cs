@@ -6,7 +6,7 @@ public interface IDisplayable{
 }
 public abstract class PointDisplay : MonoBehaviour, IDisplayable {
 
-	[SerializeField] protected Text myText;
+	[SerializeField] protected Text _myText;
 	void IDisplayable.DisplayPoints(int points){
 		DisplayPoints(points);
 	}

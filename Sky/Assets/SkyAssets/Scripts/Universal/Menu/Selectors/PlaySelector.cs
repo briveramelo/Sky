@@ -3,12 +3,12 @@ using System.Collections;
 
 public class PlaySelector : Selector {
 
-    protected override Vector2 TouchSpot => InputManager.touchSpot;
-    [SerializeField] private Pauser pauser;
+    protected override Vector2 TouchSpot => InputManager.TouchSpot;
+    [SerializeField] private Pauser _pauser;
 
     protected override IEnumerator PressButton() {
-        pauser.gameObject.SetActive(true);
-        pauser.UnPause();
+        _pauser.gameObject.SetActive(true);
+        _pauser.UnPause();
         yield return null;
     }
 }

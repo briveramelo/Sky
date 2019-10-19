@@ -11,56 +11,57 @@ public interface IBasketToBalloon {
 }
 public class Balloon : MonoBehaviour, IBasketToBalloon{
 
-	[SerializeField] private GameObject rope;
-	[SerializeField] private PixelPerfectSprite pixelPerfect;
-	[SerializeField] private SpriteRenderer mySprite;
-	[SerializeField] private Sprite[] balloonSprites;
-	[SerializeField] private RuntimeAnimatorController[] balloonAnimators;
-	[SerializeField] private CircleCollider2D balloonCollider;
-	[SerializeField] private CircleCollider2D boundsCollider;
-	[SerializeField] private Animator balloonAnimator;
-    [SerializeField] private List<SpriteRenderer> mySprites;
-    [SerializeField] private AudioClip pop;
+	[SerializeField] private GameObject _rope;
+	[SerializeField] private PixelPerfectSprite _pixelPerfect;
+	[SerializeField] private SpriteRenderer _mySprite;
+	[SerializeField] private Sprite[] _balloonSprites;
+	[SerializeField] private RuntimeAnimatorController[] _balloonAnimators;
+	[SerializeField] private CircleCollider2D _balloonCollider;
+	[SerializeField] private CircleCollider2D _boundsCollider;
+	[SerializeField] private Animator _balloonAnimator;
+    [SerializeField] private List<SpriteRenderer> _mySprites;
+    [SerializeField] private AudioClip _pop;
 
-    private int balloonNumber;
-    private const float moveSpeed = 0.75f;
-    private const float popTime = 30f;
+    private int _balloonNumber;
+    private const float _moveSpeed = 0.75f;
+    private const float _popTime = 30f;
 
     private void Awake () {
-		int randomBalloon = Random.Range(0,balloonSprites.Length);
-		mySprite.sprite = balloonSprites[randomBalloon];
-		balloonAnimator.runtimeAnimatorController = balloonAnimators[randomBalloon];
+		int randomBalloon = Random.Range(0,_balloonSprites.Length);
+		_mySprite.sprite = _balloonSprites[randomBalloon];
+		_balloonAnimator.runtimeAnimatorController = _balloonAnimators[randomBalloon];
 		if (!transform.parent){
-			boundsCollider.enabled = false;
+			_boundsCollider.enabled = false;
             StartCoroutine(((IBasketToBalloon)this).BecomeInvincible());
 			StartCoroutine (FloatUp());
 		}
 	}
 
 	#region IBasketToBalloon
-	int IBasketToBalloon.BalloonNumber{get => balloonNumber;
-		set => balloonNumber =value;
+	int IBasketToBalloon.BalloonNumber{
+		get => _balloonNumber;
+		set => _balloonNumber =value;
 	}
 	void IBasketToBalloon.DetachFromBasket(){
 		transform.parent = null;
-		gameObject.layer = Constants.balloonFloatingLayer;
+		gameObject.layer = Constants.BalloonFloatingLayer;
 		StartCoroutine (FloatUp());
 	}
 
 	void IBasketToBalloon.AttachToBasket(Vector2 newPosition){
 		StopAllCoroutines(); //specifically, stop the balloon from floating up
 		transform.SetParent(Basket.Instance.transform);
-		gameObject.layer = Constants.balloonLayer;
-		rope.layer = Constants.balloonBoundsLayer;
-		transform.position = (Vector2)Constants.jaiTransform.position + newPosition;
-		pixelPerfect.enabled = false;
-		boundsCollider.enabled = true;
+		gameObject.layer = Constants.BalloonLayer;
+		_rope.layer = Constants.BalloonBoundsLayer;
+		transform.position = (Vector2)Constants.JaiTransform.position + newPosition;
+		_pixelPerfect.enabled = false;
+		_boundsCollider.enabled = true;
 	}
 
 	IEnumerator IBasketToBalloon.BecomeInvincible(){
-		balloonCollider.enabled = false;
+		_balloonCollider.enabled = false;
         yield return StartCoroutine(FlashColor(1.5f));
-		balloonCollider.enabled = true;
+		_balloonCollider.enabled = true;
 	}
 
 	private IEnumerator FlashColor(float invincibleTime) {
@@ -71,21 +72,21 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
         float invisibleTime = 0.1f;
         float visibleTime = 0.2f;
         while (timePassed<invincibleTime) {
-            mySprites.ForEach(sprite => sprite.color = isVisible ? visible : invisible);
+            _mySprites.ForEach(sprite => sprite.color = isVisible ? visible : invisible);
             float timeToWait = isVisible ? visibleTime : invisibleTime;
             yield return new WaitForSeconds(timeToWait);
             timePassed += timeToWait;
             isVisible = !isVisible;
         }
-        mySprites.ForEach(sprite => sprite.color = visible);
+        _mySprites.ForEach(sprite => sprite.color = visible);
     } 
 	#endregion
 
 	private IEnumerator FloatUp(){
 		float startTime = Time.time;
 		while (true){
-			transform.position += Vector3.up * moveSpeed * Time.deltaTime;
-			if (Time.time-startTime>popTime){
+			transform.position += Vector3.up * _moveSpeed * Time.deltaTime;
+			if (Time.time-startTime>_popTime){
 				Destroy (gameObject);
 			}
 			yield return null;
@@ -93,13 +94,13 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
 	}
 
 	private void OnTriggerEnter2D(Collider2D col){
-		if (balloonCollider.isActiveAndEnabled && col.gameObject.layer == Constants.birdLayer){//bird layer pops free balloon
+		if (_balloonCollider.isActiveAndEnabled && col.gameObject.layer == Constants.BirdLayer){//bird layer pops free balloon
 			Pop();
 		}
 	}
 
 	public void Pop(){
-        if (gameObject.layer == Constants.balloonLayer) {
+        if (gameObject.layer == Constants.BalloonLayer) {
             ((IBalloonToBasket)(Basket.Instance)).ReportPoppedBalloon(this);
 		    Handheld.Vibrate ();
 		    GameClock.Instance.SlowTime(.5f,.75f);
@@ -110,12 +111,12 @@ public class Balloon : MonoBehaviour, IBasketToBalloon{
         else {
             ScoreSheet.Tallier.TallyBalloonPoints(transform.position);
         }
-		balloonCollider.enabled = false;
-		boundsCollider.enabled = false;
-		balloonAnimator.SetInteger("AnimState",1);
-        AudioManager.PlayAudio(pop);
-		Destroy (rope);
-		Destroy (gameObject,Constants.time2Destroy);
+		_balloonCollider.enabled = false;
+		_boundsCollider.enabled = false;
+		_balloonAnimator.SetInteger("AnimState",1);
+        AudioManager.PlayAudio(_pop);
+		Destroy (_rope);
+		Destroy (gameObject,Constants.Time2Destroy);
 	}
 
 	private void OnDestroy(){

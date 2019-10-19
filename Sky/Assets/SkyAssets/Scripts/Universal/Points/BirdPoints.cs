@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 public class BirdPoints : PointDisplay {
-	private const float moveSpeed = .5f;
+	private const float _moveSpeed = .5f;
 	protected override void DisplayPoints(int points){
-		myText.text = "+" + points.ToString();
+		_myText.text = "+" + points.ToString();
 	}
 
 	private void Awake(){
@@ -12,6 +12,6 @@ public class BirdPoints : PointDisplay {
 	}
 
 	private void Update(){
-		transform.position += Vector3.up * moveSpeed * Time.deltaTime;
+		transform.position += Vector3.up * _moveSpeed * Time.deltaTime;
 	}
 }

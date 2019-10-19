@@ -12,25 +12,25 @@ public interface IDie {
 
 public class BasketEngine : MonoBehaviour, IBumpable, IHold, IEnd, IDie {
 
-	[SerializeField] private Rigidbody2D rigbod;
-	private const float moveSpeed = 2.7f;
-	private bool movingEnabled =true;
+	[SerializeField] private Rigidbody2D _rigbod;
+	private const float _moveSpeed = 2.7f;
+	private bool _movingEnabled =true;
 
 	void IHold.OnTouchHeld(){
-		if (movingEnabled){
-			Vector2 moveDir = Vector2.ClampMagnitude(InputManager.touchSpot - Joyfulstick.startingJoystickSpot,Joyfulstick.joystickMaxMoveDistance);
-			rigbod.velocity = moveDir * moveSpeed;
+		if (_movingEnabled){
+			Vector2 moveDir = Vector2.ClampMagnitude(InputManager.TouchSpot - Joyfulstick.StartingJoystickSpot,Joyfulstick.JoystickMaxMoveDistance);
+			_rigbod.velocity = moveDir * _moveSpeed;
 		}
 	}
 
     void IEnd.OnTouchEnd() {
-        rigbod.velocity = Vector2.zero;
+        _rigbod.velocity = Vector2.zero;
     }
 
 	void IBumpable.Bump(Vector2 bumpDir){
 		StopAllCoroutines();
-		rigbod.velocity = bumpDir;
-		StartCoroutine (Bool.Toggle(boolState=>movingEnabled=boolState,.5f));
+		_rigbod.velocity = bumpDir;
+		StartCoroutine (Bool.Toggle(boolState=>_movingEnabled=boolState,.5f));
         ScoreSheet.Tallier.TallyThreat(Threat.BasketBumped);
         Invoke("StabilizeBumpThreat", 2f);
     }
@@ -40,9 +40,9 @@ public class BasketEngine : MonoBehaviour, IBumpable, IHold, IEnd, IDie {
     }
 
     void IDie.Die() {
-        movingEnabled = false;
+        _movingEnabled = false;
     }
     void IDie.Rebirth() {
-        movingEnabled = true;
+        _movingEnabled = true;
     }
 }

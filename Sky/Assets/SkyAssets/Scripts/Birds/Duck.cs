@@ -22,11 +22,15 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 	// The Duck will follow his/her DuckLeader, until the DuckLeader dies. 
 	// Then, the Duck will aimlessly bounce around the screen until killed
 
-	[SerializeField] private LeadDuck leaderScript;
-	private IDuckToLeader leader;
-	private Transform myFormationTransform;
+	[SerializeField] private LeadDuck _leaderScript;
+	private IDuckToLeader _leader;
+	private Transform _myFormationTransform;
+	private const float _moveSpeed = 2.5f;
+	private const float _maxSpeed = 4f;
+	private int _formationIndex;
+	private bool _bouncing;
 
-	private Vector2[] scatterDir = new Vector2[]{
+	private Vector2[] _scatterDir = {
 		new Vector2 (1,1).normalized,
 		new Vector2 (-1,1).normalized,
 		new Vector2 (1,-1).normalized,
@@ -36,20 +40,16 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 	};
 		
 	private Vector2 CurrentVelocity{
-		set{rigbod.velocity = value;
-			transform.FaceForward(rigbod.velocity.x<0);
+		set{
+			_rigbod.velocity = value;
+			transform.FaceForward(_rigbod.velocity.x<0);
 		}
 	}
-
-	private const float moveSpeed = 2.5f;
-	private const float maxSpeed = 4f;
-	private int formationIndex;
-	private bool bouncing;
-
+	
 	protected override void Awake () {
 		base.Awake();
 		if (transform.parent) {
-			leader = leaderScript;
+			_leader = _leaderScript;
 		}
 		else{
 			Scatter();
@@ -57,7 +57,7 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 	}
 
 	private void Update(){
-		if (bouncing){
+		if (_bouncing){
 			BounceOnTheWalls ();
 		}
 		else{
@@ -78,18 +78,18 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 		bool underY= transform.position.y<-Constants.WorldDimensions.y;
 		if (overX || underX || overY || underY){
 			CurrentVelocity = new Vector2 (
-				underX ? 1 : overX ? -1 : Mathf.Sign(rigbod.velocity.x),
-				underY ? 1 : overY ? -1 : Mathf.Sign(rigbod.velocity.y)).normalized * moveSpeed;
+				underX ? 1 : overX ? -1 : Mathf.Sign(_rigbod.velocity.x),
+				underY ? 1 : overY ? -1 : Mathf.Sign(_rigbod.velocity.y)).normalized * _moveSpeed;
 		}
 	}
 
 	private void StayInFormation(){
-		transform.position = Vector3.MoveTowards(transform.position, myFormationTransform.position, maxSpeed * Time.deltaTime);
+		transform.position = Vector3.MoveTowards(transform.position, _myFormationTransform.position, _maxSpeed * Time.deltaTime);
 	}
 
 	#region IDirectable
 	void IDirectable.SetDuckDirection(DuckDirection scatterDirection){
-		CurrentVelocity = scatterDir[(int)scatterDirection] * moveSpeed;
+		CurrentVelocity = _scatterDir[(int)scatterDirection] * _moveSpeed;
 	}
 	#endregion
 
@@ -100,14 +100,14 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 	}
 
 	private void Scatter() {
-        CurrentVelocity = scatterDir[formationIndex] * moveSpeed;
-        birdStats.ModifyForEvent(3);
-        bouncing = true;
+        CurrentVelocity = _scatterDir[_formationIndex] * _moveSpeed;
+        BirdStats.ModifyForEvent(3);
+        _bouncing = true;
     }
 	int ILeaderToDuck.FormationIndex {
-		get => formationIndex;
-		set{formationIndex = value;
-			myFormationTransform = leader.FormationTransforms[formationIndex];
+		get => _formationIndex;
+		set{_formationIndex = value;
+			_myFormationTransform = _leader.FormationTransforms[_formationIndex];
 		}
 	}
 	#endregion
@@ -115,8 +115,8 @@ public class Duck : Bird, ILeaderToDuck, IDirectable {
 	// Remember that final action some "Bird"s need to perform?
 	// When a Duck with a DuckLeader dies, he/she lets the DuckLeader know to reorganize the Flying V formation
 	protected override void DieUniquely (){
-		if (leaderScript){
-			leader.OrganizeDucks(this);
+		if (_leaderScript){
+			_leader.OrganizeDucks(this);
 		}
 		base.DieUniquely();
 	}

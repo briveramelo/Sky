@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using GenericFunctions;
-//using Vexe.Runtime.Types;
 
-public class Incubator : MonoBehaviour {
+public class Incubator : Singleton<Incubator> {
 
-	public static Incubator Instance;
-
-	[SerializeField] private GameObject[] birds; public GameObject[] Birds => birds;
+	[SerializeField] private GameObject[] _birds; 
+	public GameObject[] Birds => _birds;
 
 	private void Pigeon() {SpawnNextBird(BirdType.Pigeon); }
 	private void Duck() {SpawnNextBird(BirdType.Duck); }
@@ -22,10 +20,6 @@ public class Incubator : MonoBehaviour {
 	private void Eagle() {SpawnNextBird(BirdType.Eagle); }
 	private void BirdOfParadise() {SpawnNextBird(BirdType.BirdOfParadise); }
 
-	private void Awake(){
-		Instance = this;
-	}
-
 	public void SpawnNextBird(BirdType birdType){
 		float xSpot = -Constants.WorldDimensions.x;
 		float ySpot = Random.Range (-Constants.WorldDimensions.y, Constants.WorldDimensions.y) * 0.6f;
@@ -39,6 +33,6 @@ public class Incubator : MonoBehaviour {
         else if (birdType == BirdType.Seagull){
 			xSpot= Constants.WorldDimensions.x * (Bool.TossCoin() ? 1:-1);
 		}
-		Instantiate (birds [(int)birdType], new Vector3(xSpot,ySpot,0f), Quaternion.identity);
+		Instantiate (_birds [(int)birdType], new Vector3(xSpot,ySpot,0f), Quaternion.identity);
 	}
 }

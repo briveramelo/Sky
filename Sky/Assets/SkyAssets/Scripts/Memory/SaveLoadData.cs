@@ -6,12 +6,12 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class SaveLoadData : MonoBehaviour {
 
-    public DataSave CopyCurrentDataSave() {
-        return new DataSave(currentDataSave);
+	private DataSave _currentDataSave = new DataSave();
+	private const int _maxScores = 5;
+	
+	public DataSave CopyCurrentDataSave() {
+        return new DataSave(_currentDataSave);
     }
-
-    private DataSave currentDataSave;
-    private const int maxScores = 5;
 
     private void Awake(){
 		Load ();
@@ -21,35 +21,35 @@ public class SaveLoadData : MonoBehaviour {
 		if (File.Exists(Application.dataPath + "/SaveData/savefile.dat")){
 			BinaryFormatter bf = new BinaryFormatter ();
 			FileStream fileStream = File.Open(Application.dataPath + "/SaveData/savefile.dat",FileMode.Open);
-			currentDataSave = new DataSave((DataSave)bf.Deserialize(fileStream));
+			_currentDataSave = new DataSave((DataSave)bf.Deserialize(fileStream));
 			fileStream.Close();
 		}
         else {
-            currentDataSave = new DataSave();
+            _currentDataSave = new DataSave();
         }
 	}
 
-	public void PromptSave(StoryScore NewStoryScore){
-        currentDataSave.storyScores.Sort();
-        bool isNewHighScore = currentDataSave.storyScores.Count == maxScores ? NewStoryScore.CompareTo(currentDataSave.storyScores[currentDataSave.storyScores.Count-1]) < 0 : true;
-        AddNewHighScore(ref currentDataSave.storyScores, NewStoryScore, isNewHighScore);
+	public void PromptSave(StoryScore newStoryScore){
+        _currentDataSave.StoryScores.Sort();
+        bool isNewHighScore = _currentDataSave.StoryScores.Count == _maxScores ? newStoryScore.CompareTo(_currentDataSave.StoryScores[_currentDataSave.StoryScores.Count-1]) < 0 : true;
+        AddNewHighScore(ref _currentDataSave.StoryScores, newStoryScore, isNewHighScore);
 	}
-    public void PromptSave(EndlessScore NewEndlessScore){
-        currentDataSave.endlessScores.Sort();
-        bool isNewEndless = currentDataSave.endlessScores.Count == maxScores ? NewEndlessScore.CompareTo(currentDataSave.endlessScores[currentDataSave.endlessScores.Count-1]) < 0 : true;
-        AddNewHighScore(ref currentDataSave.endlessScores, NewEndlessScore, isNewEndless);
+    public void PromptSave(EndlessScore newEndlessScore){
+        _currentDataSave.EndlessScores.Sort();
+        bool isNewEndless = _currentDataSave.EndlessScores.Count == _maxScores ? newEndlessScore.CompareTo(_currentDataSave.EndlessScores[_currentDataSave.EndlessScores.Count-1]) < 0 : true;
+        AddNewHighScore(ref _currentDataSave.EndlessScores, newEndlessScore, isNewEndless);
 	}
 
-    private void AddNewHighScore<T>(ref List<T> MyList, T NewEntry, bool isNewHighScore) {
-        if (MyList.Count<maxScores) {
-            MyList.Add(NewEntry);
-            MyList.Sort();
+    private void AddNewHighScore<T>(ref List<T> myList, T newEntry, bool isNewHighScore) {
+        if (myList.Count<_maxScores) {
+            myList.Add(newEntry);
+            myList.Sort();
         }
         else {
             if (isNewHighScore) {
-                MyList.Remove(MyList[maxScores-1]);
-                MyList.Add(NewEntry);
-                MyList.Sort();
+                myList.Remove(myList[_maxScores-1]);
+                myList.Add(newEntry);
+                myList.Sort();
             }
         }
 		Save();
@@ -59,7 +59,7 @@ public class SaveLoadData : MonoBehaviour {
 		BinaryFormatter bf = new BinaryFormatter ();
 		FileStream fileStream = File.Create(Application.dataPath + "/SaveData/savefile.dat");
 
-		bf.Serialize (fileStream, new DataSave(currentDataSave));
+		bf.Serialize (fileStream, new DataSave(_currentDataSave));
 		fileStream.Close ();
 	}
 	
@@ -67,12 +67,12 @@ public class SaveLoadData : MonoBehaviour {
 
 [Serializable]
 public class DataSave{
-	public List<StoryScore> storyScores = new List<StoryScore>();
-    public List<EndlessScore> endlessScores = new List<EndlessScore>();
+	public List<StoryScore> StoryScores = new List<StoryScore>();
+    public List<EndlessScore> EndlessScores = new List<EndlessScore>();
 
-    public DataSave(DataSave DataToStore) {
-        this.storyScores = DataToStore.storyScores;
-        this.endlessScores = DataToStore.endlessScores;
+    public DataSave(DataSave dataToStore) {
+        StoryScores = dataToStore.StoryScores;
+        EndlessScores = dataToStore.EndlessScores;
     }
     public DataSave() { }
 }

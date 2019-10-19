@@ -2,14 +2,14 @@
 
 public class Continuer : MonoBehaviour {
 
-    [SerializeField] private GameObject continueMenu, joystick, pauseButtonGroup;
-    [SerializeField] private InputManager inputManager;
+    [SerializeField] private GameObject _continueMenu, _joystick, _pauseButtonGroup;
+    [SerializeField] private InputManager _inputManager;
 
 	public void DisplayContinueMenu(bool show) {
         Time.timeScale = show? 0f : 1f;
-        ((IFreezable)inputManager).IsFrozen = show;
-        continueMenu.SetActive(show);
-        joystick.SetActive(!show);
-        pauseButtonGroup.SetActive(!show);
+        ((IFreezable)_inputManager).IsFrozen = show;
+        _continueMenu.SetActive(show);
+        _joystick.SetActive(!show);
+        _pauseButtonGroup.SetActive(!show);
     }
 }

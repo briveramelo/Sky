@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class ReplaceGameObjects : ScriptableWizard {
 
-	public GameObject useGameObject;
+	public GameObject _useGameObject;
 
 	[MenuItem("Custom/Replace GameObjects")]
 	private static void CreateWizard(){
@@ -16,7 +16,7 @@ public class ReplaceGameObjects : ScriptableWizard {
 
 	private void OnWizardCreate(){
 		foreach (Transform t in Selection.transforms){
-			GameObject newObject = (GameObject) PrefabUtility.InstantiatePrefab(useGameObject);
+			GameObject newObject = (GameObject) PrefabUtility.InstantiatePrefab(_useGameObject);
 			Undo.RegisterCreatedObjectUndo(newObject, "created prefab");
 			Transform newT = newObject.transform;
 

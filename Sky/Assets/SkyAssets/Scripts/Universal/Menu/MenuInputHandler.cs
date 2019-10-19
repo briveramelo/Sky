@@ -4,32 +4,31 @@ using GenericFunctions;
 
 public class MenuInputHandler : MonoBehaviour, IFreezable {
 
-    public static Vector2 touchSpot;
+    public static Vector2 TouchSpot;
 
-    [SerializeField] private Selector[] selectors;
+    [SerializeField] private Selector[] _selectors;
     private List<IEnd> enders;
 
-    private Vector2 correctionPixels;
-    private float correctionPixelFactor;
-    private bool isFrozen;
+    private Vector2 _correctionPixels;
+    private float _correctionPixelFactor;
+    private bool _isFrozen;
     bool IFreezable.IsFrozen {
-        get => isFrozen;
-
-        set => isFrozen = value;
+        get => _isFrozen;
+        set => _isFrozen = value;
     }
 
     private void Awake() {
-        enders = new List<IEnd>(selectors);
+        enders = new List<IEnd>(_selectors);
         Corrections pixelFix = new Corrections(false);
-        correctionPixels = pixelFix.correctionPixels;
-        correctionPixelFactor = pixelFix.correctionPixelFactor;
+        _correctionPixels = pixelFix.CorrectionPixels;
+        _correctionPixelFactor = pixelFix.CorrectionPixelFactor;
     }
 
     private void Update() {
-        if (!isFrozen) {
+        if (!_isFrozen) {
             if (Input.touchCount > 0) {
                 foreach (Touch finger in Input.touches) {
-                    touchSpot = (finger.position + correctionPixels) * correctionPixelFactor;
+                    TouchSpot = (finger.position + _correctionPixels) * _correctionPixelFactor;
                     if (finger.phase == TouchPhase.Began) {
                         //beginners.ForEach(beginner => beginner.OnTouchBegin(finger.fingerId));
                     }
@@ -42,7 +41,7 @@ public class MenuInputHandler : MonoBehaviour, IFreezable {
                 }
             }
             else {
-                touchSpot = Vector2.up * Constants.WorldDimensions.y * 10f;
+                TouchSpot = Vector2.up * Constants.WorldDimensions.y * 10f;
             }
         }
     }

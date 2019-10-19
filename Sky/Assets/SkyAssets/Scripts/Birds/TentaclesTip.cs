@@ -2,19 +2,19 @@
 
 public class TentaclesTip : MonoBehaviour, IToggleable {
 
-	[SerializeField] private Tentacles t; 
-	[SerializeField] private Collider2D myTipCol;
-	private ITipToTentacle tentacles;
+	[SerializeField] private Tentacles _t; 
+	[SerializeField] private Collider2D _myTipCol;
+	private ITipToTentacle _tentacles;
 
 	void IToggleable.ToggleSensor(bool active){
-		myTipCol.enabled = active;
+		_myTipCol.enabled = active;
 	}
 
 	private void Awake(){
-		tentacles = t;
+		_tentacles = _t;
 	}
 
 	private void OnTriggerEnter2D(){
-		StartCoroutine (tentacles.PullDownTheKill());
+		StartCoroutine (_tentacles.PullDownTheKill());
 	}
 }

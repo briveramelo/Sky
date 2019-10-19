@@ -2,24 +2,24 @@
 
 public class WeaponStats {
 
-	public WeaponStats(Collider2D myCollider, Vector2 velocity, int birdsHit, WeaponType MyWeaponType) {
-        this.myCollider = myCollider;
-        this.velocity = velocity;
-        this.birdsHit = birdsHit;
-        this.myWeaponType = MyWeaponType;
+	public WeaponStats(Collider2D myCollider, Vector2 velocity, int birdsHit, WeaponType myWeaponType) {
+        WeaponCollider = myCollider;
+        Velocity = velocity;
+        BirdsHit = birdsHit;
+        MyWeaponType = myWeaponType;
     }
-    public void ReDefineWeapon(Collider2D myCollider, Vector2 velocity, int birdsHit, WeaponType MyWeaponType) {
-        this.myCollider = myCollider;
-        this.velocity = velocity;
-        this.birdsHit = birdsHit;
-        this.myWeaponType = MyWeaponType;
+    public void ReDefineWeapon(Collider2D myCollider, Vector2 velocity, int birdsHit, WeaponType myWeaponType) {
+        WeaponCollider = myCollider;
+        Velocity = velocity;
+        BirdsHit = birdsHit;
+        MyWeaponType = myWeaponType;
     }
     public WeaponStats() { }
 
-    private WeaponType myWeaponType; public WeaponType MyWeaponType => myWeaponType;
-    private Collider2D myCollider; public Collider2D WeaponCollider => myCollider;
-    private Vector2 velocity; public Vector2 Velocity => velocity;
-    private int birdsHit; public int BirdsHit => birdsHit;
+    public WeaponType MyWeaponType { get; private set; }
+    public Collider2D WeaponCollider { get; private set; }
+    public Vector2 Velocity { get; private set; }
+    public int BirdsHit { get; private set; }
 
     public int Damage {
         get {

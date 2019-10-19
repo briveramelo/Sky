@@ -3,24 +3,26 @@ using GenericFunctions;
 
 public class Joyfulstick : MonoBehaviour, IBegin, IHold, IEnd {
 
-    [SerializeField] private Transform stickBase;
+    [SerializeField] private Transform _stickBase;
 
-	public readonly static Vector2 startingJoystickSpot = new Vector2 (-Constants.WorldDimensions.x * (2f/3f),-Constants.WorldDimensions.y * (2f/5f));
-	public const float joystickMaxStartDist = 1.25f;
-	public const float joystickMaxMoveDistance = .75f; //maximum distance you can move the joystick
-	private IStickEngineID inputManager;
+	public readonly static Vector2 StartingJoystickSpot = new Vector2 (-Constants.WorldDimensions.x * (2f/3f),-Constants.WorldDimensions.y * (2f/5f));
+	public const float JoystickMaxStartDist = 1.25f;
+	public const float JoystickMaxMoveDistance = .75f; //maximum distance you can move the joystick
+	private IStickEngineId _inputManager;
 
 	private void Awake () {
-        stickBase.position = startingJoystickSpot;
-		inputManager = FindObjectOfType<InputManager>().GetComponent<IStickEngineID>();
-        Debug.Log("Joy here");
+        _stickBase.position = StartingJoystickSpot;
 	}
 
-	void IBegin.OnTouchBegin(int fingerID){
-        float distFromStick = Vector2.Distance(InputManager.touchSpot,startingJoystickSpot);
-		if (distFromStick<joystickMaxStartDist){
-            Debug.LogWarning("Joy here");
-			inputManager.SetStickEngineID(fingerID);
+	private void Start()
+	{
+		_inputManager = FindObjectOfType<InputManager>().GetComponent<IStickEngineId>();
+	}
+
+	void IBegin.OnTouchBegin(int fingerId){
+        float distFromStick = Vector2.Distance(InputManager.TouchSpot,StartingJoystickSpot);
+		if (distFromStick<JoystickMaxStartDist){
+			_inputManager.SetStickEngineId(fingerId);
             transform.position = SetStickPosition();
 		}
 	}
@@ -28,10 +30,10 @@ public class Joyfulstick : MonoBehaviour, IBegin, IHold, IEnd {
         transform.position = SetStickPosition();
 	}
 	void IEnd.OnTouchEnd(){
-		transform.position = startingJoystickSpot;
+		transform.position = StartingJoystickSpot;
 	}
 
 	private static Vector2 SetStickPosition(){
-		return startingJoystickSpot + Vector2.ClampMagnitude(InputManager.touchSpot - startingJoystickSpot, joystickMaxMoveDistance);
+		return StartingJoystickSpot + Vector2.ClampMagnitude(InputManager.TouchSpot - StartingJoystickSpot, JoystickMaxMoveDistance);
 	}
 }

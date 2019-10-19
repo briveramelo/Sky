@@ -1,19 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameClock : MonoBehaviour {
-
-	private static GameClock instance;
-	public static GameClock Instance => instance;
-
-	private void Awake(){
-        if (instance == null) {
-            instance = this;
-        }
-        else {
-            Destroy(gameObject);
-        }
-	}
+public class GameClock : Singleton<GameClock> {
 
 	public void SlowTime(float slowDuration, float timeScale){
 		StopAllCoroutines();

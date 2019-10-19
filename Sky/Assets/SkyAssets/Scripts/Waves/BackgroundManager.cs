@@ -13,12 +13,12 @@ internal enum Background{
 
 public class BackgroundManager : MonoBehaviour, ISwitchBackgrounds {
 
-    [SerializeField] private GameObject[] backgrounds;
-    private Background currentBackground = Background.City;
+    [SerializeField] private GameObject[] _backgrounds;
+    private Background _currentBackground = Background.City;
 
 	void ISwitchBackgrounds.UpdateBackground() {
-        backgrounds[(int)currentBackground].SetActive(false);
-        currentBackground++;
-        backgrounds[(int)currentBackground].SetActive(true);
+        _backgrounds[(int)_currentBackground].SetActive(false);
+        _currentBackground++;
+        _backgrounds[(int)_currentBackground].SetActive(true);
     }
 }

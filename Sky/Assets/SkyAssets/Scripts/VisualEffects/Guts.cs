@@ -7,12 +7,12 @@ public interface IBleedable{
 }
 public class Guts : MonoBehaviour, IBleedable {
 
-	[SerializeField] private GameObject[] gutSplosions;
-    [SerializeField] private AudioClip gutSound;
+	[SerializeField] private GameObject[] _gutSplosions;
+    [SerializeField] private AudioClip _gutSound;
 
     private void Awake(){
-        AudioManager.PlayAudio(gutSound);
-        Destroy(gameObject,Constants.time2Destroy);
+        AudioManager.PlayAudio(_gutSound);
+        Destroy(gameObject,Constants.Time2Destroy);
 	}
 
 	void IBleedable.GenerateGuts(ref BirdStats birdStats, Vector2 gutDirection){
@@ -25,7 +25,7 @@ public class Guts : MonoBehaviour, IBleedable {
 			subGutValue = Mathf.Clamp(Random.Range(1,4),1,totalGutValue-gutValue);
 			gutValue += subGutValue;
 
-			gut = Instantiate (gutSplosions[ConvertGutValueToIndex(subGutValue)],Random.insideUnitCircle.normalized * .2f + (Vector2)transform.position,Quaternion.identity);
+			gut = Instantiate (_gutSplosions[ConvertGutValueToIndex(subGutValue)],Random.insideUnitCircle.normalized * .2f + (Vector2)transform.position,Quaternion.identity);
 			gut.GetComponent<Rigidbody2D>().velocity = new Vector2 (Random.Range(gutDirection.x * .1f,gutDirection.x * .4f),Random.Range(3f,8f));
 			gut.transform.parent = transform;
 

@@ -4,38 +4,38 @@ using System.Collections.Generic;
 using System;
 
 public class BirdWaiter{
-	protected CounterType counterType;
-	protected BirdType[] birdTypes;
-	public int numberToWaitFor;
-	protected int movingNumber => ScoreSheet.Reporter.GetCounts(counterType,true,birdTypes);
-	public bool wait => Wait(movingNumber);
+	protected CounterType CounterType;
+	protected BirdType[] BirdTypes;
+	public int NumberToWaitFor;
+	protected int MovingNumber => ScoreSheet.Reporter.GetCounts(CounterType,true,BirdTypes);
+	public bool Wait => _wait(MovingNumber);
 
 	private delegate bool BoolDelegate(int mover);
 
-	private BoolDelegate Wait;
+	private BoolDelegate _wait;
 	public IEnumerator Perform;
 	public SpawnDelegate Spawn;
 
-	public BirdWaiter(CounterType counterType, bool invertBirdTypes, int numberToWaitFor, IEnumerator Perform, params BirdType[] birdTypes){
+	public BirdWaiter(CounterType counterType, bool invertBirdTypes, int numberToWaitFor, IEnumerator perform, params BirdType[] birdTypes){
 		Initialize(counterType, invertBirdTypes, numberToWaitFor, birdTypes);
-		this.Perform = Perform;
+		Perform = perform;
 	}
-	public BirdWaiter(CounterType counterType, bool invertBirdTypes, int numberToWaitFor, SpawnDelegate Spawn, params BirdType[] birdTypes){
+	public BirdWaiter(CounterType counterType, bool invertBirdTypes, int numberToWaitFor, SpawnDelegate spawn, params BirdType[] birdTypes){
 		Initialize(counterType, invertBirdTypes, numberToWaitFor, birdTypes);
-		this.Spawn = Spawn;
+		Spawn = spawn;
 	}
 	public BirdWaiter(CounterType counterType, bool invertBirdTypes, int numberToWaitFor, params BirdType[] birdTypes){
 		Initialize(counterType, invertBirdTypes, numberToWaitFor, birdTypes);
 	}
 
 	private void Initialize(CounterType counterType, bool invertBirdTypes, int numberToWaitFor, params BirdType[] birdTypes){
-		this.counterType = counterType;
-		this.birdTypes = invertBirdTypes ? InvertBirdTypes(birdTypes) : birdTypes;
-		this.numberToWaitFor = numberToWaitFor;
-		Wait = mover => mover>this.numberToWaitFor;
+		CounterType = counterType;
+		BirdTypes = invertBirdTypes ? InvertBirdTypes(birdTypes) : birdTypes;
+		NumberToWaitFor = numberToWaitFor;
+		_wait = mover => mover>NumberToWaitFor;
 		if (counterType == CounterType.Spawned || counterType == CounterType.Killed){
-			this.numberToWaitFor +=ScoreSheet.Reporter.GetCounts(counterType,true, birdTypes);
-			Wait = mover => mover < this.numberToWaitFor;
+			NumberToWaitFor +=ScoreSheet.Reporter.GetCounts(counterType,true, birdTypes);
+			_wait = mover => mover < NumberToWaitFor;
 		} 
 	}
 

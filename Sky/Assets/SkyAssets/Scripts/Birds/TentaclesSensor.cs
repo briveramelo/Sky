@@ -8,28 +8,29 @@ public interface IJaiDetected{
 }
 public class TentaclesSensor : MonoBehaviour, IToggleable, IJaiDetected {
 
-	[SerializeField] private Tentacles tentaclesScript; 
-	[SerializeField] private Collider2D sensor;
-	private ISensorToTentacle tentacle;
+	[SerializeField] private Tentacles _tentaclesScript; 
+	[SerializeField] private Collider2D _sensor;
 	
-	private bool jaiInRange; 
-	bool IJaiDetected.JaiInRange => jaiInRange;
+	private ISensorToTentacle _tentacle;
+	private bool _jaiInRange; 
+	
+	bool IJaiDetected.JaiInRange => _jaiInRange;
 
 	private void Awake () {
-		tentacle = tentaclesScript;
+		_tentacle = _tentaclesScript;
 	}
 
 	private void OnTriggerEnter2D(){
-		jaiInRange = true;
-		StartCoroutine (tentacle.GoForTheKill());
+		_jaiInRange = true;
+		StartCoroutine (_tentacle.GoForTheKill());
 	}
 
 	private void OnTriggerExit2D(){
-		jaiInRange = false;
-		StartCoroutine (tentacle.ResetPosition(false));
+		_jaiInRange = false;
+		StartCoroutine (_tentacle.ResetPosition(false));
 	}
 
 	void IToggleable.ToggleSensor(bool active){
-		sensor.enabled = active;
+		_sensor.enabled = active;
 	}
 }

@@ -3,9 +3,9 @@ using System.Collections;
 
 public class TeleportSideToSide : MonoBehaviour {
 
-	[SerializeField] private Collider2D buddyCollider;
-	[SerializeField] private Teleporter TeleporterType;
-	private Vector2 destination;
+	[SerializeField] private Collider2D _buddyCollider;
+	[SerializeField] private Teleporter _teleporterType;
+	private Vector2 _destination;
 
 	private enum Teleporter{
 		Pigeon,
@@ -13,16 +13,16 @@ public class TeleportSideToSide : MonoBehaviour {
 	}
 
 	private void Awake () {
-		destination = new Vector2 (buddyCollider.transform.position.x, 0f);
+		_destination = new Vector2 (_buddyCollider.transform.position.x, 0f);
 	}
 
 	private void OnTriggerEnter2D(Collider2D col){
-		if (TeleporterType == Teleporter.Pigeon){
+		if (_teleporterType == Teleporter.Pigeon){
 			if (col.gameObject.GetComponent<Pigeon>()){//teleport pigeons across sides
 				StartCoroutine (TemporaryTeleport(col));
 			}
 		}
-		if (TeleporterType == Teleporter.DuckLeader){
+		if (_teleporterType == Teleporter.DuckLeader){
 			if (col.gameObject.GetComponent<LeadDuck>()){//teleport duck squads across sides
 				StartCoroutine (TemporaryTeleport(col));
 			}
@@ -30,9 +30,9 @@ public class TeleportSideToSide : MonoBehaviour {
 	}
 
 	private IEnumerator TemporaryTeleport(Collider2D col){
-		col.gameObject.transform.position = destination + Vector2.up * col.gameObject.transform.position.y;
-		Physics2D.IgnoreCollision (col, buddyCollider, true);
+		col.gameObject.transform.position = _destination + Vector2.up * col.gameObject.transform.position.y;
+		Physics2D.IgnoreCollision (col, _buddyCollider, true);
 		yield return new WaitForSeconds (3f);
-		Physics2D.IgnoreCollision (col, buddyCollider, false);
+		Physics2D.IgnoreCollision (col, _buddyCollider, false);
 	}
 }

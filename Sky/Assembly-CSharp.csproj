@@ -110,7 +110,9 @@
     <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\GameCamera.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\GameClock.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\GameManager.cs" />
+    <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\GameManagerLoader.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\Incubator.cs" />
+    <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\Singleton.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\WorldWrapper.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\Universal\Menu\Continuer.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\Universal\Menu\MenuInputHandler.cs" />
@@ -129,7 +131,6 @@
     <Compile Include="Assets\SkyAssets\Scripts\Universal\Points\RenderCameraFinder.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\Universal\Points\ScoreBoard.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\Universal\Points\ScoreSheet.cs" />
-    <Compile Include="Assets\SkyAssets\Scripts\Universal\UnityServices\Achievements.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\Universal\UnityServices\AdDisplayer.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\Universal\UnityServices\ExampleAnalytics.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\VisualEffects\AnimationHelper.cs" />
@@ -140,19 +141,19 @@
     <Compile Include="Assets\SkyAssets\Scripts\Waves\BackgroundManager.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\Waves\EagleFriends.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\Waves\EmotionalIntensity.cs" />
-    <Compile Include="Assets\SkyAssets\Scripts\Waves\Endless_Wave.cs" />
-    <Compile Include="Assets\SkyAssets\Scripts\Waves\StoryWaves\Bat_Wave.cs" />
-    <Compile Include="Assets\SkyAssets\Scripts\Waves\StoryWaves\Duck_Wave.cs" />
-    <Compile Include="Assets\SkyAssets\Scripts\Waves\StoryWaves\Eagle_Wave.cs" />
-    <Compile Include="Assets\SkyAssets\Scripts\Waves\StoryWaves\Pelican_Wave.cs" />
-    <Compile Include="Assets\SkyAssets\Scripts\Waves\StoryWaves\Pigeon_Wave.cs" />
-    <Compile Include="Assets\SkyAssets\Scripts\Waves\StoryWaves\Pigeuck_Wave.cs" />
-    <Compile Include="Assets\SkyAssets\Scripts\Waves\StoryWaves\Seagull_Wave.cs" />
-    <Compile Include="Assets\SkyAssets\Scripts\Waves\StoryWaves\Shoebill_Wave.cs" />
+    <Compile Include="Assets\SkyAssets\Scripts\Waves\EndlessWave.cs" />
+    <Compile Include="Assets\SkyAssets\Scripts\Waves\StoryWaves\BatWave.cs" />
+    <Compile Include="Assets\SkyAssets\Scripts\Waves\StoryWaves\DuckWave.cs" />
+    <Compile Include="Assets\SkyAssets\Scripts\Waves\StoryWaves\EagleWave.cs" />
+    <Compile Include="Assets\SkyAssets\Scripts\Waves\StoryWaves\PelicanWave.cs" />
+    <Compile Include="Assets\SkyAssets\Scripts\Waves\StoryWaves\PigeonWave.cs" />
+    <Compile Include="Assets\SkyAssets\Scripts\Waves\StoryWaves\PigeuckWave.cs" />
+    <Compile Include="Assets\SkyAssets\Scripts\Waves\StoryWaves\SeagullWave.cs" />
+    <Compile Include="Assets\SkyAssets\Scripts\Waves\StoryWaves\ShoebillWave.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\Waves\Tips.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\Waves\Wave.cs" />
     <Compile Include="Assets\SkyAssets\Scripts\Waves\WaveManager.cs" />
-    <Compile Include="Assets\SkyAssets\Scripts\Waves\WaveUI.cs" />
+    <Compile Include="Assets\SkyAssets\Scripts\Waves\WaveUi.cs" />
     <Compile Include="Assets\Third-Party-Assets\PixelArtRotation\Scripts\Internal\Rotation.cs" />
     <Compile Include="Assets\Third-Party-Assets\PixelArtRotation\Scripts\PixelRotation.cs" />
     <Compile Include="Assets\Third-Party-Assets\PixelPerfect\DemoScenes\DemoAssets\Orbit.cs" />
@@ -162,11 +163,11 @@
     <Compile Include="Assets\Third-Party-Assets\PixelPerfect\Scripts\PixelPerfectCamera.cs" />
     <Compile Include="Assets\Third-Party-Assets\PixelPerfect\Scripts\PixelPerfectSprite.cs" />
     <None Include="Assets\Third-Party-Assets\PixelPerfect\Scripts\Internal\Resources\PixelPerfectShader.shader" />
-    <None Include="Assets\SkyAssets\Resources\Shaders\MaskConstruction.shader" />
+    <None Include="Assets\SkyAssets\Art+\Shaders\MaskConstruction.shader" />
     <None Include="Assets\Third-Party-Assets\PixelPerfect\README.txt" />
-    <None Include="Assets\SkyAssets\Resources\Shaders\Masked.shader" />
+    <None Include="Assets\SkyAssets\Art+\Shaders\Masked.shader" />
     <None Include="Assets\Third-Party-Assets\PixelArtRotation\Documentation\Documentation.txt" />
-    <None Include="Assets\SkyAssets\Resources\Shaders\TextureMasking.shader" />
+    <None Include="Assets\SkyAssets\Art+\Shaders\TextureMasking.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

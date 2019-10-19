@@ -4,15 +4,15 @@ using GenericFunctions;
 
 public class PooSlide : MonoBehaviour {
 
-	[SerializeField] private GameObject maskCamera;
-	[SerializeField] private SpriteRenderer mySpriteRenderer;
-	[SerializeField] private Animator pooAnimator;
-    [SerializeField] private Material[] pooMaterials;
+	[SerializeField] private SpriteRenderer _mySpriteRenderer;
+	[SerializeField] private Animator _pooAnimator;
+    [SerializeField] private Material[] _pooMaterials;
+    [SerializeField] private Sprite[] _lastPooSprites;
 
-	[SerializeField] private Sprite[] lastPooSprites;
-
+    private float _slideSpeed = .08f;
+    
 	private void Awake(){
-        mySpriteRenderer.material = pooMaterials[Constants.TargetPooInt];
+        _mySpriteRenderer.material = _pooMaterials[Constants.TargetPooInt];
         StartCoroutine (AnimateSplat (Constants.TargetPooInt));
 		StartCoroutine (SlideDown ());
 		Destroy (transform.parent.gameObject,15f);
@@ -23,19 +23,17 @@ public class PooSlide : MonoBehaviour {
 	}
 
 	private IEnumerator AnimateSplat(int pooCount){
-		while (pooAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime<1f){
+		while (_pooAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime<1f){
 			yield return null;
 		}
-		Destroy (pooAnimator);
+		Destroy (_pooAnimator);
 		int i = ((pooCount+2) % 2) == 0 ? 0 :1;
-		mySpriteRenderer.sprite = lastPooSprites[1];
+		_mySpriteRenderer.sprite = _lastPooSprites[1];
 	}
-
-	private float slideSpeed = .08f;
 
 	private IEnumerator SlideDown(){
 		while (true){
-			transform.position += Vector3.down * slideSpeed;
+			transform.position += Vector3.down * _slideSpeed;
             yield return new WaitForSeconds(Random.Range(0.3f, 0.6f));
 		}
 	}

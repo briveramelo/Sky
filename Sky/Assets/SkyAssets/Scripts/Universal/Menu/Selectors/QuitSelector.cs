@@ -4,18 +4,18 @@ using UnityEngine.SceneManagement;
 
 public class QuitSelector : Selector {
 
-    [SerializeField] private Pauser pauser;
-    protected override Vector2 TouchSpot => InputManager.touchSpot;
-    [SerializeField] private bool shouldSaveScore;
+    [SerializeField] private Pauser _pauser;
+    protected override Vector2 TouchSpot => InputManager.TouchSpot;
+    [SerializeField] private bool _shouldSaveScore;
 
     protected override IEnumerator PressButton() {
-        AudioManager.PlayAudio(buttonPress);
+        AudioManager.PlayAudio(_buttonPress);
         float startTime = Time.unscaledTime;
         while (Time.unscaledTime - startTime < 1f) {
             yield return null;
         }
-        pauser.ResetPause();
-        if (shouldSaveScore) {
+        _pauser.ResetPause();
+        if (_shouldSaveScore) {
             ScoreSheet.Reporter.ReportScores();
         }
         SceneManager.LoadScene(Scenes.Menu);

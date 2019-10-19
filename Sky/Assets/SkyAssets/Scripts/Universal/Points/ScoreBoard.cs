@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
 
 public class ScoreBoard : PointDisplay {
     private void Awake()
@@ -14,11 +13,11 @@ public class ScoreBoard : PointDisplay {
 
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
         if (scene.name == Scenes.Menu) {
-            myText.text = "";
+            _myText.text = "";
         }
     }
 
 	protected override void DisplayPoints(int points){
-		myText.text = points.ToString();
+		_myText.text = points.ToString();
 	}
 }

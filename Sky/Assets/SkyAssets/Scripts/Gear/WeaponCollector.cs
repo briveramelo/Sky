@@ -2,10 +2,10 @@
 
 public class WeaponCollector : MonoBehaviour {
 
-    [SerializeField] private Jai MyJai;
+    [SerializeField] private Jai _myJai;
 
     private void OnTriggerEnter2D(Collider2D col) {
-        StartCoroutine(MyJai.CollectNewWeapon(col.GetComponent<ICollectable>()));
-        FindObjectOfType<WaveUI>().GetComponent<IWaveUI>().GrabbedWeapon();
+        StartCoroutine(_myJai.CollectNewWeapon(col.GetComponent<ICollectable>()));
+        FindObjectOfType<WaveUi>().GetComponent<IWaveUi>().GrabbedWeapon();
     }
 }

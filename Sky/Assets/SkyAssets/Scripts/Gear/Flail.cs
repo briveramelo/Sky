@@ -2,9 +2,9 @@
 
 public class Flail : Weapon {
 
-    protected override int weaponNumber => timesUsed;
-    [SerializeField] private Rigidbody2D rigbod;
-    protected override Vector2 MyVelocity => rigbod.velocity;
+    protected override int WeaponNumber => TimesUsed;
+    [SerializeField] private Rigidbody2D _rigbod;
+    protected override Vector2 MyVelocity => _rigbod.velocity;
 
     protected override void DeliverDamage(Collider2D col) {
         base.DeliverDamage(col);

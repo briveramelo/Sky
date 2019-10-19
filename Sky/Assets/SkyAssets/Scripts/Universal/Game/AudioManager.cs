@@ -3,12 +3,12 @@ using System.Collections;
 
 public class AudioManager : MonoBehaviour {
 
-    [SerializeField] private AudioSource myAudioSource;
+    [SerializeField] private AudioSource _myAudioSource;
     private static AudioSource MyAudioSource;
 
     private void Awake () {
         if (MyAudioSource == null) {
-            MyAudioSource = myAudioSource;
+            MyAudioSource = _myAudioSource;
         }
 	}
 

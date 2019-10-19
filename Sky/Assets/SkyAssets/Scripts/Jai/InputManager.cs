@@ -3,7 +3,7 @@ using GenericFunctions;
 using System.Collections.Generic;
 
 public interface IBegin{
-	void OnTouchBegin(int fingerID);
+	void OnTouchBegin(int fingerId);
 }
 public interface IHold{
 	void OnTouchHeld();
@@ -15,105 +15,111 @@ public interface IEnd{
 public interface IFreezable{
 	bool IsFrozen{get;set;}
 }
-public interface IStickEngineID{
-	void SetStickEngineID(int ID);
+public interface IStickEngineId{
+	void SetStickEngineId(int id);
 }
-public interface IJaiID{
-	void SetJaiID(int ID);
+public interface IJaiId{
+	void SetJaiId(int id);
 }
 
-public class InputManager : MonoBehaviour, IFreezable, IStickEngineID, IJaiID {
+public class InputManager : MonoBehaviour, IFreezable, IStickEngineId, IJaiId {
 
-	public static Vector2 touchSpot;
+	public static Vector2 TouchSpot;
 
 	#region Touch Handlers
-	[SerializeField] private BasketEngine basketEngine;
-	[SerializeField] private Jai jai;
-	[SerializeField] private Joyfulstick joyfulstick;
-	[SerializeField] private Pauser pauser;
-    [SerializeField] private Selector[] selectors;
+	[SerializeField] private Joyfulstick _joyfulstick;
+	[SerializeField] private Pauser _pauser;
+    [SerializeField] private Selector[] _selectors;
 
-    private List<IBegin> beginners;
-    private List<IHold> holders;
-    private List<IEnd> enders;
-    private IEnd stickEnd;
-    private IEnd basketEnd;
-    private IEnd jaiEnd;
+	private BasketEngine _basketEngine;
+	private Jai _jai;
+    private List<IBegin> _beginners;
+    private List<IHold> _holders;
+    private List<IEnd> _enders;
+    private IEnd _stickEnd;
+    private IEnd _basketEnd;
+    private IEnd _jaiEnd;
 	#endregion
 
-	private int stickEngineFinger =-1;
-	private int jaiFinger =-1;
+	private int _stickEngineFinger =-1;
+	private int _jaiFinger =-1;
 
-	private Vector2 correctionPixels;
-	private float correctionPixelFactor;
+	private Vector2 _correctionPixels;
+	private float _correctionPixelFactor;
 
-	private void Awake(){
-		beginners = new List<IBegin>(new IBegin[]{
-			joyfulstick,
-			jai,
-			pauser
+	private void Start()
+	{
+		_jai = FindObjectOfType<Jai>();
+		_basketEngine = FindObjectOfType<BasketEngine>();
+		
+		_beginners = new List<IBegin>(new IBegin[]{
+			_joyfulstick,
+			_jai,
+			_pauser
 		});
-		holders = new List<IHold>(new IHold[]{
-			basketEngine,
-			joyfulstick,
+		_holders = new List<IHold>(new IHold[]{
+			_basketEngine,
+			_joyfulstick,
 		});
-        enders = new List<IEnd>(selectors);
-		stickEnd = joyfulstick;
-		jaiEnd = jai;
-        basketEnd = basketEngine;
+        _enders = new List<IEnd>(_selectors);
+		_stickEnd = _joyfulstick;
+		_jaiEnd = _jai;
+        _basketEnd = _basketEngine;
 
         Corrections pixelFix = new Corrections(true);
-        correctionPixels = pixelFix.correctionPixels;
-        correctionPixelFactor = pixelFix.correctionPixelFactor;
+        _correctionPixels = pixelFix.CorrectionPixels;
+        _correctionPixelFactor = pixelFix.CorrectionPixelFactor;
     }
 
     #region IFreezable
 
-    private bool isFrozen; bool IFreezable.IsFrozen{get => isFrozen;
-	    set => isFrozen = value;
+    private bool _isFrozen; 
+    bool IFreezable.IsFrozen{
+	    get => _isFrozen;
+	    set => _isFrozen = value;
     }
 	#endregion
 
 	#region ISetIDs
-	void IJaiID.SetJaiID(int ID){
-		jaiFinger = ID;
+	void IJaiId.SetJaiId(int id){
+		_jaiFinger = id;
 	}
-	void IStickEngineID.SetStickEngineID(int ID){
-		stickEngineFinger = ID;
+	void IStickEngineId.SetStickEngineId(int id){
+		_stickEngineFinger = id;
 	}
 	#endregion
 
 	private void Update () {
 		if (Input.touchCount>0){
 			foreach (Touch finger in Input.touches){
-                touchSpot = (finger.position + correctionPixels) * correctionPixelFactor;
+                TouchSpot = (finger.position + _correctionPixels) * _correctionPixelFactor;
                 //Debug.Log(touchSpot);
 				if (finger.phase == TouchPhase.Began){
-					beginners.ForEach(beginner=> beginner.OnTouchBegin(finger.fingerId));
+					_beginners.ForEach(beginner=> beginner.OnTouchBegin(finger.fingerId));
 				}
 				else if (finger.phase == TouchPhase.Moved || finger.phase == TouchPhase.Stationary){
-					if (finger.fingerId == stickEngineFinger && !isFrozen){
-						holders.ForEach(holder=> holder.OnTouchHeld());
+					if (finger.fingerId == _stickEngineFinger && !_isFrozen){
+						_holders.ForEach(holder=> holder.OnTouchHeld());
 					}
 				}
 				else if (finger.phase == TouchPhase.Ended){
-					if (finger.fingerId == stickEngineFinger && !isFrozen){
-						stickEnd.OnTouchEnd();
-                        basketEnd.OnTouchEnd();
-						stickEngineFinger =-1;
+					if (finger.fingerId == _stickEngineFinger && !_isFrozen){
+						_stickEnd.OnTouchEnd();
+                        _basketEnd.OnTouchEnd();
+						_stickEngineFinger =-1;
 					}
-					else if (finger.fingerId == jaiFinger && !isFrozen){
-						jaiEnd.OnTouchEnd();
-						jaiFinger =-1;
+					else if (finger.fingerId == _jaiFinger && !_isFrozen){
+						_jaiEnd.OnTouchEnd();
+						_jaiFinger =-1;
 					}
                     else {
-                        enders.ForEach(ender=> ender.OnTouchEnd());
+                        _enders.ForEach(ender=> ender.OnTouchEnd());
                     }
 				}
 			}
 		}
 		else{
-			touchSpot = Vector2.up * Constants.WorldDimensions.y * 10f;
+			TouchSpot = Vector2.up * Constants.WorldDimensions.y * 10f;
 		}
 	}
 }

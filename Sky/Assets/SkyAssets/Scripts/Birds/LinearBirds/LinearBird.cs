@@ -3,7 +3,7 @@ using GenericFunctions;
 
 public abstract class LinearBird : Bird{
 
-	protected float moveSpeed;
+	protected float MoveSpeed;
 
 	protected override void Awake () {
 		base.Awake();
@@ -11,7 +11,7 @@ public abstract class LinearBird : Bird{
 	}
 
 	public void SetVelocity(Vector2 desiredDirection){
-		rigbod.velocity = desiredDirection.normalized * moveSpeed;
+		_rigbod.velocity = desiredDirection.normalized * MoveSpeed;
 		transform.FaceForward(desiredDirection.x<0);
 	}
 }

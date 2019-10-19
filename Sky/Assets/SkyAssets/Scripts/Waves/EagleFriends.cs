@@ -34,8 +34,8 @@ public class EagleFriends : Wave, ITriggerSpawnable {
 			StartCoroutine(MassProduce(BirdSpawnDelegates[BirdType.Seagull], 3));
 			break;
 		case SpawnEvent.Albatrosses:
-			SpawnBirds(BirdType.Albatross,SpawnPoint(right,lowHeight));
-			SpawnBirds(BirdType.Albatross,SpawnPoint(left,lowHeight));
+			SpawnBirds(BirdType.Albatross,SpawnPoint(Right,LowHeight));
+			SpawnBirds(BirdType.Albatross,SpawnPoint(Left,LowHeight));
 			break;
 		}
 	}

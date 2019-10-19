@@ -12,111 +12,111 @@ public class Bat : Bird {
 
 
 	#region Initialize Variables
-	private Vector2[] targetPositions;
-	private Vector2 ellipseTrace;
-	private Vector2 moveDir;
-	private Vector2 batPos;
+	private Vector2[] _targetPositions;
+	private Vector2 _ellipseTrace;
+	private Vector2 _moveDir;
+	private Vector2 _batPos;
 
-	private float[] orbitalRadii = new float[]{1.25f, 1.5f, 1.75f};
+	private float[] _orbitalRadii = new float[]{1.25f, 1.5f, 1.75f};
 
-	private const float approachSpeed = 2.8f;
-	private const float orbitDistance = 1.5f;
-	private const float stepDistance = 0.4f;
+	private const float _approachSpeed = 2.8f;
+	private const float _orbitDistance = 1.5f;
+	private const float _stepDistance = 0.4f;
 
-	private float dist2Target;
-	private float ellipseTilt;
-	private float speedPhaseShift;
-	private float ellipseAng;
-	private float curvature;
+	private float _dist2Target;
+	private float _ellipseTilt;
+	private float _speedPhaseShift;
+	private float _ellipseAng;
+	private float _curvature;
 
-	private const int positionWindowLength = 20;
-	private int realTimeIndex;
-	private int targetIndex;
-	private int xRadiusIndex;
-	private int yRadiusIndex;
+	private const int _positionWindowLength = 20;
+	private int _realTimeIndex;
+	private int _targetIndex;
+	private int _xRadiusIndex;
+	private int _yRadiusIndex;
 
-	private bool clockwise;
-	private bool orbiting;
+	private bool _clockwise;
+	private bool _orbiting;
 	#endregion
 
 	protected override void Awake () {
 		base.Awake();
-		targetPositions = new Vector2[positionWindowLength];
+		_targetPositions = new Vector2[_positionWindowLength];
 		StartCoroutine (Approach ());
 	}
 
 	// Flap straight towards the first point on the elliptical perimeter
-	// Start orbiting once close enough
+	// Start _orbiting once close enough
 	private IEnumerator Approach(){
-		dist2Target = 10f;
+		_dist2Target = 10f;
 
 		while (true){
 			UpdatePositionIndices();
-			batPos = transform.position;
-			targetPositions[realTimeIndex] = (Vector2)Constants.balloonCenter.position - orbitDistance * rigbod.velocity.normalized;
-			dist2Target = Vector2.Distance(targetPositions[targetIndex], batPos);
+			_batPos = transform.position;
+			_targetPositions[_realTimeIndex] = (Vector2)Constants.BalloonCenter.position - _orbitDistance * _rigbod.velocity.normalized;
+			_dist2Target = Vector2.Distance(_targetPositions[_targetIndex], _batPos);
 
-			// Once close enough, stop approaching and start orbiting
-			if (dist2Target<orbitDistance){
+			// Once close enough, stop approaching and start _orbiting
+			if (_dist2Target<_orbitDistance){
 				StartCoroutine (Orbit());
 				break;
 			}
 
-			moveDir = (targetPositions[targetIndex] - batPos).normalized;
-			rigbod.velocity = moveDir * approachSpeed;
-			transform.FaceForward (transform.position.x > Constants.balloonCenter.position.x);
+			_moveDir = (_targetPositions[_targetIndex] - _batPos).normalized;
+			_rigbod.velocity = _moveDir * _approachSpeed;
+			transform.FaceForward (transform.position.x > Constants.BalloonCenter.position.x);
 			yield return null;
 		}
 	}
 
 	private void UpdatePositionIndices(){
-		realTimeIndex++;
-		targetIndex++;
-		if (realTimeIndex >= positionWindowLength)
+		_realTimeIndex++;
+		_targetIndex++;
+		if (_realTimeIndex >= _positionWindowLength)
 			ResetTargetPositionWindow ();
 	}
 
 	// Overwrite the first few frames of the bat's positional-targetting array with the last few
-	// Set the targetIndex "frameDelay" #frames before the realTime Index
+	// Set the _targetIndex "frameDelay" #frames before the realTime Index
 	// In effect, create a following delay to allow for bat/balloon collision
-	private const int frameDelay=2;
+	private const int _frameDelay=2;
 
 	private void ResetTargetPositionWindow(){
-		for (int i = 0; i<frameDelay; i++)
-			targetPositions[i] = targetPositions[positionWindowLength-frameDelay-1+i];
+		for (int i = 0; i<_frameDelay; i++)
+			_targetPositions[i] = _targetPositions[_positionWindowLength-_frameDelay-1+i];
 		
-		realTimeIndex = frameDelay;
-		targetIndex = 0;
+		_realTimeIndex = _frameDelay;
+		_targetIndex = 0;
 	}
 
 	// Move in an ellipse
-	// Set speed proportional to the curvature of the point on the ellipse
+	// Set speed proportional to the _curvature of the point on the ellipse
 	private IEnumerator Orbit(){
 		ShuffleOrbitalPhase();
-        orbiting = true;
+        _orbiting = true;
         ScoreSheet.Tallier.TallyThreat(Threat.BatSurrounding);
-        ellipseAng = ConvertAnglesAndVectors.ConvertVector2FloatAngle(-rigbod.velocity);
-		targetPositions[realTimeIndex] = FindEllipsePosition();
+        _ellipseAng = ConvertAnglesAndVectors.ConvertVector2FloatAngle(-_rigbod.velocity);
+		_targetPositions[_realTimeIndex] = FindEllipsePosition();
 
 		while (true) {
-			batPos = transform.position;
-			dist2Target = Vector2.Distance(targetPositions[targetIndex], batPos);
-			if (dist2Target<stepDistance){
+			_batPos = transform.position;
+			_dist2Target = Vector2.Distance(_targetPositions[_targetIndex], _batPos);
+			if (_dist2Target<_stepDistance){
 				UpdatePositionIndices();
-				ellipseAng = FindTargetAngle();
-				targetPositions[realTimeIndex] = FindEllipsePosition();
+				_ellipseAng = FindTargetAngle();
+				_targetPositions[_realTimeIndex] = FindEllipsePosition();
 			}
 			
-			moveDir = (targetPositions[targetIndex] - batPos).normalized; 
-			curvature = (orbitalRadii[xRadiusIndex] * orbitalRadii[yRadiusIndex]) / 
-				Mathf.Pow ((orbitalRadii[xRadiusIndex]*orbitalRadii[xRadiusIndex] * 
-					Mathf.Sin((ellipseAng+speedPhaseShift) * Mathf.Deg2Rad) * Mathf.Sin((ellipseAng+speedPhaseShift) * Mathf.Deg2Rad) + 
-					orbitalRadii[yRadiusIndex] * orbitalRadii[yRadiusIndex] * 
-					Mathf.Cos(ellipseAng * Mathf.Deg2Rad) * Mathf.Cos(ellipseAng * Mathf.Deg2Rad)),1.5f);
-			float orbitSpeed = approachSpeed / curvature;
+			_moveDir = (_targetPositions[_targetIndex] - _batPos).normalized; 
+			_curvature = (_orbitalRadii[_xRadiusIndex] * _orbitalRadii[_yRadiusIndex]) / 
+				Mathf.Pow ((_orbitalRadii[_xRadiusIndex]*_orbitalRadii[_xRadiusIndex] * 
+					Mathf.Sin((_ellipseAng+_speedPhaseShift) * Mathf.Deg2Rad) * Mathf.Sin((_ellipseAng+_speedPhaseShift) * Mathf.Deg2Rad) + 
+					_orbitalRadii[_yRadiusIndex] * _orbitalRadii[_yRadiusIndex] * 
+					Mathf.Cos(_ellipseAng * Mathf.Deg2Rad) * Mathf.Cos(_ellipseAng * Mathf.Deg2Rad)),1.5f);
+			float orbitSpeed = _approachSpeed / _curvature;
 
-			rigbod.velocity = moveDir * orbitSpeed;
-			transform.FaceForward (transform.position.x > Constants.balloonCenter.position.x);
+			_rigbod.velocity = _moveDir * orbitSpeed;
+			transform.FaceForward (transform.position.x > Constants.BalloonCenter.position.x);
 			yield return null;
 		}
 	}
@@ -124,32 +124,32 @@ public class Bat : Bird {
 	// Set properties of the ellipse
 	// Randomize these properties periodically for erratic flight
 	private void ShuffleOrbitalPhase(){
-		ellipseTilt = Random.Range (-30f,30f);
-		speedPhaseShift = ellipseTilt * 2f / 3f;
-		xRadiusIndex = Random.Range (0,3);
-		yRadiusIndex = xRadiusIndex == 1 ? 1+(int)Mathf.Sign (Random.insideUnitCircle.x) : 1;
-		clockwise = Bool.TossCoin();
+		_ellipseTilt = Random.Range (-30f,30f);
+		_speedPhaseShift = _ellipseTilt * 2f / 3f;
+		_xRadiusIndex = Random.Range (0,3);
+		_yRadiusIndex = _xRadiusIndex == 1 ? 1+(int)Mathf.Sign (Random.insideUnitCircle.x) : 1;
+		_clockwise = Bool.TossCoin();
 		Invoke ("ShuffleOrbitalPhase", Random.Range (2f, 4f));
 	}
 
 	// Help define the elliptical pattern
 	private float FindTargetAngle(){
 		float angleStep = 4f;
-		float targetAng = clockwise ? ellipseAng+90f : ellipseAng-90f;
-		return Mathf.LerpAngle( ellipseAng, targetAng, Time.deltaTime * angleStep);
+		float targetAng = _clockwise ? _ellipseAng+90f : _ellipseAng-90f;
+		return Mathf.LerpAngle( _ellipseAng, targetAng, Time.deltaTime * angleStep);
 	}
 
 	// Set an elliptical pattern around the balloons
 	// Update position indices & ensure the Bat is facing the player
 	private Vector2 FindEllipsePosition(){
-		ellipseTrace = new Vector2 ( orbitalRadii[xRadiusIndex] * Mathf.Cos((ellipseAng+ellipseTilt) * Mathf.Deg2Rad),
-			orbitalRadii[yRadiusIndex] * Mathf.Sin(ellipseAng * Mathf.Deg2Rad));
-		return (Vector2)Constants.balloonCenter.position + ellipseTrace;
+		_ellipseTrace = new Vector2 ( _orbitalRadii[_xRadiusIndex] * Mathf.Cos((_ellipseAng+_ellipseTilt) * Mathf.Deg2Rad),
+			_orbitalRadii[_yRadiusIndex] * Mathf.Sin(_ellipseAng * Mathf.Deg2Rad));
+		return (Vector2)Constants.BalloonCenter.position + _ellipseTrace;
 	}
 
     protected override void DieUniquely()
     {
-        if (orbiting) {
+        if (_orbiting) {
             ScoreSheet.Tallier.TallyThreat(Threat.BatLeft);
         }
         base.DieUniquely();

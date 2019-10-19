@@ -16,18 +16,18 @@ namespace GenericFunctions{
 
 	public static class Constants{
 
-		public static Transform jaiTransform;
-		public static Transform balloonCenter;
-		public static Transform basketTransform;
-		public static Collider2D worldBoundsCollider;
-		public static Collider2D bottomOfTheWorldCollider;
+		public static Transform JaiTransform;
+		public static Transform BalloonCenter;
+		public static Transform BasketTransform;
+		public static Collider2D WorldBoundsCollider;
+		public static Collider2D BottomOfTheWorldCollider;
 
-		private static int targetPooInt;
+		private static int _targetPooInt;
 		public static int TargetPooInt {
-			get => targetPooInt;
-			set{ targetPooInt = value;
-				if (targetPooInt>4) {
-					targetPooInt =0;
+			get => _targetPooInt;
+			set{ _targetPooInt = value;
+				if (_targetPooInt>4) {
+					_targetPooInt =0;
                 }
 			}
 		}
@@ -36,29 +36,29 @@ namespace GenericFunctions{
 			trans.localScale = new Vector3 ((forward ? 1:-1) * Mathf.Abs(trans.localScale.x), trans.localScale.y, trans.localScale.z);
 		}
 
-        private static Vector2 screenDimensions = new Vector2(1136, 640);  //new Vector2 (Screen.width, Screen.height);
-		public static Vector2 ScreenDimensions => screenDimensions;
-		private static Vector2 worldDimensions = ScreenDimensions /200f;
-		public static Vector2 WorldDimensions => worldDimensions;
+        private static Vector2 _screenDimensions = new Vector2(1136, 640);  //new Vector2 (Screen.width, Screen.height);
+		public static Vector2 ScreenDimensions => _screenDimensions;
+		private static Vector2 _worldDimensions = ScreenDimensions /200f;
+		public static Vector2 WorldDimensions => _worldDimensions;
 
-		public const int basketLayer = 8;
-		public const int spearLayer = 9;
-		public const int birdLayer = 10;
-		public const int balloonLayer = 11;
-		public const int balloonFloatingLayer = 12;
-		public const int jaiLayer = 13;
-		public const int faceLayer = 14;
-		public const int tentacleLayer = 15;
-		public const int tentacleSensorLayer = 16;
-		public const int teleporterLayer = 17;
-		public const int worldBoundsLayer = 18;
-		public const int pooNuggetLayer = 19;
-	    public const int balloonBoundsLayer = 20;
-        public const int shoebillHornLayer = 21;
-        public const int collectableWeaponLayer = 22;
+		public const int BasketLayer = 8;
+		public const int SpearLayer = 9;
+		public const int BirdLayer = 10;
+		public const int BalloonLayer = 11;
+		public const int BalloonFloatingLayer = 12;
+		public const int JaiLayer = 13;
+		public const int FaceLayer = 14;
+		public const int TentacleLayer = 15;
+		public const int TentacleSensorLayer = 16;
+		public const int TeleporterLayer = 17;
+		public const int WorldBoundsLayer = 18;
+		public const int PooNuggetLayer = 19;
+	    public const int BalloonBoundsLayer = 20;
+        public const int ShoebillHornLayer = 21;
+        public const int CollectableWeaponLayer = 22;
 
-		public const float time2Destroy = 2f;
-		public const float time2ThrowSpear = 0.333333f;
-        public const float time2StrikeLightning = 0.5f;
+		public const float Time2Destroy = 2f;
+		public const float Time2ThrowSpear = 0.333333f;
+        public const float Time2StrikeLightning = 0.5f;
 	}
 }

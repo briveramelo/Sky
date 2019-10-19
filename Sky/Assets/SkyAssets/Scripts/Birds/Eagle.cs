@@ -5,21 +5,21 @@ using GenericFunctions;
 
 public class Eagle : Bird {
 
-    [SerializeField] private EagleFriends eagleFriends;
-    private ITriggerSpawnable myEagleFriends;
-	[SerializeField] private PixelRotation pixelRotationScript;
-	private Vector3 attackDir;
+    [SerializeField] private EagleFriends _eagleFriends;
+	[SerializeField] private PixelRotation _pixelRotationScript;
+    private ITriggerSpawnable _myEagleFriends;
+	private Vector3 _attackDir;
 
-	private Vector2[] startPos = new Vector2[]{
+	private Vector2[] _startPos = {
 		new Vector2(-Constants.WorldDimensions.x,-Constants.WorldDimensions.y) * 1.2f,
 		new Vector2(Constants.WorldDimensions.x,-Constants.WorldDimensions.y) * 1.2f
 	};
-	private Vector2[] moveDir;
+	private Vector2[] _moveDir;
 		
 	protected override void Awake () {
 		base.Awake();
-		myEagleFriends = eagleFriends;
-		moveDir = new[]{
+		_myEagleFriends = _eagleFriends;
+		_moveDir = new[]{
 			Constants.ScreenDimensions.normalized,
 			new Vector2(-Constants.ScreenDimensions.x,Constants.ScreenDimensions.y).normalized,
 		};
@@ -28,7 +28,7 @@ public class Eagle : Bird {
 
 	private IEnumerator InitiateAttack(float waitTime){
         yield return null;
-        myEagleFriends.TriggerSpawnEvent();
+        _myEagleFriends.TriggerSpawnEvent();
 		yield return new WaitForSeconds(waitTime);
 		StartCoroutine (SweepUp (true));
 	}
@@ -36,15 +36,15 @@ public class Eagle : Bird {
 	private IEnumerator SweepUp(bool first){
 		float moveSpeed = 5f;
 		transform.FaceForward(first);
-		transform.position = startPos [first ? 0 : 1];
-		rigbod.velocity = moveDir [first ? 0 : 1] * moveSpeed;
-		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle (moveDir [first ? 0 : 1]);
+		transform.position = _startPos [first ? 0 : 1];
+		_rigbod.velocity = _moveDir [first ? 0 : 1] * moveSpeed;
+		_pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle (_moveDir [first ? 0 : 1]);
 		yield return new WaitForSeconds(first ? 4f : 6f);
 		if (first){
 			StartCoroutine (SweepUp (false));
 		}
 		else{
-			rigbod.velocity = Vector2.zero;
+			_rigbod.velocity = Vector2.zero;
 			Strike ();
 		}
 	}
@@ -52,15 +52,15 @@ public class Eagle : Bird {
 	private void Strike(){
 		float xStartPoint = 20f;
 		while (Mathf.Abs(xStartPoint)>Constants.WorldDimensions.x){
-			xStartPoint = Constants.balloonCenter.position.x + Random.Range (-Constants.WorldDimensions.x, Constants.WorldDimensions.x) * .15f;
+			xStartPoint = Constants.BalloonCenter.position.x + Random.Range (-Constants.WorldDimensions.x, Constants.WorldDimensions.x) * .15f;
 		}
 
 		float strikeSpeed = 9f;
 		transform.position = new Vector2 (xStartPoint, Constants.WorldDimensions.y * 1.2f);
-		attackDir = (Constants.balloonCenter.position - transform.position).normalized;
-		rigbod.velocity = attackDir * strikeSpeed;
-		transform.FaceForward(attackDir.x>0);
-		pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle (attackDir);
+		_attackDir = (Constants.BalloonCenter.position - transform.position).normalized;
+		_rigbod.velocity = _attackDir * strikeSpeed;
+		transform.FaceForward(_attackDir.x>0);
+		_pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle (_attackDir);
 
 		StartCoroutine (InitiateAttack(5f));
 	}

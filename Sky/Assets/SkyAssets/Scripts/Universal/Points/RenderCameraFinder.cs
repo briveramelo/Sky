@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class RenderCameraFinder : MonoBehaviour {
 
-    [SerializeField] private Canvas MyCanvas;
+    [SerializeField] private Canvas _myCanvas;
 
     private void Awake()
     {
@@ -16,6 +16,6 @@ public class RenderCameraFinder : MonoBehaviour {
     }
 
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
-        MyCanvas.worldCamera = Camera.main;
+        _myCanvas.worldCamera = Camera.main;
     }
 }

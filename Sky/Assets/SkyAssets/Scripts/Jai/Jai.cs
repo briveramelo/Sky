@@ -11,24 +11,32 @@ public enum WeaponType {
 
 public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
 
-	[SerializeField] private GameObject[] weaponPrefabs = new GameObject[3];
-	[SerializeField] private Animator jaiAnimator;
-	private Weapon myWeapon;
-	private IUsable weaponTrigger;
-	private WeaponType MyWeaponType;
-	private IJaiID inputManager;
+	[SerializeField] private GameObject[] _weaponPrefabs = new GameObject[3];
+	[SerializeField] private Animator _jaiAnimator;
+	
+	private const float _distToThrow = .03f;
+	
+	private Weapon _myWeapon;
+	private IUsable _weaponTrigger;
+	private WeaponType _myWeaponType;
+	private IJaiId _inputManager;
 
-	private const float distToThrow = .03f;
-	private bool attacking, stabbing, beingHeld;
-	bool IFreezable.IsFrozen{get => beingHeld;
-		set => beingHeld = value;
+	
+	private Vector2 _startingTouchPoint;
+	private bool _attacking, _stabbing, _beingHeld;
+	bool IFreezable.IsFrozen{
+		get => _beingHeld;
+		set => _beingHeld = value;
 	}
 
-	private Vector2 startingTouchPoint;
 
 	private void Awake(){
-		Constants.jaiTransform = transform;
-		inputManager = FindObjectOfType<InputManager>().GetComponent<IJaiID>();
+		Constants.JaiTransform = transform;
+	}
+
+	private void Start()
+	{
+		_inputManager = FindObjectOfType<InputManager>().GetComponent<IJaiId>();
 	}
 
 	private Vector3[] spawnSpots = new Vector3[] {
@@ -37,10 +45,10 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
         Vector3.zero
     };
     public IEnumerator CollectNewWeapon(ICollectable collectableWeapon) {
-        MyWeaponType = collectableWeapon.GetCollected();
-        GenerateNewWeapon(MyWeaponType);
+        _myWeaponType = collectableWeapon.GetCollected();
+        GenerateNewWeapon(_myWeaponType);
 
-        switch (MyWeaponType) {
+        switch (_myWeaponType) {
             case WeaponType.None:
                 break;
             case WeaponType.Spear:
@@ -70,20 +78,20 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
         yield return null;
     }
 
-	void IBegin.OnTouchBegin(int fingerID){
+	void IBegin.OnTouchBegin(int fingerId){
         if (!Pauser.Paused) {
-            if (!beingHeld){
-			    float distFromStick = Vector2.Distance(InputManager.touchSpot,Joyfulstick.startingJoystickSpot);
-			    float distFromPause = Vector2.Distance(InputManager.touchSpot,Pauser.PauseSpot);
-			    if (distFromStick>Joyfulstick.joystickMaxStartDist && distFromPause > Pauser.pauseRadius){
+            if (!_beingHeld){
+			    float distFromStick = Vector2.Distance(InputManager.TouchSpot,Joyfulstick.StartingJoystickSpot);
+			    float distFromPause = Vector2.Distance(InputManager.TouchSpot,Pauser.PauseSpot);
+			    if (distFromStick>Joyfulstick.JoystickMaxStartDist && distFromPause > Pauser.PauseRadius){
 				    if (Input.touchCount<3){
-					    startingTouchPoint = InputManager.touchSpot;
-					    inputManager.SetJaiID(fingerID);
+					    _startingTouchPoint = InputManager.TouchSpot;
+					    _inputManager.SetJaiId(fingerId);
 				    }
 			    }
 		    }
 		    else{
-			    if (!stabbing){
+			    if (!_stabbing){
 				    StartCoroutine(StabTheBeast());
 			    }
 		    }
@@ -92,11 +100,11 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
 
 	void IEnd.OnTouchEnd(){
         if (!Pauser.Paused) {
-            Vector2 swipeDir = InputManager.touchSpot- startingTouchPoint;
+            Vector2 swipeDir = InputManager.TouchSpot- _startingTouchPoint;
             float releaseDist = swipeDir.magnitude;
-		    if (!attacking){
-			    if ( releaseDist > distToThrow && myWeapon!=null){
-                    weaponTrigger.UseMe(swipeDir);
+		    if (!_attacking){
+			    if ( releaseDist > _distToThrow && _myWeapon!=null){
+                    _weaponTrigger.UseMe(swipeDir);
                     StartCoroutine (AnimateUseWeapon(swipeDir));
 			    }
 		    }
@@ -104,12 +112,12 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
 	}
 
 	private IEnumerator AnimateUseWeapon(Vector2 attackDir) {
-        attacking = true;
-        switch (MyWeaponType) {
+        _attacking = true;
+        switch (_myWeaponType) {
             case WeaponType.None:
                 break;
             case WeaponType.Spear:
-				StartCoroutine(PullOutNewSpear(Constants.time2ThrowSpear));
+				StartCoroutine(PullOutNewSpear(Constants.Time2ThrowSpear));
                 yield return StartCoroutine(AnimateThrowSpear(attackDir));
                 break;
             case WeaponType.Lightning:
@@ -119,7 +127,7 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
                 yield return StartCoroutine(AnimateSwingFlail(attackDir));
                 break;
         }
-        attacking = false;
+        _attacking = false;
     }
 
 	private enum Throw{
@@ -129,17 +137,17 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
 	}
 
 	private IEnumerator AnimateThrowSpear(Vector2 throwDir){
-		Throw ThrowState = throwDir.y<=.2f ? Throw.Down : Throw.Up;
+		Throw throwState = throwDir.y<=.2f ? Throw.Down : Throw.Up;
         transform.FaceForward(throwDir.x > 0);
 
-		jaiAnimator.SetInteger("AnimState",(int)ThrowState);
-		yield return new WaitForSeconds (Constants.time2ThrowSpear);
-		jaiAnimator.SetInteger("AnimState",(int)Throw.Idle);
+		_jaiAnimator.SetInteger("AnimState",(int)throwState);
+		yield return new WaitForSeconds (Constants.Time2ThrowSpear);
+		_jaiAnimator.SetInteger("AnimState",(int)Throw.Idle);
 	}
 
 	private IEnumerator AnimateCastLightning(Vector2 swipeDir) {
         Debug.Log("Animating Lightning Strike!");
-        yield return new WaitForSeconds(Constants.time2StrikeLightning);
+        yield return new WaitForSeconds(Constants.Time2StrikeLightning);
     }
 
 	private IEnumerator AnimateSwingFlail(Vector2 swipeDir) {
@@ -149,11 +157,11 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
 
 
 	private IEnumerator StabTheBeast(){
-        stabbing = true;
+        _stabbing = true;
 		//jaiAnimator.SetInteger("AnimState",5);
 		Tentacles.StabbableTentacle.GetStabbed(); //stab the tentacle!
 		yield return new WaitForSeconds (.1f);
-		stabbing = false;
+		_stabbing = false;
 		//jaiAnimator.SetInteger("AnimState",0);
 	}
 
@@ -163,7 +171,7 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable {
 	}
 
 	private void GenerateNewWeapon(WeaponType weaponType) {
-        myWeapon = Instantiate (weaponPrefabs[(int)weaponType], transform.position + spawnSpots[(int)weaponType], Quaternion.identity).GetComponent<Weapon>();
-        weaponTrigger = myWeapon;
+        _myWeapon = Instantiate (_weaponPrefabs[(int)weaponType], transform.position + spawnSpots[(int)weaponType], Quaternion.identity).GetComponent<Weapon>();
+        _weaponTrigger = _myWeapon;
     }
 }

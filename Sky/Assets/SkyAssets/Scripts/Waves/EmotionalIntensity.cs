@@ -24,17 +24,17 @@ public enum BirdThreat {
 }
 
 public interface IThreat {
-    void RaiseThreat(Threat MyThreat);
-    void BirdThreat(ref BirdStats birdStats, BirdThreat MyThreat);
+    void RaiseThreat(Threat myThreat);
+    void BirdThreat(ref BirdStats birdStats, BirdThreat myThreat);
 }
 
 public class EmotionalIntensity : MonoBehaviour, IThreat{
 
+    #region Member Variables
     public static IThreat ThreatTracker;
-    private int level;
-    #region ThreateningBirds
+    public static BirdType[] ThreateningBirds => _threateningBirds;
 
-    private static BirdType[] threateningBirds = new BirdType[]{
+    private static BirdType[] _threateningBirds = {
         BirdType.Pigeon,
         BirdType.Duck,
         BirdType.DuckLeader,
@@ -49,47 +49,44 @@ public class EmotionalIntensity : MonoBehaviour, IThreat{
         BirdType.Eagle,
         BirdType.BirdOfParadise
     };
-    public static BirdType[] ThreateningBirds => threateningBirds;
+    
+    [SerializeField] private AnimationCurve _timeIntensity = new AnimationCurve();
+    private static float _intensity;
+    private float _repeatTime;
 
+    public static float Intensity { 
+        get => _intensity;
+        private set => _intensity = Mathf.Clamp(value, 0, 1000);
+    }
     #endregion
+    
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
 
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
-        intensity = 0;
-        timeIntensity = new AnimationCurve();
-        editorIntensity = timeIntensity;
-        this.level = level;
+        _intensity = 0;
+        _timeIntensity = new AnimationCurve();
     }
 
     private void Awake() {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
         ThreatTracker = this;
-        editorIntensity = timeIntensity;
         Decay();
     }
-
-    private static float intensity;
-    public static float Intensity { get => intensity;
-        private set => intensity = Mathf.Clamp(value, 0, 1000);
-    }
-
-
-    private static AnimationCurve timeIntensity = new AnimationCurve();
-    public AnimationCurve editorIntensity;
-    public static AnimationCurve TimeIntensity => timeIntensity;
-
+    
+    #if UNITY_EDITOR //visualize intensity as an animation curve over time
     private void Update() {
         if (SceneManager.GetActiveScene().name != Scenes.Menu) {
-            timeIntensity.AddKey(Time.time, Intensity);
+            _timeIntensity.AddKey(Time.time, Intensity);
         }
     }
+    #endif
 
-    void IThreat.BirdThreat(ref BirdStats birdStats, BirdThreat MyThreat) {
+    void IThreat.BirdThreat(ref BirdStats birdStats, BirdThreat myThreat) {
         int threat=0;
-        switch (MyThreat) {
+        switch (myThreat) {
             case BirdThreat.Spawn:
                 threat = birdStats.TotalThreatValue;
                 break;
@@ -103,21 +100,19 @@ public class EmotionalIntensity : MonoBehaviour, IThreat{
         Intensity += threat;
     }
 
-    void IThreat.RaiseThreat(Threat MyThreat){
-        Intensity += (int)MyThreat;
+    void IThreat.RaiseThreat(Threat myThreat){
+        Intensity += (int)myThreat;
     }
-
-    private float repeatTime;
-
+    
     private void Decay(){
 		bool decay = Intensity > 0 && ScoreSheet.Reporter.GetCount(CounterType.Alive, true, BirdType.All)<5;
 		if (decay){
             Intensity -= 3;
-			repeatTime=1f;
+			_repeatTime=1f;
 		}
 		else{
-			repeatTime =3f;
+			_repeatTime =3f;
 		}
-		Invoke ("Decay",repeatTime);
+		Invoke ("Decay",_repeatTime);
 	}
 }
