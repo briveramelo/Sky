@@ -1,6 +1,7 @@
 ﻿using UnityEngine.SceneManagement;
 
-public class ScoreBoard : PointDisplay {
+public class ScoreBoard : PointDisplay
+{
     private void Awake()
     {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
@@ -11,13 +12,16 @@ public class ScoreBoard : PointDisplay {
         SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
 
-    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
-        if (scene.name == Scenes.Menu) {
+    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == Scenes.Menu)
+        {
             _myText.text = "";
         }
     }
 
-	protected override void DisplayPoints(int points){
-		_myText.text = points.ToString();
-	}
+    protected override void DisplayPoints(int points)
+    {
+        _myText.text = points.ToString();
+    }
 }

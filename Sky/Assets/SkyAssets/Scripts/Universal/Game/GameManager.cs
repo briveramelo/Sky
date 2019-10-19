@@ -1,3 +1,3 @@
-﻿public class GameManager : Singleton<GameManager> {
-    
+﻿public class GameManager : Singleton<GameManager>
+{
 }

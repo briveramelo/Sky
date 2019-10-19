@@ -2,12 +2,12 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class WaveManager : MonoBehaviour {
-
+public class WaveManager : MonoBehaviour
+{
     [SerializeField] private WaveUi _waveUi;
     [SerializeField] private Wave[] _storyWaves;
     [SerializeField] private Wave _endlessWave;
-    
+
     private IWaveUi _myWaveUi;
     private IWaveRunnable[] _storyWaveCalls;
     private IWaveRunnable _endlessWaveCall;
@@ -23,16 +23,19 @@ public class WaveManager : MonoBehaviour {
         ChooseMode(scene.name);
     }
 
-    private void Awake(){
+    private void Awake()
+    {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
         _storyWaveCalls = _storyWaves;
         _endlessWaveCall = _endlessWave;
         _myWaveUi = _waveUi;
-	}
+    }
 
-    private void ChooseMode(string loadedScene) {
+    private void ChooseMode(string loadedScene)
+    {
         Debug.LogFormat("mode chosen with scene: {0}", loadedScene);
-        switch (loadedScene) {
+        switch (loadedScene)
+        {
             case Scenes.Story:
                 StartCoroutine(RunStoryWaves());
                 break;
@@ -48,22 +51,28 @@ public class WaveManager : MonoBehaviour {
 
     #region StoryWaves
 
-    private IEnumerator RunStoryWaves() {
-        foreach (IWaveRunnable wave in _storyWaveCalls){
-            if (wave.MyWave == WaveName.Pigeon) {
+    private IEnumerator RunStoryWaves()
+    {
+        foreach (var wave in _storyWaveCalls)
+        {
+            if (wave.MyWave == WaveName.Pigeon)
+            {
                 CurrentWave = wave.MyWave;
-                yield return StartCoroutine (wave.RunWave());
+                yield return StartCoroutine(wave.RunWave());
             }
-		}
+        }
+
         yield return StartCoroutine(FinishStoryMode());
     }
 
-    private IEnumerator StartStoryMode() {
+    private IEnumerator StartStoryMode()
+    {
         CurrentWave = WaveName.Intro;
         yield return StartCoroutine(_myWaveUi.AnimateStoryStart());
     }
 
-    private IEnumerator FinishStoryMode() {
+    private IEnumerator FinishStoryMode()
+    {
         Debug.Log("Play Victory noises and stuff");
         CurrentWave = WaveName.Complete;
         ScoreSheet.Reporter.ReportScores();
@@ -71,9 +80,11 @@ public class WaveManager : MonoBehaviour {
 
         SceneManager.LoadScene(Scenes.Menu);
     }
+
     #endregion
 
-    private void RunEndlessWaves() {
+    private void RunEndlessWaves()
+    {
         CurrentWave = WaveName.Endless;
         StartCoroutine(_endlessWaveCall.RunWave());
     }

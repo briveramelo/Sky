@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using GenericFunctions;
 
-public class MenuInputHandler : MonoBehaviour, IFreezable {
-
+public class MenuInputHandler : MonoBehaviour, IFreezable
+{
     public static Vector2 TouchSpot;
 
     [SerializeField] private Selector[] _selectors;
@@ -12,35 +12,46 @@ public class MenuInputHandler : MonoBehaviour, IFreezable {
     private Vector2 _correctionPixels;
     private float _correctionPixelFactor;
     private bool _isFrozen;
-    bool IFreezable.IsFrozen {
+
+    bool IFreezable.IsFrozen
+    {
         get => _isFrozen;
         set => _isFrozen = value;
     }
 
-    private void Awake() {
+    private void Awake()
+    {
         enders = new List<IEnd>(_selectors);
-        Corrections pixelFix = new Corrections(false);
+        var pixelFix = new Corrections(false);
         _correctionPixels = pixelFix.CorrectionPixels;
         _correctionPixelFactor = pixelFix.CorrectionPixelFactor;
     }
 
-    private void Update() {
-        if (!_isFrozen) {
-            if (Input.touchCount > 0) {
-                foreach (Touch finger in Input.touches) {
+    private void Update()
+    {
+        if (!_isFrozen)
+        {
+            if (Input.touchCount > 0)
+            {
+                foreach (var finger in Input.touches)
+                {
                     TouchSpot = (finger.position + _correctionPixels) * _correctionPixelFactor;
-                    if (finger.phase == TouchPhase.Began) {
+                    if (finger.phase == TouchPhase.Began)
+                    {
                         //beginners.ForEach(beginner => beginner.OnTouchBegin(finger.fingerId));
                     }
-                    else if (finger.phase == TouchPhase.Moved || finger.phase == TouchPhase.Stationary) {
+                    else if (finger.phase == TouchPhase.Moved || finger.phase == TouchPhase.Stationary)
+                    {
                         //holders.ForEach(holder => holder.OnTouchHeld());
                     }
-                    else if (finger.phase == TouchPhase.Ended) {
+                    else if (finger.phase == TouchPhase.Ended)
+                    {
                         enders.ForEach(ender => ender.OnTouchEnd());
                     }
                 }
             }
-            else {
+            else
+            {
                 TouchSpot = Vector2.up * Constants.WorldDimensions.y * 10f;
             }
         }

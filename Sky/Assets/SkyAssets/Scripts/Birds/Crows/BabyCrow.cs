@@ -2,94 +2,113 @@
 using System.Collections;
 using GenericFunctions;
 
-public class BabyCrow : Bird {
+public class BabyCrow : Bird
+{
+    [SerializeField] private Animator _babyCrowAnimator;
 
-	[SerializeField] private Animator _babyCrowAnimator;
+    private Vector2[] basketOffsets = new Vector2[]
+    {
+        new Vector2(-.8f, 0.1f),
+        new Vector2(.8f, 0.1f),
+    };
 
-	private Vector2[] basketOffsets = new Vector2[]{
-		new Vector2 (-.8f, 0.1f),
-		new Vector2 (.8f, 0.1f),
-	};
+    private Vector2 _moveDir;
+    private float _dist2Target;
 
-	private Vector2 _moveDir;
-	private float _dist2Target;
+    private const float _triggerShiftDistance = 0.3f;
+    private const float _moveSpeed = 2f;
 
-	private const float _triggerShiftDistance = 0.3f;
-	private const float _moveSpeed = 2f;
+    private int _currentShift;
+    private int _shiftsHit;
+    private const int _maxShifts = 5;
+    private int _basketOffsetIndex;
 
-	private int _currentShift;
-	private int _shiftsHit;
-	private const int _maxShifts = 5;
-	private int _basketOffsetIndex;
-	private int BasketOffsetIndex{
-		get => _basketOffsetIndex;
-		set{
-			_basketOffsetIndex = value;
-			if (_basketOffsetIndex>1){
-				_basketOffsetIndex =0;
-			}
-		}
-	}
+    private int BasketOffsetIndex
+    {
+        get => _basketOffsetIndex;
+        set
+        {
+            _basketOffsetIndex = value;
+            if (_basketOffsetIndex > 1)
+            {
+                _basketOffsetIndex = 0;
+            }
+        }
+    }
 
-	private float CorrectSpeed => _dist2Target<0.4f? Mathf.Lerp(_rigbod.velocity.magnitude,0f,Time.deltaTime *2f) : _moveSpeed;
+    private float CorrectSpeed => _dist2Target < 0.4f ? Mathf.Lerp(_rigbod.velocity.magnitude, 0f, Time.deltaTime * 2f) : _moveSpeed;
 
-	private enum AnimState{
-		Flying=0,
-		Looking=1
-	}
+    private enum AnimState
+    {
+        Flying = 0,
+        Looking = 1
+    }
 
-	protected override void Awake () {
-		base.Awake();
-		StartCoroutine(ApproachShifts());
-	}
+    protected override void Awake()
+    {
+        base.Awake();
+        StartCoroutine(ApproachShifts());
+    }
 
-	private IEnumerator ApproachShifts(){
-		transform.FaceForward(transform.position.x<Constants.BalloonCenter.position.x);
-		while (_currentShift<_maxShifts){
-			_dist2Target = Vector2.Distance(Constants.JaiTransform.position + (Vector3)basketOffsets [BasketOffsetIndex],transform.position);
-			_moveDir = (Constants.JaiTransform.position + (Vector3)basketOffsets [BasketOffsetIndex] - transform.position).normalized;
-			_rigbod.velocity = _moveDir * CorrectSpeed;
+    private IEnumerator ApproachShifts()
+    {
+        transform.FaceForward(transform.position.x < Constants.BalloonCenter.position.x);
+        while (_currentShift < _maxShifts)
+        {
+            _dist2Target = Vector2.Distance(Constants.JaiTransform.position + (Vector3) basketOffsets[BasketOffsetIndex], transform.position);
+            _moveDir = (Constants.JaiTransform.position + (Vector3) basketOffsets[BasketOffsetIndex] - transform.position).normalized;
+            _rigbod.velocity = _moveDir * CorrectSpeed;
 
-			if (_dist2Target<_triggerShiftDistance && _shiftsHit == _currentShift){
-				StartCoroutine (ShiftSpots());
-			}
-			yield return null;
-		}
-		_rigbod.velocity = Vector2.zero;
-		StartCoroutine (FlyAway());
-	}
+            if (_dist2Target < _triggerShiftDistance && _shiftsHit == _currentShift)
+            {
+                StartCoroutine(ShiftSpots());
+            }
 
-	private IEnumerator ShiftSpots(){
-		_shiftsHit++;
-		_babyCrowAnimator.SetInteger("AnimState",(int)AnimState.Looking);
-		yield return StartCoroutine (LookBackAndForth(transform.position.x<Constants.BalloonCenter.position.x));
-		_babyCrowAnimator.SetInteger("AnimState",(int)AnimState.Flying);
-		_currentShift++;
-		BasketOffsetIndex++;
-	}
+            yield return null;
+        }
 
-	private IEnumerator FlyAway(){
-		_dist2Target = Vector2.Distance(Vector3.right * Constants.WorldDimensions.x * 1.2f, transform.position);
+        _rigbod.velocity = Vector2.zero;
+        StartCoroutine(FlyAway());
+    }
 
-		while (_dist2Target > _triggerShiftDistance){
-			_dist2Target = Vector2.Distance(Vector3.right * Constants.WorldDimensions.x * 1.2f, transform.position);
-			_moveDir = (Vector3.right * Constants.WorldDimensions.x * 1.2f - transform.position).normalized;
-			_rigbod.velocity = _moveDir * _moveSpeed;
-			yield return null;
-		}
-		Destroy(gameObject);
-	}
+    private IEnumerator ShiftSpots()
+    {
+        _shiftsHit++;
+        _babyCrowAnimator.SetInteger("AnimState", (int) AnimState.Looking);
+        yield return StartCoroutine(LookBackAndForth(transform.position.x < Constants.BalloonCenter.position.x));
+        _babyCrowAnimator.SetInteger("AnimState", (int) AnimState.Flying);
+        _currentShift++;
+        BasketOffsetIndex++;
+    }
 
-	private IEnumerator LookBackAndForth(bool faceDir){
-		for (int i=0; i<7; i++){
-			transform.FaceForward(faceDir);
-			yield return new WaitForSeconds (Random.Range(0.33f,.75f));
-			faceDir = !faceDir;
-		}
-	}
-		
-	protected override void DieUniquely (){
-		Incubator.Instance.SpawnNextBird(BirdType.Crow);
-		base.DieUniquely();
-	}
+    private IEnumerator FlyAway()
+    {
+        _dist2Target = Vector2.Distance(Vector3.right * Constants.WorldDimensions.x * 1.2f, transform.position);
+
+        while (_dist2Target > _triggerShiftDistance)
+        {
+            _dist2Target = Vector2.Distance(Vector3.right * Constants.WorldDimensions.x * 1.2f, transform.position);
+            _moveDir = (Vector3.right * Constants.WorldDimensions.x * 1.2f - transform.position).normalized;
+            _rigbod.velocity = _moveDir * _moveSpeed;
+            yield return null;
+        }
+
+        Destroy(gameObject);
+    }
+
+    private IEnumerator LookBackAndForth(bool faceDir)
+    {
+        for (var i = 0; i < 7; i++)
+        {
+            transform.FaceForward(faceDir);
+            yield return new WaitForSeconds(Random.Range(0.33f, .75f));
+            faceDir = !faceDir;
+        }
+    }
+
+    protected override void DieUniquely()
+    {
+        Incubator.Instance.SpawnNextBird(BirdType.Crow);
+        base.DieUniquely();
+    }
 }

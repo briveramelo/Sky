@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public enum GameMode {
-    Story =0,
-    Endless =1
+public enum GameMode
+{
+    Story = 0,
+    Endless = 1
 }
 
-public class ScoreDisplayer : MonoBehaviour {
-
+public class ScoreDisplayer : MonoBehaviour
+{
     [SerializeField] private Text _title;
     [SerializeField] private Text _column1Title;
     [SerializeField] private Text _column2Title;
@@ -16,17 +17,20 @@ public class ScoreDisplayer : MonoBehaviour {
 
     private DataSave _currentDataSave;
 
-    private void Awake() {
+    private void Awake()
+    {
         _currentDataSave = FindObjectOfType<SaveLoadData>().CopyCurrentDataSave();
         DisplayStats(GameMode.Story);
     }
 
-    public void DisplayStats(GameMode myGameMode) {
+    public void DisplayStats(GameMode myGameMode)
+    {
         _title.text = myGameMode.ToString().ToUpper() + " HIGH SCORES";
         _column1Title.text = myGameMode == GameMode.Story ? "Final Wave" : "Score";
         _column2Title.text = myGameMode == GameMode.Story ? "Score" : "Time";
 
-        switch (myGameMode) {
+        switch (myGameMode)
+        {
             case GameMode.Story:
                 DisplayScores(ref _currentDataSave.StoryScores);
                 break;
@@ -36,27 +40,34 @@ public class ScoreDisplayer : MonoBehaviour {
         }
     }
 
-    private void DisplayScores(ref List<StoryScore> myScores) {
-        for (int i=0; i<myScores.Count; i++) {
+    private void DisplayScores(ref List<StoryScore> myScores)
+    {
+        for (var i = 0; i < myScores.Count; i++)
+        {
             _column1[i].text = myScores[i].FinalWave.ToString();
             _column2[i].text = myScores[i].Score.ToString();
         }
+
         EmptyRemaining(myScores.Count);
     }
 
-    private void DisplayScores(ref List<EndlessScore> myScores) {
-        for (int i=0; i<myScores.Count; i++) {
+    private void DisplayScores(ref List<EndlessScore> myScores)
+    {
+        for (var i = 0; i < myScores.Count; i++)
+        {
             _column1[i].text = myScores[i].Score.ToString();
-            _column2[i].text = ((int)myScores[i].Duration).ToString() + "s";
+            _column2[i].text = ((int) myScores[i].Duration).ToString() + "s";
         }
+
         EmptyRemaining(myScores.Count);
     }
 
-    private void EmptyRemaining(int scoresRecorded) {
-        for (int i=scoresRecorded; i<5; i++) {
+    private void EmptyRemaining(int scoresRecorded)
+    {
+        for (var i = scoresRecorded; i < 5; i++)
+        {
             _column1[i].text = "-";
             _column2[i].text = "-";
         }
     }
-    
 }

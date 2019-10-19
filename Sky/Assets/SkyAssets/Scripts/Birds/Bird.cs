@@ -1,56 +1,67 @@
 ﻿using UnityEngine;
 
-public interface IHurtable {
-	void GetHurt(ref WeaponStats weaponStats);
+public interface IHurtable
+{
+    void GetHurt(ref WeaponStats weaponStats);
 }
 
-public abstract class Bird : MonoBehaviour, IHurtable {
+public abstract class Bird : MonoBehaviour, IHurtable
+{
+    protected BirdStats BirdStats;
+    public BirdStats MyBirdStats => BirdStats;
 
-	protected BirdStats BirdStats; public BirdStats MyBirdStats => BirdStats;
+    [SerializeField] private BirdType _myBirdType;
+    [SerializeField] protected Rigidbody2D _rigbod;
+    [SerializeField] protected Collider2D _birdCollider;
+    [SerializeField] protected GameObject _guts;
 
-	[SerializeField] private BirdType _myBirdType;
-	[SerializeField] protected Rigidbody2D _rigbod;
-	[SerializeField] protected Collider2D _birdCollider;
-	[SerializeField] protected GameObject _guts;
-
-	protected virtual void Awake(){
+    protected virtual void Awake()
+    {
         BirdStats = new BirdStats(_myBirdType);
         ScoreSheet.Tallier.TallyBirth(ref BirdStats);
         ScoreSheet.Tallier.TallyBirdThreat(ref BirdStats, BirdThreat.Spawn);
     }
 
-	void IHurtable.GetHurt(ref WeaponStats weaponStats) {
+    void IHurtable.GetHurt(ref WeaponStats weaponStats)
+    {
         BirdStats.DamageTaken = TakeDamage(ref weaponStats);
         BirdStats.BirdPosition = transform.position;
-		BirdStats.ModifyForStreak(ScoreSheet.Streaker.GetHitStreak());
-		BirdStats.ModifyForCombo(weaponStats.BirdsHit);
-		ScoreSheet.Tallier.TallyPoints (ref BirdStats);
+        BirdStats.ModifyForStreak(ScoreSheet.Streaker.GetHitStreak());
+        BirdStats.ModifyForCombo(weaponStats.BirdsHit);
+        ScoreSheet.Tallier.TallyPoints(ref BirdStats);
         ScoreSheet.Tallier.TallyBirdThreat(ref BirdStats, BirdThreat.Damage);
-        if (BirdStats.Health<=0){
-			GameClock.Instance.SlowTime(.1f,.5f);
-			ScoreSheet.Tallier.TallyKill (ref BirdStats);
+        if (BirdStats.Health <= 0)
+        {
+            GameClock.Instance.SlowTime(.1f, .5f);
+            ScoreSheet.Tallier.TallyKill(ref BirdStats);
             DieUniquely();
-		}
-	}
+        }
+    }
 
-	protected virtual int TakeDamage(ref WeaponStats weaponStats){
-        int damageDealt = Mathf.Clamp(weaponStats.Damage, 0, BirdStats.Health);
+    protected virtual int TakeDamage(ref WeaponStats weaponStats)
+    {
+        var damageDealt = Mathf.Clamp(weaponStats.Damage, 0, BirdStats.Health);
         BirdStats.Health -= damageDealt;
-		Instantiate (_guts, transform.position, Quaternion.identity).GetComponent<IBleedable>().GenerateGuts(ref BirdStats, weaponStats.Velocity);
+        Instantiate(_guts, transform.position, Quaternion.identity).GetComponent<IBleedable>().GenerateGuts(ref BirdStats, weaponStats.Velocity);
         return damageDealt;
     }
 
-	protected virtual void DieUniquely(){
-		Destroy(gameObject);
-	}
+    protected virtual void DieUniquely()
+    {
+        Destroy(gameObject);
+    }
 
-	protected void OnDestroy(){
-		if (ScoreSheet.Instance){
-			ScoreSheet.Tallier.TallyDeath (ref BirdStats);
-            if (BirdStats.Health > 0) {
+    protected void OnDestroy()
+    {
+        if (ScoreSheet.Instance)
+        {
+            ScoreSheet.Tallier.TallyDeath(ref BirdStats);
+            if (BirdStats.Health > 0)
+            {
                 ScoreSheet.Tallier.TallyBirdThreat(ref BirdStats, BirdThreat.Leave);
             }
         }
-		StopAllCoroutines();
-	}
+
+        StopAllCoroutines();
+    }
 }

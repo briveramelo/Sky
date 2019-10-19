@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 
-public class AnimationHelper : MonoBehaviour {
+public class AnimationHelper : MonoBehaviour
+{
+    [SerializeField] private Animator _myAnimator;
 
-	[SerializeField] private Animator _myAnimator;
-
-    private void SetAnimState(TextAnimState myAnim) {
-        _myAnimator.SetInteger("AnimState", (int)myAnim);
+    private void SetAnimState(TextAnimState myAnim)
+    {
+        _myAnimator.SetInteger("AnimState", (int) myAnim);
     }
 }

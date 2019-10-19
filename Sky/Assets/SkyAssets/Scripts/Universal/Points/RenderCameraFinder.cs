@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class RenderCameraFinder : MonoBehaviour {
-
+public class RenderCameraFinder : MonoBehaviour
+{
     [SerializeField] private Canvas _myCanvas;
 
     private void Awake()
@@ -15,7 +15,8 @@ public class RenderCameraFinder : MonoBehaviour {
         SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
 
-    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
         _myCanvas.worldCamera = Camera.main;
     }
 }
