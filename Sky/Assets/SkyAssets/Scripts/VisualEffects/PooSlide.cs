@@ -14,7 +14,7 @@ public class PooSlide : MonoBehaviour
     private void Awake()
     {
         _mySpriteRenderer.material = _pooMaterials[Constants.TargetPooInt];
-        StartCoroutine(AnimateSplat(Constants.TargetPooInt));
+        StartCoroutine(AnimateSplat());
         StartCoroutine(SlideDown());
         Destroy(transform.parent.gameObject, 15f);
         ScoreSheet.Tallier.TallyThreat(Threat.Poop);
@@ -23,7 +23,7 @@ public class PooSlide : MonoBehaviour
         Seagull.LogPooCam(true);
     }
 
-    private IEnumerator AnimateSplat(int pooCount)
+    private IEnumerator AnimateSplat()
     {
         while (_pooAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
@@ -31,7 +31,6 @@ public class PooSlide : MonoBehaviour
         }
 
         Destroy(_pooAnimator);
-        var i = (pooCount + 2) % 2 == 0 ? 0 : 1;
         _mySpriteRenderer.sprite = _lastPooSprites[1];
     }
 

@@ -14,7 +14,7 @@ public class PelicanWave : Wave
 
         // 4 PIGEONS (Wait 2, + 2)
         // 2 PELICANS
-        var waitForPigeons = new BirdWaiter[]
+        var waitForPigeons = new []
         {
             new BirdWaiter(CounterType.Alive, false, 2, MassProduce(BirdSpawnDelegates[BirdType.Pigeon], 2), BirdType.Pigeon),
             new BirdWaiter(CounterType.Spawned, false, 1, BirdSpawnDelegates[BirdType.Pelican], BirdType.Pigeon),

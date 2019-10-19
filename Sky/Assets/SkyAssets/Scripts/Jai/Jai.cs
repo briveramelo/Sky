@@ -167,9 +167,9 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable
         var throwState = throwDir.y <= .2f ? Throw.Down : Throw.Up;
         transform.FaceForward(throwDir.x > 0);
 
-        _jaiAnimator.SetInteger("AnimState", (int) throwState);
+        _jaiAnimator.SetInteger(0, (int) throwState);
         yield return new WaitForSeconds(Constants.Time2ThrowSpear);
-        _jaiAnimator.SetInteger("AnimState", (int) Throw.Idle);
+        _jaiAnimator.SetInteger(0, (int) Throw.Idle);
     }
 
     private IEnumerator AnimateCastLightning(Vector2 swipeDir)
@@ -188,11 +188,11 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable
     private IEnumerator StabTheBeast()
     {
         _stabbing = true;
-        //jaiAnimator.SetInteger("AnimState",5);
+        //jaiAnimator.SetInteger(0,5);
         Tentacles.StabbableTentacle.GetStabbed(); //stab the tentacle!
         yield return new WaitForSeconds(.1f);
         _stabbing = false;
-        //jaiAnimator.SetInteger("AnimState",0);
+        //jaiAnimator.SetInteger(0,0);
     }
 
     private IEnumerator PullOutNewSpear(float time2Wait)

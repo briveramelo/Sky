@@ -19,7 +19,6 @@ public class Spear : Weapon
         new Vector2(0f, .085f * 4f)
     };
 
-    private const float _bounceForce = 5f; //force at which the spear bounces back from the bird
     private const float _throwForce = 1400f; //Force with which Jai throws the spear
 
     protected override Vector2 MyVelocity => _rigbod.velocity;

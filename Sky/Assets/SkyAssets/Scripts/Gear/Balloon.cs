@@ -101,7 +101,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon
         var startTime = Time.time;
         while (true)
         {
-            transform.position += Vector3.up * _moveSpeed * Time.deltaTime;
+            transform.position += Time.deltaTime * _moveSpeed * Vector3.up;
             if (Time.time - startTime > _popTime)
             {
                 Destroy(gameObject);
@@ -138,7 +138,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon
 
         _balloonCollider.enabled = false;
         _boundsCollider.enabled = false;
-        _balloonAnimator.SetInteger("AnimState", 1);
+        _balloonAnimator.SetInteger(0, 1);
         AudioManager.PlayAudio(_pop);
         Destroy(_rope);
         Destroy(gameObject, Constants.Time2Destroy);

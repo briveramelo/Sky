@@ -43,7 +43,9 @@ namespace GenericFunctions
 
         public static void FaceForward(this Transform trans, bool forward)
         {
-            trans.localScale = new Vector3((forward ? 1 : -1) * Mathf.Abs(trans.localScale.x), trans.localScale.y, trans.localScale.z);
+            var localScale = trans.localScale;
+            localScale = new Vector3((forward ? 1 : -1) * Mathf.Abs(localScale.x), localScale.y, localScale.z);
+            trans.localScale = localScale;
         }
 
         private static Vector2 _screenDimensions = new Vector2(1136, 640); //new Vector2 (Screen.width, Screen.height);

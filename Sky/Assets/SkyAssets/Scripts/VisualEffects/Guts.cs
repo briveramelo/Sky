@@ -21,7 +21,6 @@ public class Guts : MonoBehaviour, IBleedable
     void IBleedable.GenerateGuts(ref BirdStats birdStats, Vector2 gutDirection)
     {
         var totalGutValue = birdStats.GutsToSpill;
-        var j = 0;
         var gutValue = 0;
         var subGutValue = 0;
         GameObject gut;
@@ -33,8 +32,6 @@ public class Guts : MonoBehaviour, IBleedable
             gut = Instantiate(_gutSplosions[ConvertGutValueToIndex(subGutValue)], Random.insideUnitCircle.normalized * .2f + (Vector2) transform.position, Quaternion.identity);
             gut.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(gutDirection.x * .1f, gutDirection.x * .4f), Random.Range(3f, 8f));
             gut.transform.parent = transform;
-
-            j++;
         }
     }
 

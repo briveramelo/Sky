@@ -30,6 +30,7 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable
     protected const float HighHeight = 0.6f;
     protected static float[] Heights;
     protected Vector2[] DuckSpawnPoints;
+    protected Dictionary<BirdType, SpawnDelegate> BirdSpawnDelegates = new Dictionary<BirdType, SpawnDelegate>();
 
     protected const bool Right = true;
     protected const bool Left = false;
@@ -58,7 +59,6 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable
         };
     }
 
-    protected Dictionary<BirdType, SpawnDelegate> BirdSpawnDelegates = new Dictionary<BirdType, SpawnDelegate>();
 
     #endregion
 

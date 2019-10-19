@@ -20,7 +20,7 @@ public class Shoebill : Bird
         base.Awake();
         _sinPeriodShift = Random.Range(0f, 5f);
         _movingRight = transform.position.x < Constants.JaiTransform.position.x;
-        _rigbod.velocity = Vector2.right * MovingSign * 0.01f;
+        _rigbod.velocity = 0.01f * MovingSign * Vector2.right;
     }
 
     private void Start()
@@ -55,9 +55,10 @@ public class Shoebill : Bird
 
     private float FindXVelocity()
     {
-        var outOfBounds = Mathf.Abs(transform.position.x) > _xEdge;
+        var pos = transform.position;
+        var outOfBounds = Mathf.Abs(pos.x) > _xEdge;
         var movingAway = MovingSign == (int) Mathf.Sign(_rigbod.velocity.x);
-        var properSide = MovingSign == (int) Mathf.Sign(transform.position.x);
+        var properSide = MovingSign == (int) Mathf.Sign(pos.x);
 
         var reverseDirection = outOfBounds && movingAway && properSide;
         if (reverseDirection)
@@ -66,21 +67,21 @@ public class Shoebill : Bird
             _birdCollider.enabled = false;
         }
 
-        if (Mathf.Abs(_lastXPosition) > Constants.WorldDimensions.x && Mathf.Abs(transform.position.x) < Constants.WorldDimensions.x)
+        if (Mathf.Abs(_lastXPosition) > Constants.WorldDimensions.x && Mathf.Abs(pos.x) < Constants.WorldDimensions.x)
         {
             _birdCollider.enabled = true;
         }
 
-        if (_lastXPosition < -Constants.WorldDimensions.x / 2f && transform.position.x > -Constants.WorldDimensions.x / 2f)
+        if (_lastXPosition < -Constants.WorldDimensions.x / 2f && pos.x > -Constants.WorldDimensions.x / 2f)
         {
             _rightIsTarget = true;
         }
-        else if (_lastXPosition > Constants.WorldDimensions.x / 2f && transform.position.x < Constants.WorldDimensions.x / 2f)
+        else if (_lastXPosition > Constants.WorldDimensions.x / 2f && pos.x < Constants.WorldDimensions.x / 2f)
         {
             _rightIsTarget = false;
         }
 
-        _lastXPosition = transform.position.x;
+        _lastXPosition = pos.x;
         return Mathf.Lerp(_rigbod.velocity.x, MovingSign * MoveSpeed, Time.deltaTime);
     }
 
@@ -92,7 +93,8 @@ public class Shoebill : Bird
             if (_canHitBasket)
             {
                 GameCamera.Instance.ShakeTheCamera();
-                _basket.Bump(1.5f * new Vector2(_rigbod.velocity.x, _rigbod.velocity.y * 5f).normalized);
+                var vel = _rigbod.velocity;
+                _basket.Bump(1.5f * new Vector2(vel.x, vel.y * 5f).normalized);
                 StartCoroutine(Bool.Toggle(boolState => _canHitBasket = boolState, 4f));
                 StartCoroutine(Fall());
             }
@@ -102,7 +104,8 @@ public class Shoebill : Bird
     private IEnumerator Fall()
     {
         StartCoroutine(Bool.Toggle(boolState => _flying = boolState, 2f));
-        _rigbod.velocity = new Vector2(-_rigbod.velocity.x, -Mathf.Abs(_rigbod.velocity.y)).normalized * 2.5f;
+        var vel = _rigbod.velocity;
+        _rigbod.velocity = new Vector2(-vel.x, -Mathf.Abs(vel.y)).normalized * 2.5f;
         while (!_flying)
         {
             _rigbod.velocity = Vector2.Lerp(_rigbod.velocity, Vector2.zero, Time.deltaTime * 1.5f);

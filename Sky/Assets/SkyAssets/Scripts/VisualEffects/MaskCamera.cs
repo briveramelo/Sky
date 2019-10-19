@@ -22,7 +22,8 @@ public class MaskCamera : MonoBehaviour
     {
         _newHolePosition = null;
         var touchSpot = InputManager.TouchSpot;
-        var worldRect = new Rect(-Constants.WorldDimensions.x + _pooSliderTransform.position.x - _startingPoint.x, -Constants.WorldDimensions.y + _pooSliderTransform.position.y - _startingPoint.y,
+        var pooPos = _pooSliderTransform.position;
+        var worldRect = new Rect(-Constants.WorldDimensions.x + pooPos.x - _startingPoint.x, -Constants.WorldDimensions.y + pooPos.y - _startingPoint.y,
             Constants.WorldDimensions.x * 2f, Constants.WorldDimensions.y * 2f);
         if (worldRect.Contains(touchSpot))
         {

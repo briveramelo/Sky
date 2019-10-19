@@ -30,7 +30,7 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket
     [SerializeField] private Collider2D[] _boundingColliders;
     [SerializeField] private GameObject _balloonReplacement;
     [SerializeField] private List<SpriteRenderer> _mySprites;
-    [SerializeField] private AudioClip _invincible, _ready, _rebirth;
+    [SerializeField] private AudioClip _invincible, _rebirth;
     [SerializeField] private BasketEngine _basketEngine;
 
     private List<IBasketToBalloon> _balloons;

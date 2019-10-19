@@ -152,7 +152,7 @@ public class InputManager : MonoBehaviour, IFreezable, IStickEngineId, IJaiId
         }
         else
         {
-            TouchSpot = Vector2.up * Constants.WorldDimensions.y * 10f;
+            TouchSpot = 10f * Constants.WorldDimensions.y * Vector2.up;
         }
     }
 }

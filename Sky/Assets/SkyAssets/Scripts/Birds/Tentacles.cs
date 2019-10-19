@@ -76,7 +76,9 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 
     private void FaceTowardYou(bool toward)
     {
-        transform.FaceForward(toward ? Constants.BasketTransform.position.x - transform.position.x > 0 : Constants.BasketTransform.position.x - transform.position.x < 0);
+        var pos = transform.position;
+        var basketPos = Constants.BasketTransform.position;
+        transform.FaceForward(toward ? basketPos.x - pos.x > 0 : basketPos.x - pos.x < 0);
     }
 
     #region ISensorToTentacle

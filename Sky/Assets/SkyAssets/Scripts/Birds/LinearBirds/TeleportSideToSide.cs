@@ -41,7 +41,8 @@ public class TeleportSideToSide : MonoBehaviour
 
     private IEnumerator TemporaryTeleport(Collider2D col)
     {
-        col.gameObject.transform.position = _destination + Vector2.up * col.gameObject.transform.position.y;
+        var colTran = col.transform;
+        colTran.position = _destination + Vector2.up * colTran.position.y;
         Physics2D.IgnoreCollision(col, _buddyCollider, true);
         yield return new WaitForSeconds(3f);
         Physics2D.IgnoreCollision(col, _buddyCollider, false);

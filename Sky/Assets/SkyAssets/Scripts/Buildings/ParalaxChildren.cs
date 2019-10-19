@@ -27,7 +27,7 @@ public class ParalaxChildren : MonoBehaviour
     {
         children.ForEach(child =>
         {
-            child.position += (_toRight ? 1 : -1) * Vector3.right * Time.deltaTime * _moveSpeed;
+            child.position += (_toRight ? 1 : -1) * _moveSpeed * Time.deltaTime * Vector3.right;
             if (Mathf.Abs(child.position.x) > Mathf.Abs(_teleportXSpot))
             {
                 child.position = new Vector3((_toRight ? 1 : -1) * (_teleportXSpot + 0.01f), child.position.y, 0f);

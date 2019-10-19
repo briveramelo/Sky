@@ -6,6 +6,6 @@ public class AnimationHelper : MonoBehaviour
 
     private void SetAnimState(TextAnimState myAnim)
     {
-        _myAnimator.SetInteger("AnimState", (int) myAnim);
+        _myAnimator.SetInteger(0, (int) myAnim);
     }
 }

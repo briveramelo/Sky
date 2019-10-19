@@ -95,8 +95,10 @@ public class Crow : Bird, IMurderToCrow
         _currentDistance = 10f;
         while (_currentDistance > _commitDistance)
         {
-            _currentDistance = Vector3.Distance(Constants.BalloonCenter.position, transform.position);
-            _moveDir = (Constants.BalloonCenter.position - transform.position).normalized;
+            var balloonPos = Constants.BalloonCenter.position;
+            var pos = transform.position;
+            _currentDistance = Vector3.Distance(balloonPos, pos);
+            _moveDir = (balloonPos - pos).normalized;
             Swoop();
             yield return null;
         }
@@ -120,7 +122,7 @@ public class Crow : Bird, IMurderToCrow
 
     private IEnumerator TurnAwayFromBalloons()
     {
-        _crowAnimator.SetInteger("AnimState", (int) CrowStates.Gliding);
+        _crowAnimator.SetInteger(0, (int) CrowStates.Gliding);
         var rotationSpeed = Bool.TossCoin() ? 4 : -4;
         var angleDelta = 0;
         var startAngle = ConvertAnglesAndVectors.ConvertVector2IntAngle(_rigbod.velocity, false);
@@ -132,7 +134,7 @@ public class Crow : Bird, IMurderToCrow
             yield return null;
         }
 
-        _crowAnimator.SetInteger("AnimState", (int) CrowStates.Flapping);
+        _crowAnimator.SetInteger(0, (int) CrowStates.Flapping);
     }
 
     #region Swoop Helper Functions

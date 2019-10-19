@@ -45,7 +45,7 @@ public class LeadDuck : Bird, IDuckToLeader
         var separationDistance = 0.15f;
         for (var i = 0; i < _formationTransforms.Length; i++)
         {
-            _formationTransforms[i].localPosition = (goLeft ? 1 : -1) * (i % 2 == 0 ? topSide : bottomSide) * (Mathf.Floor(i / 2) + 1) * separationDistance;
+            _formationTransforms[i].localPosition = (goLeft ? 1 : -1) * (separationDistance) * (Mathf.Floor(f: i / 2) + 1) * (i % 2 == 0 ? topSide : bottomSide);
             ducks[i].FormationIndex = i;
         }
     }

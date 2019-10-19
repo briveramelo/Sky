@@ -86,10 +86,11 @@ public class Duck : Bird, ILeaderToDuck, IDirectable
     // This solution eliminates that concern.
     private void BounceOnTheWalls()
     {
-        var overX = transform.position.x > Constants.WorldDimensions.x;
-        var underX = transform.position.x < -Constants.WorldDimensions.x;
-        var overY = transform.position.y > Constants.WorldDimensions.y;
-        var underY = transform.position.y < -Constants.WorldDimensions.y;
+        var pos = transform.position;
+        var overX = pos.x > Constants.WorldDimensions.x;
+        var underX = pos.x < -Constants.WorldDimensions.x;
+        var overY = pos.y > Constants.WorldDimensions.y;
+        var underY = pos.y < -Constants.WorldDimensions.y;
         if (overX || underX || overY || underY)
         {
             CurrentVelocity = new Vector2(

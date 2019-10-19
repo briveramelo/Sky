@@ -17,6 +17,6 @@ public class BirdPoints : PointDisplay
 
     private void Update()
     {
-        transform.position += Vector3.up * _moveSpeed * Time.deltaTime;
+        transform.position += Time.deltaTime * _moveSpeed * Vector3.up;
     }
 }

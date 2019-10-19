@@ -4,7 +4,7 @@ using System.Collections;
 public class GameCamera : Singleton<GameCamera>
 {
     private bool _shaking;
-    private Vector3 _startSpot;
+    private Vector3 _startSpot = Vector3.zero;
 
     public void ShakeTheCamera()
     {

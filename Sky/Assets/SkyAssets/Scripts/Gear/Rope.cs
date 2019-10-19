@@ -15,8 +15,9 @@ public class Rope : MonoBehaviour
 
     private void Update()
     {
-        var fastEnough = Mathf.Abs(transform.position.x - _lastXPosition) > _speedThreshold;
-        _ropeAnimator.SetInteger("AnimState", fastEnough ? (int) RopeAnimState.Waving : (int) RopeAnimState.Idle);
-        _lastXPosition = transform.position.x;
+        var pos = transform.position;
+        var fastEnough = Mathf.Abs(pos.x - _lastXPosition) > _speedThreshold;
+        _ropeAnimator.SetInteger(0, fastEnough ? (int) RopeAnimState.Waving : (int) RopeAnimState.Idle);
+        _lastXPosition = pos.x;
     }
 }

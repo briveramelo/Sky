@@ -11,9 +11,9 @@ public class AdDisplayer : MonoBehaviour
     private void Awake()
     {
 #if UNITY_IOS // If build platform is set to iOS...
-        gameID = iOS_GameID;
+        _gameId = _iOsGameId;
 #elif UNITY_ANDROID // Else if build platform is set to Android...
-        gameID = android_GameID;
+        _gameId = _androidGameId;
 #endif
     }
 
@@ -24,8 +24,7 @@ public class AdDisplayer : MonoBehaviour
             _gameId = null;
         }
 
-        var options = new ShowOptions();
-        options.resultCallback = HandleShowResult;
+        var options = new ShowOptions {resultCallback = HandleShowResult};
         Advertisement.Show(_gameId, options);
         while (Advertisement.isShowing)
         {

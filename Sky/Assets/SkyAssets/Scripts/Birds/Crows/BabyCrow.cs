@@ -55,8 +55,10 @@ public class BabyCrow : Bird
         transform.FaceForward(transform.position.x < Constants.BalloonCenter.position.x);
         while (_currentShift < _maxShifts)
         {
-            _dist2Target = Vector2.Distance(Constants.JaiTransform.position + (Vector3) basketOffsets[BasketOffsetIndex], transform.position);
-            _moveDir = (Constants.JaiTransform.position + (Vector3) basketOffsets[BasketOffsetIndex] - transform.position).normalized;
+            var pos = transform.position;
+            var jaiPos = Constants.JaiTransform.position;
+            _dist2Target = Vector2.Distance(jaiPos + (Vector3) basketOffsets[BasketOffsetIndex], pos);
+            _moveDir = (jaiPos + (Vector3) basketOffsets[BasketOffsetIndex] - pos).normalized;
             _rigbod.velocity = _moveDir * CorrectSpeed;
 
             if (_dist2Target < _triggerShiftDistance && _shiftsHit == _currentShift)
@@ -74,21 +76,22 @@ public class BabyCrow : Bird
     private IEnumerator ShiftSpots()
     {
         _shiftsHit++;
-        _babyCrowAnimator.SetInteger("AnimState", (int) AnimState.Looking);
+        _babyCrowAnimator.SetInteger(0, (int) AnimState.Looking);
         yield return StartCoroutine(LookBackAndForth(transform.position.x < Constants.BalloonCenter.position.x));
-        _babyCrowAnimator.SetInteger("AnimState", (int) AnimState.Flying);
+        _babyCrowAnimator.SetInteger(0, (int) AnimState.Flying);
         _currentShift++;
         BasketOffsetIndex++;
     }
 
     private IEnumerator FlyAway()
     {
-        _dist2Target = Vector2.Distance(Vector3.right * Constants.WorldDimensions.x * 1.2f, transform.position);
+        _dist2Target = Vector2.Distance(1.2f * Constants.WorldDimensions.x * Vector3.right, transform.position);
 
         while (_dist2Target > _triggerShiftDistance)
         {
-            _dist2Target = Vector2.Distance(Vector3.right * Constants.WorldDimensions.x * 1.2f, transform.position);
-            _moveDir = (Vector3.right * Constants.WorldDimensions.x * 1.2f - transform.position).normalized;
+            var pos = transform.position;
+            _dist2Target = Vector2.Distance(1.2f * Constants.WorldDimensions.x * Vector3.right, pos);
+            _moveDir = (1.2f * Constants.WorldDimensions.x * Vector3.right - pos).normalized;
             _rigbod.velocity = _moveDir * _moveSpeed;
             yield return null;
         }
