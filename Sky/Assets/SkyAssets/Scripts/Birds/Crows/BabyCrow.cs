@@ -5,7 +5,7 @@ using GenericFunctions;
 public class BabyCrow : Bird
 {
     [SerializeField] private Animator _babyCrowAnimator;
-    protected override BirdType _myBirdType => BirdType.BabyCrow;
+    public override BirdType MyBirdType => BirdType.BabyCrow;
     private Vector2[] basketOffsets = new Vector2[]
     {
         new Vector2(-.8f, 0.1f),
@@ -76,9 +76,9 @@ public class BabyCrow : Bird
     private IEnumerator ShiftSpots()
     {
         _shiftsHit++;
-        _babyCrowAnimator.SetInteger(0, AnimState.Looking);
+        _babyCrowAnimator.SetInteger(Constants.AnimState, AnimState.Looking);
         yield return StartCoroutine(LookBackAndForth(transform.position.x < Constants.BalloonCenter.position.x));
-        _babyCrowAnimator.SetInteger(0, AnimState.Flying);
+        _babyCrowAnimator.SetInteger(Constants.AnimState, AnimState.Flying);
         _currentShift++;
         BasketOffsetIndex++;
     }

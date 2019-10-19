@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GenericFunctions;
+using UnityEngine;
 
 public class Rope : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class Rope : MonoBehaviour
     {
         var pos = transform.position;
         var fastEnough = Mathf.Abs(pos.x - _lastXPosition) > _speedThreshold;
-        _ropeAnimator.SetInteger(0, fastEnough ? RopeAnimState.Waving : RopeAnimState.Idle);
+        _ropeAnimator.SetInteger(Constants.AnimState, fastEnough ? RopeAnimState.Waving : RopeAnimState.Idle);
         _lastXPosition = pos.x;
     }
 }

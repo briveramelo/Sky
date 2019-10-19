@@ -16,7 +16,7 @@ public class LeadDuck : Bird, IDuckToLeader
 
     [SerializeField] private Duck[] _duckScripts;
     [SerializeField] private Transform[] _formationTransforms;
-    protected override BirdType _myBirdType => BirdType.DuckLeader;
+    public override BirdType MyBirdType => BirdType.DuckLeader;
     private List<ILeaderToDuck> ducks;
 
     protected override void Awake()

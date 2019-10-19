@@ -4,16 +4,23 @@ using GenericFunctions;
 
 public class Incubator : Singleton<Incubator>
 {
-    [SerializeField] private GameObject[] _birds;
+    [System.Serializable]
+    private struct BirdPrefab
+    {
+        public BirdType BirdType;
+        public GameObject Prefab;
+    }
+
+    [SerializeField] private BirdPrefab[] _birdPrefabs;
     public Dictionary<BirdType, GameObject> BirdPrefabs { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
         BirdPrefabs = new Dictionary<BirdType, GameObject>();
-        foreach (var prefab in _birds)
+        foreach (var birdPrefab in _birdPrefabs)
         {
-            BirdPrefabs.Add(prefab.GetComponent<Bird>().MyBirdStats.MyBirdType, prefab);
+            BirdPrefabs.Add(birdPrefab.BirdType, birdPrefab.Prefab);
         }
     }
 

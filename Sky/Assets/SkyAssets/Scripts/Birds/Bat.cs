@@ -12,7 +12,7 @@ public class Bat : Bird
 
 
     #region Initialize Variables
-    protected override BirdType _myBirdType => BirdType.Bat;
+    public override BirdType MyBirdType => BirdType.Bat;
     private Vector2[] _targetPositions;
     private Vector2 _ellipseTrace;
     private Vector2 _moveDir;

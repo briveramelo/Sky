@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq;
+using GenericFunctions;
 using UnityEngine.SceneManagement;
 
 public interface IWaveUi
@@ -108,8 +109,8 @@ public class WaveUi : MonoBehaviour, IWaveUi
 
     private void ClearText()
     {
-        _titleA.SetInteger(0, TextAnimState.IdleOffscreen);
-        _subTitleA.SetInteger(0, TextAnimState.IdleOffscreen);
+        _titleA.SetInteger(Constants.AnimState, TextAnimState.IdleOffscreen);
+        _subTitleA.SetInteger(Constants.AnimState, TextAnimState.IdleOffscreen);
 
         _pointTotal.text = "";
         _streak.text = "";
@@ -178,21 +179,21 @@ public class WaveUi : MonoBehaviour, IWaveUi
             _newTips = System.Enum.GetValues(typeof(Tip)).Cast<Tip>().ToList();
         }
 
-        _titleA.SetInteger(0, TextAnimState.IdleOnScreen);
-        _subTitleA.SetInteger(0, TextAnimState.IdleOnScreen);
+        _titleA.SetInteger(Constants.AnimState, TextAnimState.IdleOnScreen);
+        _subTitleA.SetInteger(Constants.AnimState, TextAnimState.IdleOnScreen);
 
         yield return new WaitForSeconds(4f);
-        _titleA.SetInteger(0, TextAnimState.IdleOffscreen);
-        _subTitleA.SetInteger(0, TextAnimState.IdleOffscreen);
+        _titleA.SetInteger(Constants.AnimState, TextAnimState.IdleOffscreen);
+        _subTitleA.SetInteger(Constants.AnimState, TextAnimState.IdleOffscreen);
     }
 
     private IEnumerator DisplayWaveName(WaveName waveName)
     {
         _title.text = waveName.ToString() + " Wave";
         _subTitle.text = _waveSubtitles[waveName];
-        _titleA.SetInteger(0, TextAnimState.RightAcross);
-        _subTitleA.SetInteger(0, TextAnimState.LeftAcross);
-        while (_titleA.GetInteger(0) == TextAnimState.RightAcross)
+        _titleA.SetInteger(Constants.AnimState, TextAnimState.RightAcross);
+        _subTitleA.SetInteger(Constants.AnimState, TextAnimState.LeftAcross);
+        while (_titleA.GetInteger(Constants.AnimState) == TextAnimState.RightAcross)
         {
             yield return null;
         }
@@ -205,9 +206,9 @@ public class WaveUi : MonoBehaviour, IWaveUi
     private IEnumerator DisplayWaveComplete()
     {
         _title.text += " Complete";
-        _titleA.SetInteger(0, TextAnimState.RightCenter);
+        _titleA.SetInteger(Constants.AnimState, TextAnimState.RightCenter);
         //move progress sprites to the center 
-        while (_titleA.GetInteger(0) == TextAnimState.RightCenter)
+        while (_titleA.GetInteger(Constants.AnimState) == TextAnimState.RightCenter)
         {
             yield return null;
         }
@@ -220,19 +221,19 @@ public class WaveUi : MonoBehaviour, IWaveUi
         _streak.text = "Streaks: " + ScoreSheet.Reporter.GetScore(ScoreType.Streak, isWaveScore, BirdType.All).ToString();
         _combo.text = "Combos: " + ScoreSheet.Reporter.GetScore(ScoreType.Combo, isWaveScore, BirdType.All).ToString();
 
-        _scoreBackDrop.SetInteger(0, PointBackDrop.ComeIn);
-        _pointTotalA.SetInteger(0, PointAnimState.Shine);
-        _streakA.SetInteger(0, PointAnimState.Shine);
-        _comboA.SetInteger(0, PointAnimState.Shine);
+        _scoreBackDrop.SetInteger(Constants.AnimState, PointBackDrop.ComeIn);
+        _pointTotalA.SetInteger(Constants.AnimState, PointAnimState.Shine);
+        _streakA.SetInteger(Constants.AnimState, PointAnimState.Shine);
+        _comboA.SetInteger(Constants.AnimState, PointAnimState.Shine);
 
         yield return new WaitForSeconds(4f);
 
-        _scoreBackDrop.SetInteger(0, PointBackDrop.GetOut);
-        _pointTotalA.SetInteger(0, PointAnimState.Poof);
-        _streakA.SetInteger(0, PointAnimState.Poof);
-        _comboA.SetInteger(0, PointAnimState.Poof);
+        _scoreBackDrop.SetInteger(Constants.AnimState, PointBackDrop.GetOut);
+        _pointTotalA.SetInteger(Constants.AnimState, PointAnimState.Poof);
+        _streakA.SetInteger(Constants.AnimState, PointAnimState.Poof);
+        _comboA.SetInteger(Constants.AnimState, PointAnimState.Poof);
         yield return new WaitForSeconds(2f);
-        _scoreBackDrop.SetInteger(0, PointBackDrop.IdleOffScreen);
+        _scoreBackDrop.SetInteger(Constants.AnimState, PointBackDrop.IdleOffScreen);
     }
 
     #endregion
@@ -240,9 +241,9 @@ public class WaveUi : MonoBehaviour, IWaveUi
     IEnumerator IWaveUi.AnimateStoryEnd()
     {
         _title.text = "Story Complete";
-        _titleA.SetInteger(0, TextAnimState.RightCenter);
+        _titleA.SetInteger(Constants.AnimState, TextAnimState.RightCenter);
 
-        while (_titleA.GetInteger(0) == TextAnimState.RightCenter)
+        while (_titleA.GetInteger(Constants.AnimState) == TextAnimState.RightCenter)
         {
             yield return null;
         }

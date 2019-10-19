@@ -3,7 +3,7 @@ using GenericFunctions;
 
 public class Albatross : Bird
 {
-    protected override BirdType _myBirdType => BirdType.Albatross;
+    public override BirdType MyBirdType => BirdType.Albatross;
     private bool _shouldWaitToTurn;
     private const float _moveSpeed = 1.065f;
 
@@ -43,7 +43,6 @@ public class Albatross : Bird
 
         BirdStats.Health -= damageDealt;
         Instantiate(_guts, transform.position, Quaternion.identity).GetComponent<IBleedable>().GenerateGuts(ref BirdStats, weaponStats.Velocity);
-        Debug.Log(damageDealt);
         return damageDealt;
     }
 }

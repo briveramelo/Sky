@@ -48,6 +48,7 @@ namespace GenericFunctions
             trans.localScale = localScale;
         }
 
+
         private static Vector2 _screenDimensions = new Vector2(1136, 640); //new Vector2 (Screen.width, Screen.height);
         public static Vector2 ScreenDimensions => _screenDimensions;
         private static Vector2 _worldDimensions = ScreenDimensions / 200f;
@@ -72,5 +73,20 @@ namespace GenericFunctions
         public const float Time2Destroy = 2f;
         public const float Time2ThrowSpear = 0.333333f;
         public const float Time2StrikeLightning = 0.5f;
+
+        private static int? _animState;
+
+        public static int AnimState
+        {
+            get
+            {
+                if (!_animState.HasValue)
+                {
+                    _animState = Animator.StringToHash("AnimState");
+                }
+
+                return _animState.Value;
+            }
+        }
     }
 }

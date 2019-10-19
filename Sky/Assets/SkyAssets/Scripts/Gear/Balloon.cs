@@ -138,7 +138,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon
 
         _balloonCollider.enabled = false;
         _boundsCollider.enabled = false;
-        _balloonAnimator.SetInteger(0, 1);
+        _balloonAnimator.SetInteger(Constants.AnimState, 1);
         AudioManager.PlayAudio(_pop);
         Destroy(_rope);
         Destroy(gameObject, Constants.Time2Destroy);

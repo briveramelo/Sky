@@ -895,20 +895,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 206818a7923014c1380c377e11b61b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _birds:
-  - {fileID: 176178, guid: 1f5cfa2f484ef444ca3b4f4a5b00e7f4, type: 3}
-  - {fileID: 121926, guid: a0823131fbf68471eb77571bea2cfa96, type: 3}
-  - {fileID: 199352, guid: 16dda3956083a494ca2b7dcfbcb88730, type: 3}
-  - {fileID: 140138, guid: c8a4ce405247d4d1baab38de36086969, type: 3}
-  - {fileID: 173176, guid: 8a44cdc2104624eaa94cee8eeafe4cfb, type: 3}
-  - {fileID: 152284, guid: fbae02674830c4d98b0964f3075cc17f, type: 3}
-  - {fileID: 191540, guid: cd4056db3a7b748a49824ab3a8f3ef87, type: 3}
-  - {fileID: 136588, guid: b2d924430ecf742f8a8455291b231b25, type: 3}
-  - {fileID: 153434, guid: bb183bccd63d54eaba8756e9baecc2ea, type: 3}
-  - {fileID: 148646, guid: fb79abea4bbcf48e0a8d873f07e7807e, type: 3}
-  - {fileID: 166612, guid: 9ea679bf2282b455ea1af34a50a8e0c7, type: 3}
-  - {fileID: 175384, guid: 6fac294ad61874da699aad66017bb75d, type: 3}
-  - {fileID: 156092, guid: 9919c17745d5e44b09e49882610b405e, type: 3}
+  _birdPrefabs:
+  - BirdType: 0
+    Prefab: {fileID: 176178, guid: 1f5cfa2f484ef444ca3b4f4a5b00e7f4, type: 3}
+  - BirdType: 1
+    Prefab: {fileID: 121926, guid: a0823131fbf68471eb77571bea2cfa96, type: 3}
+  - BirdType: 2
+    Prefab: {fileID: 199352, guid: 16dda3956083a494ca2b7dcfbcb88730, type: 3}
+  - BirdType: 3
+    Prefab: {fileID: 140138, guid: c8a4ce405247d4d1baab38de36086969, type: 3}
+  - BirdType: 4
+    Prefab: {fileID: 173176, guid: 8a44cdc2104624eaa94cee8eeafe4cfb, type: 3}
+  - BirdType: 5
+    Prefab: {fileID: 152284, guid: fbae02674830c4d98b0964f3075cc17f, type: 3}
+  - BirdType: 6
+    Prefab: {fileID: 191540, guid: cd4056db3a7b748a49824ab3a8f3ef87, type: 3}
+  - BirdType: 7
+    Prefab: {fileID: 136588, guid: b2d924430ecf742f8a8455291b231b25, type: 3}
+  - BirdType: 8
+    Prefab: {fileID: 153434, guid: bb183bccd63d54eaba8756e9baecc2ea, type: 3}
+  - BirdType: 9
+    Prefab: {fileID: 148646, guid: fb79abea4bbcf48e0a8d873f07e7807e, type: 3}
+  - BirdType: 10
+    Prefab: {fileID: 166612, guid: 9ea679bf2282b455ea1af34a50a8e0c7, type: 3}
+  - BirdType: 11
+    Prefab: {fileID: 175384, guid: 6fac294ad61874da699aad66017bb75d, type: 3}
+  - BirdType: 12
+    Prefab: {fileID: 156092, guid: 9919c17745d5e44b09e49882610b405e, type: 3}
 --- !u!114 &11469346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1060,6 +1073,7 @@ GameObject:
   - component: {fileID: 22246886}
   - component: {fileID: 11495988}
   - component: {fileID: 9512854}
+  - component: {fileID: 3925086645321402595}
   m_Layer: 0
   m_Name: SubTitle
   m_TagString: Untagged
@@ -1147,6 +1161,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3925086645321402595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49775ab0856b1124690b32e2c7ded90b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myAnimator: {fileID: 9512854}
 --- !u!1 &152808
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,6 +1787,7 @@ GameObject:
   - component: {fileID: 22253400}
   - component: {fileID: 11440200}
   - component: {fileID: 9567062}
+  - component: {fileID: 2198618580038702641}
   m_Layer: 0
   m_Name: Title
   m_TagString: Untagged
@@ -1847,6 +1875,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2198618580038702641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49775ab0856b1124690b32e2c7ded90b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myAnimator: {fileID: 9567062}
 --- !u!1 &171824
 GameObject:
   m_ObjectHideFlags: 0

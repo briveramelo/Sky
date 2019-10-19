@@ -27,7 +27,7 @@ public class Duck : Bird, ILeaderToDuck, IDirectable
     // Then, the Duck will aimlessly bounce around the screen until killed
     [SerializeField] private LeadDuck _leaderScript;
 
-    protected override BirdType _myBirdType => BirdType.Duck;
+    public override BirdType MyBirdType => BirdType.Duck;
     private IDuckToLeader _leader;
     private Transform _myFormationTransform;
     private const float _moveSpeed = 2.5f;

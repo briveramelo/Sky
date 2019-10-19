@@ -13,7 +13,7 @@ public interface IMurderToCrow
 public class Crow : Bird, IMurderToCrow
 {
     #region Initialize Variables
-    protected override BirdType _myBirdType => BirdType.Crow;
+    public override BirdType MyBirdType => BirdType.Crow;
     private ICrowToMurder _murderInterface;
     [HideInInspector] public int MyCrowNum;
 
@@ -122,7 +122,7 @@ public class Crow : Bird, IMurderToCrow
 
     private IEnumerator TurnAwayFromBalloons()
     {
-        _crowAnimator.SetInteger(0, CrowStates.Gliding);
+        _crowAnimator.SetInteger(Constants.AnimState, CrowStates.Gliding);
         var rotationSpeed = Bool.TossCoin() ? 4 : -4;
         var angleDelta = 0;
         var startAngle = ConvertAnglesAndVectors.ConvertVector2IntAngle(_rigbod.velocity, false);
@@ -134,7 +134,7 @@ public class Crow : Bird, IMurderToCrow
             yield return null;
         }
 
-        _crowAnimator.SetInteger(0, CrowStates.Flapping);
+        _crowAnimator.SetInteger(Constants.AnimState, CrowStates.Flapping);
     }
 
     #region Swoop Helper Functions

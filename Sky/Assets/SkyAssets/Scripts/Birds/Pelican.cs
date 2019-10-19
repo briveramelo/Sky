@@ -6,7 +6,7 @@ public class Pelican : Bird
 {
     [SerializeField] private Animator _pelicanAnimator;
 
-    protected override BirdType _myBirdType => BirdType.Pelican;
+    public override BirdType MyBirdType => BirdType.Pelican;
     private int _currentTarIn;
     private Vector3[] _setPositions;
 
@@ -14,7 +14,7 @@ public class Pelican : Bird
 
     protected override void Awake()
     {
-        _pelicanAnimator.SetInteger(0, Random.Range(0, 2));
+        _pelicanAnimator.SetInteger(Constants.AnimState, Random.Range(0, 2));
         base.Awake();
         float yAbove = 2;
         var yBelow = -2.2f;
@@ -40,7 +40,7 @@ public class Pelican : Bird
     //Move from one checkpoint to another
     private IEnumerator SwoopAround()
     {
-        _pelicanAnimator.SetInteger(0, PelAnimState.Flapping);
+        _pelicanAnimator.SetInteger(Constants.AnimState, PelAnimState.Flapping);
         _currentTarIn = 0;
         _sideMultiplier = transform.position.x < 0 ? 1 : -1;
 
@@ -53,7 +53,7 @@ public class Pelican : Bird
             if (Vector3.Distance(transform.position, TargetPosition) < 0.2f)
             {
                 _currentTarIn++;
-                if (_pelicanAnimator.GetInteger(0) == PelAnimState.Flapping && _setPositions[_currentTarIn].y > 1.2f)
+                if (_pelicanAnimator.GetInteger(Constants.AnimState) == PelAnimState.Flapping && _setPositions[_currentTarIn].y > 1.2f)
                 {
                     StartCoroutine(TriggerDiveAnimation());
                 }
@@ -73,7 +73,7 @@ public class Pelican : Bird
     private IEnumerator TriggerDiveAnimation()
     {
         float timeSinceStartedDiving = 0;
-        _pelicanAnimator.SetInteger(0, PelAnimState.Diving);
+        _pelicanAnimator.SetInteger(Constants.AnimState, PelAnimState.Diving);
         timeSinceStartedDiving = Time.time;
         while (true)
         {
@@ -95,7 +95,7 @@ public class Pelican : Bird
     //plunge to (un)certain balloon-popping glory
     private IEnumerator DiveBomb(bool goingRight)
     {
-        _pelicanAnimator.SetInteger(0, PelAnimState.Down);
+        _pelicanAnimator.SetInteger(Constants.AnimState, PelAnimState.Down);
         var diveAngle = goingRight ? -80f : 260f;
         _rigbod.velocity = ConvertAnglesAndVectors.ConvertAngleToVector2(diveAngle) * 6f;
         transform.FaceForward(_rigbod.velocity.x > 0);
