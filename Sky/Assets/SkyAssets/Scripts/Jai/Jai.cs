@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using GenericFunctions;
 
@@ -10,28 +11,39 @@ public enum WeaponType
     None = 3
 }
 
-public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable
+public class Jai : MonoBehaviour, IFreezable
 {
     [SerializeField] private GameObject[] _weaponPrefabs = new GameObject[3];
     [SerializeField] private Animator _jaiAnimator;
 
     private const float _distToThrow = .03f;
 
+    private int _currentFingerId = -1;
     private Weapon _myWeapon;
     private IUsable _weaponTrigger;
     private WeaponType _myWeaponType;
-    private IJaiId _inputManager;
-
 
     private Vector2 _startingTouchPoint;
     private bool _attacking, _stabbing, _beingHeld;
+    private const string _jaiName = nameof(Jai);
+    private Vector3[] _spawnSpots = 
+    {
+        new Vector3(0.14f, 0.12f, 0f),
+        Vector3.zero,
+        Vector3.zero
+    };
+    private static class Throw
+    {
+        public const int Idle = 0;
+        public const int Down = 1;
+        public const int Up = 2;
+    }
 
     bool IFreezable.IsFrozen
     {
         get => _beingHeld;
         set => _beingHeld = value;
     }
-
 
     private void Awake()
     {
@@ -40,15 +52,15 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable
 
     private void Start()
     {
-        _inputManager = FindObjectOfType<InputManager>().GetComponent<IJaiId>();
+        TouchInputManager.Instance.OnTouchBegin += OnTouchBegin;
+        TouchInputManager.Instance.OnTouchEnd += OnTouchEnd;
     }
 
-    private Vector3[] spawnSpots = new Vector3[]
+    private void OnDestroy()
     {
-        new Vector3(0.14f, 0.12f, 0f),
-        Vector3.zero,
-        Vector3.zero
-    };
+        TouchInputManager.Instance.OnTouchBegin -= OnTouchBegin;
+        TouchInputManager.Instance.OnTouchEnd -= OnTouchEnd;
+    }
 
     public IEnumerator CollectNewWeapon(ICollectable collectableWeapon)
     {
@@ -89,46 +101,42 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable
         yield return null;
     }
 
-    void IBegin.OnTouchBegin(int fingerId)
+    private void OnTouchBegin(int fingerId, Vector2 fingerPosition)
     {
-        if (!Pauser.Paused)
+        if (Pauser.Paused || !TouchInputManager.Instance.TryClaimFingerId(fingerId, _jaiName))
         {
-            if (!_beingHeld)
-            {
-                var distFromStick = Vector2.Distance(InputManager.TouchSpot, Joyfulstick.StartingJoystickSpot);
-                var distFromPause = Vector2.Distance(InputManager.TouchSpot, Pauser.PauseSpot);
-                if (distFromStick > Joyfulstick.JoystickMaxStartDist && distFromPause > Pauser.PauseRadius)
-                {
-                    if (Input.touchCount < 3)
-                    {
-                        _startingTouchPoint = InputManager.TouchSpot;
-                        _inputManager.SetJaiId(fingerId);
-                    }
-                }
-            }
-            else
-            {
-                if (!_stabbing)
-                {
-                    StartCoroutine(StabTheBeast());
-                }
-            }
+            return;
+        }
+
+        _currentFingerId = fingerId;
+        if (!_beingHeld)
+        {
+            _startingTouchPoint = fingerPosition;
+        }
+        else if (!_stabbing)
+        {
+            StartCoroutine(StabTheBeast());
         }
     }
 
-    void IEnd.OnTouchEnd()
+    private void OnTouchEnd(int fingerId, Vector2 fingerPosition)
     {
-        if (!Pauser.Paused)
+        if (Pauser.Paused || fingerId != _currentFingerId)
         {
-            var swipeDir = InputManager.TouchSpot - _startingTouchPoint;
-            var releaseDist = swipeDir.magnitude;
-            if (!_attacking)
+            return;
+        }
+
+        _currentFingerId = -1;
+        TouchInputManager.Instance.ReleaseFingerId(fingerId, _jaiName);
+        
+        var swipeDir = fingerPosition - _startingTouchPoint;
+        var releaseDist = swipeDir.magnitude;
+        if (!_attacking)
+        {
+            if (releaseDist > _distToThrow && _myWeapon != null)
             {
-                if (releaseDist > _distToThrow && _myWeapon != null)
-                {
-                    _weaponTrigger.UseMe(swipeDir);
-                    StartCoroutine(AnimateUseWeapon(swipeDir));
-                }
+                _weaponTrigger.UseMe(swipeDir);
+                StartCoroutine(AnimateUseWeapon(swipeDir));
             }
         }
     }
@@ -153,13 +161,6 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable
         }
 
         _attacking = false;
-    }
-
-    private static class Throw
-    {
-        public const int Idle = 0;
-        public const int Down = 1;
-        public const int Up = 2;
     }
 
     private IEnumerator AnimateThrowSpear(Vector2 throwDir)
@@ -203,7 +204,7 @@ public class Jai : MonoBehaviour, IBegin, IEnd, IFreezable
 
     private void GenerateNewWeapon(WeaponType weaponType)
     {
-        _myWeapon = Instantiate(_weaponPrefabs[(int) weaponType], transform.position + spawnSpots[(int) weaponType], Quaternion.identity).GetComponent<Weapon>();
+        _myWeapon = Instantiate(_weaponPrefabs[(int) weaponType], transform.position + _spawnSpots[(int) weaponType], Quaternion.identity).GetComponent<Weapon>();
         _weaponTrigger = _myWeapon;
     }
 }

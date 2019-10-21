@@ -4,12 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class BackSelector : Selector
 {
-    protected override Vector2 TouchSpot => MenuInputHandler.TouchSpot;
-
-    protected override IEnumerator PressButton()
+    protected override IEnumerator OnClickRoutine()
     {
-        AudioManager.PlayAudio(_buttonPress);
-        SceneManager.LoadScene(Scenes.Menu);
         yield return null;
+        SceneManager.LoadScene(Scenes.Menu);
     }
 }

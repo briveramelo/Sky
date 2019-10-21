@@ -45,6 +45,10 @@ public class TeleportSideToSide : MonoBehaviour
         colTran.position = _destination + Vector2.up * colTran.position.y;
         Physics2D.IgnoreCollision(col, _buddyCollider, true);
         yield return new WaitForSeconds(3f);
-        Physics2D.IgnoreCollision(col, _buddyCollider, false);
+        if (col != null)
+        {
+            Physics2D.IgnoreCollision(col, _buddyCollider, false);
+        }
+
     }
 }

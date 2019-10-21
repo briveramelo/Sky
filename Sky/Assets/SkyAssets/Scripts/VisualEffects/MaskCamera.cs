@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using GenericFunctions;
 
 public class MaskCamera : MonoBehaviour
@@ -16,19 +17,24 @@ public class MaskCamera : MonoBehaviour
         _startingPoint = _pooSliderTransform.transform.position;
         _myCam.targetTexture = _rts[Constants.TargetPooInt];
         _firstFrame = true;
+        TouchInputManager.Instance.OnTouchHeld += OnTouchHeld;
     }
 
-    private void Update()
+    private void OnDestroy()
+    {
+        TouchInputManager.Instance.OnTouchHeld -= OnTouchHeld;
+    }
+
+    private void OnTouchHeld(int fingerId, Vector2 fingerPosition)
     {
         _newHolePosition = null;
-        var touchSpot = InputManager.TouchSpot;
         var pooPos = _pooSliderTransform.position;
         var worldRect = new Rect(-Constants.WorldDimensions.x + pooPos.x - _startingPoint.x, -Constants.WorldDimensions.y + pooPos.y - _startingPoint.y,
             Constants.WorldDimensions.x * 2f, Constants.WorldDimensions.y * 2f);
-        if (worldRect.Contains(touchSpot))
+        if (worldRect.Contains(fingerPosition))
         {
-            _newHolePosition = new Vector2(Constants.ScreenDimensions.x * (touchSpot.x - worldRect.xMin) / worldRect.width,
-                Constants.ScreenDimensions.y * (touchSpot.y - worldRect.yMin) / worldRect.height);
+            _newHolePosition = new Vector2(Constants.ScreenDimensions.x * (fingerPosition.x - worldRect.xMin) / worldRect.width,
+                Constants.ScreenDimensions.y * (fingerPosition.y - worldRect.yMin) / worldRect.height);
         }
     }
 

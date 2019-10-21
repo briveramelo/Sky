@@ -5,12 +5,10 @@ using UnityEngine.SceneManagement;
 public class QuitSelector : Selector
 {
     [SerializeField] private Pauser _pauser;
-    protected override Vector2 TouchSpot => InputManager.TouchSpot;
     [SerializeField] private bool _shouldSaveScore;
 
-    protected override IEnumerator PressButton()
+    protected override IEnumerator OnClickRoutine()
     {
-        AudioManager.PlayAudio(_buttonPress);
         var startTime = Time.unscaledTime;
         while (Time.unscaledTime - startTime < 1f)
         {
@@ -24,6 +22,5 @@ public class QuitSelector : Selector
         }
 
         SceneManager.LoadScene(Scenes.Menu);
-        yield return null;
     }
 }

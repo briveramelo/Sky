@@ -3,7 +3,7 @@
 public class Continuer : MonoBehaviour
 {
     [SerializeField] private GameObject _continueMenu, _joystick, _pauseButtonGroup;
-    [SerializeField] private InputManager _inputManager;
+    [SerializeField] private TouchInputManager _inputManager;
 
     public void DisplayContinueMenu(bool show)
     {

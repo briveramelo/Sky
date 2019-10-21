@@ -21,12 +21,8 @@ public class WaveSelector : Selector
 {
     [SerializeField] private WaveType _myWaveType;
 
-    protected override Vector2 TouchSpot => MenuInputHandler.TouchSpot;
-
-    protected override IEnumerator PressButton()
+    protected override IEnumerator OnClickRoutine()
     {
-        AudioManager.PlayAudio(_buttonPress);
-        //inputManager.IsFrozen = true;
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene((int) _myWaveType);
     }

@@ -72,7 +72,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 
     private void Start()
     {
-        _inputManager = FindObjectOfType<InputManager>().GetComponent<IFreezable>();
+        _inputManager = FindObjectOfType<TouchInputManager>().GetComponent<IFreezable>();
         _jai = FindObjectOfType<Jai>().GetComponent<IFreezable>();
     }
 

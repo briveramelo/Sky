@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using GenericFunctions;
 
 public interface IBumpable
@@ -12,22 +13,34 @@ public interface IDie
     void Rebirth();
 }
 
-public class BasketEngine : MonoBehaviour, IBumpable, IHold, IEnd, IDie
+public class BasketEngine : MonoBehaviour, IBumpable, IDie
 {
     [SerializeField] private Rigidbody2D _rigbod;
+    
     private const float _moveSpeed = 2.7f;
     private bool _movingEnabled = true;
 
-    void IHold.OnTouchHeld()
+    private void Start()
+    {
+        Joystick.Instance.OnTouchHold += OnTouchHeld;
+        Joystick.Instance.OnTouchEnded += OnTouchEnd;
+    }
+
+    private void OnDestroy()
+    {
+        Joystick.Instance.OnTouchHold -= OnTouchHeld;
+        Joystick.Instance.OnTouchEnded -= OnTouchEnd;
+    }
+
+    private void OnTouchHeld(Vector2 moveDirection)
     {
         if (_movingEnabled)
         {
-            var moveDir = Vector2.ClampMagnitude(InputManager.TouchSpot - Joyfulstick.StartingJoystickSpot, Joyfulstick.JoystickMaxMoveDistance);
-            _rigbod.velocity = moveDir * _moveSpeed;
+            _rigbod.velocity = moveDirection * _moveSpeed;
         }
     }
 
-    void IEnd.OnTouchEnd()
+    private void OnTouchEnd()
     {
         _rigbod.velocity = Vector2.zero;
     }

@@ -1,60 +1,79 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
-public class Pauser : MonoBehaviour, IBegin
+public class Pauser : Selector
 {
-    public static bool Paused => _paused;
-    private static bool _paused;
-    public static Vector2 PauseSpot => _pauseSpot;
-    private static Vector2 _pauseSpot;
-    public static readonly float PauseRadius = 0.5f;
+    public static bool Paused { get; private set; }
 
-    [SerializeField] private AudioClip _pause, _unPause;
-    [SerializeField] private GameObject _joystick, _pauseMenu, _pauseButtonCanvas;
+    [SerializeField] private GameObject _joystick, _pauseMenu;
 
-    private void Awake()
+    private const string _pauseName = nameof(Pauser);
+    private int _fingerId;
+
+    protected override void Awake()
     {
-        _pauseSpot = transform.position;
+        base.Awake();
+        TouchInputManager.Instance.OnTouchBegin += OnTouchBegin;
     }
 
-    void IBegin.OnTouchBegin(int fingerId)
+    private void OnDestroy()
     {
-        if (!_paused)
+        TouchInputManager.Instance.OnTouchBegin -= OnTouchBegin;
+    }
+
+    private void OnTouchBegin(int fingerId, Vector2 fingerPosition)
+    {
+        bool isCloseEnough = Vector2.Distance(fingerPosition, TouchToWorld.GetWorldPosition(transform.position)) < 1f;
+        if (!isCloseEnough || !TouchInputManager.Instance.TryClaimFingerId(fingerId, _pauseName))
         {
-            var distFromStick = Vector2.Distance(InputManager.TouchSpot, _pauseSpot);
-            if (distFromStick < PauseRadius)
-            {
-                Pause();
-            }
+            return;
         }
+
+        _fingerId = fingerId;
+        StartCoroutine(OnClickRoutine());
+    }
+
+    protected override void OnClick()
+    {
+        if (!Paused)
+        {
+            AudioManager.PlayAudio(_buttonPress);
+            Pause();
+        }
+    }
+
+    protected override IEnumerator OnClickRoutine()
+    {
+        yield return null;
+        TouchInputManager.Instance.ReleaseFingerId(_fingerId, _pauseName);
+        _fingerId = -1;
     }
 
     private void Pause()
     {
-        _paused = true;
-        AudioManager.PlayAudio(_pause);
+        Paused = true;
         Time.timeScale = 0f;
         ShowPauseMenu(true);
     }
 
     public void UnPause()
     {
-        _paused = false;
-        AudioManager.PlayAudio(_unPause);
+        Paused = false;
         Time.timeScale = 1f;
         ShowPauseMenu(false);
     }
 
     public void ResetPause()
     {
-        _paused = false;
+        Paused = false;
         Time.timeScale = 1f;
     }
 
     private void ShowPauseMenu(bool setActive)
     {
         _pauseMenu.SetActive(setActive);
+        
         _joystick.SetActive(!setActive);
-        _pauseButtonCanvas.SetActive(!setActive);
         gameObject.SetActive(!setActive);
     }
 }

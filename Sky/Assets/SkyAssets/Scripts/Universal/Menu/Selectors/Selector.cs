@@ -1,35 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
-public abstract class Selector : MonoBehaviour, IEnd
+public abstract class Selector : MonoBehaviour
 {
+    [SerializeField] protected Button _button;
     [SerializeField] protected AudioClip _buttonPress;
 
-    [SerializeField] [Range(0, 2)] protected float _buttonRadius;
-    protected abstract Vector2 TouchSpot { get; }
-
-    private void OnDrawGizmosSelected()
+    protected virtual void Awake()
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, _buttonRadius);
+        _button.onClick.AddListener(OnClick);
     }
 
-    protected static class ButtonState
+    protected virtual void OnClick()
     {
-        public const int Up = 0;
-        public const int Pressed = 1;
+        AudioManager.PlayAudio(_buttonPress);
+        StartCoroutine(OnClickRoutine());
     }
 
-    void IEnd.OnTouchEnd()
+    protected virtual IEnumerator OnClickRoutine()
     {
-        if (gameObject.activeInHierarchy)
-        {
-            if (Vector2.Distance(TouchSpot, transform.position) < _buttonRadius)
-            {
-                StartCoroutine(PressButton());
-            }
-        }
+        yield return null;
     }
-
-    protected abstract IEnumerator PressButton();
 }
