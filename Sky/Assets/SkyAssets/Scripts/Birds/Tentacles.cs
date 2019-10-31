@@ -42,7 +42,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
     private IFreezable _jai;
 
     private WeaponStats _fakeWeapon = new WeaponStats();
-    private Vector2 _homeSpot = new Vector2(0f, -.75f - Constants.WorldDimensions.y);
+    private Vector2 _homeSpot;
 
     private float _descendSpeed = 1f;
     private float _attackSpeed = 1.5f;
@@ -66,6 +66,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
         _sensor = _ts;
         _sensorOnJai = _ts;
 
+        _homeSpot = new Vector2(0f, -.75f - Constants.WorldSize.y);
         _resetHeight = .5f + _homeSpot.y;
         _defeatedHeight = .25f + _homeSpot.y;
     }
@@ -89,7 +90,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
     {
         while (_sensorOnJai.JaiInRange && !_holdingJai)
         {
-            _rigbod.velocity = (Constants.BasketTransform.position - Vector3.one * 0.2f - _tipTransform.position).normalized * _attackSpeed;
+            _rigbod.velocity = Constants.SpeedMultiplier * _attackSpeed * (Constants.BasketTransform.position - Vector3.one * 0.2f - _tipTransform.position).normalized;
             FaceTowardYou(true);
             yield return null;
         }
@@ -101,7 +102,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 
         while (_tipTransform.position.y > finishHeight && (defeated ? true : !_sensorOnJai.JaiInRange))
         {
-            _rigbod.velocity = ((Vector3) _homeSpot - _tipTransform.position).normalized * _resetSpeed;
+            _rigbod.velocity = Constants.SpeedMultiplier * _resetSpeed * ((Vector3) _homeSpot - _tipTransform.position).normalized;
             FaceTowardYou(!defeated);
             yield return null;
         }
@@ -129,7 +130,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 
         while (_tipTransform.position.y > _defeatedHeight && _stabsTaken < _stabs2Retreat)
         {
-            _rigbod.velocity = Vector2.down * _descendSpeed;
+            _rigbod.velocity = Constants.SpeedMultiplier * _descendSpeed * Vector2.down;
             yield return null;
         }
 

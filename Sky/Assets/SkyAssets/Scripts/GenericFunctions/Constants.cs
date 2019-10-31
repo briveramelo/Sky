@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections;
 
 namespace GenericFunctions
@@ -20,10 +20,10 @@ namespace GenericFunctions
 
     public static class Constants
     {
+        public const float SpeedMultiplier = 0.25f;
         public static Transform JaiTransform;
         public static Transform BalloonCenter;
         public static Transform BasketTransform;
-        public static Collider2D WorldBoundsCollider;
         public static Collider2D BottomOfTheWorldCollider;
 
         private static int _targetPooInt;
@@ -48,11 +48,23 @@ namespace GenericFunctions
             trans.localScale = localScale;
         }
 
+        public static Vector2 ScreenSize => new Vector2 (Screen.width, Screen.height);
 
-        private static Vector2 _screenDimensions = new Vector2(1136, 640); //new Vector2 (Screen.width, Screen.height);
-        public static Vector2 ScreenDimensions => _screenDimensions;
-        private static Vector2 _worldDimensions = ScreenDimensions / 200f;
-        public static Vector2 WorldDimensions => _worldDimensions;
+        public static Vector2 WorldSize
+        {
+            get
+            {
+                var pixelCam = Object.FindObjectOfType<PixelPerfectCamera>();
+                var cam = pixelCam.normalCamera;
+                var scaleFactor = 1f / pixelCam.cameraZoom;
+                var height = cam.orthographicSize * scaleFactor;
+                
+                var size = new Vector2(height * cam.aspect, height);//1f / pixelCam.cameraZoom * ;
+                return size;
+            }
+        }
+
+        public static Vector2 WorldPadding => new Vector2(1f, 1f);
 
         public const int BasketLayer = 8;
         public const int SpearLayer = 9;

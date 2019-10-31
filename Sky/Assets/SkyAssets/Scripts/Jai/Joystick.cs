@@ -31,6 +31,10 @@ public class Joystick : Singleton<Joystick>
     
     private void OnDestroy()
     {
+        if (TouchInputManager.Instance == null)
+        {
+            return;
+        }
         TouchInputManager.Instance.OnTouchBegin -= OnTouchBegin;
         TouchInputManager.Instance.OnTouchHeld -= OnTouchHeld;
         TouchInputManager.Instance.OnTouchEnd -= OnTouchEnd;

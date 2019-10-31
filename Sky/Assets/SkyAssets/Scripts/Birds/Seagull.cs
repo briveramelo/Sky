@@ -7,14 +7,14 @@ public class Seagull : Bird
     [SerializeField] private GameObject _pooNugget;
 
     public override BirdType MyBirdType => BirdType.Seagull;
-    private bool _movingRight;
 
     private const float _moveSpeed = 3f;
     private static int _activePooCams;
     private static int _totalSeagulls = 0;
 
-    private int _mySeagullNumber;
     private Vector2 _targetCenterPosition;
+    private int _mySeagullNumber;
+    private bool _movingRight;
     private float _xSpread = 4;
     private bool _startedMovingRight;
     private float _shift;
@@ -56,7 +56,7 @@ public class Seagull : Bird
     {
         while (true)
         {
-            _rigbod.velocity = (_targetCenterPosition - (Vector2) transform.position).normalized * _moveSpeed;
+            _rigbod.velocity = Constants.SpeedMultiplier * _moveSpeed * (_targetCenterPosition - (Vector2) transform.position).normalized;
             if (Vector2.Distance(_targetCenterPosition, transform.position) < 0.1f)
             {
                 StartCoroutine(SwoopOverhead());

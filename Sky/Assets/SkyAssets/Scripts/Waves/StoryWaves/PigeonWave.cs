@@ -105,7 +105,7 @@ public class PigeonWave : Wave
      */
     private IEnumerator AlternatingPigeons(int numPigeons)
     {
-        var spawnOpts = new float[]
+        var spawnOpts = new []
         {
             .9f, 0.85f, .8f, 0.75f, .7f, 0.65f, .6f, 0.55f, .5f, 0.45f, .4f, 0.35f, .3f, 0.25f, 0.2f, 0.15f, .1f, 0.05f, 0f,
             -.9f, -0.85f, -.8f, -0.75f, -.7f, -0.65f, -.6f, -0.55f, -.5f, -0.45f, -.4f, -0.35f, -.3f, -0.25f, -0.2f, -0.15f, -.1f, -0.05f
@@ -308,13 +308,12 @@ public class PigeonWave : Wave
     #region Graveyard
 
     #region Pigeon 1 Wait 3 top mid bot
-
     private IEnumerator Pigeon3()
     {
         float[] bottomHeights = {LowHeight, LowHeight, MedHeight};
         float[] topHeights = {MedHeight, HighHeight, HighHeight};
 
-        var spawnPigeons = new PigeonDelegate[]
+        var spawnPigeons = new[]
         {
             AtHeight(Heights),
             AtHeight(bottomHeights) + AtHeight(topHeights)
@@ -334,7 +333,6 @@ public class PigeonWave : Wave
     {
         return i => { SpawnBirds(BirdType.Pigeon, SpawnPoint(Right, myHeights[i])); };
     }
-
     #endregion
 
     #endregion

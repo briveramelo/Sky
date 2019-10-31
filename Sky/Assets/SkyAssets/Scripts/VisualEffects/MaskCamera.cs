@@ -29,12 +29,12 @@ public class MaskCamera : MonoBehaviour
     {
         _newHolePosition = null;
         var pooPos = _pooSliderTransform.position;
-        var worldRect = new Rect(-Constants.WorldDimensions.x + pooPos.x - _startingPoint.x, -Constants.WorldDimensions.y + pooPos.y - _startingPoint.y,
-            Constants.WorldDimensions.x * 2f, Constants.WorldDimensions.y * 2f);
+        var worldRect = new Rect(-Constants.WorldSize.x + pooPos.x - _startingPoint.x, -Constants.WorldSize.y + pooPos.y - _startingPoint.y,
+            Constants.WorldSize.x * 2f, Constants.WorldSize.y * 2f);
         if (worldRect.Contains(fingerPosition))
         {
-            _newHolePosition = new Vector2(Constants.ScreenDimensions.x * (fingerPosition.x - worldRect.xMin) / worldRect.width,
-                Constants.ScreenDimensions.y * (fingerPosition.y - worldRect.yMin) / worldRect.height);
+            _newHolePosition = new Vector2(Constants.ScreenSize.x * (fingerPosition.x - worldRect.xMin) / worldRect.width,
+                Constants.ScreenSize.y * (fingerPosition.y - worldRect.yMin) / worldRect.height);
         }
     }
 
@@ -48,7 +48,7 @@ public class MaskCamera : MonoBehaviour
 
         if (_newHolePosition != null)
         {
-            CutHole(new Vector2(Constants.ScreenDimensions.x, Constants.ScreenDimensions.y), _newHolePosition.Value);
+            CutHole(new Vector2(Constants.ScreenSize.x, Constants.ScreenSize.y), _newHolePosition.Value);
         }
     }
 

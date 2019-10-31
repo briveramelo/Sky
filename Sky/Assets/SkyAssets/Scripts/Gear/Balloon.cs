@@ -51,7 +51,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon
 
     void IBasketToBalloon.DetachFromBasket()
     {
-        transform.parent = null;
+        transform.SetParent(null);
         gameObject.layer = Constants.BalloonFloatingLayer;
         StartCoroutine(FloatUp());
     }
@@ -129,7 +129,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon
             GameClock.Instance.SlowTime(.5f, .75f);
             GameCamera.Instance.ShakeTheCamera();
             StopAllCoroutines(); //specifically, stop the balloon from floating up
-            transform.parent = null;
+            transform.SetParent(null);
         }
         else
         {

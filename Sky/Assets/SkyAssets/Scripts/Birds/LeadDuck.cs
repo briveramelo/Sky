@@ -25,7 +25,7 @@ public class LeadDuck : Bird, IDuckToLeader
         ducks = new List<ILeaderToDuck>(_duckScripts);
         var goLeft = transform.position.x > 0;
         transform.FaceForward(goLeft);
-        _rigbod.velocity = new Vector2(goLeft ? -1 : 1, 0) * 2.5f;
+        _rigbod.velocity = Constants.SpeedMultiplier * 2.5f * new Vector2(goLeft ? -1 : 1, 0);
         SetDuckFormation(goLeft);
     }
 

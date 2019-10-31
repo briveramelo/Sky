@@ -26,7 +26,7 @@ public class PixelPerfectCamera : MonoBehaviour {
 	Material postProcessingMaterial;
 	
 	void Awake() {
-		CalculateZoomForClosestResolution();
+		//CalculateZoomForClosestResolution();
 	}
 	
 	void OnEnable() {
@@ -69,7 +69,7 @@ public class PixelPerfectCamera : MonoBehaviour {
 		if (pixelZoomMode==PixelPerfectZoomMode.ConstantZoom) {
 			targetPixelHeight=Screen.height/cameraZoom;
 		}
-		CalculateZoomForClosestResolution();
+		//CalculateZoomForClosestResolution();
 		
 		if (!pixelatedPostProcessing) {
 			orthoSizeFactor*=1f/cameraZoom;

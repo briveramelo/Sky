@@ -4,6 +4,13 @@ using GenericFunctions;
 
 public class Pelican : Bird
 {
+    private static class PelAnimState
+    {
+        public const int Flapping = 0;
+        public const int Diving = 1;
+        public const int Down = 2;
+    }
+    
     [SerializeField] private Animator _pelicanAnimator;
 
     public override BirdType MyBirdType => BirdType.Pelican;
@@ -89,7 +96,7 @@ public class Pelican : Bird
 
     private Vector2 GetVelocity()
     {
-        return (TargetPosition - transform.position).normalized * _moveSpeed;
+        return Constants.SpeedMultiplier * _moveSpeed * (TargetPosition - transform.position).normalized;
     }
 
     //plunge to (un)certain balloon-popping glory
@@ -97,9 +104,9 @@ public class Pelican : Bird
     {
         _pelicanAnimator.SetInteger(Constants.AnimState, PelAnimState.Down);
         var diveAngle = goingRight ? -80f : 260f;
-        _rigbod.velocity = ConvertAnglesAndVectors.ConvertAngleToVector2(diveAngle) * 6f;
+        _rigbod.velocity = Constants.SpeedMultiplier * 6f * ConvertAnglesAndVectors.ConvertAngleToVector2(diveAngle);
         transform.FaceForward(_rigbod.velocity.x > 0);
-        while (transform.position.y > -Constants.WorldDimensions.y - 1f)
+        while (transform.position.y > -Constants.WorldSize.y - 1f)
         {
             yield return null;
         }
@@ -108,18 +115,11 @@ public class Pelican : Bird
         _birdCollider.enabled = false;
         yield return new WaitForSeconds(2f);
         StartCoroutine(SwoopAround());
-        while (transform.position.y < -Constants.WorldDimensions.y)
+        while (transform.position.y < -Constants.WorldSize.y)
         {
             yield return null;
         }
 
         _birdCollider.enabled = true;
-    }
-
-    private static class PelAnimState
-    {
-        public const int Flapping = 0;
-        public const int Diving = 1;
-        public const int Down = 2;
     }
 }

@@ -5,6 +5,8 @@ using GenericFunctions;
 
 public class DuckWave : Wave
 {
+    private float _duckSinPeriod => Constants.WorldSize.x * 2f;
+
     protected override IEnumerator GenerateBirds()
     {
         yield return StartCoroutine(DuckSine(true, .5f, 0f, DuckDirection.UpRight));
@@ -175,8 +177,6 @@ public class DuckWave : Wave
      *   -   -   -
      *         -  
      */
-    private float _duckSinPeriod = Constants.WorldDimensions.x * 2f;
-
     private IEnumerator DuckSine(bool onRight, float sineAmp, float midPoint, DuckDirection duckDir)
     {
         var numDucks = 20;

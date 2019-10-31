@@ -28,6 +28,10 @@ public class BasketEngine : MonoBehaviour, IBumpable, IDie
 
     private void OnDestroy()
     {
+        if (Joystick.Instance == null)
+        {
+            return;
+        }
         Joystick.Instance.OnTouchHold -= OnTouchHeld;
         Joystick.Instance.OnTouchEnded -= OnTouchEnd;
     }
@@ -36,7 +40,7 @@ public class BasketEngine : MonoBehaviour, IBumpable, IDie
     {
         if (_movingEnabled)
         {
-            _rigbod.velocity = moveDirection * _moveSpeed;
+            _rigbod.velocity = Constants.SpeedMultiplier * _moveSpeed * moveDirection;
         }
     }
 
@@ -48,7 +52,7 @@ public class BasketEngine : MonoBehaviour, IBumpable, IDie
     void IBumpable.Bump(Vector2 bumpDir)
     {
         StopAllCoroutines();
-        _rigbod.velocity = bumpDir;
+        _rigbod.velocity = Constants.SpeedMultiplier * bumpDir;
         StartCoroutine(Bool.Toggle(boolState => _movingEnabled = boolState, .5f));
         ScoreSheet.Tallier.TallyThreat(Threat.BasketBumped);
         Invoke("StabilizeBumpThreat", 2f);

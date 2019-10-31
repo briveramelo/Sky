@@ -12,15 +12,22 @@ public interface IMurderToCrow
 
 public class Crow : Bird, IMurderToCrow
 {
+    private static class CrowStates
+    {
+        public const int Flapping = 0;
+        public const int Gliding = 1;
+    }
+    
     #region Initialize Variables
     public override BirdType MyBirdType => BirdType.Crow;
-    private ICrowToMurder _murderInterface;
     [HideInInspector] public int MyCrowNum;
 
     [SerializeField] private Murder _murder;
     [SerializeField] private PixelRotation _pixelRotationScript;
     [SerializeField] private Animator _crowAnimator;
 
+    private ICrowToMurder _murderInterface;
+    
     private Vector2 _startPosition;
     private Vector2 _moveDir;
 
@@ -41,11 +48,6 @@ public class Crow : Bird, IMurderToCrow
         _murderInterface = _murder;
     }
 
-    private static class CrowStates
-    {
-        public const int Flapping = 0;
-        public const int Gliding = 1;
-    }
 
     #endregion
 
@@ -141,7 +143,7 @@ public class Crow : Bird, IMurderToCrow
 
     private void Swoop()
     {
-        _rigbod.velocity = _moveDir * _moveSpeed;
+        _rigbod.velocity = Constants.SpeedMultiplier * _moveSpeed * _moveDir;
         _pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle(_rigbod.velocity);
         transform.FaceForward(_rigbod.velocity.x > 0);
     }
@@ -154,7 +156,7 @@ public class Crow : Bird, IMurderToCrow
             yield return null;
         }
 
-        _rigbod.velocity = Vector2.zero;
+        _rigbod.velocity = Constants.SpeedMultiplier * Vector2.zero;
         _birdCollider.enabled = false;
         transform.position = _startPosition;
         _readyToFly = true;

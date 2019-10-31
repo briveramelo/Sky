@@ -38,6 +38,7 @@ public class EmotionalIntensity : MonoBehaviour, IThreat
     public static IThreat ThreatTracker;
     public static BirdType[] ThreateningBirds => _threateningBirds;
 
+    [SerializeField] private AnimationCurve _timeIntensity = new AnimationCurve();
     private static BirdType[] _threateningBirds =
     {
         BirdType.Pigeon,
@@ -55,7 +56,6 @@ public class EmotionalIntensity : MonoBehaviour, IThreat
         BirdType.BirdOfParadise
     };
 
-    [SerializeField] private AnimationCurve _timeIntensity = new AnimationCurve();
     private static float _intensity;
     private float _repeatTime;
 

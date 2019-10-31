@@ -19,24 +19,25 @@ public class Murder : MonoBehaviour, ICrowToMurder
     private ICrowToMurder _me;
 
 
-    private Vector2[] crowPositions =
-    {
-        new Vector2(0f, Constants.WorldDimensions.y * 1.4f),
-        new Vector2(Constants.WorldDimensions.x * 1.08f, Constants.WorldDimensions.y * 1.2f),
-        new Vector2(Constants.WorldDimensions.x * 1.08f, -Constants.WorldDimensions.y * 1.2f),
-        new Vector2(0f, -Constants.WorldDimensions.y * 1.4f),
-        new Vector2(-Constants.WorldDimensions.x * 1.08f, -Constants.WorldDimensions.y * 1.2f),
-        new Vector2(-Constants.WorldDimensions.x * 1.08f, Constants.WorldDimensions.y * 1.2f)
-    };
-
+    private Vector2[] _crowPositions;
     private int _maxCycles = 10;
     private int _cycle = 1;
 
     private void Awake()
     {
+        _crowPositions = new[]
+        {
+            new Vector2(0f, Constants.WorldSize.y * 1.4f),
+            new Vector2(Constants.WorldSize.x * 1.08f, Constants.WorldSize.y * 1.2f),
+            new Vector2(Constants.WorldSize.x * 1.08f, -Constants.WorldSize.y * 1.2f),
+            new Vector2(0f, -Constants.WorldSize.y * 1.4f),
+            new Vector2(-Constants.WorldSize.x * 1.08f, -Constants.WorldSize.y * 1.2f),
+            new Vector2(-Constants.WorldSize.x * 1.08f, Constants.WorldSize.y * 1.2f)
+        };
+        
         _crowsAlive = new List<IMurderToCrow>(_crows);
         _crowsToSwoop = new List<IMurderToCrow>(_crowsAlive);
-        _availableCrowPositions = new List<Vector2>(crowPositions);
+        _availableCrowPositions = new List<Vector2>(_crowPositions);
         _availableCrowPositions.Shuffle();
         var i = 0;
         _crowsAlive.ForEach(crow =>
@@ -89,7 +90,7 @@ public class Murder : MonoBehaviour, ICrowToMurder
         }
 
         _crowsToSwoop = new List<IMurderToCrow>(_crowsAlive);
-        _availableCrowPositions = new List<Vector2>(crowPositions);
+        _availableCrowPositions = new List<Vector2>(_crowPositions);
         _availableCrowPositions.Shuffle();
         yield return new WaitForSeconds(3f);
         _cycle++;

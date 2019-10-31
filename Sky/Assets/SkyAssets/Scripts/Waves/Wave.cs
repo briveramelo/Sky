@@ -62,22 +62,8 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable
 
     #endregion
 
-    private void OnDestroy()
+    private void Start()
     {
-        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
-    }
-
-    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == Scenes.Menu)
-        {
-            StopAllCoroutines();
-        }
-    }
-
-    protected virtual void Awake()
-    {
-        SceneManager.sceneLoaded += OnLevelFinishedLoading;
         Heights = new[] {LowHeight, MedHeight, HighHeight};
         DuckSpawnPoints = new Vector2[6];
         for (var i = 0; i < 6; i++)
@@ -129,10 +115,10 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable
 
         if (birdType == BirdType.Eagle)
         {
-            spawnPoint = new Vector2(-Constants.WorldDimensions.x * 5f, 0f);
+            spawnPoint = new Vector2(-Constants.WorldSize.x * 5f, 0f);
         }
 
-        var bird = Instantiate(Incubator.Instance.BirdPrefabs[birdType], spawnPoint, Quaternion.identity).GetComponent<Bird>();
+        var bird = BirdFactory.Instance.CreateBird(birdType, spawnPoint);
 
         if (birdType == BirdType.Pigeon || birdType == BirdType.BirdOfParadise)
         {
@@ -154,7 +140,7 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable
         y2 = y2 == -1337f ? y1 : y2;
         y1 = Mathf.Clamp(y1, -1f, 1f);
         y2 = Mathf.Clamp(y2, -1f, 1f);
-        return new Vector2((startOnRight ? 1 : -1) * Constants.WorldDimensions.x, UnityEngine.Random.Range(y1, y2) * Constants.WorldDimensions.y);
+        return new Vector2((startOnRight ? 1 : -1) * Constants.WorldSize.x, UnityEngine.Random.Range(y1, y2) * Constants.WorldSize.y);
     }
 
     protected IEnumerator MassProduce(SpawnDelegate spawn, int birdCount)

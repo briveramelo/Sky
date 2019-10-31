@@ -3,10 +3,11 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Incubator))]
+[CustomEditor(typeof(BirdFactory))]
 public class IncubatorEditor : Editor
 {
     public override void OnInspectorGUI() {
+        base.OnInspectorGUI();
         serializedObject.Update();
         var birdTypes = Enum.GetValues(typeof(BirdType)).Cast<BirdType>().ToList();
         
@@ -19,7 +20,7 @@ public class IncubatorEditor : Editor
 
             if (GUILayout.Button(birdType.ToString()))
             {
-                ((Incubator) serializedObject.targetObject).SpawnNextBird(birdType);
+                ((BirdFactory) serializedObject.targetObject).CreateNextBird(birdType);
             }
         }
 

@@ -28,10 +28,13 @@ public class Duck : Bird, ILeaderToDuck, IDirectable
     [SerializeField] private LeadDuck _leaderScript;
 
     public override BirdType MyBirdType => BirdType.Duck;
-    private IDuckToLeader _leader;
-    private Transform _myFormationTransform;
+    
     private const float _moveSpeed = 2.5f;
     private const float _maxSpeed = 4f;
+    
+    private IDuckToLeader _leader;
+    private Transform _myFormationTransform;
+    
     private int _formationIndex;
     private bool _bouncing;
 
@@ -49,7 +52,7 @@ public class Duck : Bird, ILeaderToDuck, IDirectable
     {
         set
         {
-            _rigbod.velocity = value;
+            _rigbod.velocity = Constants.SpeedMultiplier * value;
             transform.FaceForward(_rigbod.velocity.x < 0);
         }
     }
@@ -57,7 +60,7 @@ public class Duck : Bird, ILeaderToDuck, IDirectable
     protected override void Awake()
     {
         base.Awake();
-        if (transform.parent)
+        if (_leaderScript)
         {
             _leader = _leaderScript;
         }
@@ -80,7 +83,7 @@ public class Duck : Bird, ILeaderToDuck, IDirectable
     }
 
     // This function restricts a duck's movement to the confines of the screen- an omage to DuckHunt
-    // Although it seems that flipping the sign of the duck's x or y velocity when the duck's position exceed the WorldDimensions
+    // Although it seems that flipping the sign of the duck's x or y velocity when the duck's position exceed the WorldSize
     // would eliminate extra lines of code, this is not the case.
     // In that scenario, the duck often travels far beyond the WorldDimension, reversing direction and velocity,
     // only to be trapped flipping its velocity each frame for some time. 
@@ -88,10 +91,10 @@ public class Duck : Bird, ILeaderToDuck, IDirectable
     private void BounceOnTheWalls()
     {
         var pos = transform.position;
-        var overX = pos.x > Constants.WorldDimensions.x;
-        var underX = pos.x < -Constants.WorldDimensions.x;
-        var overY = pos.y > Constants.WorldDimensions.y;
-        var underY = pos.y < -Constants.WorldDimensions.y;
+        var overX = pos.x > Constants.WorldSize.x;
+        var underX = pos.x < -Constants.WorldSize.x;
+        var overY = pos.y > Constants.WorldSize.y;
+        var underY = pos.y < -Constants.WorldSize.y;
         if (overX || underX || overY || underY)
         {
             CurrentVelocity = new Vector2(

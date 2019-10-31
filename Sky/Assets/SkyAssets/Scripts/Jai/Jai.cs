@@ -13,31 +13,28 @@ public enum WeaponType
 
 public class Jai : MonoBehaviour, IFreezable
 {
-    [SerializeField] private GameObject[] _weaponPrefabs = new GameObject[3];
-    [SerializeField] private Animator _jaiAnimator;
-
-    private const float _distToThrow = .03f;
-
-    private int _currentFingerId = -1;
-    private Weapon _myWeapon;
-    private IUsable _weaponTrigger;
-    private WeaponType _myWeaponType;
-
-    private Vector2 _startingTouchPoint;
-    private bool _attacking, _stabbing, _beingHeld;
-    private const string _jaiName = nameof(Jai);
-    private Vector3[] _spawnSpots = 
-    {
-        new Vector3(0.14f, 0.12f, 0f),
-        Vector3.zero,
-        Vector3.zero
-    };
     private static class Throw
     {
         public const int Idle = 0;
         public const int Down = 1;
         public const int Up = 2;
     }
+    [SerializeField] private GameObject[] _weaponPrefabs = new GameObject[3];
+    [SerializeField] private Transform[] _weaponSpawnParents;
+    [SerializeField] private Animator _jaiAnimator;
+    [SerializeField, Range(0,1400f)] private float _throwForceMagnitude = 1400f; //Force with which Jai throws the spear
+    
+    private const string _jaiName = nameof(Jai);
+    private const float _distToThrow = .03f;
+
+    private Weapon _myWeapon;
+    private IUsable _weaponTrigger;
+    private WeaponType _myWeaponType;
+
+    private Vector2 _startingTouchPoint;
+    private int _currentFingerId = -1;
+    private bool _attacking, _stabbing, _beingHeld;
+    
 
     bool IFreezable.IsFrozen
     {
@@ -58,6 +55,11 @@ public class Jai : MonoBehaviour, IFreezable
 
     private void OnDestroy()
     {
+        if (TouchInputManager.Instance == null)
+        {
+            return;
+        }
+
         TouchInputManager.Instance.OnTouchBegin -= OnTouchBegin;
         TouchInputManager.Instance.OnTouchEnd -= OnTouchEnd;
     }
@@ -135,7 +137,7 @@ public class Jai : MonoBehaviour, IFreezable
         {
             if (releaseDist > _distToThrow && _myWeapon != null)
             {
-                _weaponTrigger.UseMe(swipeDir);
+                _weaponTrigger.UseMe(swipeDir.normalized * _throwForceMagnitude);
                 StartCoroutine(AnimateUseWeapon(swipeDir));
             }
         }
@@ -204,7 +206,7 @@ public class Jai : MonoBehaviour, IFreezable
 
     private void GenerateNewWeapon(WeaponType weaponType)
     {
-        _myWeapon = Instantiate(_weaponPrefabs[(int) weaponType], transform.position + _spawnSpots[(int) weaponType], Quaternion.identity).GetComponent<Weapon>();
+        _myWeapon = Instantiate(_weaponPrefabs[(int) weaponType], _weaponSpawnParents[(int)weaponType], false).GetComponent<Weapon>();
         _weaponTrigger = _myWeapon;
     }
 }

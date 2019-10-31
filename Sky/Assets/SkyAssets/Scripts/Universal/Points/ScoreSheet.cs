@@ -58,84 +58,6 @@ public enum ScoreType
 
 public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReportable, IStreakable
 {
-    public static ITallyable Tallier;
-    public static IResetable Resetter;
-    public static IReportable Reporter;
-    public static IStreakable Streaker;
-
-    [SerializeField] private GameObject _points;
-    [SerializeField] private ScoreBoard _scoreBoard;
-
-    private static int _hitStreak;
-    private static int _tempStreak;
-    private static int _lastHitWeaponNumber;
-
-    private static Dictionary<CounterType, Counter> _allCounters;
-    private static Dictionary<ScoreType, PointCounter> _scoreCounters;
-    private const bool _increase = true;
-    private const bool _decrease = false;
-    private float _startTime;
-
-    protected override bool _destroyOnLoad => true;
-
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
-    }
-
-    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == Scenes.Story || scene.name == Scenes.Endless)
-        {
-            ResetHitStreak();
-        }
-    }
-
-    #region IStreakable
-
-    private static void ResetHitStreak()
-    {
-        _hitStreak = 0;
-        _tempStreak = 0;
-        _lastHitWeaponNumber = 0;
-    }
-
-    void IStreakable.ReportHit(int newHitWeaponNumber)
-    {
-        var weaponNumberDif = newHitWeaponNumber - _lastHitWeaponNumber;
-
-        if (weaponNumberDif == 0 || weaponNumberDif == 1)
-        {
-            //continue the streeeeeaaaakkkk!
-            _hitStreak++;
-            if (weaponNumberDif == 1)
-            {
-                _tempStreak = 1;
-            }
-        }
-        else if (weaponNumberDif > 1)
-        {
-            //c-c-c-combo breaker
-            _tempStreak = _hitStreak;
-            _hitStreak = 1;
-        }
-        else if (weaponNumberDif < 0)
-        {
-            //Combo RESTORATION!
-            _hitStreak = _tempStreak + 1;
-            //rectify points
-        }
-
-        _lastHitWeaponNumber = newHitWeaponNumber;
-    }
-
-    int IStreakable.GetHitStreak()
-    {
-        return _hitStreak;
-    }
-
-    #endregion
-
     #region BirdCounters
 
     private class Counter
@@ -212,7 +134,85 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
     }
 
     #endregion
+    
+    public static ITallyable Tallier;
+    public static IResetable Resetter;
+    public static IReportable Reporter;
+    public static IStreakable Streaker;
 
+    [SerializeField] private GameObject _points;
+    [SerializeField] private ScoreBoard _scoreBoard;
+
+    private static int _hitStreak;
+    private static int _tempStreak;
+    private static int _lastHitWeaponNumber;
+    private static Dictionary<CounterType, Counter> _allCounters;
+    private static Dictionary<ScoreType, PointCounter> _scoreCounters;
+
+    private const bool _increase = true;
+    private const bool _decrease = false;
+    
+    private float _startTime;
+
+    protected override bool _destroyOnLoad => true;
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
+
+    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == Scenes.Story || scene.name == Scenes.Endless)
+        {
+            ResetHitStreak();
+        }
+    }
+
+    #region IStreakable
+
+    private static void ResetHitStreak()
+    {
+        _hitStreak = 0;
+        _tempStreak = 0;
+        _lastHitWeaponNumber = 0;
+    }
+
+    void IStreakable.ReportHit(int newHitWeaponNumber)
+    {
+        var weaponNumberDif = newHitWeaponNumber - _lastHitWeaponNumber;
+
+        if (weaponNumberDif == 0 || weaponNumberDif == 1)
+        {
+            //continue the streeeeeaaaakkkk!
+            _hitStreak++;
+            if (weaponNumberDif == 1)
+            {
+                _tempStreak = 1;
+            }
+        }
+        else if (weaponNumberDif > 1)
+        {
+            //c-c-c-combo breaker
+            _tempStreak = _hitStreak;
+            _hitStreak = 1;
+        }
+        else if (weaponNumberDif < 0)
+        {
+            //Combo RESTORATION!
+            _hitStreak = _tempStreak + 1;
+            //rectify points
+        }
+
+        _lastHitWeaponNumber = newHitWeaponNumber;
+    }
+
+    int IStreakable.GetHitStreak()
+    {
+        return _hitStreak;
+    }
+
+    #endregion
 
     protected override void Awake()
     {
@@ -347,11 +347,11 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
 
     private void DisplayPoints(Vector2 position, int pointsToAdd)
     {
-        var xClamp = Constants.WorldDimensions.x * .9f;
-        var yClamp = Constants.WorldDimensions.y * .9f;
+        var xClamp = Constants.WorldSize.x * .9f;
+        var yClamp = Constants.WorldSize.y * .9f;
         var spawnPosition = new Vector2(Mathf.Clamp(position.x, -xClamp, xClamp), Mathf.Clamp(position.y, -yClamp, yClamp));
 
-        Instantiate(_points, spawnPosition, Quaternion.identity).GetComponent<IDisplayable>().DisplayPoints(pointsToAdd);
+        Instantiate(_points, spawnPosition, Quaternion.identity, ScoreSheet.Instance.transform).GetComponent<IDisplayable>().DisplayPoints(pointsToAdd);
         ((IDisplayable) _scoreBoard).DisplayPoints(((PointCounter) _allCounters[CounterType.Scored]).GetCount(BirdType.All, false));
     }
 

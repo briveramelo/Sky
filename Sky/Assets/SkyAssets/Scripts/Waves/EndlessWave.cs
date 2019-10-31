@@ -36,10 +36,7 @@ public class EndlessWave : Wave
         Hard = 5
     }
     [SerializeField] private Difficulty _toughness;
-
-    private float _emotionalCap = 50f;
-    private float _emotionalSafePoint = 10f;
-
+    
     private OrderedDictionary _lockedStandardBirds = new OrderedDictionary()
     {
         {BirdType.Pigeon, 0f * 60f},
@@ -50,9 +47,7 @@ public class EndlessWave : Wave
         {BirdType.Shoebill, 2.5f * 60f},
         {BirdType.Bat, 3f * 60f}
     };
-
     private List<BirdType> _unlockedStandardBirds = new List<BirdType>();
-
     private OrderedDictionary _lockedBossBirds = new OrderedDictionary()
     {
         {BirdType.DuckLeader, 3.5f * 60f},
@@ -62,25 +57,8 @@ public class EndlessWave : Wave
     };
 
     private List<BirdType> _unlockedBossBirds = new List<BirdType>();
-
-    protected override void Awake()
-    {
-        base.Awake();
-        SceneManager.sceneLoaded += OnLevelFinishedLoading;
-    }
-
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
-    }
-
-    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name != Scenes.Endless)
-        {
-            StopAllCoroutines();
-        }
-    }
+    private float _emotionalCap = 50f;
+    private float _emotionalSafePoint = 10f;
 
     protected override IEnumerator GenerateBirds()
     {
@@ -113,10 +91,8 @@ public class EndlessWave : Wave
         {
             return new[] {_unlockedBossBirds[UnityEngine.Random.Range(0, _unlockedBossBirds.Count)]};
         }
-        else
-        {
-            return new[] {BirdType.All};
-        }
+        
+        return new[] {BirdType.All};
     }
 
     private IEnumerator UnlockBirdies(OrderedDictionary lockedBirds, List<BirdType> unlockedBirds)

@@ -13,7 +13,7 @@ public abstract class LinearBird : Bird
 
     public void SetVelocity(Vector2 desiredDirection)
     {
-        _rigbod.velocity = desiredDirection.normalized * MoveSpeed;
+        _rigbod.velocity = Constants.SpeedMultiplier * MoveSpeed * desiredDirection.normalized;
         transform.FaceForward(desiredDirection.x < 0);
     }
 }

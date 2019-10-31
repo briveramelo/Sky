@@ -12,12 +12,12 @@ public class Albatross : Bird
         Vector2 moveDir = Constants.BalloonCenter.position - transform.position;
         if (Vector2.Distance(moveDir, Vector2.zero) > 0.1f)
         {
-            _rigbod.velocity = moveDir.normalized * _moveSpeed;
+            _rigbod.velocity = Constants.SpeedMultiplier * _moveSpeed * moveDir.normalized;
             transform.FaceForward(_rigbod.velocity.x < 0);
         }
         else
         {
-            _rigbod.velocity = Vector2.Lerp(_rigbod.velocity, Vector2.zero, 0.1f);
+            _rigbod.velocity = Constants.SpeedMultiplier * Vector2.Lerp(_rigbod.velocity, Vector2.zero, 0.1f);
             if (!_shouldWaitToTurn)
             {
                 StartCoroutine(Bool.Toggle(theBool => _shouldWaitToTurn = !theBool, .75f));

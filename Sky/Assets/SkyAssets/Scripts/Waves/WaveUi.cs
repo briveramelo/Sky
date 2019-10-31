@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq;
 using GenericFunctions;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public interface IWaveUi
@@ -54,13 +55,12 @@ public class WaveUi : MonoBehaviour, IWaveUi
         public const int ComeIn = 1;
         public const int GetOut = 2;
     }
-    
-    
-    [SerializeField] private Text _title;
-    [SerializeField] private Text _subTitle;
-    [SerializeField] private Text _pointTotal;
-    [SerializeField] private Text _streak;
-    [SerializeField] private Text _combo;
+
+    [SerializeField] private TextMeshProUGUI _title;
+    [SerializeField] private TextMeshProUGUI _subTitle;
+    [SerializeField] private TextMeshProUGUI _pointTotal;
+    [SerializeField] private TextMeshProUGUI _combo;
+    [SerializeField] private TextMeshProUGUI _streak;
     [SerializeField] private Animator _titleA;
     [SerializeField] private Animator _subTitleA;
     [SerializeField] private Animator _pointTotalA;

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine.UI;
 
 public enum GameMode
@@ -10,14 +11,14 @@ public enum GameMode
 
 public class ScoreDisplayer : MonoBehaviour
 {
-    [SerializeField] private Text _title;
-    [SerializeField] private Text _column1Title;
-    [SerializeField] private Text _column2Title;
-    [SerializeField] private Text[] _column1, _column2;
+    [SerializeField] private TextMeshProUGUI _title;
+    [SerializeField] private TextMeshProUGUI _column1Title;
+    [SerializeField] private TextMeshProUGUI _column2Title;
+    [SerializeField] private TextMeshProUGUI[] _column1, _column2;
 
     private DataSave _currentDataSave;
 
-    private void Awake()
+    private void Start()
     {
         _currentDataSave = FindObjectOfType<SaveLoadData>().CopyCurrentDataSave();
         DisplayStats(GameMode.Story);

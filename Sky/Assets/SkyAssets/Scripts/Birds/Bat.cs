@@ -69,7 +69,7 @@ public class Bat : Bird
             }
 
             _moveDir = (_targetPositions[_targetIndex] - _batPos).normalized;
-            _rigbod.velocity = _moveDir * _approachSpeed;
+            _rigbod.velocity = Constants.SpeedMultiplier * _approachSpeed * _moveDir;
             transform.FaceForward(transform.position.x > Constants.BalloonCenter.position.x);
             yield return null;
         }
@@ -130,7 +130,7 @@ public class Bat : Bird
                                    Mathf.Cos(_ellipseAng * Mathf.Deg2Rad) * Mathf.Cos(_ellipseAng * Mathf.Deg2Rad), 1.5f);
             var orbitSpeed = _approachSpeed / _curvature;
 
-            _rigbod.velocity = _moveDir * orbitSpeed;
+            _rigbod.velocity = Constants.SpeedMultiplier * orbitSpeed * _moveDir;
             transform.FaceForward(transform.position.x > Constants.BalloonCenter.position.x);
             yield return null;
         }
@@ -151,9 +151,9 @@ public class Bat : Bird
     // Help define the elliptical pattern
     private float FindTargetAngle()
     {
-        var angleStep = 4f;
+        const float decay = 0.0167f * 4f;
         var targetAng = _clockwise ? _ellipseAng + 90f : _ellipseAng - 90f;
-        return Mathf.LerpAngle(_ellipseAng, targetAng, Time.deltaTime * angleStep);
+        return Mathf.LerpAngle(_ellipseAng, targetAng, decay);
     }
 
     // Set an elliptical pattern around the balloons

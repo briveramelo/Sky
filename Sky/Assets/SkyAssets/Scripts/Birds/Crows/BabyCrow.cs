@@ -4,9 +4,16 @@ using GenericFunctions;
 
 public class BabyCrow : Bird
 {
+    private static class AnimState
+    {
+        public const int Flying = 0;
+        public const int Looking = 1;
+    }
+    
     [SerializeField] private Animator _babyCrowAnimator;
     public override BirdType MyBirdType => BirdType.BabyCrow;
-    private Vector2[] basketOffsets = new Vector2[]
+    
+    private Vector2[] _basketOffsets = 
     {
         new Vector2(-.8f, 0.1f),
         new Vector2(.8f, 0.1f),
@@ -38,12 +45,6 @@ public class BabyCrow : Bird
 
     private float CorrectSpeed => _dist2Target < 0.4f ? Mathf.Lerp(_rigbod.velocity.magnitude, 0f, Time.deltaTime * 2f) : _moveSpeed;
 
-    private static class AnimState
-    {
-        public const int Flying = 0;
-        public const int Looking = 1;
-    }
-
     protected override void Awake()
     {
         base.Awake();
@@ -57,9 +58,9 @@ public class BabyCrow : Bird
         {
             var pos = transform.position;
             var jaiPos = Constants.JaiTransform.position;
-            _dist2Target = Vector2.Distance(jaiPos + (Vector3) basketOffsets[BasketOffsetIndex], pos);
-            _moveDir = (jaiPos + (Vector3) basketOffsets[BasketOffsetIndex] - pos).normalized;
-            _rigbod.velocity = _moveDir * CorrectSpeed;
+            _dist2Target = Vector2.Distance(jaiPos + (Vector3) _basketOffsets[BasketOffsetIndex], pos);
+            _moveDir = (jaiPos + (Vector3) _basketOffsets[BasketOffsetIndex] - pos).normalized;
+            _rigbod.velocity = Constants.SpeedMultiplier * CorrectSpeed * _moveDir;
 
             if (_dist2Target < _triggerShiftDistance && _shiftsHit == _currentShift)
             {
@@ -85,14 +86,14 @@ public class BabyCrow : Bird
 
     private IEnumerator FlyAway()
     {
-        _dist2Target = Vector2.Distance(1.2f * Constants.WorldDimensions.x * Vector3.right, transform.position);
+        _dist2Target = Vector2.Distance(1.2f * Constants.WorldSize.x * Vector3.right, transform.position);
 
         while (_dist2Target > _triggerShiftDistance)
         {
             var pos = transform.position;
-            _dist2Target = Vector2.Distance(1.2f * Constants.WorldDimensions.x * Vector3.right, pos);
-            _moveDir = (1.2f * Constants.WorldDimensions.x * Vector3.right - pos).normalized;
-            _rigbod.velocity = _moveDir * _moveSpeed;
+            _dist2Target = Vector2.Distance(1.2f * Constants.WorldSize.x * Vector3.right, pos);
+            _moveDir = (1.2f * Constants.WorldSize.x * Vector3.right - pos).normalized;
+            _rigbod.velocity = Constants.SpeedMultiplier * _moveSpeed * _moveDir;
             yield return null;
         }
 
@@ -111,7 +112,7 @@ public class BabyCrow : Bird
 
     protected override void DieUniquely()
     {
-        Incubator.Instance.SpawnNextBird(BirdType.Crow);
+        BirdFactory.Instance.CreateNextBird(BirdType.Crow);
         base.DieUniquely();
     }
 }

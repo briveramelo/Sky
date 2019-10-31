@@ -23,7 +23,7 @@ public class ReplaceGameObjects : ScriptableWizard {
 			newT.position = t.position;
 			newT.rotation = t.rotation;
 			newT.localScale = t.localScale;
-			newT.parent = t.parent;
+			newT.SetParent(t.parent);
 		}
 
 		foreach (GameObject go in Selection.gameObjects){

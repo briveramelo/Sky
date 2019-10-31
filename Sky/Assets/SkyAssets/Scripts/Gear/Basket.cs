@@ -157,12 +157,12 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket
         _rigbod.isKinematic = true;
         _basketCollider.enabled = false;
         ScoreSheet.Tallier.TallyThreat(Threat.BasketGrabbed);
-        transform.parent = tentaclesTransform;
+        transform.SetParent(tentaclesTransform);
     }
 
     void ITentacleToBasket.DetachFromTentacles()
     {
-        transform.parent = null;
+        transform.SetParent(null);
         transform.localScale = Vector3.one;
         _basketCollider.enabled = true;
         _rigbod.isKinematic = false;

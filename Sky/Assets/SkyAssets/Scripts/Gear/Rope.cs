@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class Rope : MonoBehaviour
 {
-    [SerializeField] private Animator _ropeAnimator;
-
-    private float _lastXPosition;
-    private const float _speedThreshold = 0.019f;
-
     private static class RopeAnimState
     {
         public const int Idle = 0;
         public const int Waving = 1;
     }
+    
+    [SerializeField] private Animator _ropeAnimator;
+
+    private float _lastXPosition;
+    private const float _speedThreshold = 0.019f;
 
     private void Update()
     {

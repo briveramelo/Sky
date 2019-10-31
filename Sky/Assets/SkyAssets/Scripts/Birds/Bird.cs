@@ -32,7 +32,7 @@ public abstract class Bird : MonoBehaviour, IHurtable
         ScoreSheet.Tallier.TallyBirdThreat(ref BirdStats, BirdThreat.Damage);
         if (BirdStats.Health <= 0)
         {
-            GameClock.Instance.SlowTime(.1f, .5f);
+            GameClock.Instance.SlowTime(.1f, .8f);
             ScoreSheet.Tallier.TallyKill(ref BirdStats);
             DieUniquely();
         }

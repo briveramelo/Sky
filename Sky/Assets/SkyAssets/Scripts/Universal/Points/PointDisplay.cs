@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using TMPro;
+using UnityEngine;
 
 public interface IDisplayable
 {
@@ -8,7 +8,7 @@ public interface IDisplayable
 
 public abstract class PointDisplay : MonoBehaviour, IDisplayable
 {
-    [SerializeField] protected Text _myText;
+    [SerializeField] protected TextMeshProUGUI _myText;
 
     void IDisplayable.DisplayPoints(int points)
     {

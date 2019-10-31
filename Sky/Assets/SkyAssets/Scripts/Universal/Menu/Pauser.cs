@@ -18,6 +18,10 @@ public class Pauser : Selector
 
     private void OnDestroy()
     {
+        if (TouchInputManager.Instance == null)
+        {
+            return;
+        }
         TouchInputManager.Instance.OnTouchBegin -= OnTouchBegin;
     }
 

@@ -14,8 +14,8 @@ public class BirdOfParadise : LinearBird
 
     protected override void DieUniquely()
     {
-        var xSpot = Random.Range(-Constants.WorldDimensions.x, Constants.WorldDimensions.x) * 0.67f;
-        var spawnSpot = new Vector3(xSpot, -Constants.WorldDimensions.y * 1.6f, 0f);
+        var xSpot = Random.Range(-Constants.WorldSize.x, Constants.WorldSize.x) * 0.67f;
+        var spawnSpot = new Vector3(xSpot, -Constants.WorldSize.y * 1.6f, 0f);
         Instantiate(_balloon, spawnSpot, Quaternion.identity);
         base.DieUniquely();
     }
