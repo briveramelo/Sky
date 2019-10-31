@@ -52,7 +52,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon
     void IBasketToBalloon.DetachFromBasket()
     {
         transform.SetParent(null);
-        gameObject.layer = Constants.BalloonFloatingLayer;
+        gameObject.layer = Layers.BalloonFloatingLayer;
         StartCoroutine(FloatUp());
     }
 
@@ -60,8 +60,8 @@ public class Balloon : MonoBehaviour, IBasketToBalloon
     {
         StopAllCoroutines(); //specifically, stop the balloon from floating up
         transform.SetParent(Basket.Instance.transform);
-        gameObject.layer = Constants.BalloonLayer;
-        _rope.layer = Constants.BalloonBoundsLayer;
+        gameObject.layer = Layers.BalloonLayer;
+        _rope.layer = Layers.BalloonBoundsLayer;
         transform.position = (Vector2) Constants.JaiTransform.position + newPosition;
         _pixelPerfect.enabled = false;
         _boundsCollider.enabled = true;
@@ -113,7 +113,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (_balloonCollider.isActiveAndEnabled && col.gameObject.layer == Constants.BirdLayer)
+        if (_balloonCollider.isActiveAndEnabled && col.gameObject.layer == Layers.BirdLayer)
         {
             //bird layer pops free balloon
             Pop();
@@ -122,7 +122,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon
 
     public void Pop()
     {
-        if (gameObject.layer == Constants.BalloonLayer)
+        if (gameObject.layer == Layers.BalloonLayer)
         {
             ((IBalloonToBasket) Basket.Instance).ReportPoppedBalloon(this);
             Handheld.Vibrate();

@@ -21,6 +21,7 @@ namespace GenericFunctions
     public static class Constants
     {
         public const float SpeedMultiplier = 0.25f;
+        public const float DistanceMultiplier = 0.25f;
         public static Transform JaiTransform;
         public static Transform BalloonCenter;
         public static Transform BasketTransform;
@@ -66,22 +67,6 @@ namespace GenericFunctions
 
         public static Vector2 WorldPadding => new Vector2(1f, 1f);
 
-        public const int BasketLayer = 8;
-        public const int SpearLayer = 9;
-        public const int BirdLayer = 10;
-        public const int BalloonLayer = 11;
-        public const int BalloonFloatingLayer = 12;
-        public const int JaiLayer = 13;
-        public const int FaceLayer = 14;
-        public const int TentacleLayer = 15;
-        public const int TentacleSensorLayer = 16;
-        public const int TeleporterLayer = 17;
-        public const int WorldBoundsLayer = 18;
-        public const int PooNuggetLayer = 19;
-        public const int BalloonBoundsLayer = 20;
-        public const int ShoebillHornLayer = 21;
-        public const int CollectableWeaponLayer = 22;
-
         public const float Time2Destroy = 2f;
         public const float Time2ThrowSpear = 0.333333f;
         public const float Time2StrikeLightning = 0.5f;
@@ -100,5 +85,24 @@ namespace GenericFunctions
                 return _animState.Value;
             }
         }
+    }
+    
+    public static class Layers
+    {
+        public const int BasketLayer = 8;
+        public const int SpearLayer = 9;
+        public const int BirdLayer = 10;
+        public const int BalloonLayer = 11;
+        public const int BalloonFloatingLayer = 12;
+        public const int JaiLayer = 13;
+        public const int FaceLayer = 14;
+        public const int TentacleLayer = 15;
+        public const int TentacleSensorLayer = 16;
+        public const int TeleporterLayer = 17;
+        public const int WorldBoundsLayer = 18;
+        public const int PooNuggetLayer = 19;
+        public const int BalloonBoundsLayer = 20;
+        public const int ShoebillHornLayer = 21;
+        public const int CollectableWeaponLayer = 22;
     }
 }

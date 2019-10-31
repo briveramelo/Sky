@@ -19,7 +19,7 @@ public class PooNugget : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.layer == Constants.FaceLayer)
+        if (col.gameObject.layer == Layers.FaceLayer)
         {
             SplatterPoo();
         }

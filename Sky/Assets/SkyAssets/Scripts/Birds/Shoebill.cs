@@ -90,7 +90,7 @@ public class Shoebill : Bird
     //for _basket collision only
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.layer == Constants.JaiLayer)
+        if (col.gameObject.layer == Layers.JaiLayer)
         {
             if (_canHitBasket)
             {

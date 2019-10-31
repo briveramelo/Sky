@@ -24,12 +24,12 @@ public abstract class Weapon : MonoBehaviour, IUsable
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.layer == Constants.BirdLayer)
+        if (col.gameObject.layer == Layers.BirdLayer)
         {
             Hit();
             DeliverDamage(col);
         }
-        else if (col.gameObject.layer == Constants.BalloonFloatingLayer)
+        else if (col.gameObject.layer == Layers.BalloonFloatingLayer)
         {
             Hit();
             PopBalloon(col);

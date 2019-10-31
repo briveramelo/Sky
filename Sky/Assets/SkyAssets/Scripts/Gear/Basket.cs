@@ -111,7 +111,7 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.layer == Constants.BalloonFloatingLayer)
+        if (col.gameObject.layer == Layers.BalloonFloatingLayer)
         {
             if (_balloons.Count < 3)
             {
