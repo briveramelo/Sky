@@ -13,7 +13,7 @@ public class Pelican : Bird
     
     [SerializeField] private Animator _pelicanAnimator;
 
-    public override BirdType MyBirdType => BirdType.Pelican;
+    protected override BirdType MyBirdType => BirdType.Pelican;
     private int _currentTarIn;
     private Vector3[] _setPositions;
 

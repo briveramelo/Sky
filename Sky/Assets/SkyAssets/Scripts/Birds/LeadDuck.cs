@@ -15,7 +15,7 @@ public class LeadDuck : Bird, IDuckToLeader
     // The DuckLeader ensures all ducks follow as closely behind in an evenly distributed Flying V Formation
     // The DuckLeader will fly linearly across the screen
 
-    public override BirdType MyBirdType => BirdType.DuckLeader;
+    protected override BirdType MyBirdType => BirdType.DuckLeader;
     
     [SerializeField] private Duck[] _duckScripts;
     [SerializeField] private Transform[] _formationTransforms;

@@ -4,7 +4,7 @@ using GenericFunctions;
 
 public class Shoebill : Bird
 {
-    public override BirdType MyBirdType => BirdType.Shoebill;
+    protected override BirdType MyBirdType => BirdType.Shoebill;
     private IBumpable _basket;
     private bool _canHitBasket = true;
     private bool _flying = true;

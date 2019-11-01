@@ -4,7 +4,7 @@ using GenericFunctions;
 public class BirdOfParadise : LinearBird
 {
     [SerializeField] private GameObject _balloon;
-    public override BirdType MyBirdType => BirdType.BirdOfParadise;
+    protected override BirdType MyBirdType => BirdType.BirdOfParadise;
     protected override void Awake()
     {
         MoveSpeed = 3f;

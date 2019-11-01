@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 
-public struct DamageKill
+//point values for damaging or killing something
+public struct DamagePoints
 {
     public int Damage;
     public int Kill;
 
-    public DamageKill(int damage, int kill)
+    public DamagePoints(int damage, int kill)
     {
         Damage = damage;
         Kill = kill;
     }
 
-    public DamageKill(DamageKill model)
+    public DamagePoints(DamagePoints model)
     {
         Damage = model.Damage;
         Kill = model.Kill;
@@ -43,49 +44,30 @@ public struct DamageKill
 public class BirdStats
 {
     public int DamageTaken;
-
-    private const int _basePointMultiplier = 10;
-    public BirdType MyBirdType { get; }
     public Vector2 BirdPosition { get; set; }
     public int Health { get; set; }
 
-    private int _streakPoints;
+    public BirdType MyBirdType { get; }
+    public int StartHealth { get; }
     public int StreakPoints => _streakPoints * _basePointMultiplier;
-    private int _comboPoints;
     public int ComboPoints => _comboPoints * _basePointMultiplier;
-
-    private DamageKill _pointBase, _pointsToGive, _threat, _guts;
-
     public int TotalThreatValue => _threat.Total(Health);
     public int TotalPointValue => _pointBase.Total(Health) * _basePointMultiplier;
-
     public int GutsToSpill => _guts.GetDeathOrDamage(Health <= 0, DamageTaken + 1);
     public int PointsToAdd => _pointsToGive.GetDeathOrDamage(Health <= 0, DamageTaken) * _basePointMultiplier;
     public int ThreatRemoved => _threat.GetDeathOrDamage(Health <= 0, DamageTaken);
 
-    public void ModifyForStreak(int birdStreak)
-    {
-        _streakPoints = birdStreak - 1;
-        _pointsToGive.Redefine(_pointBase.Damage + _streakPoints, _pointBase.Kill + _streakPoints);
-    }
-
-    public void ModifyForCombo(int birdsHit)
-    {
-        _comboPoints = Health <= 0 ? _pointsToGive.Kill : _pointsToGive.Damage;
-        _pointsToGive.Multiply(birdsHit);
-        _comboPoints = (Health <= 0 ? _pointsToGive.Kill : _pointsToGive.Damage) - _comboPoints;
-    }
-
-    public void ModifyForEvent(int newKillPoint)
-    {
-        _pointBase.Kill = _pointsToGive.Kill = _threat.Kill = newKillPoint;
-    }
+    private const int _basePointMultiplier = 10;
+    
+    private int _streakPoints;
+    private int _comboPoints;
+    private DamagePoints _pointBase, _pointsToGive, _threat, _guts;
 
     public BirdStats(BirdType birdType)
     {
         MyBirdType = birdType;
         Health = 1;
-        _pointsToGive = _guts = _threat = new DamageKill(1, 1);
+        _pointsToGive = _guts = _threat = new DamagePoints(1, 1);
 
         switch (birdType)
         {
@@ -158,6 +140,25 @@ public class BirdStats
                 break;
         }
 
-        _pointBase = new DamageKill(_pointsToGive);
+        StartHealth = Health;
+        _pointBase = new DamagePoints(_pointsToGive);
+    }
+    
+    public void ModifyForStreak(int birdStreak)
+    {
+        _streakPoints = birdStreak - 1;
+        _pointsToGive.Redefine(_pointBase.Damage + _streakPoints, _pointBase.Kill + _streakPoints);
+    }
+
+    public void ModifyForCombo(int birdsHit)
+    {
+        _comboPoints = Health <= 0 ? _pointsToGive.Kill : _pointsToGive.Damage;
+        _pointsToGive.Multiply(birdsHit);
+        _comboPoints = (Health <= 0 ? _pointsToGive.Kill : _pointsToGive.Damage) - _comboPoints;
+    }
+
+    public void ModifyForEvent(int newKillPoint)
+    {
+        _pointBase.Kill = _pointsToGive.Kill = _threat.Kill = newKillPoint;
     }
 }

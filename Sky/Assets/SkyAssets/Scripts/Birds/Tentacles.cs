@@ -33,7 +33,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
     [SerializeField] private Transform _tipTransform;
     [SerializeField] private Collider2D _tipCollider;
 
-    public override BirdType MyBirdType => BirdType.Tentacles;
+    protected override BirdType MyBirdType => BirdType.Tentacles;
     
     private ISensorToTentacle _me; //just because I wanted to use ResetPosition locally with less mess...
     private IToggleable _sensor;

@@ -19,7 +19,7 @@ public class Crow : Bird, IMurderToCrow
     }
     
     #region Initialize Variables
-    public override BirdType MyBirdType => BirdType.Crow;
+    protected override BirdType MyBirdType => BirdType.Crow;
 
     [SerializeField] private Murder _murder;
     [SerializeField] private PixelRotation _pixelRotationScript;

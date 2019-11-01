@@ -3,10 +3,11 @@ using GenericFunctions;
 
 public class Albatross : Bird
 {
-    public override BirdType MyBirdType => BirdType.Albatross;
+    protected override BirdType MyBirdType => BirdType.Albatross;
+    
+    [SerializeField] private float _farEnoughDist = 0.1f;
     
     private const float _moveSpeed = 1.065f;
-    [SerializeField] private float _farEnoughDist = 0.1f;
     
     private bool _shouldWaitToTurn;
 

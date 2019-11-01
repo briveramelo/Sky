@@ -8,7 +8,7 @@ public class Eagle : Bird
     [SerializeField] private EagleFriends _eagleFriends;
     [SerializeField] private PixelRotation _pixelRotationScript;
     
-    public override BirdType MyBirdType => BirdType.Eagle;
+    protected override BirdType MyBirdType => BirdType.Eagle;
     private ITriggerSpawnable _myEagleFriends;
     private Vector3 _attackDir;
 

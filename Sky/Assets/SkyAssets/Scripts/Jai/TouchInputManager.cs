@@ -13,8 +13,9 @@ public class TouchInputManager : Singleton<TouchInputManager>, IFreezable
     public event Action<int, Vector2> OnTouchWorldHeld;
     public event Action<int, Vector2> OnTouchWorldEnd;
 
-    private Dictionary<int, string> _fingerIdClaimers = new Dictionary<int, string>();
     protected override bool _destroyOnLoad => true;
+    
+    private Dictionary<int, string> _fingerIdClaimers = new Dictionary<int, string>();
     private bool _isFrozen;
     
     public bool TryClaimFingerId(int fingerId, string claimer)

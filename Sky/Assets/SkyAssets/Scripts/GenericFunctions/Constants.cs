@@ -13,7 +13,7 @@ using System.Collections;
             return Random.value > 0.5f;
         }
 
-        public static IEnumerator Toggle(System.Action<bool> lambda, float time2Wait)
+        public static IEnumerator Toggle(Action<bool> lambda, float time2Wait)
         {
             lambda(false);
             yield return new WaitForSeconds(time2Wait);
@@ -60,7 +60,7 @@ using System.Collections;
                 var cam = pixelCam.normalCamera;
                 var height = cam.orthographicSize / _pixelCam.Value.cameraZoom;
                 var width = height * cam.aspect;
-                var size = new Vector2(width, height);//1f / pixelCam.cameraZoom * ;
+                var size = new Vector2(width, height);
                 return size;
             }
         }
@@ -69,27 +69,15 @@ using System.Collections;
 
         public static Vector2 WorldPadding => new Vector2(1f, 1f);
 
-        public static float SpeedMultiplier =>  0.25f;
+        public static float SpeedMultiplier =>  0.25f;//accounts
         public static float DistanceMultiplier => _pixelCam.Value.cameraZoom;
 
         public const float Time2Destroy = 2f;
         public const float Time2ThrowSpear = 0.333333f;
         public const float Time2StrikeLightning = 0.5f;
 
-        private static int? _animState;
-
-        public static int AnimState
-        {
-            get
-            {
-                if (!_animState.HasValue)
-                {
-                    _animState = Animator.StringToHash("AnimState");
-                }
-
-                return _animState.Value;
-            }
-        }
+        private static Lazy<int> _animState = new Lazy<int>(() => Animator.StringToHash("AnimState"));
+        public static int AnimState => _animState.Value;
     }
     
     public static class Layers

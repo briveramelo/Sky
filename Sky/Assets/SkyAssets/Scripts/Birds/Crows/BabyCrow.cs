@@ -11,7 +11,7 @@ public class BabyCrow : Bird
     }
     
     [SerializeField] private Animator _babyCrowAnimator;
-    public override BirdType MyBirdType => BirdType.BabyCrow;
+    protected override BirdType MyBirdType => BirdType.BabyCrow;
     
     private Vector2[] _basketOffsets = 
     {
