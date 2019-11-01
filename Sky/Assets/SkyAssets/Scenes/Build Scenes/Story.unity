@@ -121,18 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!223 &359097316 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 54225488130402724, guid: 988c378eb4ea17d43af83f61e531b864,
-    type: 3}
-  m_PrefabInstance: {fileID: 7620556678811648998}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &534907330 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7207757976015751335, guid: 988c378eb4ea17d43af83f61e531b864,
-    type: 3}
-  m_PrefabInstance: {fileID: 7620556678811648998}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1752870732
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -226,6 +214,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameplayContainer
       objectReference: {fileID: 0}
+    - target: {fileID: 7207757976015751335, guid: 988c378eb4ea17d43af83f61e531b864,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.0000076293945
+      objectReference: {fileID: 0}
+    - target: {fileID: 7207757976015751335, guid: 988c378eb4ea17d43af83f61e531b864,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.0000038146973
+      objectReference: {fileID: 0}
     - target: {fileID: 4677115831199751721, guid: 988c378eb4ea17d43af83f61e531b864,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -281,36 +279,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3166401258820101142, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 24.999985
-      objectReference: {fileID: 0}
-    - target: {fileID: 3166401258820101142, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 24.999996
-      objectReference: {fileID: 0}
-    - target: {fileID: 7207757976015751335, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7207757976015751335, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7180468945479664941, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7180468945479664941, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7620556679974761268, guid: 988c378eb4ea17d43af83f61e531b864,
         type: 3}
       propertyPath: pixelPerfectCamera
@@ -321,71 +289,11 @@ PrefabInstance:
       propertyPath: pixelPerfectCamera
       value: 
       objectReference: {fileID: 1752870733}
-    - target: {fileID: 8698589440122418229, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: _joystickMaxMoveDistance
-      value: 56.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8698589440122418229, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: _joystickMaxStartDist
-      value: 205.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 8698589440122418229, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: _parentCanvas
-      value: 
-      objectReference: {fileID: 359097316}
-    - target: {fileID: 8698589440122418229, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: _joystickView
-      value: 
-      objectReference: {fileID: 534907330}
-    - target: {fileID: 8698589440122418229, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: _joystickMaxStartDistCanvUnits
-      value: 205
-      objectReference: {fileID: 0}
-    - target: {fileID: 8698589440122418229, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: _joystickMaxMoveDistanceCanvUnits
-      value: 56
-      objectReference: {fileID: 0}
-    - target: {fileID: 8698589440122418229, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: _joystickMaxStartPixels
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 8698589440122418229, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: _joystickMaxMovePixels
-      value: 32
-      objectReference: {fileID: 0}
     - target: {fileID: 2473388810552461341, guid: 988c378eb4ea17d43af83f61e531b864,
         type: 3}
       propertyPath: pixelPerfectCamera
       value: 
       objectReference: {fileID: 1752870733}
-    - target: {fileID: 5394003618502239754, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: _parentCanvas
-      value: 
-      objectReference: {fileID: 359097316}
-    - target: {fileID: 5394003618502239754, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: _rectTran
-      value: 
-      objectReference: {fileID: 534907330}
-    - target: {fileID: 5394003618502239754, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: _targetWorldPosition.x
-      value: -4.224
-      objectReference: {fileID: 0}
-    - target: {fileID: 5394003618502239754, guid: 988c378eb4ea17d43af83f61e531b864,
-        type: 3}
-      propertyPath: _targetWorldPosition.y
-      value: -1.74
-      objectReference: {fileID: 0}
     - target: {fileID: 2027446426965476545, guid: 988c378eb4ea17d43af83f61e531b864,
         type: 3}
       propertyPath: pixelPerfectCamera
@@ -396,8 +304,5 @@ PrefabInstance:
       propertyPath: pixelPerfectCamera
       value: 
       objectReference: {fileID: 1752870733}
-    m_RemovedComponents:
-    - {fileID: 7373975222694559139, guid: 988c378eb4ea17d43af83f61e531b864, type: 3}
-    - {fileID: 471235459329107741, guid: 988c378eb4ea17d43af83f61e531b864, type: 3}
-    - {fileID: 5394003618502239754, guid: 988c378eb4ea17d43af83f61e531b864, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 988c378eb4ea17d43af83f61e531b864, type: 3}

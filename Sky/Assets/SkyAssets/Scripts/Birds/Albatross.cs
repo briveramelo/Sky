@@ -4,13 +4,16 @@ using GenericFunctions;
 public class Albatross : Bird
 {
     public override BirdType MyBirdType => BirdType.Albatross;
-    private bool _shouldWaitToTurn;
+    
     private const float _moveSpeed = 1.065f;
+    [SerializeField] private float _farEnoughDist = 0.1f;
+    
+    private bool _shouldWaitToTurn;
 
     private void Update()
     {
         Vector2 moveDir = Constants.BalloonCenter.position - transform.position;
-        if (Vector2.Distance(moveDir, Vector2.zero) > 0.1f)
+        if (Vector2.Distance(moveDir, Vector2.zero) > _farEnoughDist)
         {
             _rigbod.velocity = Constants.SpeedMultiplier * _moveSpeed * moveDir.normalized;
             transform.FaceForward(_rigbod.velocity.x < 0);
@@ -29,7 +32,7 @@ public class Albatross : Bird
     protected override int TakeDamage(ref WeaponStats weaponStats)
     {
         var hitHeight = _birdCollider.bounds.ClosestPoint(weaponStats.WeaponCollider.transform.position).y;
-        var damageToTake = 3;
+        const int damageToTake = 4;
         int damageDealt;
         if (weaponStats.Velocity.y > 0 && hitHeight < transform.position.y)
         {

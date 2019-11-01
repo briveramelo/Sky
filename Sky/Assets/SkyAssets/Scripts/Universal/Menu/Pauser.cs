@@ -1,13 +1,17 @@
 ﻿using System.Collections;
+using GenericFunctions;
 using UnityEngine;
 
 public class Pauser : Selector
 {
     public static bool Paused { get; private set; }
-
+    
+    [SerializeField] protected Canvas _parentCanvas;
     [SerializeField] private GameObject _joystick, _pauseMenu;
+    [SerializeField] private float _clickRadiusCanvUnits;
 
     private const string _pauseName = nameof(Pauser);
+    
     private int _fingerId;
 
     private void Start()
@@ -24,10 +28,12 @@ public class Pauser : Selector
         OrderedTouchEventRegistry.Instance.OnTouchWorldBegin(typeof(Pauser), OnTouchWorldBegin, false);
     }
 
-    private void OnTouchWorldBegin(int fingerId, Vector2 worldPosition)
+    //used to eat inputs and prevent jai from throwing a spear accidentally
+    private void OnTouchWorldBegin(int fingerId, Vector2 touchWorldPosition)
     {
-        bool isCloseEnough = Vector2.Distance(worldPosition, transform.position.PixelsToWorldUnits()) < 1f;
-        if (!isCloseEnough || !TouchInputManager.Instance.TryClaimFingerId(fingerId, _pauseName))
+        var touchCanvasPosition = touchWorldPosition.WorldUnitsToCanvasUnits(_parentCanvas);
+        bool isCloseEnough = Vector2.Distance(touchCanvasPosition, transform.position.WorldUnitsToCanvasUnits(_parentCanvas)) < _clickRadiusCanvUnits;
+        if (!gameObject.activeInHierarchy || !isCloseEnough || !TouchInputManager.Instance.TryClaimFingerId(fingerId, _pauseName))
         {
             return;
         }
@@ -49,7 +55,7 @@ public class Pauser : Selector
     {
         yield return null;
         TouchInputManager.Instance.ReleaseFingerId(_fingerId, _pauseName);
-        _fingerId = -1;
+        _fingerId = Constants.UnusedFingerId;
     }
 
     private void Pause()

@@ -46,11 +46,11 @@ public class TeleportSideToSide : MonoBehaviour
         }
     }
 
-    private float t1;
 
+    private float t1;
     private IEnumerator TemporaryTeleport(Collider2D col)
     {
-        Debug.Log(Time.time - t1);
+        //todo: measure Debug.Log(Time.time - t1);
         t1 = Time.time;
         var colTran = col.transform;
         colTran.position = _destination + Vector2.up * colTran.position.y;

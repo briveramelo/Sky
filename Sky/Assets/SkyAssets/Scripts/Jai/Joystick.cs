@@ -50,8 +50,8 @@ public class Joystick : Singleton<Joystick>
         var touchCanvasPosition = touchWorldPosition.WorldUnitsToCanvasUnits(_parentCanvas);
         var targetAnchoredPosition = touchCanvasPosition - _joystickStartingCanvasPosition;
         
-        var distFromStick = Vector2.Distance(targetAnchoredPosition, Vector2.zero);
-        if (distFromStick < _joystickMaxStartCanvUnits && TouchInputManager.Instance.TryClaimFingerId(fingerId, _joystickName))
+        var distFromStickCanvUnits = Vector2.Distance(targetAnchoredPosition, Vector2.zero);
+        if (distFromStickCanvUnits < _joystickMaxStartCanvUnits && TouchInputManager.Instance.TryClaimFingerId(fingerId, _joystickName))
         {
             _currentFingerId = fingerId;
             _joystickView.anchoredPosition = Vector2.ClampMagnitude(targetAnchoredPosition, _joystickMaxMoveCanvUnits);
