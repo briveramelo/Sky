@@ -1,32 +1,32 @@
 using System;
+using GenericFunctions;
 using UnityEngine;
 
 public class Joystick : Singleton<Joystick>
 {
-    public static Vector2 MoveDirection01 { get; private set; }
-    public static int CurrentFingerId { get; private set; }
-
-    [SerializeField] private CanvasToWorldView _joystickView;
-
-    public event Action<Vector2> OnTouchHold;
+    public event Action<Vector2> OnTouchDirectionHold;
     public event Action OnTouchEnded;
-    
-    private const float _joystickMaxStartDist = 1.25f;
-    private const float _joystickMaxMoveDistance = .75f; //maximum distance you can move the joystick
-    private const string _joystickName = nameof(Joystick);
-    private static Vector2 _startingJoystickPos;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        TouchInputManager.Instance.OnTouchBegin += OnTouchBegin;
-        TouchInputManager.Instance.OnTouchHeld += OnTouchHeld;
-        TouchInputManager.Instance.OnTouchEnd += OnTouchEnd;
-    }
+    [SerializeField] private Canvas _parentCanvas;
+    [SerializeField] private RectTransform _joystickView;
+
+    private const string _joystickName = nameof(Joystick);
+
+    private const float _joystickMaxStartCanvUnits = 32f;
+    private const float _joystickMaxMoveCanvUnits = 16f;
+    private Vector2 _joystickStartingCanvasPosition => _joystickView.position.PixelsToCanvasUnits(_parentCanvas);
+    private int _currentFingerId;
+    private bool _isFingerInUse => _currentFingerId != Constants.UnusedFingerId;
 
     private void Start()
     {
-        _startingJoystickPos = _joystickView.WorldPosition;
+//        _joystickMaxStartCanvUnits = _joystickMaxStartPixels.PixelsToCanvasUnits(_parentCanvas);
+//        _joystickMaxMoveCanvUnits = _joystickMaxMovePixels.PixelsToCanvasUnits(_parentCanvas);
+//        _joystickStartingCanvasPosition = _joystickView.position.PixelsToCanvasUnits(_parentCanvas);
+        
+        OrderedTouchEventRegistry.Instance.OnTouchWorldBegin(typeof(Joystick), OnTouchWorldBegin, true);
+        OrderedTouchEventRegistry.Instance.OnTouchWorldHeld(typeof(Joystick), OnTouchWorldHeld, true);
+        OrderedTouchEventRegistry.Instance.OnTouchWorldEnd(typeof(Joystick), OnTouchWorldEnd, true);
     }
     
     private void OnDestroy()
@@ -35,53 +35,57 @@ public class Joystick : Singleton<Joystick>
         {
             return;
         }
-        TouchInputManager.Instance.OnTouchBegin -= OnTouchBegin;
-        TouchInputManager.Instance.OnTouchHeld -= OnTouchHeld;
-        TouchInputManager.Instance.OnTouchEnd -= OnTouchEnd;
+        OrderedTouchEventRegistry.Instance.OnTouchWorldBegin(typeof(Joystick), OnTouchWorldBegin, false);
+        OrderedTouchEventRegistry.Instance.OnTouchWorldHeld(typeof(Joystick), OnTouchWorldHeld, false);
+        OrderedTouchEventRegistry.Instance.OnTouchWorldEnd(typeof(Joystick), OnTouchWorldEnd, false);
     }
 
-    private void OnTouchBegin(int fingerId, Vector2 fingerPosition)
+    private void OnTouchWorldBegin(int fingerId, Vector2 touchWorldPosition)
     {
-        var distFromStick = Vector2.Distance(fingerPosition, _startingJoystickPos);
-        if (distFromStick < _joystickMaxStartDist && TouchInputManager.Instance.TryClaimFingerId(fingerId, _joystickName))
-        {
-            CurrentFingerId = fingerId;
-            _joystickView.WorldPosition = GetStickPosition(fingerPosition);
-            MoveDirection01 = GetClampedMoveDirection(fingerPosition, 1);
-        }
-    }
-
-    private void OnTouchHeld(int fingerId, Vector2 fingerPosition)
-    {
-        if (fingerId != CurrentFingerId)
-        {
-            return;
-        }
-        _joystickView.WorldPosition = GetStickPosition(fingerPosition);
-        MoveDirection01 = GetClampedMoveDirection(fingerPosition, 1);
-        OnTouchHold?.Invoke(MoveDirection01);
-    }
-
-    private void OnTouchEnd(int fingerId, Vector2 fingerPosition)
-    {
-        if (fingerId != CurrentFingerId)
+        if (_isFingerInUse)
         {
             return;
         }
 
-        CurrentFingerId = -1;
+        var touchCanvasPosition = touchWorldPosition.WorldUnitsToCanvasUnits(_parentCanvas);
+        var targetAnchoredPosition = touchCanvasPosition - _joystickStartingCanvasPosition;
+        
+        var distFromStick = Vector2.Distance(targetAnchoredPosition, Vector2.zero);
+        if (distFromStick < _joystickMaxStartCanvUnits && TouchInputManager.Instance.TryClaimFingerId(fingerId, _joystickName))
+        {
+            _currentFingerId = fingerId;
+            _joystickView.anchoredPosition = Vector2.ClampMagnitude(targetAnchoredPosition, _joystickMaxMoveCanvUnits);
+        }
+    }
+
+    private void OnTouchWorldHeld(int fingerId, Vector2 touchWorldPosition)
+    {
+        if (fingerId != _currentFingerId)
+        {
+            return;
+        }
+
+        var touchCanvasPosition = touchWorldPosition.WorldUnitsToCanvasUnits(_parentCanvas);
+        var targetAnchoredPosition = touchCanvasPosition - _joystickStartingCanvasPosition;
+        
+        float intensity = Mathf.Clamp01(targetAnchoredPosition.magnitude / _joystickMaxMoveCanvUnits);
+        var joyDirection = targetAnchoredPosition.normalized;
+        var moveDirectionJoystickNormalized = intensity * joyDirection;
+
+        _joystickView.anchoredPosition = moveDirectionJoystickNormalized * _joystickMaxMoveCanvUnits;
+        OnTouchDirectionHold?.Invoke(moveDirectionJoystickNormalized);
+    }
+
+    private void OnTouchWorldEnd(int fingerId, Vector2 worldPosition)
+    {
+        if (fingerId != _currentFingerId)
+        {
+            return;
+        }
+
+        _currentFingerId = Constants.UnusedFingerId;
         TouchInputManager.Instance.ReleaseFingerId(fingerId, _joystickName);
-        _joystickView.WorldPosition = _startingJoystickPos;
+        _joystickView.anchoredPosition = Vector2.zero;
         OnTouchEnded?.Invoke();
-    }
-
-    private static Vector2 GetStickPosition(Vector2 fingerPosition)
-    {
-        return _startingJoystickPos + GetClampedMoveDirection(fingerPosition, _joystickMaxMoveDistance);
-    }
-
-    private static Vector2 GetClampedMoveDirection(Vector2 fingerPosition, float maxClamp)
-    {
-        return Vector2.ClampMagnitude(fingerPosition - _startingJoystickPos, maxClamp);
     }
 }

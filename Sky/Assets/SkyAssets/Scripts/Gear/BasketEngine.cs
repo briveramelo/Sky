@@ -22,7 +22,7 @@ public class BasketEngine : MonoBehaviour, IBumpable, IDie
 
     private void Start()
     {
-        Joystick.Instance.OnTouchHold += OnTouchHeld;
+        Joystick.Instance.OnTouchDirectionHold += OnTouchDirectionHeld;
         Joystick.Instance.OnTouchEnded += OnTouchEnd;
     }
 
@@ -32,11 +32,11 @@ public class BasketEngine : MonoBehaviour, IBumpable, IDie
         {
             return;
         }
-        Joystick.Instance.OnTouchHold -= OnTouchHeld;
+        Joystick.Instance.OnTouchDirectionHold -= OnTouchDirectionHeld;
         Joystick.Instance.OnTouchEnded -= OnTouchEnd;
     }
 
-    private void OnTouchHeld(Vector2 moveDirection)
+    private void OnTouchDirectionHeld(Vector2 moveDirection)
     {
         if (_movingEnabled)
         {

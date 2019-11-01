@@ -423,12 +423,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 449760}
+  - component: {fileID: 11418866}
+  - component: {fileID: 11410288}
   - component: {fileID: 2091520}
   - component: {fileID: 9264002}
   - component: {fileID: 12400024}
   - component: {fileID: 8180054}
-  - component: {fileID: 11410288}
-  - component: {fileID: 11418866}
   m_Layer: 0
   m_Name: mainCam
   m_TagString: MainCamera
@@ -448,8 +448,42 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 427720}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &11418866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289ff84f28a264cdd9bc6a786479f4ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pixelCam: {fileID: 11410288}
+--- !u!114 &11410288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9c55f9e2e4bf845a8f21eda023f561, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fitType: 0
+  targetPixelHeight: 1440
+  parallaxLayerCount: 10
+  cameraZoom: 1
+  pixelatedPostProcessing: 1
+  heightError: 0
+  showGizmos: 0
+  subpixelOffset: {x: 0, y: 0}
+  pixelZoomMode: 0
 --- !u!20 &2091520
 Camera:
   m_ObjectHideFlags: 0
@@ -459,7 +493,7 @@ Camera:
   m_GameObject: {fileID: 134912}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0.019607844}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -475,9 +509,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 110
-  field of view: 25.087946
+  field of view: 37.19617
   orthographic: 0
-  orthographic size: 2.225
+  orthographic size: 3.365
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -517,40 +551,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 134912}
   m_Enabled: 1
---- !u!114 &11410288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 134912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e9c55f9e2e4bf845a8f21eda023f561, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fitType: 0
-  targetPixelHeight: 240
-  parallaxLayerCount: 10
-  cameraZoom: 1
-  pixelatedPostProcessing: 1
-  heightError: 0
-  showGizmos: 1
-  subpixelOffset: {x: 0, y: 0}
-  pixelZoomMode: 0
---- !u!114 &11418866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 134912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 289ff84f28a264cdd9bc6a786479f4ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pixelCam: {fileID: 11410288}
 --- !u!1 &146006
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,9 +583,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 470096}
   - {fileID: 449760}
   - {fileID: 484422}
+  - {fileID: 470096}
+  - {fileID: 1270268836166694926}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -927,7 +928,7 @@ MonoBehaviour:
   pixelPerfectCamera: {fileID: 11410288}
   fitType: 0
   parallaxLayer: 0
-  pixelScale: 0
+  pixelScale: 1
   runContinously: 1
   useParentTransform: 0
   displayGrid: 0
@@ -1109,7 +1110,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 427720}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11463812
 MonoBehaviour:
@@ -1529,7 +1530,7 @@ Transform:
   - {fileID: 472852}
   - {fileID: 468022}
   m_Father: {fileID: 427720}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11413700
 MonoBehaviour:
@@ -1547,3 +1548,69 @@ MonoBehaviour:
   - {fileID: 101686}
   - {fileID: 152808}
   - {fileID: 185180}
+--- !u!1 &7099427656412314376
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1270268836166694926}
+  - component: {fileID: 8033644165477668945}
+  - component: {fileID: 8732415512573801479}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &1270268836166694926
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7099427656412314376}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 427720}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8033644165477668945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7099427656412314376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!114 &8732415512573801479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7099427656412314376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0

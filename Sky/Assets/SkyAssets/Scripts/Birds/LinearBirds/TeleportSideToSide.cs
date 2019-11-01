@@ -2,6 +2,7 @@
 using System.Collections;
 using GenericFunctions;
 
+//todo: measure time to cross across resolutions
 public class TeleportSideToSide : MonoBehaviour
 {
     [SerializeField] private Collider2D _buddyCollider;
@@ -16,19 +17,12 @@ public class TeleportSideToSide : MonoBehaviour
         DuckLeader
     }
 
-    private void Awake()
-    {
-    }
-
-    private void Update()
+    private IEnumerator Start()
     {
         var xMult = transform.parent.GetChild(0) == transform ? 1f : -1f;
-        transform.localPosition = new Vector2(xMult * (Constants.WorldSize.x + _distanceFromWorldEdge), 0f);
+        transform.localPosition = new Vector2(xMult * (Constants.ScreenSizeWorldUnits.x + _distanceFromWorldEdge), 0f);
+        yield return null;
         _destination = new Vector2(_buddyCollider.transform.position.x, 0f);
-    }
-
-    private void Start()
-    {
     }
 
     private void OnTriggerEnter2D(Collider2D col)

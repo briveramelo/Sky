@@ -5,7 +5,7 @@ using GenericFunctions;
 
 public interface IMurderToCrow
 {
-    void InitializeCrow(int crowNum);
+    void InitializeCrow(bool isKiller);
     void TakeFlight(Vector2 crowPosition);
     bool ReadyToFly { get; }
 }
@@ -20,7 +20,6 @@ public class Crow : Bird, IMurderToCrow
     
     #region Initialize Variables
     public override BirdType MyBirdType => BirdType.Crow;
-    [HideInInspector] public int MyCrowNum;
 
     [SerializeField] private Murder _murder;
     [SerializeField] private PixelRotation _pixelRotationScript;
@@ -47,16 +46,14 @@ public class Crow : Bird, IMurderToCrow
         base.Awake();
         _murderInterface = _murder;
     }
-
-
+    
     #endregion
 
     #region IMurderToCrow Interface
 
-    void IMurderToCrow.InitializeCrow(int crowNum)
+    void IMurderToCrow.InitializeCrow(bool isKiller)
     {
-        _isKiller = crowNum == 5;
-        MyCrowNum = crowNum;
+        _isKiller = isKiller;
         _commitDistance = _isKiller ? _commitDistance : 3f;
     }
 

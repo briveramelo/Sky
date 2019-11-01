@@ -25,6 +25,11 @@ public class BirdFactory : Singleton<BirdFactory>
     protected override void Awake()
     {
         base.Awake();
+        InitializeBirdPrefabData();
+    }
+
+    private void InitializeBirdPrefabData()
+    {
         foreach (var birdPrefab in _birdPrefabs)
         {
             var container = new GameObject(birdPrefab.BirdType.ToString());
@@ -40,8 +45,8 @@ public class BirdFactory : Singleton<BirdFactory>
 
     public void CreateNextBird(BirdType birdType)
     {
-        var xSpot = -Constants.WorldSize.x;
-        var ySpot = Random.Range(-Constants.WorldSize.y, Constants.WorldSize.y) * 0.6f;
+        var xSpot = -Constants.ScreenSizeWorldUnits.x;
+        var ySpot = Random.Range(-Constants.ScreenSizeWorldUnits.y, Constants.ScreenSizeWorldUnits.y) * 0.6f;
         if (birdType == BirdType.Tentacles || birdType == BirdType.Crow)
         {
             xSpot = 0f;
@@ -49,11 +54,11 @@ public class BirdFactory : Singleton<BirdFactory>
         }
         else if (birdType == BirdType.Eagle)
         {
-            xSpot = -Constants.WorldSize.x * 5f;
+            xSpot = -Constants.ScreenSizeWorldUnits.x * 5f;
         }
         else if (birdType == BirdType.Seagull)
         {
-            xSpot = Constants.WorldSize.x * (Bool.TossCoin() ? 1 : -1);
+            xSpot = Constants.ScreenSizeWorldUnits.x * (Bool.TossCoin() ? 1 : -1);
         }
 
         CreateBird(birdType, new Vector3(xSpot, ySpot));

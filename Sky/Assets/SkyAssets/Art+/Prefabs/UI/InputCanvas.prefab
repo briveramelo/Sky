@@ -508,11 +508,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2547694185155770473}
   - component: {fileID: 11455940}
+  - component: {fileID: 3738628974772383386}
   - component: {fileID: 7566331219747034734}
   - component: {fileID: 8204393476624177054}
   - component: {fileID: 3761058903115625505}
-  - component: {fileID: 8019659468756326615}
-  - component: {fileID: 1122584371724616297}
   m_Layer: 5
   m_Name: InputCanvas
   m_TagString: Untagged
@@ -553,6 +552,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d945be92d0de4467b9bd9d210c65089c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3738628974772383386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8cf9ccd0f44eac8473711c2e825958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!223 &7566331219747034734
@@ -615,40 +626,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 32
---- !u!114 &8019659468756326615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 163212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!114 &1122584371724616297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 163212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!1 &164458
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ public class PixelPerfectCamera : MonoBehaviour {
 	public PixelPerfectFitType fitType=PixelPerfectFitType.Retro;
 	public int targetPixelHeight=1080;
 	public int parallaxLayerCount=10;
-	public int cameraZoom=1;
+	public int cameraZoom = 1;
 	public bool pixelatedPostProcessing=true;
 	public int heightError;
 	public bool showGizmos=true;
@@ -26,7 +26,7 @@ public class PixelPerfectCamera : MonoBehaviour {
 	Material postProcessingMaterial;
 	
 	void Awake() {
-		//CalculateZoomForClosestResolution();
+		CalculatePixelPerfectSize();
 	}
 	
 	void OnEnable() {

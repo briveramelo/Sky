@@ -5,11 +5,13 @@ using System.Collections.Generic;
 public class GameCamera : Singleton<GameCamera>
 {
     [SerializeField] private PixelPerfectCamera _pixelCam;
+    
     private bool _shaking;
     private Vector3 _startSpot;
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
         _startSpot = transform.position;
         _pixelCam.cameraZoom = GetCamZoom();
     }

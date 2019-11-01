@@ -43,7 +43,7 @@ public class BabyCrow : Bird
         }
     }
 
-    private float CorrectSpeed => _dist2Target < 0.4f ? Mathf.Lerp(_rigbod.velocity.magnitude, 0f, Time.deltaTime * 2f) : _moveSpeed;
+    private float CorrectSpeed => _dist2Target < (0.4f * Constants.DistanceMultiplier) ? Mathf.Lerp(_rigbod.velocity.magnitude, 0f, 0.033f) : _moveSpeed;
 
     protected override void Awake()
     {
@@ -86,13 +86,14 @@ public class BabyCrow : Bird
 
     private IEnumerator FlyAway()
     {
-        _dist2Target = Vector2.Distance(1.2f * Constants.WorldSize.x * Vector3.right, transform.position);
+        Vector2 targetPoint = (0.8f * Constants.DistanceMultiplier + Constants.ScreenSizeWorldUnits.x) * Vector3.right;
+        _dist2Target = Vector2.Distance(targetPoint, transform.position);
 
         while (_dist2Target > _triggerShiftDistance)
         {
-            var pos = transform.position;
-            _dist2Target = Vector2.Distance(1.2f * Constants.WorldSize.x * Vector3.right, pos);
-            _moveDir = (1.2f * Constants.WorldSize.x * Vector3.right - pos).normalized;
+            Vector2 pos = transform.position;
+            _dist2Target = Vector2.Distance(targetPoint, pos);
+            _moveDir = (targetPoint - pos).normalized;
             _rigbod.velocity = Constants.SpeedMultiplier * _moveSpeed * _moveDir;
             yield return null;
         }

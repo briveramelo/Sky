@@ -14,39 +14,48 @@ public interface ICrowToMurder
 public class Murder : MonoBehaviour, ICrowToMurder
 {
     [SerializeField] private Crow[] _crows;
-    private List<IMurderToCrow> _crowsAlive, _crowsToSwoop;
-    private List<Vector2> _availableCrowPositions;
-    private ICrowToMurder _me;
-
-
+    
     private Vector2[] _crowPositions;
+    private List<Vector2> _availableCrowPositions;
+    private List<IMurderToCrow> _crowsAlive, _crowsToSwoop;
+    private ICrowToMurder _me;
+    
     private int _maxCycles = 10;
     private int _cycle = 1;
 
-    private void Awake()
+    private void Start()
+    {
+        _me = this;
+        InitializeCrowPositions();
+        InitializeCrows();
+    }
+
+    private void InitializeCrowPositions()
     {
         _crowPositions = new[]
         {
-            new Vector2(0f, Constants.WorldSize.y * 1.4f),
-            new Vector2(Constants.WorldSize.x * 1.08f, Constants.WorldSize.y * 1.2f),
-            new Vector2(Constants.WorldSize.x * 1.08f, -Constants.WorldSize.y * 1.2f),
-            new Vector2(0f, -Constants.WorldSize.y * 1.4f),
-            new Vector2(-Constants.WorldSize.x * 1.08f, -Constants.WorldSize.y * 1.2f),
-            new Vector2(-Constants.WorldSize.x * 1.08f, Constants.WorldSize.y * 1.2f)
+            new Vector2(0f, Constants.ScreenSizeWorldUnits.y * 1.4f),
+            new Vector2(Constants.ScreenSizeWorldUnits.x * 1.08f, Constants.ScreenSizeWorldUnits.y * 1.2f),
+            new Vector2(Constants.ScreenSizeWorldUnits.x * 1.08f, -Constants.ScreenSizeWorldUnits.y * 1.2f),
+            new Vector2(0f, -Constants.ScreenSizeWorldUnits.y * 1.4f),
+            new Vector2(-Constants.ScreenSizeWorldUnits.x * 1.08f, -Constants.ScreenSizeWorldUnits.y * 1.2f),
+            new Vector2(-Constants.ScreenSizeWorldUnits.x * 1.08f, Constants.ScreenSizeWorldUnits.y * 1.2f)
         };
         
         _crowsAlive = new List<IMurderToCrow>(_crows);
         _crowsToSwoop = new List<IMurderToCrow>(_crowsAlive);
         _availableCrowPositions = new List<Vector2>(_crowPositions);
         _availableCrowPositions.Shuffle();
-        var i = 0;
-        _crowsAlive.ForEach(crow =>
-        {
-            crow.InitializeCrow(i);
-            i++;
-        });
+    }
 
-        _me = this;
+    private void InitializeCrows()
+    {
+        for (var i = 0; i < _crowsAlive.Count; i++)
+        {
+            var crow = _crowsAlive[i];
+            crow.InitializeCrow(i==5);
+        }
+
         _me.SendNextCrow();
     }
 

@@ -2,21 +2,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public interface IBegin
-{
-    void OnTouchBegin(int fingerId, Vector2 fingerPosition);
-}
-
-public interface IHold
-{
-    void OnTouchHeld(Vector2 fingerPosition);
-}
-
-public interface IEnd
-{
-    void OnTouchEnd(Vector2 fingerPosition);
-}
-
 public interface IFreezable
 {
     bool IsFrozen { get; set; }
@@ -24,9 +9,9 @@ public interface IFreezable
 
 public class TouchInputManager : Singleton<TouchInputManager>, IFreezable
 {
-    public event Action<int, Vector2> OnTouchBegin;
-    public event Action<int, Vector2> OnTouchHeld;
-    public event Action<int, Vector2> OnTouchEnd;
+    public event Action<int, Vector2> OnTouchWorldBegin;
+    public event Action<int, Vector2> OnTouchWorldHeld;
+    public event Action<int, Vector2> OnTouchWorldEnd;
 
     private Dictionary<int, string> _fingerIdClaimers = new Dictionary<int, string>();
     protected override bool _destroyOnLoad => true;
@@ -76,18 +61,18 @@ public class TouchInputManager : Singleton<TouchInputManager>, IFreezable
         foreach (var finger in Input.touches)
         {
             var fingerId = finger.fingerId;
-            var touchSpot = TouchToWorld.GetWorldPosition(finger.position);
+            var worldTouchSpot = finger.position.PixelsToWorldUnits();
             switch (finger.phase)
             {
                 case TouchPhase.Began:
-                    OnTouchBegin?.Invoke(fingerId, touchSpot);
+                    OnTouchWorldBegin?.Invoke(fingerId, worldTouchSpot);
                     break;
                 case TouchPhase.Moved:
                 case TouchPhase.Stationary:
-                    OnTouchHeld?.Invoke(fingerId, touchSpot);
+                    OnTouchWorldHeld?.Invoke(fingerId, worldTouchSpot);
                     break;
                 case TouchPhase.Ended:
-                    OnTouchEnd?.Invoke(fingerId, touchSpot);
+                    OnTouchWorldEnd?.Invoke(fingerId, worldTouchSpot);
                     break;
                 default:
                     Debug.LogWarningFormat("unexpected finger phase type: {0}", finger.phase);

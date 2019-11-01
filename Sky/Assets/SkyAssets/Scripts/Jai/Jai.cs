@@ -32,7 +32,7 @@ public class Jai : MonoBehaviour, IFreezable
     private WeaponType _myWeaponType;
 
     private Vector2 _startingTouchPoint;
-    private int _currentFingerId = -1;
+    private int _currentFingerId = Constants.UnusedFingerId;
     private bool _attacking, _stabbing, _beingHeld;
     
 
@@ -49,8 +49,8 @@ public class Jai : MonoBehaviour, IFreezable
 
     private void Start()
     {
-        TouchInputManager.Instance.OnTouchBegin += OnTouchBegin;
-        TouchInputManager.Instance.OnTouchEnd += OnTouchEnd;
+        OrderedTouchEventRegistry.Instance.OnTouchWorldBegin(typeof(Jai), OnTouchWorldBegin, true);
+        OrderedTouchEventRegistry.Instance.OnTouchWorldEnd(typeof(Jai), OnTouchWorldEnd, true);
     }
 
     private void OnDestroy()
@@ -60,8 +60,8 @@ public class Jai : MonoBehaviour, IFreezable
             return;
         }
 
-        TouchInputManager.Instance.OnTouchBegin -= OnTouchBegin;
-        TouchInputManager.Instance.OnTouchEnd -= OnTouchEnd;
+        OrderedTouchEventRegistry.Instance.OnTouchWorldBegin(typeof(Jai), OnTouchWorldBegin, false);
+        OrderedTouchEventRegistry.Instance.OnTouchWorldEnd(typeof(Jai), OnTouchWorldEnd, false);
     }
 
     public IEnumerator CollectNewWeapon(ICollectable collectableWeapon)
@@ -103,7 +103,7 @@ public class Jai : MonoBehaviour, IFreezable
         yield return null;
     }
 
-    private void OnTouchBegin(int fingerId, Vector2 fingerPosition)
+    private void OnTouchWorldBegin(int fingerId, Vector2 worldPosition)
     {
         if (Pauser.Paused || !TouchInputManager.Instance.TryClaimFingerId(fingerId, _jaiName))
         {
@@ -113,7 +113,7 @@ public class Jai : MonoBehaviour, IFreezable
         _currentFingerId = fingerId;
         if (!_beingHeld)
         {
-            _startingTouchPoint = fingerPosition;
+            _startingTouchPoint = worldPosition;
         }
         else if (!_stabbing)
         {
@@ -121,17 +121,17 @@ public class Jai : MonoBehaviour, IFreezable
         }
     }
 
-    private void OnTouchEnd(int fingerId, Vector2 fingerPosition)
+    private void OnTouchWorldEnd(int fingerId, Vector2 worldPosition)
     {
         if (Pauser.Paused || fingerId != _currentFingerId)
         {
             return;
         }
 
-        _currentFingerId = -1;
+        _currentFingerId = Constants.UnusedFingerId;
         TouchInputManager.Instance.ReleaseFingerId(fingerId, _jaiName);
         
-        var swipeDir = fingerPosition - _startingTouchPoint;
+        var swipeDir = worldPosition - _startingTouchPoint;
         var releaseDist = swipeDir.magnitude;
         if (!_attacking)
         {

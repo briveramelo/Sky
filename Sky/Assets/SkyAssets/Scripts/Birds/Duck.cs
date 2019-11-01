@@ -91,10 +91,10 @@ public class Duck : Bird, ILeaderToDuck, IDirectable
     private void BounceOnTheWalls()
     {
         var pos = transform.position;
-        var overX = pos.x > Constants.WorldSize.x;
-        var underX = pos.x < -Constants.WorldSize.x;
-        var overY = pos.y > Constants.WorldSize.y;
-        var underY = pos.y < -Constants.WorldSize.y;
+        var overX = pos.x > Constants.ScreenSizeWorldUnits.x;
+        var underX = pos.x < -Constants.ScreenSizeWorldUnits.x;
+        var overY = pos.y > Constants.ScreenSizeWorldUnits.y;
+        var underY = pos.y < -Constants.ScreenSizeWorldUnits.y;
         if (overX || underX || overY || underY)
         {
             CurrentVelocity = new Vector2(

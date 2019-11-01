@@ -10,10 +10,9 @@ public class Pauser : Selector
     private const string _pauseName = nameof(Pauser);
     private int _fingerId;
 
-    protected override void Awake()
+    private void Start()
     {
-        base.Awake();
-        TouchInputManager.Instance.OnTouchBegin += OnTouchBegin;
+        OrderedTouchEventRegistry.Instance.OnTouchWorldBegin(typeof(Pauser), OnTouchWorldBegin, true);
     }
 
     private void OnDestroy()
@@ -22,12 +21,12 @@ public class Pauser : Selector
         {
             return;
         }
-        TouchInputManager.Instance.OnTouchBegin -= OnTouchBegin;
+        OrderedTouchEventRegistry.Instance.OnTouchWorldBegin(typeof(Pauser), OnTouchWorldBegin, false);
     }
 
-    private void OnTouchBegin(int fingerId, Vector2 fingerPosition)
+    private void OnTouchWorldBegin(int fingerId, Vector2 worldPosition)
     {
-        bool isCloseEnough = Vector2.Distance(fingerPosition, TouchToWorld.GetWorldPosition(transform.position)) < 1f;
+        bool isCloseEnough = Vector2.Distance(worldPosition, transform.position.PixelsToWorldUnits()) < 1f;
         if (!isCloseEnough || !TouchInputManager.Instance.TryClaimFingerId(fingerId, _pauseName))
         {
             return;

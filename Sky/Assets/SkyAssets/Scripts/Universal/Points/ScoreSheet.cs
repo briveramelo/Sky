@@ -134,11 +134,11 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
     }
 
     #endregion
-    
-    public static ITallyable Tallier;
-    public static IResetable Resetter;
-    public static IReportable Reporter;
-    public static IStreakable Streaker;
+
+    public static ITallyable Tallier { get; private set; }
+    public static IResetable Resetter { get; private set; }
+    public static IReportable Reporter { get; private set; }
+    public static IStreakable Streaker { get; private set; }
 
     [SerializeField] private GameObject _points;
     [SerializeField] private ScoreBoard _scoreBoard;
@@ -155,6 +155,43 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
     private float _startTime;
 
     protected override bool _destroyOnLoad => true;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
+
+        Tallier = this;
+        Resetter = this;
+        Reporter = this;
+        Streaker = this;
+
+        InitializeCounters();
+
+        _startTime = Time.time;
+    }
+
+    private void InitializeCounters()
+    {
+        _allCounters = new Dictionary<CounterType, Counter>();
+        for (var i = 0; i < Enum.GetNames(typeof(CounterType)).Length; i++)
+        {
+            if ((CounterType) i == CounterType.Scored)
+            {
+                _allCounters.Add((CounterType) i, new PointCounter(CounterType.Scored));
+            }
+            else
+            {
+                _allCounters.Add((CounterType) i, new BirdCounter((CounterType) i));
+            }
+        }
+
+        _scoreCounters = new Dictionary<ScoreType, PointCounter>();
+        for (var i = 0; i < Enum.GetNames(typeof(ScoreType)).Length; i++)
+        {
+            _scoreCounters.Add((ScoreType) i, new PointCounter(CounterType.Scored));
+        }
+    }
 
     private void OnDestroy()
     {
@@ -213,38 +250,6 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
     }
 
     #endregion
-
-    protected override void Awake()
-    {
-        base.Awake();
-        SceneManager.sceneLoaded += OnLevelFinishedLoading;
-
-        Tallier = this;
-        Resetter = this;
-        Reporter = this;
-        Streaker = this;
-
-        _allCounters = new Dictionary<CounterType, Counter>();
-        for (var i = 0; i < Enum.GetNames(typeof(CounterType)).Length; i++)
-        {
-            if ((CounterType) i == CounterType.Scored)
-            {
-                _allCounters.Add((CounterType) i, new PointCounter(CounterType.Scored));
-            }
-            else
-            {
-                _allCounters.Add((CounterType) i, new BirdCounter((CounterType) i));
-            }
-        }
-
-        _scoreCounters = new Dictionary<ScoreType, PointCounter>();
-        for (var i = 0; i < Enum.GetNames(typeof(ScoreType)).Length; i++)
-        {
-            _scoreCounters.Add((ScoreType) i, new PointCounter(CounterType.Scored));
-        }
-
-        _startTime = Time.time;
-    }
 
     #region IResetable
 
@@ -347,8 +352,8 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
 
     private void DisplayPoints(Vector2 position, int pointsToAdd)
     {
-        var xClamp = Constants.WorldSize.x * .9f;
-        var yClamp = Constants.WorldSize.y * .9f;
+        var xClamp = Constants.ScreenSizeWorldUnits.x * .9f;
+        var yClamp = Constants.ScreenSizeWorldUnits.y * .9f;
         var spawnPosition = new Vector2(Mathf.Clamp(position.x, -xClamp, xClamp), Mathf.Clamp(position.y, -yClamp, yClamp));
 
         Instantiate(_points, spawnPosition, Quaternion.identity, ScoreSheet.Instance.transform).GetComponent<IDisplayable>().DisplayPoints(pointsToAdd);

@@ -92,8 +92,8 @@
      <Compile Include="Assets\SkyAssets\Scripts\Helpers\BirdStats.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Helpers\BirdTypes.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Helpers\BirdWaiter.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Helpers\TouchToWorld.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Jai\CanvasToWorldView.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Helpers\OrderedTouchEventRegistry.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Helpers\PositionConverter.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Jai\Jai.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Jai\Joystick.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Jai\TouchInputManager.cs" />
@@ -105,8 +105,8 @@
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\GameCamera.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\GameClock.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\GameManager.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\GameManagerLoader.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\Singleton.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\WorldBounds.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Menu\Continuer.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Menu\Pauser.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Menu\ScoreDisplayer.cs" />

@@ -1,7 +1,10 @@
-﻿﻿using UnityEngine;
+﻿﻿using System;
+ using UnityEngine;
 using System.Collections;
+ using Object = UnityEngine.Object;
+ using Random = UnityEngine.Random;
 
-namespace GenericFunctions
+ namespace GenericFunctions
 {
     public static class Bool
     {
@@ -20,13 +23,11 @@ namespace GenericFunctions
 
     public static class Constants
     {
-        public const float SpeedMultiplier = 0.25f;
-        public const float DistanceMultiplier = 0.25f;
         public static Transform JaiTransform;
         public static Transform BalloonCenter;
         public static Transform BasketTransform;
-        public static Collider2D BottomOfTheWorldCollider;
-
+        public static Collider2D WorldCollider;
+        public const int UnusedFingerId = -1;
         private static int _targetPooInt;
 
         public static int TargetPooInt
@@ -49,23 +50,27 @@ namespace GenericFunctions
             trans.localScale = localScale;
         }
 
-        public static Vector2 ScreenSize => new Vector2 (Screen.width, Screen.height);
+        public static Vector2 ScreenSizePixels => new Vector2 (Screen.width, Screen.height);
 
-        public static Vector2 WorldSize
+        public static Vector2 ScreenSizeWorldUnits
         {
             get
             {
-                var pixelCam = Object.FindObjectOfType<PixelPerfectCamera>();
+                var pixelCam = _pixelCam.Value;
                 var cam = pixelCam.normalCamera;
-                var scaleFactor = 1f / pixelCam.cameraZoom;
-                var height = cam.orthographicSize * scaleFactor;
-                
-                var size = new Vector2(height * cam.aspect, height);//1f / pixelCam.cameraZoom * ;
+                var height = cam.orthographicSize / _pixelCam.Value.cameraZoom;
+                var width = height * cam.aspect;
+                var size = new Vector2(width, height);//1f / pixelCam.cameraZoom * ;
                 return size;
             }
         }
 
+        private static Lazy<PixelPerfectCamera> _pixelCam = new Lazy<PixelPerfectCamera>(Object.FindObjectOfType<PixelPerfectCamera>);
+
         public static Vector2 WorldPadding => new Vector2(1f, 1f);
+
+        public static float SpeedMultiplier =>  0.25f;
+        public static float DistanceMultiplier => _pixelCam.Value.cameraZoom;
 
         public const float Time2Destroy = 2f;
         public const float Time2ThrowSpear = 0.333333f;

@@ -66,7 +66,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
         _sensor = _ts;
         _sensorOnJai = _ts;
 
-        _homeSpot = new Vector2(0f, -.75f - Constants.WorldSize.y);
+        _homeSpot = new Vector2(0f, -.75f - Constants.ScreenSizeWorldUnits.y);
         _resetHeight = .5f + _homeSpot.y;
         _defeatedHeight = .25f + _homeSpot.y;
     }
@@ -126,7 +126,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 
         GameClock.Instance.SlowTime(0.4f, 0.5f);
         GameCamera.Instance.ShakeTheCamera();
-        Constants.BottomOfTheWorldCollider.enabled = false;
+        Constants.WorldCollider.enabled = false;
 
         while (_tipTransform.position.y > _defeatedHeight && _stabsTaken < _stabs2Retreat)
         {
@@ -139,7 +139,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
             Basket.TentacleToBasket.LoseAllBalloons();
         }
 
-        Constants.BottomOfTheWorldCollider.enabled = true;
+        Constants.WorldCollider.enabled = true;
     }
 
     #endregion
@@ -216,9 +216,9 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 
     protected override void DieUniquely()
     {
-        if (Constants.BottomOfTheWorldCollider != null)
+        if (Constants.WorldCollider != null)
         {
-            Constants.BottomOfTheWorldCollider.enabled = true;
+            Constants.WorldCollider.enabled = true;
         }
 
         if (_holdingJai)

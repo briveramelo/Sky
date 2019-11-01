@@ -106,7 +106,7 @@ public class Pelican : Bird
         var diveAngle = goingRight ? -80f : 260f;
         _rigbod.velocity = Constants.SpeedMultiplier * 6f * ConvertAnglesAndVectors.ConvertAngleToVector2(diveAngle);
         transform.FaceForward(_rigbod.velocity.x > 0);
-        while (transform.position.y > -Constants.WorldSize.y - 1f)
+        while (transform.position.y > -Constants.ScreenSizeWorldUnits.y - 1f)
         {
             yield return null;
         }
@@ -115,7 +115,7 @@ public class Pelican : Bird
         _birdCollider.enabled = false;
         yield return new WaitForSeconds(2f);
         StartCoroutine(SwoopAround());
-        while (transform.position.y < -Constants.WorldSize.y)
+        while (transform.position.y < -Constants.ScreenSizeWorldUnits.y)
         {
             yield return null;
         }

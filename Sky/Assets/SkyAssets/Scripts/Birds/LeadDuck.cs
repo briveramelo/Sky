@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using GenericFunctions;
 
@@ -14,15 +15,16 @@ public class LeadDuck : Bird, IDuckToLeader
     // The DuckLeader ensures all ducks follow as closely behind in an evenly distributed Flying V Formation
     // The DuckLeader will fly linearly across the screen
 
+    public override BirdType MyBirdType => BirdType.DuckLeader;
+    
     [SerializeField] private Duck[] _duckScripts;
     [SerializeField] private Transform[] _formationTransforms;
-    public override BirdType MyBirdType => BirdType.DuckLeader;
-    private List<ILeaderToDuck> ducks;
+    
+    private List<ILeaderToDuck> _ducks;
 
-    protected override void Awake()
+    private void Start()
     {
-        base.Awake();
-        ducks = new List<ILeaderToDuck>(_duckScripts);
+        _ducks = new List<ILeaderToDuck>(_duckScripts);
         var goLeft = transform.position.x > 0;
         transform.FaceForward(goLeft);
         _rigbod.velocity = Constants.SpeedMultiplier * 2.5f * new Vector2(goLeft ? -1 : 1, 0);
@@ -46,8 +48,8 @@ public class LeadDuck : Bird, IDuckToLeader
         var separationDistance = 0.15f;
         for (var i = 0; i < _formationTransforms.Length; i++)
         {
-            _formationTransforms[i].localPosition = (goLeft ? 1 : -1) * (separationDistance) * (Mathf.Floor(f: i / 2) + 1) * (i % 2 == 0 ? topSide : bottomSide);
-            ducks[i].FormationIndex = i;
+            _formationTransforms[i].localPosition = (goLeft ? 1 : -1) * (separationDistance) * (Mathf.Floor(f: (float)i / 2) + 1) * (i % 2 == 0 ? topSide : bottomSide);
+            _ducks[i].FormationIndex = i;
         }
     }
 
@@ -62,29 +64,29 @@ public class LeadDuck : Bird, IDuckToLeader
         var topCount = 0;
         var bottomCount = 0;
 
-        for (var i = 0; i < ducks.Count; i++)
+        for (var i = 0; i < _ducks.Count; i++)
         {
-            topCount += ducks[i].FormationIndex % 2 == 0 ? 1 : 0; //birds on top use even indices
-            bottomCount += ducks[i].FormationIndex % 2 != 0 ? 1 : 0; //		bottom use odd indices
+            topCount += _ducks[i].FormationIndex % 2 == 0 ? 1 : 0; //birds on top use even indices
+            bottomCount += _ducks[i].FormationIndex % 2 != 0 ? 1 : 0; //		bottom use odd indices
 
-            if (ducks[i].FormationIndex > deadNumber && ducks[i].FormationIndex % 2 == deadNumber % 2)
+            if (_ducks[i].FormationIndex > deadNumber && _ducks[i].FormationIndex % 2 == deadNumber % 2)
             {
-                ducks[i].FormationIndex -= 2;
+                _ducks[i].FormationIndex -= 2;
             }
         }
 
         if (topCount < bottomCount && deadNumber % 2 == 0)
         {
             var highestOdd = bottomCount * 2 - 1;
-            ducks.Find(duck => duck.FormationIndex == highestOdd).FormationIndex -= 3;
+            _ducks.Find(duck => duck.FormationIndex == highestOdd).FormationIndex -= 3;
         }
         else if (bottomCount < topCount && deadNumber % 2 != 0)
         {
             var highestEven = (topCount - 1) * 2;
-            ducks.Find(duck => duck.FormationIndex == highestEven).FormationIndex -= 1;
+            _ducks.Find(duck => duck.FormationIndex == highestEven).FormationIndex -= 1;
         }
 
-        ducks.Remove(deadDuck);
+        _ducks.Remove(deadDuck);
     }
 
     #endregion
@@ -100,7 +102,7 @@ public class LeadDuck : Bird, IDuckToLeader
     private void BreakTheV()
     {
         transform.DetachChildren();
-        ducks.ForEach(duck => duck.Scatter());
+        _ducks.ForEach(duck => duck.Scatter());
         for (var i = 0; i < _formationTransforms.Length; i++)
         {
             Destroy(_formationTransforms[i].gameObject);

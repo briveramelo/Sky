@@ -21,13 +21,13 @@ public class Eagle : Bird
         _myEagleFriends = _eagleFriends;
         _startPos = new[]
         {
-            new Vector2(-Constants.WorldSize.x, -Constants.WorldSize.y) * 1.2f,
-            new Vector2(Constants.WorldSize.x, -Constants.WorldSize.y) * 1.2f
+            new Vector2(-Constants.ScreenSizeWorldUnits.x, -Constants.ScreenSizeWorldUnits.y) * 1.2f,
+            new Vector2(Constants.ScreenSizeWorldUnits.x, -Constants.ScreenSizeWorldUnits.y) * 1.2f
         };
         _moveDir = new[]
         {
-            Constants.ScreenSize.normalized,
-            new Vector2(-Constants.ScreenSize.x, Constants.ScreenSize.y).normalized,
+            Constants.ScreenSizePixels.normalized,
+            new Vector2(-Constants.ScreenSizePixels.x, Constants.ScreenSizePixels.y).normalized,
         };
         StartCoroutine(InitiateAttack(1f));
     }
@@ -62,13 +62,13 @@ public class Eagle : Bird
     private void Strike()
     {
         var xStartPoint = 20f;
-        while (Mathf.Abs(xStartPoint) > Constants.WorldSize.x)
+        while (Mathf.Abs(xStartPoint) > Constants.ScreenSizeWorldUnits.x)
         {
-            xStartPoint = Constants.BalloonCenter.position.x + Random.Range(-Constants.WorldSize.x, Constants.WorldSize.x) * .15f;
+            xStartPoint = Constants.BalloonCenter.position.x + Random.Range(-Constants.ScreenSizeWorldUnits.x, Constants.ScreenSizeWorldUnits.x) * .15f;
         }
 
         var strikeSpeed = 9f;
-        Vector3 newPosition = new Vector2(xStartPoint, Constants.WorldSize.y * 1.2f);
+        Vector3 newPosition = new Vector2(xStartPoint, Constants.ScreenSizeWorldUnits.y * 1.2f);
         _attackDir = (Constants.BalloonCenter.position - newPosition).normalized;
         transform.position = newPosition;
         _rigbod.velocity = Constants.SpeedMultiplier * strikeSpeed * _attackDir;

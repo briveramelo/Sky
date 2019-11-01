@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using UnityEngine;
 using GenericFunctions;
 
@@ -8,6 +8,7 @@ public class MaskCamera : MonoBehaviour
     [SerializeField] private Material _eraserMaterial;
     [SerializeField] private Camera _myCam;
     [SerializeField] private RenderTexture[] _rts;
+    
     private Vector3 _startingPoint;
     private bool _firstFrame;
     private Vector2? _newHolePosition;
@@ -17,24 +18,28 @@ public class MaskCamera : MonoBehaviour
         _startingPoint = _pooSliderTransform.transform.position;
         _myCam.targetTexture = _rts[Constants.TargetPooInt];
         _firstFrame = true;
-        TouchInputManager.Instance.OnTouchHeld += OnTouchHeld;
+        TouchInputManager.Instance.OnTouchWorldHeld += OnTouchWorldHeld;
     }
 
     private void OnDestroy()
     {
-        TouchInputManager.Instance.OnTouchHeld -= OnTouchHeld;
+        TouchInputManager.Instance.OnTouchWorldHeld -= OnTouchWorldHeld;
     }
 
-    private void OnTouchHeld(int fingerId, Vector2 fingerPosition)
+    private void OnTouchWorldHeld(int fingerId, Vector2 worldPosition)
     {
         _newHolePosition = null;
         var pooPos = _pooSliderTransform.position;
-        var worldRect = new Rect(-Constants.WorldSize.x + pooPos.x - _startingPoint.x, -Constants.WorldSize.y + pooPos.y - _startingPoint.y,
-            Constants.WorldSize.x * 2f, Constants.WorldSize.y * 2f);
-        if (worldRect.Contains(fingerPosition))
+        var worldRect = new Rect(
+            -Constants.ScreenSizeWorldUnits.x + pooPos.x - _startingPoint.x, 
+            -Constants.ScreenSizeWorldUnits.y + pooPos.y - _startingPoint.y,
+            Constants.ScreenSizeWorldUnits.x, 
+            Constants.ScreenSizeWorldUnits.y);
+        if (worldRect.Contains(worldPosition))
         {
-            _newHolePosition = new Vector2(Constants.ScreenSize.x * (fingerPosition.x - worldRect.xMin) / worldRect.width,
-                Constants.ScreenSize.y * (fingerPosition.y - worldRect.yMin) / worldRect.height);
+            _newHolePosition = new Vector2(
+                Constants.ScreenSizePixels.x * (worldPosition.x - worldRect.xMin) / worldRect.width,
+                Constants.ScreenSizePixels.y * (worldPosition.y - worldRect.yMin) / worldRect.height);
         }
     }
 
@@ -48,7 +53,7 @@ public class MaskCamera : MonoBehaviour
 
         if (_newHolePosition != null)
         {
-            CutHole(new Vector2(Constants.ScreenSize.x, Constants.ScreenSize.y), _newHolePosition.Value);
+            CutHole(new Vector2(Constants.ScreenSizePixels.x, Constants.ScreenSizePixels.y), _newHolePosition.Value);
         }
     }
 
