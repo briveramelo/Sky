@@ -43,7 +43,7 @@ public class BabyCrow : Bird
         }
     }
 
-    private float CorrectSpeed => _dist2Target < (0.4f * Constants.DistanceMultiplier) ? Mathf.Lerp(_rigbod.velocity.magnitude, 0f, 0.033f) : _moveSpeed;
+    private float CorrectSpeed => _dist2Target < 0.4f ? Mathf.Lerp(_rigbod.velocity.magnitude, 0f, 0.033f) : _moveSpeed;
 
     protected override void Awake()
     {
@@ -86,7 +86,7 @@ public class BabyCrow : Bird
 
     private IEnumerator FlyAway()
     {
-        Vector2 targetPoint = (0.8f * Constants.DistanceMultiplier + Constants.ScreenSizeWorldUnits.x) * Vector3.right;
+        Vector2 targetPoint = (0.8f + Constants.ScreenSizeWorldUnits.x) * Vector3.right;
         _dist2Target = Vector2.Distance(targetPoint, transform.position);
 
         while (_dist2Target > _triggerShiftDistance)
@@ -111,9 +111,9 @@ public class BabyCrow : Bird
         }
     }
 
-    protected override void DieUniquely()
+    protected override void OnDeath()
     {
         BirdFactory.Instance.CreateNextBird(BirdType.Crow);
-        base.DieUniquely();
+        base.OnDeath();
     }
 }

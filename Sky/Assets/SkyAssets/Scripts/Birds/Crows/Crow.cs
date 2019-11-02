@@ -161,7 +161,7 @@ public class Crow : Bird, IMurderToCrow
 
     #endregion
 
-    protected override void DieUniquely()
+    protected override void OnDeath()
     {
         _murderInterface.ReportCrowDown(this);
         if (!_hasRequestedNext)
@@ -169,6 +169,6 @@ public class Crow : Bird, IMurderToCrow
             _murderInterface.SendNextCrow();
         }
 
-        base.DieUniquely();
+        base.OnDeath();
     }
 }

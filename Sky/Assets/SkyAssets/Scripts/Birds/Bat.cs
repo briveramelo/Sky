@@ -10,27 +10,29 @@ public class Bat : Bird
     // Intentional following-lag is introduced to allow for collision between bat / balloon
     // From a game design standpoint, this forces the player to slow movement to avoid this dangerous collision
 
-
     #region Initialize Variables
     protected override BirdType MyBirdType => BirdType.Bat;
+    
     private Vector2[] _targetPositions;
     private Vector2 _ellipseTrace;
-    private Vector2 _moveDir;
-    private Vector2 _batPos;
 
-    private float[] _orbitalRadii = new float[] {1.25f, 1.5f, 1.75f};
+    private float[] _orbitalRadii = {1.25f/4, 1.5f/4, 1.75f/4};
 
-    private const float _approachSpeed = 2.8f;
-    private const float _orbitDistance = 1.5f;
-    private const float _stepDistance = 0.4f;
+    // Overwrite the first few frames of the bat's positional-targeting array with the last few
+    // Set the _targetIndex "frameDelay" #frames before the realTime Index
+    // In effect, create a following delay to allow for bat/balloon collision
+    private const int _frameDelay = 2;
+    private const int _positionWindowLength = 15;
+    private const float _approachSpeed = 2.8f/3f;
+    private float _orbitSpeedMultiplier = 2.16f;
+    private const float _orbitDistance = 1.5f/4;
+    private const float _stepDistance = 0.4f/4f;
 
-    private float _dist2Target;
+    private float _curvature;
     private float _ellipseTilt;
     private float _speedPhaseShift;
     private float _ellipseAng;
-    private float _curvature;
 
-    private const int _positionWindowLength = 20;
     private int _realTimeIndex;
     private int _targetIndex;
     private int _xRadiusIndex;
@@ -38,7 +40,6 @@ public class Bat : Bird
 
     private bool _clockwise;
     private bool _orbiting;
-
     #endregion
 
     protected override void Awake()
@@ -52,24 +53,22 @@ public class Bat : Bird
     // Start _orbiting once close enough
     private IEnumerator Approach()
     {
-        _dist2Target = 10f;
-
         while (true)
         {
             UpdatePositionIndices();
-            _batPos = transform.position;
+            Vector2 batPos = transform.position;
             _targetPositions[_realTimeIndex] = (Vector2) Constants.BalloonCenter.position - _orbitDistance * _rigbod.velocity.normalized;
-            _dist2Target = Vector2.Distance(_targetPositions[_targetIndex], _batPos);
+            var dist2Target = Vector2.Distance(_targetPositions[_targetIndex], batPos);
 
             // Once close enough, stop approaching and start _orbiting
-            if (_dist2Target < _orbitDistance)
+            if (dist2Target < _orbitDistance)
             {
                 StartCoroutine(Orbit());
-                break;
+                yield break;
             }
 
-            _moveDir = (_targetPositions[_targetIndex] - _batPos).normalized;
-            _rigbod.velocity = Constants.SpeedMultiplier * _approachSpeed * _moveDir;
+            var moveDir = (_targetPositions[_targetIndex] - batPos).normalized;
+            _rigbod.velocity = _approachSpeed * moveDir;
             transform.FaceForward(transform.position.x > Constants.BalloonCenter.position.x);
             yield return null;
         }
@@ -84,11 +83,6 @@ public class Bat : Bird
             ResetTargetPositionWindow();
         }
     }
-
-    // Overwrite the first few frames of the bat's positional-targetting array with the last few
-    // Set the _targetIndex "frameDelay" #frames before the realTime Index
-    // In effect, create a following delay to allow for bat/balloon collision
-    private const int _frameDelay = 2;
 
     private void ResetTargetPositionWindow()
     {
@@ -113,24 +107,24 @@ public class Bat : Bird
 
         while (true)
         {
-            _batPos = transform.position;
-            _dist2Target = Vector2.Distance(_targetPositions[_targetIndex], _batPos);
-            if (_dist2Target < _stepDistance)
+            Vector2 batPos = transform.position;
+            var dist2Target = Vector2.Distance(_targetPositions[_targetIndex], batPos);
+            if (dist2Target < _stepDistance)
             {
                 UpdatePositionIndices();
                 _ellipseAng = FindTargetAngle();
                 _targetPositions[_realTimeIndex] = FindEllipsePosition();
             }
 
-            _moveDir = (_targetPositions[_targetIndex] - _batPos).normalized;
+            var moveDir = (_targetPositions[_targetIndex] - batPos).normalized;
             _curvature = _orbitalRadii[_xRadiusIndex] * _orbitalRadii[_yRadiusIndex] /
                          Mathf.Pow(_orbitalRadii[_xRadiusIndex] * _orbitalRadii[_xRadiusIndex] *
                                    Mathf.Sin((_ellipseAng + _speedPhaseShift) * Mathf.Deg2Rad) * Mathf.Sin((_ellipseAng + _speedPhaseShift) * Mathf.Deg2Rad) +
                                    _orbitalRadii[_yRadiusIndex] * _orbitalRadii[_yRadiusIndex] *
                                    Mathf.Cos(_ellipseAng * Mathf.Deg2Rad) * Mathf.Cos(_ellipseAng * Mathf.Deg2Rad), 1.5f);
-            var orbitSpeed = _approachSpeed / _curvature;
+            var orbitSpeed = _orbitSpeedMultiplier / _curvature;
 
-            _rigbod.velocity = Constants.SpeedMultiplier * orbitSpeed * _moveDir;
+            _rigbod.velocity = orbitSpeed * moveDir;
             transform.FaceForward(transform.position.x > Constants.BalloonCenter.position.x);
             yield return null;
         }
@@ -145,7 +139,7 @@ public class Bat : Bird
         _xRadiusIndex = Random.Range(0, 3);
         _yRadiusIndex = _xRadiusIndex == 1 ? 1 + (int) Mathf.Sign(Random.insideUnitCircle.x) : 1;
         _clockwise = Bool.TossCoin();
-        Invoke("ShuffleOrbitalPhase", Random.Range(2f, 4f));
+        Invoke(nameof(ShuffleOrbitalPhase), Random.Range(2f, 4f));
     }
 
     // Help define the elliptical pattern
@@ -165,13 +159,13 @@ public class Bat : Bird
         return (Vector2) Constants.BalloonCenter.position + _ellipseTrace;
     }
 
-    protected override void DieUniquely()
+    protected override void OnDeath()
     {
         if (_orbiting)
         {
             ScoreSheet.Tallier.TallyThreat(Threat.BatLeft);
         }
 
-        base.DieUniquely();
+        base.OnDeath();
     }
 }

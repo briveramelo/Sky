@@ -60,7 +60,7 @@ public class Seagull : Bird
             if (Vector2.Distance(_targetCenterPosition, transform.position) < 0.1f)
             {
                 StartCoroutine(SwoopOverhead());
-                break;
+                yield break;
             }
 
             yield return null;

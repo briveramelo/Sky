@@ -214,7 +214,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 
     #endregion
 
-    protected override void DieUniquely()
+    protected override void OnDeath()
     {
         if (Constants.WorldCollider != null)
         {

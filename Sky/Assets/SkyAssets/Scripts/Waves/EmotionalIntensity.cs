@@ -132,6 +132,6 @@ public class EmotionalIntensity : MonoBehaviour, IThreat
             _repeatTime = 3f;
         }
 
-        Invoke("Decay", _repeatTime);
+        Invoke(nameof(Decay), _repeatTime);
     }
 }

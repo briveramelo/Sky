@@ -55,7 +55,7 @@ public class BasketEngine : MonoBehaviour, IBumpable, IDie
         _rigbod.velocity = Constants.SpeedMultiplier * bumpDir;
         StartCoroutine(Bool.Toggle(boolState => _movingEnabled = boolState, .5f));
         ScoreSheet.Tallier.TallyThreat(Threat.BasketBumped);
-        Invoke("StabilizeBumpThreat", 2f);
+        Invoke(nameof(StabilizeBumpThreat), 2f);
     }
 
     private void StabilizeBumpThreat()

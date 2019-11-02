@@ -87,7 +87,7 @@ public class Pelican : Bird
             if (Time.time - timeSinceStartedDiving > 1f)
             {
                 _currentTarIn = _setPositions.Length + 1;
-                break;
+                yield break;
             }
 
             yield return new WaitForEndOfFrame();

@@ -4,12 +4,12 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(BirdFactory))]
-public class IncubatorEditor : Editor
+public class BirdFactoryEditor : Editor
 {
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
         serializedObject.Update();
-        var birdTypes = Enum.GetValues(typeof(BirdType)).Cast<BirdType>().ToList();
+        var birdTypes = Enum.GetValues(typeof(BirdType)).Cast<BirdType>().OrderBy(item => item.ToString());
         
         foreach (var birdType in birdTypes)
         {
@@ -17,8 +17,11 @@ public class IncubatorEditor : Editor
             {
                 continue;
             }
+            //GUIStyle style = new GUIStyle("button");
+            // or
+            GUIStyle leftAlignedButtonStyle = new GUIStyle(GUI.skin.button) {alignment = TextAnchor.MiddleLeft};
 
-            if (GUILayout.Button(birdType.ToString()))
+            if (GUILayout.Button(birdType.ToString(), leftAlignedButtonStyle))
             {
                 ((BirdFactory) serializedObject.targetObject).CreateNextBird(birdType);
             }

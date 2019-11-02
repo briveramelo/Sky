@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using GenericFunctions;
 
+// The Duck receives communication from the DuckLeader through this interface
 public interface ILeaderToDuck
 {
     void Scatter();
     int FormationIndex { get; set; }
 }
-// The Duck receives communication from the DuckLeader through this interface
 
 public enum DuckDirection
 {
@@ -26,15 +26,17 @@ public class Duck : Bird, ILeaderToDuck, IDirectable
     // The Duck will follow his/her DuckLeader, until the DuckLeader dies. 
     // Then, the Duck will aimlessly bounce around the screen until killed
     [SerializeField] private LeadDuck _leaderScript;
-
+    [SerializeField] private AnimationCurve _newFormationTransition;
+    [SerializeField] private float _newFormationTransitionDuration;
     protected override BirdType MyBirdType => BirdType.Duck;
     
-    private const float _moveSpeed = 2.5f;
-    private const float _maxSpeed = 4f;
+    private const float _bounceSpeed = 2.5f / 4f;
     
     private IDuckToLeader _leader;
     private Transform _myFormationTransform;
-    
+
+    private Vector3 _newFormationStartLocalPosition;
+    private float _newFormationStartTime;
     private int _formationIndex;
     private bool _bouncing;
 
@@ -50,10 +52,33 @@ public class Duck : Bird, ILeaderToDuck, IDirectable
 
     private Vector2 CurrentVelocity
     {
+        get => _rigbod.velocity;
         set
         {
-            _rigbod.velocity = Constants.SpeedMultiplier * value;
+            _rigbod.velocity = value;
             transform.FaceForward(_rigbod.velocity.x < 0);
+        }
+    }
+    
+    void IDirectable.SetDuckDirection(DuckDirection scatterDirection)
+    {
+        CurrentVelocity = _scatterDir[(int) scatterDirection] * _bounceSpeed;
+    }
+    void ILeaderToDuck.Scatter()
+    {
+        ScoreSheet.Tallier.TallyThreat(Threat.FreeDuck);
+        Scatter();
+    }
+    int ILeaderToDuck.FormationIndex
+    {
+        get => _formationIndex;
+        set
+        {
+            _formationIndex = value;
+            _myFormationTransform = _leader.GetFormationTransform(_formationIndex);
+            _newFormationStartTime = Time.time;
+            transform.SetParent(_myFormationTransform);
+            _newFormationStartLocalPosition = transform.localPosition;
         }
     }
 
@@ -99,60 +124,35 @@ public class Duck : Bird, ILeaderToDuck, IDirectable
         {
             CurrentVelocity = new Vector2(
                                   underX ? 1 : overX ? -1 : Mathf.Sign(_rigbod.velocity.x),
-                                  underY ? 1 : overY ? -1 : Mathf.Sign(_rigbod.velocity.y)).normalized * _moveSpeed;
+                                  underY ? 1 : overY ? -1 : Mathf.Sign(_rigbod.velocity.y)).normalized * _bounceSpeed;
         }
     }
 
     private void StayInFormation()
     {
-        transform.position = Vector3.MoveTowards(transform.position, _myFormationTransform.position, _maxSpeed * Time.deltaTime);
-    }
+        var secondsSinceNewFormationSet = Time.time - _newFormationStartTime;
+        var normalizedTime = secondsSinceNewFormationSet / _newFormationTransitionDuration;
+        if (normalizedTime > 1f)
+        {
+            transform.localPosition = Vector2.zero;
+            return;
+        }
 
-    #region IDirectable
-
-    void IDirectable.SetDuckDirection(DuckDirection scatterDirection)
-    {
-        CurrentVelocity = _scatterDir[(int) scatterDirection] * _moveSpeed;
-    }
-
-    #endregion
-
-    #region ILeaderToDuck
-
-    void ILeaderToDuck.Scatter()
-    {
-        ScoreSheet.Tallier.TallyThreat(Threat.FreeDuck);
-        Scatter();
+        var targetProgress = _newFormationTransition.Evaluate(normalizedTime);
+        var targetLocalPosition = (1 - targetProgress) * _newFormationStartLocalPosition;
+        transform.localPosition = targetLocalPosition;
     }
 
     private void Scatter()
     {
-        CurrentVelocity = _scatterDir[_formationIndex] * _moveSpeed;
+        CurrentVelocity = _scatterDir[_formationIndex] * _bounceSpeed;
         BirdStats.ModifyForEvent(3);
         _bouncing = true;
     }
 
-    int ILeaderToDuck.FormationIndex
+    protected override void OnDeath()
     {
-        get => _formationIndex;
-        set
-        {
-            _formationIndex = value;
-            _myFormationTransform = _leader.FormationTransforms[_formationIndex];
-        }
-    }
-
-    #endregion
-
-    // Remember that final action some "Bird"s need to perform?
-    // When a Duck with a DuckLeader dies, he/she lets the DuckLeader know to reorganize the Flying V formation
-    protected override void DieUniquely()
-    {
-        if (_leaderScript)
-        {
-            _leader.OrganizeDucks(this);
-        }
-
-        base.DieUniquely();
+        _leader?.OrganizeDucks(this);
+        base.OnDeath();
     }
 }

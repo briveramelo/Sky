@@ -33,7 +33,7 @@ public abstract class Bird : MonoBehaviour, IHurtable
         {
             GameClock.Instance.SlowTime(.1f, .8f);
             ScoreSheet.Tallier.TallyKill(ref BirdStats);
-            DieUniquely();
+            OnDeath();
         }
     }
 
@@ -45,7 +45,7 @@ public abstract class Bird : MonoBehaviour, IHurtable
         return damageDealt;
     }
 
-    protected virtual void DieUniquely()
+    protected virtual void OnDeath()
     {
         Destroy(gameObject);
     }

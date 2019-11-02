@@ -56,8 +56,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\SkyAssets\Scripts\Editor\BirdFactoryEditor.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Editor\EagleFriends_Editor.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Editor\IncubatorEditor.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Editor\ReplaceGameObjects.cs" />
  <Reference Include="UnityEditor.TestRunner">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>

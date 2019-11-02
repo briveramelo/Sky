@@ -14,10 +14,10 @@ public class BirdOfParadise : LinearBird
         Destroy(gameObject, 10f);
     }
 
-    protected override void DieUniquely()
+    protected override void OnDeath()
     {
         SpawnBalloon();
-        base.DieUniquely();
+        base.OnDeath();
     }
 
     private void SpawnBalloon()

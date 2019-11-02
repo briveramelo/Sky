@@ -30,6 +30,8 @@ using UnityEditor;
         public static Transform BalloonCenter;
         public static Transform BasketTransform;
         public static Collider2D WorldCollider;
+        public static float PositionFrameSpeed => Time.deltaTime * TargetFramesPerSecond;
+        public const float TargetFramesPerSecond = 60;
         public const int UnusedFingerId = -1;
         private static int _targetPooInt;
 
@@ -82,8 +84,7 @@ using UnityEditor;
 
         public static Vector2 WorldPadding => new Vector2(1f, 1f);
 
-        public static float SpeedMultiplier =>  0.25f;//accounts
-        public static float DistanceMultiplier => _pixelCam.Value.cameraZoom;
+        public static float SpeedMultiplier => 0.25f;//accounts
 
         public const float Time2Destroy = 2f;
         public const float Time2ThrowSpear = 0.333333f;
