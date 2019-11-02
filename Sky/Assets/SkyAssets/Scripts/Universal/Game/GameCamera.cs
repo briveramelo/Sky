@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using GenericFunctions;
+using UnityEditor;
+using Debug = UnityEngine.Debug;
 
 public class GameCamera : Singleton<GameCamera>
 {
-    [SerializeField] private PixelPerfectCamera _pixelCam;
-    
     private bool _shaking;
     private Vector3 _startSpot;
 
@@ -13,15 +15,7 @@ public class GameCamera : Singleton<GameCamera>
     {
         base.Awake();
         _startSpot = transform.position;
-        _pixelCam.cameraZoom = GetCamZoom();
     }
-
-    private int GetCamZoom()
-    {
-        float diagonalPixels = Mathf.Sqrt(Screen.width * Screen.width + Screen.height * Screen.height);
-        return Mathf.CeilToInt(diagonalPixels / 400f);
-    }
-
     public void ShakeTheCamera()
     {
         //todo: fix

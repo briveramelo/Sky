@@ -36,6 +36,7 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket
     private List<IBasketToBalloon> _balloons;
     private Vector2[] _relativeBalloonPositions;
     private int _continuesRemaining = 1;
+    private const int _numStartBalloons = 3;
     private const float _invincibleTime = 1.5f;
     protected override bool _destroyOnLoad => true;
 
@@ -46,7 +47,7 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket
         Constants.BalloonCenter = _balloonCenter;
         Constants.BasketTransform = _basketCenter;
         _balloons = new List<IBasketToBalloon>(_balloonScripts);
-        _relativeBalloonPositions = new Vector2[3];
+        _relativeBalloonPositions = new Vector2[_numStartBalloons];
         for (var i = 0; i < _balloons.Count; i++)
         {
             _balloons[i].BalloonNumber = i;
@@ -205,10 +206,9 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket
         transform.position = Vector3.zero;
         _rigbod.velocity = Vector2.zero;
         _boundingColliders.ToList().ForEach(col => col.enabled = true);
-        IBasketToBalloon newBalloon;
-        for (var i = 0; i < 3; i++)
+        for (var i = 0; i < _numStartBalloons; i++)
         {
-            newBalloon = Instantiate(_balloonReplacement, Vector3.zero, Quaternion.identity).GetComponent<IBasketToBalloon>();
+            var newBalloon = Instantiate(_balloonReplacement, Vector3.zero, Quaternion.identity).GetComponent<IBasketToBalloon>();
             CollectNewBalloon(newBalloon);
         }
 

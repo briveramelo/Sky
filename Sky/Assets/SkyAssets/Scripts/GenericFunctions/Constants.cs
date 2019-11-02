@@ -1,9 +1,12 @@
 ﻿﻿using System;
- using UnityEngine;
+using UnityEngine;
 using System.Collections;
- using Object = UnityEngine.Object;
- using Random = UnityEngine.Random;
-
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+ 
  namespace GenericFunctions
 {
     public static class Bool
@@ -50,7 +53,17 @@ using System.Collections;
             trans.localScale = localScale;
         }
 
-        public static Vector2 ScreenSizePixels => new Vector2 (Screen.width, Screen.height);
+        public static Vector2 ScreenSizePixels
+        {
+            get
+            {
+            #if UNITY_EDITOR
+                string[] res = UnityStats.screenRes.Split('x');
+                return new Vector2(int.Parse(res[0]), int.Parse(res[1]));
+            #endif
+                return new Vector2 (Screen.width, Screen.height);
+            }
+        }
 
         public static Vector2 ScreenSizeWorldUnits
         {
