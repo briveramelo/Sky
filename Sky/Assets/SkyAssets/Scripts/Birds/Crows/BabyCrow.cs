@@ -13,21 +13,22 @@ public class BabyCrow : Bird
     [SerializeField] private Animator _babyCrowAnimator;
     protected override BirdType MyBirdType => BirdType.BabyCrow;
     
+    private const float _triggerShiftDistance = 0.05f;
+    private const float _moveSpeed = 2f;
+    private const int _maxShifts = 5;
+    
     private Vector2[] _basketOffsets = 
     {
-        new Vector2(-.8f, 0.1f),
-        new Vector2(.8f, 0.1f),
+        new Vector2(-.25f, 0.0f),
+        new Vector2(.25f, 0.0f),
     };
+    
 
     private Vector2 _moveDir;
     private float _dist2Target;
-
-    private const float _triggerShiftDistance = 0.3f;
-    private const float _moveSpeed = 2f;
-
+    private bool _isLooking;
     private int _currentShift;
     private int _shiftsHit;
-    private const int _maxShifts = 5;
     private int _basketOffsetIndex;
 
     private int BasketOffsetIndex
@@ -43,7 +44,8 @@ public class BabyCrow : Bird
         }
     }
 
-    private float CorrectSpeed => _dist2Target < 0.4f ? Mathf.Lerp(_rigbod.velocity.magnitude, 0f, 0.033f) : _moveSpeed;
+    private bool _isCloseEnoughToShift => _dist2Target < _triggerShiftDistance;
+    private float ClosenessCorrectedSpeed => _isLooking && _isCloseEnoughToShift ? Mathf.Lerp(_rigbod.velocity.magnitude, 0f, 0.033f) : _moveSpeed;
 
     protected override void Awake()
     {
@@ -60,9 +62,9 @@ public class BabyCrow : Bird
             var jaiPos = Constants.JaiTransform.position;
             _dist2Target = Vector2.Distance(jaiPos + (Vector3) _basketOffsets[BasketOffsetIndex], pos);
             _moveDir = (jaiPos + (Vector3) _basketOffsets[BasketOffsetIndex] - pos).normalized;
-            _rigbod.velocity = Constants.SpeedMultiplier * CorrectSpeed * _moveDir;
+            _rigbod.velocity = Constants.SpeedMultiplier * ClosenessCorrectedSpeed * _moveDir;
 
-            if (_dist2Target < _triggerShiftDistance && _shiftsHit == _currentShift)
+            if (_isCloseEnoughToShift && _shiftsHit == _currentShift)
             {
                 StartCoroutine(ShiftSpots());
             }
@@ -76,24 +78,23 @@ public class BabyCrow : Bird
 
     private IEnumerator ShiftSpots()
     {
+        _isLooking = true;
         _shiftsHit++;
         _babyCrowAnimator.SetInteger(Constants.AnimState, AnimState.Looking);
         yield return StartCoroutine(LookBackAndForth(transform.position.x < Constants.BalloonCenter.position.x));
         _babyCrowAnimator.SetInteger(Constants.AnimState, AnimState.Flying);
         _currentShift++;
         BasketOffsetIndex++;
+        _isLooking = false;
     }
 
     private IEnumerator FlyAway()
     {
-        Vector2 targetPoint = (0.8f + Constants.ScreenSizeWorldUnits.x) * Vector3.right;
-        _dist2Target = Vector2.Distance(targetPoint, transform.position);
-
-        while (_dist2Target > _triggerShiftDistance)
+        Vector2 targetPoint = (Constants.ScreenSizeWorldUnits.x + 0.2f) * Vector2.right;
+        
+        while (Vector2.Distance(targetPoint, transform.position) > _triggerShiftDistance)
         {
-            Vector2 pos = transform.position;
-            _dist2Target = Vector2.Distance(targetPoint, pos);
-            _moveDir = (targetPoint - pos).normalized;
+            _moveDir = (targetPoint - (Vector2)transform.position).normalized;
             _rigbod.velocity = Constants.SpeedMultiplier * _moveSpeed * _moveDir;
             yield return null;
         }

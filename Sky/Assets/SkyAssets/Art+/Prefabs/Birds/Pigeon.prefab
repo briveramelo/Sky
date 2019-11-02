@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 433110}
+  - component: {fileID: 11465350}
+  - component: {fileID: 11466604}
   - component: {fileID: 21216788}
   - component: {fileID: 9508728}
   - component: {fileID: 5010816}
-  - component: {fileID: 11466604}
   - component: {fileID: 6147370}
-  - component: {fileID: 11465350}
   m_Layer: 10
   m_Name: Pigeon
   m_TagString: Untagged
@@ -36,6 +36,40 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &11465350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 406f206d35eb143cfb1496bc4c299174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigbod: {fileID: 5010816}
+  _birdCollider: {fileID: 6147370}
+  _guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 3}
+--- !u!114 &11466604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pixelPerfectCamera: {fileID: 0}
+  fitType: 0
+  parallaxLayer: 0
+  pixelScale: 1
+  runContinously: 1
+  useParentTransform: 0
+  displayGrid: 0
 --- !u!212 &21216788
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -125,25 +159,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &11466604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 176178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pixelPerfectCamera: {fileID: 0}
-  fitType: 0
-  parallaxLayer: 0
-  pixelScale: 1
-  runContinously: 1
-  useParentTransform: 0
-  displayGrid: 0
 --- !u!61 &6147370
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -170,18 +185,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.21, y: 0.05}
   m_EdgeRadius: 0
---- !u!114 &11465350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 176178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 406f206d35eb143cfb1496bc4c299174, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rigbod: {fileID: 5010816}
-  _birdCollider: {fileID: 6147370}
-  _guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 3}

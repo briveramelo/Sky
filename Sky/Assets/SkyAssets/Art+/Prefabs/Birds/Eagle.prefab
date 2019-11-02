@@ -10,13 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 402174}
   - component: {fileID: 11499908}
+  - component: {fileID: 11454850}
+  - component: {fileID: 11492958}
+  - component: {fileID: 11409202}
   - component: {fileID: 21261556}
   - component: {fileID: 9573360}
-  - component: {fileID: 11492958}
   - component: {fileID: 5072746}
-  - component: {fileID: 11409202}
   - component: {fileID: 5802966}
-  - component: {fileID: 11454850}
   m_Layer: 10
   m_Name: Eagle
   m_TagString: Untagged
@@ -55,6 +55,53 @@ MonoBehaviour:
   _guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 3}
   _eagleFriends: {fileID: 11454850}
   _pixelRotationScript: {fileID: 11409202}
+--- !u!114 &11454850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0145db7d3f16d54aabb6272e6cbfe8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myWaveName: 0
+--- !u!114 &11492958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pixelPerfectCamera: {fileID: 0}
+  fitType: 0
+  parallaxLayer: 0
+  pixelScale: 1
+  runContinously: 1
+  useParentTransform: 0
+  displayGrid: 0
+--- !u!114 &11409202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45251146cf068bf4b8bbee7cfd1f74b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Angle: 0
+  Filter: 0
+  PixelsPerUnit: 100
 --- !u!212 &21261556
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -123,25 +170,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &11492958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pixelPerfectCamera: {fileID: 0}
-  fitType: 0
-  parallaxLayer: 0
-  pixelScale: 1
-  runContinously: 1
-  useParentTransform: 0
-  displayGrid: 0
 --- !u!50 &5072746
 Rigidbody2D:
   serializedVersion: 4
@@ -163,21 +191,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &11409202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45251146cf068bf4b8bbee7cfd1f74b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Angle: 0
-  Filter: 0
-  PixelsPerUnit: 100
 --- !u!58 &5802966
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -194,16 +207,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.15
---- !u!114 &11454850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0145db7d3f16d54aabb6272e6cbfe8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _myWaveName: 0

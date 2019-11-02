@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 485058}
-  - component: {fileID: 21226670}
-  - component: {fileID: 9503310}
   - component: {fileID: 11465188}
   - component: {fileID: 11483936}
-  - component: {fileID: 5098798}
   - component: {fileID: 11412386}
+  - component: {fileID: 21226670}
+  - component: {fileID: 9503310}
+  - component: {fileID: 5098798}
   - component: {fileID: 5830908}
   m_Layer: 10
   m_Name: Crow
@@ -37,6 +37,58 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &11465188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d15e464747ef47a6b4c3a7a8ebdc7ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigbod: {fileID: 5098798}
+  _birdCollider: {fileID: 5830908}
+  _guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 3}
+  _murder: {fileID: 0}
+  _pixelRotationScript: {fileID: 11412386}
+  _crowAnimator: {fileID: 9503310}
+--- !u!114 &11483936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pixelPerfectCamera: {fileID: 0}
+  fitType: 0
+  parallaxLayer: 0
+  pixelScale: 1
+  runContinously: 1
+  useParentTransform: 0
+  displayGrid: 0
+--- !u!114 &11412386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45251146cf068bf4b8bbee7cfd1f74b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Angle: 0
+  Filter: 0
+  PixelsPerUnit: 100
 --- !u!212 &21226670
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -105,44 +157,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &11465188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 190058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d15e464747ef47a6b4c3a7a8ebdc7ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rigbod: {fileID: 5098798}
-  _birdCollider: {fileID: 5830908}
-  _guts: {fileID: 0}
-  MyCrowNum: 0
-  _murder: {fileID: 0}
-  _pixelRotationScript: {fileID: 11412386}
-  _crowAnimator: {fileID: 9503310}
---- !u!114 &11483936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 190058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pixelPerfectCamera: {fileID: 0}
-  fitType: 0
-  parallaxLayer: 0
-  pixelScale: 1
-  runContinously: 1
-  useParentTransform: 0
-  displayGrid: 0
 --- !u!50 &5098798
 Rigidbody2D:
   serializedVersion: 4
@@ -164,21 +178,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &11412386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 190058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45251146cf068bf4b8bbee7cfd1f74b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Angle: 0
-  Filter: 0
-  PixelsPerUnit: 100
 --- !u!58 &5830908
 CircleCollider2D:
   m_ObjectHideFlags: 0

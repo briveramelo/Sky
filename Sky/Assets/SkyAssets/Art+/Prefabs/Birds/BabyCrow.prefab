@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 482614}
   - component: {fileID: 11407028}
+  - component: {fileID: 11465960}
   - component: {fileID: 21282088}
   - component: {fileID: 9531916}
-  - component: {fileID: 11465960}
   - component: {fileID: 5091728}
   - component: {fileID: 5862866}
   m_Layer: 10
@@ -52,6 +52,25 @@ MonoBehaviour:
   _birdCollider: {fileID: 5862866}
   _guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 3}
   _babyCrowAnimator: {fileID: 9531916}
+--- !u!114 &11465960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pixelPerfectCamera: {fileID: 0}
+  fitType: 0
+  parallaxLayer: 0
+  pixelScale: 1
+  runContinously: 1
+  useParentTransform: 0
+  displayGrid: 0
 --- !u!212 &21282088
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -120,25 +139,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &11465960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 173176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pixelPerfectCamera: {fileID: 0}
-  fitType: 0
-  parallaxLayer: 0
-  pixelScale: 1
-  runContinously: 1
-  useParentTransform: 0
-  displayGrid: 0
 --- !u!50 &5091728
 Rigidbody2D:
   serializedVersion: 4

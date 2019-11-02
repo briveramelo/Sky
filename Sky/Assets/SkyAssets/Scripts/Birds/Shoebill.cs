@@ -19,7 +19,7 @@ public class Shoebill : Bird
     protected override void Awake()
     {
         base.Awake();
-        _xEdge = Constants.ScreenSizeWorldUnits.x * 1.2f;
+        _xEdge = Constants.ScreenSizeWorldUnits.x + 0.2f;
         _sinPeriodShift = Random.Range(0f, 5f);
         _movingRight = transform.position.x < Constants.JaiTransform.position.x;
         _rigbod.velocity = Constants.SpeedMultiplier * 0.01f * MovingSign * Vector2.right;

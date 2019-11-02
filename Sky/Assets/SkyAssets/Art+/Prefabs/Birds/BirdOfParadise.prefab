@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 480686}
   - component: {fileID: 11454078}
+  - component: {fileID: 11475130}
   - component: {fileID: 21255910}
   - component: {fileID: 9596952}
   - component: {fileID: 5865880}
-  - component: {fileID: 11475130}
   - component: {fileID: 5009806}
   m_Layer: 10
   m_Name: BirdOfParadise
@@ -52,6 +52,25 @@ MonoBehaviour:
   _birdCollider: {fileID: 5865880}
   _guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 3}
   _balloon: {fileID: 125308, guid: 843c1b0a79ab54d09845b45382dae317, type: 3}
+--- !u!114 &11475130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pixelPerfectCamera: {fileID: 0}
+  fitType: 0
+  parallaxLayer: 0
+  pixelScale: 1
+  runContinously: 1
+  useParentTransform: 0
+  displayGrid: 0
 --- !u!212 &21255910
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -136,25 +155,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.06
---- !u!114 &11475130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 156092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pixelPerfectCamera: {fileID: 0}
-  fitType: 0
-  parallaxLayer: 0
-  pixelScale: 1
-  runContinously: 1
-  useParentTransform: 0
-  displayGrid: 0
 --- !u!50 &5009806
 Rigidbody2D:
   serializedVersion: 4

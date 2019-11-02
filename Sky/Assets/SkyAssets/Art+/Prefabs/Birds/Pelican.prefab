@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 456846}
+  - component: {fileID: 11411288}
+  - component: {fileID: 11440384}
   - component: {fileID: 21296904}
   - component: {fileID: 9587476}
-  - component: {fileID: 11411288}
   - component: {fileID: 5049218}
   - component: {fileID: 6149256}
-  - component: {fileID: 11440384}
   m_Layer: 10
   m_Name: Pelican
   m_TagString: Untagged
@@ -36,6 +36,41 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &11411288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5f49d5473b7e403dbe73ad4d6d62bc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigbod: {fileID: 5049218}
+  _birdCollider: {fileID: 6149256}
+  _guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 3}
+  _pelicanAnimator: {fileID: 9587476}
+--- !u!114 &11440384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153434}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pixelPerfectCamera: {fileID: 0}
+  fitType: 0
+  parallaxLayer: 0
+  pixelScale: 1
+  runContinously: 1
+  useParentTransform: 0
+  displayGrid: 0
 --- !u!212 &21296904
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -104,22 +139,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &11411288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 153434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5f49d5473b7e403dbe73ad4d6d62bc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rigbod: {fileID: 5049218}
-  _birdCollider: {fileID: 6149256}
-  _guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 3}
-  _pelicanAnimator: {fileID: 9587476}
 --- !u!50 &5049218
 Rigidbody2D:
   serializedVersion: 4
@@ -167,22 +186,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.22, y: 0.15}
   m_EdgeRadius: 0
---- !u!114 &11440384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 153434}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pixelPerfectCamera: {fileID: 0}
-  fitType: 0
-  parallaxLayer: 0
-  pixelScale: 1
-  runContinously: 1
-  useParentTransform: 0
-  displayGrid: 0
