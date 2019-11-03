@@ -10,6 +10,12 @@ public interface IMurderToCrow
     bool ReadyToFly { get; }
 }
 
+//the crow follows this behavior
+//1. Move toward the balloons
+//2a. If killer and close enough, move in a straight line
+//2b. If not killer, bend away from the balloons
+//3. Carry on and reset
+
 public class Crow : Bird, IMurderToCrow
 {
     private static class CrowStates
@@ -28,18 +34,18 @@ public class Crow : Bird, IMurderToCrow
     private ICrowToMurder _murderInterface;
     
     private Vector2 _startPosition;
-    private Vector2 _moveDir;
 
-    private float _moveSpeed = 4.5f;
-    private float _turnDistance = 2.5f;
-    private float _commitDistance = 4f;
-    private float _resetDistance = 15f;
-    private float _requestNextCrowDistance = 4.5f;
-    private float _currentDistance;
+    private const float _moveSpeed = 4.5f /4f;
+    private const float _turnDistance = 2.5f/4;
+    private const float _distanceBeforeDiving = 4f/4;
+    private const float _resetDistance = 15f/4;
+    private const float _requestNextCrowDistance = 4.5f/4;
+    private float _distFromBalloons => Vector3.Distance(Constants.BalloonCenter.position, transform.position);
 
     private bool _isKiller;
     private bool _readyToFly = true;
     private bool _hasRequestedNext;
+    private float _distanceBeforeDeciding;
 
     protected override void Awake()
     {
@@ -54,12 +60,14 @@ public class Crow : Bird, IMurderToCrow
     void IMurderToCrow.InitializeCrow(bool isKiller)
     {
         _isKiller = isKiller;
-        _commitDistance = _isKiller ? _commitDistance : 3f;
+        _distanceBeforeDeciding = _isKiller ? _distanceBeforeDiving : 3f/4;
     }
 
     void IMurderToCrow.TakeFlight(Vector2 crowPosition)
     {
-        SetPosition(crowPosition);
+        _startPosition = crowPosition;
+        transform.position = crowPosition;
+        
         _hasRequestedNext = false;
         _readyToFly = false;
         _birdCollider.enabled = true;
@@ -69,17 +77,11 @@ public class Crow : Bird, IMurderToCrow
 
     bool IMurderToCrow.ReadyToFly => _readyToFly;
 
-    private void SetPosition(Vector2 crowPosition)
-    {
-        _startPosition = crowPosition;
-        transform.position = crowPosition;
-    }
-
     #endregion
 
     private IEnumerator RequestNextCrow()
     {
-        while (_currentDistance > _requestNextCrowDistance)
+        while (_distFromBalloons > _requestNextCrowDistance)
         {
             yield return null;
         }
@@ -91,30 +93,30 @@ public class Crow : Bird, IMurderToCrow
 
     private IEnumerator TargetBalloons()
     {
-        _currentDistance = 10f;
-        while (_currentDistance > _commitDistance)
+        Debug.Log("targeting" + name);
+        while (_distFromBalloons > _distanceBeforeDeciding)
         {
             var balloonPos = Constants.BalloonCenter.position;
             var pos = transform.position;
-            _currentDistance = Vector3.Distance(balloonPos, pos);
-            _moveDir = (balloonPos - pos).normalized;
-            Swoop();
+            var moveDir = (balloonPos - pos);
+            PointAndMoveInMoveDir(moveDir);
             yield return null;
         }
-
-        yield return StartCoroutine(BeeLine());
+        Debug.Log("moving straight" + name);
+        yield return StartCoroutine(MoveStraightInLastDirection());
+        Debug.Log("triggering reset" + name);
         StartCoroutine(TriggerReset());
         if (!_isKiller)
         {
+            Debug.Log("turning away" + name);
             StartCoroutine(TurnAwayFromBalloons());
         }
     }
 
-    private IEnumerator BeeLine()
+    private IEnumerator MoveStraightInLastDirection()
     {
-        while (_currentDistance > _turnDistance)
+        while (_distFromBalloons > _turnDistance)
         {
-            _currentDistance = Vector3.Distance(Constants.BalloonCenter.position, transform.position);
             yield return null;
         }
     }
@@ -128,32 +130,32 @@ public class Crow : Bird, IMurderToCrow
         while (Mathf.Abs(angleDelta) < 60)
         {
             angleDelta += rotationSpeed;
-            _moveDir = ConvertAnglesAndVectors.ConvertAngleToVector2(startAngle + angleDelta).normalized;
-            Swoop();
+            var moveDir = ConvertAnglesAndVectors.ConvertAngleToVector2(startAngle + angleDelta);
+            PointAndMoveInMoveDir(moveDir);
             yield return null;
         }
-
+        Debug.Log("finished turning away" + name);
         _crowAnimator.SetInteger(Constants.AnimState, CrowStates.Flapping);
     }
 
-    #region Swoop Helper Functions
+    #region PointAndMoveInMoveDir Helper Functions
 
-    private void Swoop()
+    private void PointAndMoveInMoveDir(Vector2 moveDir)
     {
-        _rigbod.velocity = Constants.SpeedMultiplier * _moveSpeed * _moveDir;
+        _rigbod.velocity = _moveSpeed * moveDir.normalized;
         _pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle(_rigbod.velocity);
         transform.FaceForward(_rigbod.velocity.x > 0);
     }
 
     private IEnumerator TriggerReset()
     {
-        while (_currentDistance < _resetDistance)
+        while (_distFromBalloons < _resetDistance)
         {
-            _currentDistance = Vector3.Distance(Constants.BalloonCenter.position, transform.position);
             yield return null;
         }
+        Debug.Log("resetting" + name);
 
-        _rigbod.velocity = Constants.SpeedMultiplier * Vector2.zero;
+        _rigbod.velocity = Vector2.zero;
         _birdCollider.enabled = false;
         transform.position = _startPosition;
         _readyToFly = true;

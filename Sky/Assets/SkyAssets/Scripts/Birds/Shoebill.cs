@@ -6,11 +6,11 @@ public class Shoebill : Bird
 {
     protected override BirdType MyBirdType => BirdType.Shoebill;
     private IBumpable _basket;
-    private bool _canHitBasket = true;
+    private bool _canCollide = true;
     private bool _flying = true;
     private bool _rightIsTarget;
     private bool _movingRight;
-    private int MovingSign => _movingRight ? 1 : -1;
+    private int _movingSign => _movingRight ? 1 : -1;
     private float _sinPeriodShift;
 
     private float _lastXPosition;
@@ -22,7 +22,7 @@ public class Shoebill : Bird
         _xEdge = Constants.ScreenSizeWorldUnits.x + 0.2f;
         _sinPeriodShift = Random.Range(0f, 5f);
         _movingRight = transform.position.x < Constants.JaiTransform.position.x;
-        _rigbod.velocity = Constants.SpeedMultiplier * 0.01f * MovingSign * Vector2.right;
+        _rigbod.velocity = Constants.SpeedMultiplier * 0.01f * _movingSign * Vector2.right;
     }
 
     private void Start()
@@ -37,11 +37,24 @@ public class Shoebill : Bird
             _rigbod.velocity = Constants.SpeedMultiplier * FindYVelocity() * Vector2.up + Vector2.right * FindXVelocity();
         }
     }
+    
+    //for _basket collision only
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (_canCollide && col.gameObject.layer == Layers.JaiLayer)
+        {
+            GameCamera.Instance.ShakeTheCamera();
+            var vel = _rigbod.velocity;
+            _basket.Bump(1.5f * new Vector2(vel.x, vel.y * 5f).normalized);
+            StartCoroutine(Bool.Toggle(boolState => _canCollide = boolState, 4f));
+            StartCoroutine(Fall());
+        }
+    }
 
     private float FindYVelocity()
     {
         var yDistAway = transform.position.y - Constants.BasketTransform.position.y;
-        var periodLength = 4f;
+        var periodLength = 1f;
         var sinOffset = 1f * Mathf.Sin(2 * Mathf.PI * (1 / periodLength) * (Time.timeSinceLevelLoad + _sinPeriodShift));
         return Mathf.Clamp(-yDistAway, -1, 1) + sinOffset;
     }
@@ -59,14 +72,14 @@ public class Shoebill : Bird
     {
         var pos = transform.position;
         var outOfBounds = Mathf.Abs(pos.x) > _xEdge;
-        var movingAway = MovingSign == (int) Mathf.Sign(_rigbod.velocity.x);
-        var properSide = MovingSign == (int) Mathf.Sign(pos.x);
+        var movingAway = _movingSign == (int) Mathf.Sign(_rigbod.velocity.x);
+        var properSide = _movingSign == (int) Mathf.Sign(pos.x);
 
         var reverseDirection = outOfBounds && movingAway && properSide;
         if (reverseDirection)
         {
             _movingRight = !_movingRight;
-            _birdCollider.enabled = false;
+            _birdCollider.enabled = false;//disallow off screen hits
         }
 
         if (Mathf.Abs(_lastXPosition) > Constants.ScreenSizeWorldUnits.x && Mathf.Abs(pos.x) < Constants.ScreenSizeWorldUnits.x)
@@ -84,23 +97,7 @@ public class Shoebill : Bird
         }
 
         _lastXPosition = pos.x;
-        return Mathf.Lerp(_rigbod.velocity.x, MovingSign * MoveSpeed, 0.0167f);
-    }
-
-    //for _basket collision only
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.layer == Layers.JaiLayer)
-        {
-            if (_canHitBasket)
-            {
-                GameCamera.Instance.ShakeTheCamera();
-                var vel = _rigbod.velocity;
-                _basket.Bump(1.5f * new Vector2(vel.x, vel.y * 5f).normalized);
-                StartCoroutine(Bool.Toggle(boolState => _canHitBasket = boolState, 4f));
-                StartCoroutine(Fall());
-            }
-        }
+        return Mathf.Lerp(_rigbod.velocity.x, _movingSign * MoveSpeed, 0.0167f);
     }
 
     private IEnumerator Fall()

@@ -32,14 +32,16 @@ public class Murder : MonoBehaviour, ICrowToMurder
 
     private void InitializeCrowPositions()
     {
+        var xPos = Constants.ScreenSizeWorldUnits.x + 1f;
+        var yPos = Constants.ScreenSizeWorldUnits.y + 1.6f;
         _crowPositions = new[]
         {
-            new Vector2(0f, Constants.ScreenSizeWorldUnits.y * 1.4f),
-            new Vector2(Constants.ScreenSizeWorldUnits.x * 1.08f, Constants.ScreenSizeWorldUnits.y * 1.2f),
-            new Vector2(Constants.ScreenSizeWorldUnits.x * 1.08f, -Constants.ScreenSizeWorldUnits.y * 1.2f),
-            new Vector2(0f, -Constants.ScreenSizeWorldUnits.y * 1.4f),
-            new Vector2(-Constants.ScreenSizeWorldUnits.x * 1.08f, -Constants.ScreenSizeWorldUnits.y * 1.2f),
-            new Vector2(-Constants.ScreenSizeWorldUnits.x * 1.08f, Constants.ScreenSizeWorldUnits.y * 1.2f)
+            new Vector2(0f, yPos),
+            new Vector2(xPos, yPos),
+            new Vector2(xPos, -yPos),
+            new Vector2(0f, -yPos),
+            new Vector2(-xPos, -yPos),
+            new Vector2(-xPos, yPos)
         };
         
         _crowsAlive = new List<IMurderToCrow>(_crows);
@@ -50,10 +52,11 @@ public class Murder : MonoBehaviour, ICrowToMurder
 
     private void InitializeCrows()
     {
+        var killerCrowIndex = Random.Range(0, _crowsAlive.Count);
         for (var i = 0; i < _crowsAlive.Count; i++)
         {
             var crow = _crowsAlive[i];
-            crow.InitializeCrow(i==5);
+            crow.InitializeCrow(i == killerCrowIndex);
         }
 
         _me.SendNextCrow();
@@ -65,10 +68,13 @@ public class Murder : MonoBehaviour, ICrowToMurder
     {
         if (_crowsToSwoop.Count > 0)
         {
-            var luckyCrow = Random.Range(0, _crowsToSwoop.Count - 1);
-            _crowsToSwoop[luckyCrow].TakeFlight(_availableCrowPositions[luckyCrow]);
-            _crowsToSwoop.Remove(_crowsToSwoop[luckyCrow]);
-            _availableCrowPositions.Remove(_availableCrowPositions[luckyCrow]);
+            var luckyCrowIndex = Random.Range(0, _crowsToSwoop.Count - 1);
+            var luckyCrow = _crowsToSwoop[luckyCrowIndex];
+            var availableCrowPos = _availableCrowPositions[luckyCrowIndex];
+            luckyCrow.TakeFlight(availableCrowPos);
+            
+            _crowsToSwoop.Remove(luckyCrow);
+            _availableCrowPositions.Remove(availableCrowPos);
         }
         else if (_crowsAlive.Count > 0)
         {
@@ -82,7 +88,6 @@ public class Murder : MonoBehaviour, ICrowToMurder
         _crowsToSwoop.Remove(crowDown);
         if (_crowsAlive.Count == 0)
         {
-            StopAllCoroutines();
             Destroy(gameObject);
         }
     }
