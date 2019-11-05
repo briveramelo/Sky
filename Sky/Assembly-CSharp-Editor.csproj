@@ -698,6 +698,10 @@
       <Project>{DC5700C6-B2E6-291E-384F-63B852578FD4}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="PixelPerfect.csproj">
+      <Project>{9C2EFC27-C06F-A19B-C066-96E2EBFC2D7D}</Project>
+      <Name>PixelPerfect</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

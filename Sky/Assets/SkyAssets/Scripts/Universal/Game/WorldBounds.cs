@@ -7,7 +7,7 @@ public class WorldBounds : MonoBehaviour
 
     private void Start()
     {
-        var worldSize = Constants.ScreenSizeWorldUnits;
+        var worldSize = ScreenSpace.WorldEdge;
         var xDist = worldSize.x;
         var yDist = worldSize.y;
         var points = new[]

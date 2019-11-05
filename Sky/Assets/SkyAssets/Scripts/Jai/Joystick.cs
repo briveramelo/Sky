@@ -14,7 +14,7 @@ public class Joystick : Singleton<Joystick>
 
     private const float _joystickMaxStartCanvUnits = 32f;
     private const float _joystickMaxMoveCanvUnits = 16f;
-    private Vector2 _joystickStartingCanvasPosition => _joystickView.position.PixelsToCanvasUnits(_parentCanvas);
+    private Vector2 _joystickStartingCanvasPosition => _joystickView.position.PixelsToCanvasPosition(_parentCanvas);
     private int _currentFingerId;
     private bool _isFingerInUse => _currentFingerId != Constants.UnusedFingerId;
 
@@ -47,7 +47,7 @@ public class Joystick : Singleton<Joystick>
             return;
         }
 
-        var touchCanvasPosition = touchWorldPosition.WorldUnitsToCanvasUnits(_parentCanvas);
+        var touchCanvasPosition = touchWorldPosition.WorldPositionToCanvasPosition(_parentCanvas);
         var targetAnchoredPosition = touchCanvasPosition - _joystickStartingCanvasPosition;
         
         var distFromStickCanvUnits = Vector2.Distance(targetAnchoredPosition, Vector2.zero);
@@ -65,7 +65,7 @@ public class Joystick : Singleton<Joystick>
             return;
         }
 
-        var touchCanvasPosition = touchWorldPosition.WorldUnitsToCanvasUnits(_parentCanvas);
+        var touchCanvasPosition = touchWorldPosition.WorldPositionToCanvasPosition(_parentCanvas);
         var targetAnchoredPosition = touchCanvasPosition - _joystickStartingCanvasPosition;
         
         float intensity = Mathf.Clamp01(targetAnchoredPosition.magnitude / _joystickMaxMoveCanvUnits);

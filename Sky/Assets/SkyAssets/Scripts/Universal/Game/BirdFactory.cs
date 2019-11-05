@@ -45,8 +45,8 @@ public class BirdFactory : Singleton<BirdFactory>
 
     public void CreateNextBird(BirdType birdType)
     {
-        var xSpot = -Constants.ScreenSizeWorldUnits.x;
-        var ySpot = Random.Range(-Constants.ScreenSizeWorldUnits.y, Constants.ScreenSizeWorldUnits.y) * 0.6f;
+        var xSpot = -ScreenSpace.WorldEdge.x;
+        var ySpot = Random.Range(-ScreenSpace.WorldEdge.y, ScreenSpace.WorldEdge.y) * 0.6f;
         if (birdType == BirdType.Tentacles || birdType == BirdType.Crow)
         {
             xSpot = 0f;
@@ -54,11 +54,11 @@ public class BirdFactory : Singleton<BirdFactory>
         }
         else if (birdType == BirdType.Eagle)
         {
-            xSpot = -Constants.ScreenSizeWorldUnits.x * 5f;
+            xSpot = -ScreenSpace.WorldEdge.x * 5f;
         }
         else if (birdType == BirdType.Seagull)
         {
-            xSpot = Constants.ScreenSizeWorldUnits.x * (Bool.TossCoin() ? 1 : -1);
+            xSpot = ScreenSpace.WorldEdge.x * (Bool.TossCoin() ? 1 : -1);
         }
 
         CreateBird(birdType, new Vector3(xSpot, ySpot));

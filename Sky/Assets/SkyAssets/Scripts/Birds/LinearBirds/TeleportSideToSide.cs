@@ -20,7 +20,7 @@ public class TeleportSideToSide : MonoBehaviour
     private IEnumerator Start()
     {
         var xMult = transform.parent.GetChild(0) == transform ? 1f : -1f;
-        transform.localPosition = new Vector2(xMult * (Constants.ScreenSizeWorldUnits.x + _distanceFromWorldEdge), 0f);
+        transform.localPosition = new Vector2(xMult * (ScreenSpace.WorldEdge.x + _distanceFromWorldEdge), 0f);
         yield return null;
         _destination = new Vector2(_buddyCollider.transform.position.x, 0f);
     }

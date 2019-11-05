@@ -352,8 +352,8 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
 
     private void DisplayPoints(Vector2 position, int pointsToAdd)
     {
-        var xClamp = Constants.ScreenSizeWorldUnits.x * .9f;
-        var yClamp = Constants.ScreenSizeWorldUnits.y * .9f;
+        var xClamp = ScreenSpace.ScreenSizePixels.x * .9f;
+        var yClamp = ScreenSpace.ScreenSizePixels.y * .9f;
         var spawnPosition = new Vector2(Mathf.Clamp(position.x, -xClamp, xClamp), Mathf.Clamp(position.y, -yClamp, yClamp));
 
         Instantiate(_points, spawnPosition, Quaternion.identity, ScoreSheet.Instance.transform).GetComponent<IDisplayable>().DisplayPoints(pointsToAdd);

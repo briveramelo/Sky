@@ -22,8 +22,8 @@ public class BirdOfParadise : LinearBird
 
     private void SpawnBalloon()
     {
-        var xSpot = Random.Range(-Constants.ScreenSizeWorldUnits.x, Constants.ScreenSizeWorldUnits.x) * 0.67f;
-        var spawnSpot = new Vector3(xSpot, -Constants.ScreenSizeWorldUnits.y * 1.6f, 0f);
+        var xSpot = Random.Range(-ScreenSpace.WorldEdge.x, ScreenSpace.WorldEdge.x) * 0.67f;
+        var spawnSpot = new Vector3(xSpot, -ScreenSpace.WorldEdge.y - 0.6f, 0f);
         Instantiate(_balloon, spawnSpot, Quaternion.identity);
     }
 }

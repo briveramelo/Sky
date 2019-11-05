@@ -5,7 +5,7 @@ using GenericFunctions;
 
 public class DuckWave : Wave
 {
-    private float _duckSinPeriod => Constants.ScreenSizeWorldUnits.x * 2f;
+    private float _duckSinPeriod => ScreenSpace.ScreenSizeWorldUnits.x;
 
     protected override IEnumerator GenerateBirds()
     {

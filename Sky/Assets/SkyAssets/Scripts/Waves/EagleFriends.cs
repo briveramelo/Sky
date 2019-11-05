@@ -19,6 +19,7 @@ public class EagleFriends : Wave, ITriggerSpawnable
 
     void ITriggerSpawnable.TriggerSpawnEvent()
     {
+        //todo: rework?
         var dice = (SpawnEvent) UnityEngine.Random.Range(0, Enum.GetNames(typeof(SpawnEvent)).Length);
         switch (dice)
         {

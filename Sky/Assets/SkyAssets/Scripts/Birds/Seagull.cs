@@ -8,27 +8,21 @@ public class Seagull : Bird
 
     protected override BirdType MyBirdType => BirdType.Seagull;
 
-    private const float _moveSpeed = 3f;
+    private const float _moveSpeed = 0.75f;
+    private const float _ySpread = 0.15f;
+    
     private static int _activePooCams;
     private static int _totalSeagulls = 0;
 
     private Vector2 _targetCenterPosition;
-    private int _mySeagullNumber;
-    private bool _movingRight;
-    private float _xSpread = 4;
-    private bool _startedMovingRight;
+    private float _xSpread => ScreenSpace.WorldEdge.x * 0.8f;
     private float _shift;
     private float _startTime;
+    private int _mySeagullNumber;
+    private bool _startedMovingRight;
+    private bool _movingRight;
 
-    private Vector2[] _targetPositions =
-    {
-        new Vector2(0f, 2.25f),
-        new Vector2(.25f, 2.35f),
-        new Vector2(-.5f, 2.25f),
-        new Vector2(.5f, 2.25f),
-        new Vector2(-.25f, 2.35f),
-        new Vector2(0f, 2.35f),
-    };
+    private Vector2[] _targetPositions;
 
     #region WakeUp
 
@@ -36,6 +30,17 @@ public class Seagull : Bird
     {
         base.Awake();
 
+        var screenHeight = ScreenSpace.WorldEdge.y;
+        var screenHeightDrop = 0.18f + _ySpread;
+        _targetPositions = new[]
+        {
+            new Vector2(0f, screenHeight - screenHeightDrop),
+            new Vector2(.25f/4, screenHeight - screenHeightDrop),
+            new Vector2(-.5f/4, screenHeight - screenHeightDrop),
+            new Vector2(.5f/4, screenHeight - screenHeightDrop),
+            new Vector2(-.25f/4, screenHeight - screenHeightDrop),
+            new Vector2(0f, screenHeight - screenHeightDrop)
+        };
         InitializeThisSeagull();
         StartCoroutine(GetIntoPlace());
         StartCoroutine(Poop());
@@ -56,8 +61,8 @@ public class Seagull : Bird
     {
         while (true)
         {
-            _rigbod.velocity = Constants.SpeedMultiplier * _moveSpeed * (_targetCenterPosition - (Vector2) transform.position).normalized;
-            if (Vector2.Distance(_targetCenterPosition, transform.position) < 0.1f)
+            _rigbod.velocity = _moveSpeed * (_targetCenterPosition - (Vector2) transform.position).normalized;
+            if (Vector2.Distance(_targetCenterPosition, transform.position) < 0.03f)
             {
                 StartCoroutine(SwoopOverhead());
                 yield break;
@@ -98,7 +103,7 @@ public class Seagull : Bird
 
     private float GetYPosition()
     {
-        return 0.6f * Mathf.Sin(2f * Mathf.PI / 5f * (Time.time - _startTime)) + _targetCenterPosition.y;
+        return _ySpread * Mathf.Sin(2f * Mathf.PI / 5f * (Time.time - _startTime)) + _targetCenterPosition.y;
     }
 
     private float GetYVelocity()
@@ -127,13 +132,13 @@ public class Seagull : Bird
     private IEnumerator Poop()
     {
         var minPoopTimeDelay = 1f;
-        var pooDistanceRange = new Vector2(1f, 1.5f) * 0.8f;
+        var pooDistanceRange = 0.4f * new Vector2(1f, 1.5f);
         yield return new WaitForSeconds(minPoopTimeDelay);
         while (true)
         {
             var xDist = Mathf.Abs(transform.position.x - Constants.JaiTransform.position.x);
             var lastTimePooped = 0f;
-            if (xDist > pooDistanceRange[0] && xDist < pooDistanceRange[1] && Mathf.Sign(GetXVelocity()) == Mathf.Sign(-transform.position.x + Constants.JaiTransform.position.x))
+            if (xDist > pooDistanceRange[0] && xDist < pooDistanceRange[1] && Mathf.Sign(GetXVelocity()) == Mathf.Sign(Constants.JaiTransform.position.x - transform.position.x))
             {
                 if (_activePooCams < 5)
                 {

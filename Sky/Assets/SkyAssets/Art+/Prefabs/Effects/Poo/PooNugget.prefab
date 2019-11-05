@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 445226}
   - component: {fileID: 11447584}
-  - component: {fileID: 5095544}
   - component: {fileID: 11451030}
+  - component: {fileID: 5095544}
   - component: {fileID: 21201314}
   - component: {fileID: 9571952}
   - component: {fileID: 6075254}
@@ -50,6 +50,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _softbody: {fileID: 5095544}
   _pooSplat: {fileID: 160972, guid: 5ef76f578d00147b9b3f58a65df558bc, type: 3}
+--- !u!114 &11451030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pixelPerfectCamera: {fileID: 0}
+  fitType: 0
+  parallaxLayer: 0
+  pixelScale: 1
+  runContinously: 1
+  useParentTransform: 0
+  displayGrid: 0
 --- !u!50 &5095544
 Rigidbody2D:
   serializedVersion: 4
@@ -71,25 +90,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &11451030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 173546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pixelPerfectCamera: {fileID: 0}
-  fitType: 0
-  parallaxLayer: 0
-  pixelScale: 1
-  runContinously: 1
-  useParentTransform: 0
-  displayGrid: 0
 --- !u!212 &21201314
 SpriteRenderer:
   m_ObjectHideFlags: 0

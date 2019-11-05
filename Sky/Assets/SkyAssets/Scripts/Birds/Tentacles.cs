@@ -66,7 +66,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
         _sensor = _ts;
         _sensorOnJai = _ts;
 
-        _homeSpot = new Vector2(0f, -.75f - Constants.ScreenSizeWorldUnits.y);
+        _homeSpot = new Vector2(0f, -.75f - ScreenSpace.WorldEdge.y);
         _resetHeight = .5f + _homeSpot.y;
         _defeatedHeight = .25f + _homeSpot.y;
     }

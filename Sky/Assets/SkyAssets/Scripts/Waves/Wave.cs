@@ -115,7 +115,7 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable
 
         if (birdType == BirdType.Eagle)
         {
-            spawnPoint = new Vector2(-Constants.ScreenSizeWorldUnits.x * 5f, 0f);
+            spawnPoint = new Vector2(-ScreenSpace.WorldEdge.x * 5f, 0f);
         }
 
         var bird = BirdFactory.Instance.CreateBird(birdType, spawnPoint);
@@ -140,7 +140,7 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable
         y2 = y2 == -1337f ? y1 : y2;
         y1 = Mathf.Clamp(y1, -1f, 1f);
         y2 = Mathf.Clamp(y2, -1f, 1f);
-        return new Vector2((startOnRight ? 1 : -1) * Constants.ScreenSizeWorldUnits.x, UnityEngine.Random.Range(y1, y2) * Constants.ScreenSizeWorldUnits.y);
+        return new Vector2((startOnRight ? 1 : -1) * ScreenSpace.WorldEdge.x, UnityEngine.Random.Range(y1, y2) * ScreenSpace.WorldEdge.y);
     }
 
     protected IEnumerator MassProduce(SpawnDelegate spawn, int birdCount)

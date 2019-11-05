@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using GenericFunctions;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -26,7 +24,7 @@ public class PixelPerfectCamera : MonoBehaviour {
 		{
 			if (_resHeight == 0)
 			{
-				return (int)Constants.ScreenSizePixels.y;
+				return (int)ScreenSpace.ScreenSizePixels.y;
 			}
 
 			return _resHeight;
@@ -81,7 +79,7 @@ public class PixelPerfectCamera : MonoBehaviour {
 		float orthoSizeFactor=1f;
 		
 		if (pixelZoomMode==PixelPerfectZoomMode.ConstantZoom) {
-			targetPixelHeight=(int)Constants.ScreenSizePixels.y/cameraZoom;
+			targetPixelHeight=(int)ScreenSpace.ScreenSizePixels.y/cameraZoom;
 		}
 		CalculateZoomForClosestResolution();
 		
@@ -95,7 +93,7 @@ public class PixelPerfectCamera : MonoBehaviour {
 	
 	void CalculateZoomForClosestResolution()
 	{
-		var screenSizePixels = Constants.ScreenSizePixels;
+		var screenSizePixels = ScreenSpace.ScreenSizePixels;
 		float diagonalPixels = Mathf.Sqrt(screenSizePixels.x * screenSizePixels.x + screenSizePixels.y * screenSizePixels.y);
 		cameraZoom = Mathf.CeilToInt(diagonalPixels / 400f);
 		
@@ -103,8 +101,8 @@ public class PixelPerfectCamera : MonoBehaviour {
 		int possibleHeight=0;
 		int minError=int.MaxValue;
 		int targetScale=1;
-		resolutionHeight=Mathf.RoundToInt(Constants.ScreenSizePixels.y*normalCamera.rect.height);
-		for (int scale = 1; scale <= Constants.ScreenSizePixels.y; scale++) {
+		resolutionHeight=Mathf.RoundToInt(ScreenSpace.ScreenSizePixels.y*normalCamera.rect.height);
+		for (int scale = 1; scale <= ScreenSpace.ScreenSizePixels.y; scale++) {
 			possibleHeight=targetPixelHeight*scale;
 			int error=Mathf.Abs(possibleHeight-resolutionHeight);
 			if (error<minError) {
@@ -293,14 +291,14 @@ public class PixelPerfectCameraEditor : Editor {
 	void DrawTitle() {
 		GUILayout.Space(8f);
 		if (pixelPerfectLogo!=null) {
-			var headerRect = GUILayoutUtility.GetRect(Constants.ScreenSizePixels.x, 5.0f);
+			var headerRect = GUILayoutUtility.GetRect(ScreenSpace.ScreenSizePixels.x, 5.0f);
 			headerRect.x=headerRect.x-16f;
 			headerRect.width = pixelPerfectLogo.width;
 			headerRect.height = pixelPerfectLogo.height;
 			GUILayout.Space( headerRect.height );
 			GUI.DrawTexture( headerRect, pixelPerfectLogo);
 			
-			if (GUI.Button(new Rect(Constants.ScreenSizePixels.x-60, headerRect.y+4, headerRect.height*0.875f, headerRect.height*0.875f), new GUIContent(pixelattoIcon, "More Pixelatto Assets"))) {
+			if (GUI.Button(new Rect(ScreenSpace.ScreenSizePixels.x-60, headerRect.y+4, headerRect.height*0.875f, headerRect.height*0.875f), new GUIContent(pixelattoIcon, "More Pixelatto Assets"))) {
 				Application.OpenURL("http://www.pixelatto.com/");
 			}
 		}

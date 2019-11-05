@@ -32,8 +32,8 @@ public class Murder : MonoBehaviour, ICrowToMurder
 
     private void InitializeCrowPositions()
     {
-        var xPos = Constants.ScreenSizeWorldUnits.x + 1f;
-        var yPos = Constants.ScreenSizeWorldUnits.y + 1.6f;
+        var xPos = ScreenSpace.WorldEdge.x + 1f;
+        var yPos = ScreenSpace.WorldEdge.y + 1.6f;
         _crowPositions = new[]
         {
             new Vector2(0f, yPos),

@@ -9,18 +9,35 @@ public class PooSlide : MonoBehaviour
     [SerializeField] private Material[] _pooMaterials;
     [SerializeField] private Sprite[] _lastPooSprites;
 
-    private float _slideSpeed = .08f;
+    private const float _slideSpeed = .08f * 60f / 4f;
+    private bool _isStationary;
+    private Coroutine _slideDownRoutine;
 
     private void Awake()
     {
         _mySpriteRenderer.material = _pooMaterials[Constants.TargetPooInt];
+        
         StartCoroutine(AnimateSplat());
-        StartCoroutine(SlideDown());
-        Destroy(transform.parent.gameObject, 15f);
+        if (!_isStationary)
+        {
+            _slideDownRoutine = StartCoroutine(SlideDown());
+        }
+        //Destroy(transform.parent.gameObject, 15f);
         ScoreSheet.Tallier.TallyThreat(Threat.Poop);
 
         Constants.TargetPooInt++;
         Seagull.LogPooCam(true);
+    }
+
+    public void KeepStationary()
+    {
+        _isStationary = true;
+        if (_slideDownRoutine != null)
+        {
+            StopCoroutine(_slideDownRoutine);
+        }
+
+        transform.localPosition = Vector3.zero;
     }
 
     private IEnumerator AnimateSplat()
@@ -38,7 +55,7 @@ public class PooSlide : MonoBehaviour
     {
         while (true)
         {
-            transform.position += Vector3.down * _slideSpeed;
+            transform.position += Time.deltaTime * _slideSpeed * Vector3.down;
             yield return new WaitForSeconds(Random.Range(0.3f, 0.6f));
         }
     }
@@ -47,6 +64,11 @@ public class PooSlide : MonoBehaviour
     {
         StopAllCoroutines();
         Seagull.LogPooCam(false);
+        if (ScoreSheet.Tallier == null)
+        {
+            return;
+        }
+
         ScoreSheet.Tallier.TallyThreat(Threat.PoopCleaned);
     }
 }

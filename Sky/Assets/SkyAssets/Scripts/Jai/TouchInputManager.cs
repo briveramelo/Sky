@@ -62,7 +62,7 @@ public class TouchInputManager : Singleton<TouchInputManager>, IFreezable
         foreach (var finger in Input.touches)
         {
             var fingerId = finger.fingerId;
-            var worldTouchSpot = finger.position.PixelsToWorldUnits();
+            var worldTouchSpot = finger.position.PixelsToWorldPosition();
             switch (finger.phase)
             {
                 case TouchPhase.Began:

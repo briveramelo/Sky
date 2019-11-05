@@ -19,7 +19,7 @@ public class Shoebill : Bird
     protected override void Awake()
     {
         base.Awake();
-        _xEdge = Constants.ScreenSizeWorldUnits.x + 0.2f;
+        _xEdge = ScreenSpace.WorldEdge.x + 0.2f;
         _sinPeriodShift = Random.Range(0f, 5f);
         _movingRight = transform.position.x < Constants.JaiTransform.position.x;
         _rigbod.velocity = Constants.SpeedMultiplier * 0.01f * _movingSign * Vector2.right;
@@ -82,16 +82,17 @@ public class Shoebill : Bird
             _birdCollider.enabled = false;//disallow off screen hits
         }
 
-        if (Mathf.Abs(_lastXPosition) > Constants.ScreenSizeWorldUnits.x && Mathf.Abs(pos.x) < Constants.ScreenSizeWorldUnits.x)
+        var worldEdge = ScreenSpace.WorldEdge;
+        if (Mathf.Abs(_lastXPosition) > worldEdge.x && Mathf.Abs(pos.x) < worldEdge.x)
         {
             _birdCollider.enabled = true;
         }
 
-        if (_lastXPosition < -Constants.ScreenSizeWorldUnits.x / 2f && pos.x > -Constants.ScreenSizeWorldUnits.x / 2f)
+        if (_lastXPosition < -worldEdge.x / 2f && pos.x > -worldEdge.x / 2f)
         {
             _rightIsTarget = true;
         }
-        else if (_lastXPosition > Constants.ScreenSizeWorldUnits.x / 2f && pos.x < Constants.ScreenSizeWorldUnits.x / 2f)
+        else if (_lastXPosition > worldEdge.x / 2f && pos.x < worldEdge.x / 2f)
         {
             _rightIsTarget = false;
         }

@@ -90,7 +90,7 @@ public class BabyCrow : Bird
 
     private IEnumerator FlyAway()
     {
-        Vector2 targetPoint = (Constants.ScreenSizeWorldUnits.x + 0.2f) * Vector2.right;
+        Vector2 targetPoint = (ScreenSpace.WorldEdge.x + 0.2f) * Vector2.right;
         
         while (Vector2.Distance(targetPoint, transform.position) > _triggerShiftDistance)
         {

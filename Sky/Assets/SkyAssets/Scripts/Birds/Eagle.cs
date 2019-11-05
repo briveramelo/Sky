@@ -19,15 +19,20 @@ public class Eagle : Bird
     {
         base.Awake();
         _myEagleFriends = _eagleFriends;
+        var screenSizeWorldUnits = ScreenSpace.WorldEdge;
+        var xEdge = screenSizeWorldUnits.x;
+        var yEdge = screenSizeWorldUnits.y;
+
+        var normalizedSize = screenSizeWorldUnits.normalized;
         _startPos = new[]
         {
-            new Vector2(-Constants.ScreenSizeWorldUnits.x, -Constants.ScreenSizeWorldUnits.y) * 1.2f,
-            new Vector2(Constants.ScreenSizeWorldUnits.x, -Constants.ScreenSizeWorldUnits.y) * 1.2f
+            new Vector2(-xEdge, -yEdge) - normalizedSize * 0.2f,
+            new Vector2(xEdge, -yEdge) + new Vector2(normalizedSize.x, - normalizedSize.y) * 0.2f
         };
         _moveDir = new[]
         {
-            Constants.ScreenSizePixels.normalized,
-            new Vector2(-Constants.ScreenSizePixels.x, Constants.ScreenSizePixels.y).normalized,
+            normalizedSize,
+            new Vector2(-normalizedSize.x, normalizedSize.y),
         };
         StartCoroutine(InitiateAttack(1f));
     }
@@ -42,10 +47,11 @@ public class Eagle : Bird
 
     private IEnumerator SweepUp(bool first)
     {
-        var moveSpeed = 5f;
         transform.FaceForward(first);
         transform.position = _startPos[first ? 0 : 1];
-        _rigbod.velocity = Constants.SpeedMultiplier * _moveDir[first ? 0 : 1] * moveSpeed;
+        
+        const float sweepSpeed = 5f/4;
+        _rigbod.velocity = sweepSpeed * _moveDir[first ? 0 : 1];
         _pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle(_moveDir[first ? 0 : 1]);
         yield return new WaitForSeconds(first ? 4f : 6f);
         if (first)
@@ -61,17 +67,18 @@ public class Eagle : Bird
 
     private void Strike()
     {
-        var xStartPoint = 20f;
-        while (Mathf.Abs(xStartPoint) > Constants.ScreenSizeWorldUnits.x)
+        var xStartPoint = Mathf.Infinity;
+        var screenSize = ScreenSpace.WorldEdge;
+        while (Mathf.Abs(xStartPoint) > screenSize.x)
         {
-            xStartPoint = Constants.BalloonCenter.position.x + Random.Range(-Constants.ScreenSizeWorldUnits.x, Constants.ScreenSizeWorldUnits.x) * .15f;
+            xStartPoint = Constants.BalloonCenter.position.x + Random.Range(-screenSize.x, screenSize.x) * .15f;
         }
 
-        var strikeSpeed = 9f;
-        Vector3 newPosition = new Vector2(xStartPoint, Constants.ScreenSizeWorldUnits.y * 1.2f);
+        Vector3 newPosition = new Vector2(xStartPoint, screenSize.y + 0.2f);
         _attackDir = (Constants.BalloonCenter.position - newPosition).normalized;
         transform.position = newPosition;
-        _rigbod.velocity = Constants.SpeedMultiplier * strikeSpeed * _attackDir;
+        const float strikeSpeed = 9f/4;
+        _rigbod.velocity = strikeSpeed * _attackDir;
         transform.FaceForward(_attackDir.x > 0);
         _pixelRotationScript.Angle = ConvertAnglesAndVectors.ConvertVector2IntAngle(_attackDir);
 

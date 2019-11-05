@@ -31,8 +31,8 @@ public class Pauser : Selector
     //used to eat inputs and prevent jai from throwing a spear accidentally
     private void OnTouchWorldBegin(int fingerId, Vector2 touchWorldPosition)
     {
-        var touchCanvasPosition = touchWorldPosition.WorldUnitsToCanvasUnits(_parentCanvas);
-        bool isCloseEnough = Vector2.Distance(touchCanvasPosition, transform.position.WorldUnitsToCanvasUnits(_parentCanvas)) < _clickRadiusCanvUnits;
+        var touchCanvasPosition = touchWorldPosition.WorldPositionToCanvasPosition(_parentCanvas);
+        bool isCloseEnough = Vector2.Distance(touchCanvasPosition, transform.position.WorldPositionToCanvasPosition(_parentCanvas)) < _clickRadiusCanvUnits;
         if (!gameObject.activeInHierarchy || !isCloseEnough || !TouchInputManager.Instance.TryClaimFingerId(fingerId, _pauseName))
         {
             return;
