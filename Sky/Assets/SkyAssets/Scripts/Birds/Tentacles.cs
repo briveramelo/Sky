@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using BRM.EventBrokers;
+using BRM.EventBrokers.Interfaces;
 using GenericFunctions;
 using Random = UnityEngine.Random;
 
@@ -20,16 +22,10 @@ public interface ITipToTentacle
     void PullDownTheKill();
 }
 
-public interface IReleasable
-{
-    void ReleaseJai();
-}
-
-public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IReleasable
+public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle
 {
     public static Tentacles Instance;
     public static IStabbable StabbableTentacle;
-    public static IReleasable Releaser;
 
     [SerializeField] private Transform _parentTran;
     [SerializeField] private TentaclesSensor _tentaclesSensor;
@@ -42,6 +38,9 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
     private const float _descendSpeed = 1.2f;
     private const float _attackSpeed = 1.7f;
     private const float _resetSpeed = 1.45f;
+    
+    private IPublishEvents _eventPublisher = new StaticEventBroker();
+    private IBrokerEvents _eventBroker = new StaticEventBroker();
     
     private IToggleable _jaiSensorToggler;
     private IToggleable _tipToggler;
@@ -83,7 +82,6 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 
         Instance = this;
         StabbableTentacle = this;
-        Releaser = this;
         _tipToggler = _tentaclesTip;
         _jaiSensorToggler = _tentaclesSensor;
         _jaiDetector = _tentaclesSensor;
@@ -96,10 +94,16 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 
     private void Start()
     {
+        _eventBroker.Subscribe<ContinueData>(ReleaseJai);
         _basketEngineFreezable = FindObjectOfType<BasketEngine>();
         var jai = FindObjectOfType<Jai>();
         _jaiFreezable = jai;
         _jaiDeath = jai;
+    }
+
+    protected override void OnDestroy()
+    {
+        _eventBroker.Unsubscribe<ContinueData>(ReleaseJai);
     }
 
     private void FaceTowardBasket(bool toward)
@@ -214,7 +218,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle, IR
 
     #endregion
 
-    void IReleasable.ReleaseJai()
+    private void ReleaseJai(ContinueData data)
     {
         if (_holdingJai)
         {

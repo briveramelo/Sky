@@ -50,7 +50,7 @@ public abstract class Bird : MonoBehaviour, IHurtable
         Destroy(gameObject);
     }
 
-    protected void OnDestroy()
+    protected virtual void OnDestroy()
     {
         if (ScoreSheet.Instance)
         {

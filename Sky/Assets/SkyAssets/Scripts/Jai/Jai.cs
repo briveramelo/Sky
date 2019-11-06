@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using BRM.EventBrokers;
+using BRM.EventBrokers.Interfaces;
 using GenericFunctions;
 
 public enum WeaponType
@@ -27,6 +29,8 @@ public class Jai : MonoBehaviour, IFreezable, IDie
     private const string _jaiName = nameof(Jai);
     private const float _distToThrow = .03f;
 
+    private IBrokerEvents _eventBroker = new StaticEventBroker();
+    
     private Weapon _myWeapon;
     private IUsable _weaponTrigger;
     private WeaponType _myWeaponType;
@@ -46,11 +50,13 @@ public class Jai : MonoBehaviour, IFreezable, IDie
     
     private void Awake()
     {
+        _isAlive = true;
         Constants.JaiTransform = transform;
     }
 
     private void Start()
     {
+        _eventBroker.Subscribe<ContinueData>(OnContinue);
         OrderedTouchEventRegistry.Instance.OnTouchWorldBegin(typeof(Jai), OnTouchWorldBegin, true);
         OrderedTouchEventRegistry.Instance.OnTouchWorldEnd(typeof(Jai), OnTouchWorldEnd, true);
     }
@@ -62,10 +68,16 @@ public class Jai : MonoBehaviour, IFreezable, IDie
             return;
         }
 
+        _eventBroker.Unsubscribe<ContinueData>(OnContinue);
         OrderedTouchEventRegistry.Instance.OnTouchWorldBegin(typeof(Jai), OnTouchWorldBegin, false);
         OrderedTouchEventRegistry.Instance.OnTouchWorldEnd(typeof(Jai), OnTouchWorldEnd, false);
     }
-    
+
+    private void OnContinue(ContinueData data)
+    {
+        Rebirth();
+    }
+
     public void Die()
     {
         _isAlive = false;

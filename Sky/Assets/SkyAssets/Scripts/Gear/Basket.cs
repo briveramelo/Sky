@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using GenericFunctions;
 using System.Linq;
+using BRM.EventBrokers;
+using BRM.EventBrokers.Interfaces;
 using UnityEngine.SceneManagement;
 
 public interface ITentacleToBasket
@@ -32,6 +35,9 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket, ID
     [SerializeField] private AudioClip _invincible, _rebirth;
     [SerializeField] private BasketEngine _basketEngine;
 
+    private IBrokerEvents _eventBroker = new StaticEventBroker();
+    private IPublishEvents _eventPublisher = new StaticEventBroker();
+    
     private Transform _startingParentTransform;
     private List<IBasketToBalloon> _balloons;
     private Vector2[] _relativeBalloonPositions;
@@ -43,6 +49,7 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket, ID
     protected override void Awake()
     {
         base.Awake();
+        _eventBroker.Subscribe<ContinueData>(OnContinue);
         _startingParentTransform = transform.parent;
         TentacleToBasket = this;
         Constants.BalloonCenter = _balloonCenter;
@@ -54,6 +61,16 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket, ID
             _balloons[i].BalloonNumber = i;
             _relativeBalloonPositions[i] = _balloonScripts[i].transform.position - Constants.JaiTransform.position;
         }
+    }
+
+    private void OnDestroy()
+    {
+        _eventBroker.Unsubscribe<ContinueData>(OnContinue);
+    }
+
+    private void OnContinue(ContinueData data)
+    {
+        ((IDie) this).Rebirth();
     }
 
     #region IBalloonToBasket
