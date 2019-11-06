@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using GenericFunctions;
+using Random = UnityEngine.Random;
 
 public class BirdFactory : Singleton<BirdFactory>
 {
@@ -21,6 +24,7 @@ public class BirdFactory : Singleton<BirdFactory>
     [SerializeField] private Transform _birdParentTransform;
     private Dictionary<BirdType, BirdData> _birdTypeData = new Dictionary<BirdType, BirdData>();
     protected override bool _destroyOnLoad => true;
+    private bool _displayBirdButtons;
 
     protected override void Awake()
     {
@@ -70,4 +74,48 @@ public class BirdFactory : Singleton<BirdFactory>
         var bird = birdGameObject.GetComponent<Bird>();
         return bird;
     }
+
+    #if DEBUG
+    private const int _numSimulTouches = 4;
+    private void Update()
+    {
+        var touchPassed = (Input.touchCount == _numSimulTouches && Input.GetTouch(_numSimulTouches - 1).phase == TouchPhase.Began);
+        var keyboardPassed = Input.GetMouseButtonDown(1);
+        if (touchPassed || keyboardPassed)
+        {
+            _displayBirdButtons = !_displayBirdButtons;
+        }
+    }
+
+    private void OnGUI()
+    {
+        if (!_displayBirdButtons)
+        {
+            return;
+        }
+
+        var birdTypes = Enum.GetValues(typeof(BirdType)).Cast<BirdType>().OrderBy(item => item.ToString());
+        
+        foreach (var birdType in birdTypes)
+        {
+            if (birdType == BirdType.All)
+            {
+                continue;
+            }
+            //GUIStyle style = new GUIStyle("button");
+            // or
+            GUIStyle leftAlignedButtonStyle = new GUIStyle(GUI.skin.button)
+            {
+                alignment = TextAnchor.MiddleLeft,
+                fontSize = (int)(5 + 11 * (ScreenSpace.ScreenZoom - 1)),
+                
+            };
+
+            if (GUILayout.Button(birdType.ToString(), leftAlignedButtonStyle))
+            {
+                CreateNextBird(birdType);
+            }
+        }
+    }
+    #endif
 }
