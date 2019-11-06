@@ -13,7 +13,7 @@ public interface IDie
     void Rebirth();
 }
 
-public class BasketEngine : MonoBehaviour, IBumpable, IDie
+public class BasketEngine : MonoBehaviour, IBumpable, IDie, IFreezable
 {
     [SerializeField] private Rigidbody2D _rigbod;
     
@@ -71,5 +71,11 @@ public class BasketEngine : MonoBehaviour, IBumpable, IDie
     void IDie.Rebirth()
     {
         _movingEnabled = true;
+    }
+
+    bool IFreezable.IsFrozen
+    {
+        get => !_movingEnabled;
+        set => _movingEnabled = !value;
     }
 }

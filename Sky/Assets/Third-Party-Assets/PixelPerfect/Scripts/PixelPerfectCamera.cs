@@ -93,9 +93,10 @@ public class PixelPerfectCamera : MonoBehaviour {
 	
 	void CalculateZoomForClosestResolution()
 	{
+		const int unitHeight = 240;
 		var screenSizePixels = ScreenSpace.ScreenSizePixels;
-		float diagonalPixels = Mathf.Sqrt(screenSizePixels.x * screenSizePixels.x + screenSizePixels.y * screenSizePixels.y);
-		cameraZoom = Mathf.CeilToInt(diagonalPixels / 400f);
+		var calcZoom = Mathf.RoundToInt(screenSizePixels.y / unitHeight);
+		cameraZoom = (int)Mathf.Clamp(calcZoom, 1, Mathf.Infinity);
 		
 		return;
 		int possibleHeight=0;

@@ -6,31 +6,13 @@ public static class ScreenSpaceConverter
     private static Vector2 _pixelCenter => ScreenSpace.ScreenSizePixels / 2; //pixels start at bottom left as (0,0)
     private static Vector2 _worldCenter => ScreenSpace.WorldEdge; //world units start at bottom left as (-size.x/2,-size.y/2)
     private static Vector2 _viewportCenter => Vector2.one * 0.5f;
+    private static Vector2 GetCenterCanvasUnits(this Canvas canvas) => canvas.GetSizeCanvasUnits() / 2f;
     
     //canvas units start at bottom left as (0,0)
-    private static Vector2 GetCenterCanvasUnits(this Canvas canvas)
-    {
-        return canvas.GetSizeCanvasUnits() / 2f;
-    }
-    
-    private static float _pixelsPerWorldUnit
-    {
-        get
-        {
-            var pixelsPerWorldUnitsByAxis = ScreenSpace.ScreenSizePixels / ScreenSpace.ScreenSizeWorldUnits;
-            return (pixelsPerWorldUnitsByAxis.x + pixelsPerWorldUnitsByAxis.y) / 2f;
-        }
-    }
-    private static float GetPixelsPerCanvasUnit(this Canvas canvas)
-    {
-        var pixelsPerCanvasUnitsByAxis = ScreenSpace.ScreenSizePixels / canvas.GetSizeCanvasUnits(); 
-        return (pixelsPerCanvasUnitsByAxis.x + pixelsPerCanvasUnitsByAxis.y) / 2f;
-    }
-    private static float GetWorldUnitsPerCanvasUnit(this Canvas canvas)
-    {
-        var worldUnitsPerCanvasUnitsByAxis = ScreenSpace.ScreenSizeWorldUnits / canvas.GetSizeCanvasUnits(); 
-        return (worldUnitsPerCanvasUnitsByAxis.x + worldUnitsPerCanvasUnitsByAxis.y) / 2f;
-    }
+    private static Vector2 _pixelsPerWorldUnit => ScreenSpace.ScreenSizePixels / ScreenSpace.ScreenSizeWorldUnits;
+    private static Vector2 GetWorldUnitsPerCanvasUnit(this Canvas canvas) => ScreenSpace.ScreenSizeWorldUnits / canvas.GetSizeCanvasUnits();
+    private static Vector2 GetPixelsPerCanvasUnit(this Canvas canvas) => ScreenSpace.ScreenSizePixels / canvas.GetSizeCanvasUnits();
+    private static Vector2 GetSizeCanvasUnits(this Canvas canvas) => (canvas.transform as RectTransform).sizeDelta / 2f;
     #endregion
     
     #region Pixel<->Viewport
@@ -108,7 +90,7 @@ public static class ScreenSpaceConverter
     #endregion
 
     #region Pixel<->World
-    public static float PixelsToWorldUnits(this float pixels)
+    public static Vector2 PixelsToWorldUnits(this Vector2 pixels)
     {
         return pixels / _pixelsPerWorldUnit;
     }
@@ -121,9 +103,9 @@ public static class ScreenSpaceConverter
         return ((Vector2)pixelPosition - _pixelCenter) / _pixelsPerWorldUnit;
     }
 
-    public static float WorldUnitsToPixels(this float worldUnits)
+    public static Vector2 WorldSizeToPixels(this Vector2 worldSize)
     {
-        return worldUnits * _pixelsPerWorldUnit;
+        return worldSize * _pixelsPerWorldUnit;
     }
     public static Vector2 WorldPositionToPixels(this Vector2 worldPosition)
     {
@@ -131,12 +113,12 @@ public static class ScreenSpaceConverter
     }
     public static Vector2 WorldPositionToPixels(this Vector3 worldPosition)
     {
-        return (Vector2)worldPosition * _pixelsPerWorldUnit + _pixelCenter;
+        return worldPosition * _pixelsPerWorldUnit + _pixelCenter;
     }
     #endregion
 
     #region Canvas<->World
-    public static float CanvasUnitsToWorldUnits(this float canvasUnits, Canvas canvas)
+    public static Vector2 CanvasUnitsToWorldUnits(this Vector2 canvasUnits, Canvas canvas)
     {
         return canvasUnits * canvas.GetWorldUnitsPerCanvasUnit();
     }
@@ -149,7 +131,7 @@ public static class ScreenSpaceConverter
         return ((Vector2)canvasPosition - canvas.GetCenterCanvasUnits()) * canvas.GetWorldUnitsPerCanvasUnit();
     }
 
-    public static float WorldUnitsToCanvasUnits(this float worldUnits, Canvas canvas)
+    public static Vector2 WorldUnitsToCanvasUnits(this Vector2 worldUnits, Canvas canvas)
     {
         return worldUnits / canvas.GetWorldUnitsPerCanvasUnit();
     }
@@ -164,7 +146,7 @@ public static class ScreenSpaceConverter
     #endregion
 
     #region Pixel<->Canvas
-    public static float PixelsToCanvasUnits(this float pixels, Canvas canvas)
+    public static Vector2 PixelsToCanvasUnits(this Vector2 pixels, Canvas canvas)
     {
         return pixels / canvas.GetPixelsPerCanvasUnit();
     }
@@ -177,7 +159,7 @@ public static class ScreenSpaceConverter
         return pixelPosition / canvas.GetPixelsPerCanvasUnit();
     }
 
-    public static float CanvasUnitsToPixels(this float canvasUnits, Canvas canvas)
+    public static Vector2 CanvasUnitsToPixels(this Vector2 canvasUnits, Canvas canvas)
     {
         return canvasUnits * canvas.GetPixelsPerCanvasUnit();
     }
@@ -190,10 +172,4 @@ public static class ScreenSpaceConverter
         return canvasPosition * canvas.GetPixelsPerCanvasUnit();
     }
     #endregion
-
-
-    private static Vector2 GetSizeCanvasUnits(this Canvas canvas)
-    {
-        return (canvas.transform as RectTransform).sizeDelta / 2f;
-    }
 }

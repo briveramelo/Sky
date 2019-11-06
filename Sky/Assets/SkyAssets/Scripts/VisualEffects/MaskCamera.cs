@@ -106,7 +106,7 @@ public class MaskCamera : MonoBehaviour
     private Vector2 GetRenderHoleSize()
     {
         const float zoomScalar = .16f/2;
-        const float addend = 70f-zoomScalar;
+        const float addend = 120f-zoomScalar;
         const float scalar = 1.5f;
         var holeSizeScaled = scalar * (addend + zoomScalar * ScreenSpace.ScreenZoom) * (Vector2.one / RenderSize);
         return holeSizeScaled;

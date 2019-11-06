@@ -8,6 +8,11 @@ public class BirdFactoryEditor : Editor
 {
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
+        if (!Application.isPlaying)
+        {
+            return;
+        }
+
         serializedObject.Update();
         var birdTypes = Enum.GetValues(typeof(BirdType)).Cast<BirdType>().OrderBy(item => item.ToString());
         

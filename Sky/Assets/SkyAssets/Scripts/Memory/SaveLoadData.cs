@@ -8,23 +8,36 @@ public class SaveLoadData : MonoBehaviour
 {
     private DataSave _currentDataSave = new DataSave();
     private const int _maxScores = 5;
-
-    public DataSave CopyCurrentDataSave()
-    {
-        return new DataSave(_currentDataSave);
-    }
+    private string _folderName => $"{Application.dataPath}/SaveData";
+    private string _fileName => "savefile.dat";
+    private string _filePath => $"{_folderName}/{_fileName}";
+    public DataSave CopyCurrentDataSave() => new DataSave(_currentDataSave);
 
     private void Awake()
     {
         Load();
     }
+    
+    private void Save()
+    {
+        var bf = new BinaryFormatter();
+        if (!Directory.Exists(_folderName))
+        {
+            Directory.CreateDirectory(_folderName);
+        }
+
+        var fileStream = File.Create(_filePath);
+
+        bf.Serialize(fileStream, new DataSave(_currentDataSave));
+        fileStream.Close();
+    }
 
     private void Load()
     {
-        if (File.Exists(Application.dataPath + "/SaveData/savefile.dat"))
+        if (File.Exists(_filePath))
         {
             var bf = new BinaryFormatter();
-            var fileStream = File.Open(Application.dataPath + "/SaveData/savefile.dat", FileMode.Open);
+            var fileStream = File.Open(_filePath, FileMode.Open);
             _currentDataSave = new DataSave((DataSave) bf.Deserialize(fileStream));
             fileStream.Close();
         }
@@ -66,15 +79,6 @@ public class SaveLoadData : MonoBehaviour
         }
 
         Save();
-    }
-
-    private void Save()
-    {
-        var bf = new BinaryFormatter();
-        var fileStream = File.Create(Application.dataPath + "/SaveData/savefile.dat");
-
-        bf.Serialize(fileStream, new DataSave(_currentDataSave));
-        fileStream.Close();
     }
 }
 

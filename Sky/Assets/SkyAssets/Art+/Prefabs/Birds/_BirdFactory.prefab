@@ -70,4 +70,6 @@ MonoBehaviour:
     Prefab: {fileID: 175384, guid: 6fac294ad61874da699aad66017bb75d, type: 3}
   - BirdType: 12
     Prefab: {fileID: 156092, guid: 9919c17745d5e44b09e49882610b405e, type: 3}
+  - BirdType: 7
+    Prefab: {fileID: 136588, guid: b2d924430ecf742f8a8455291b231b25, type: 3}
   _birdParentTransform: {fileID: 7961179997133360878}

@@ -24,6 +24,23 @@ using UnityEditor;
         }
     }
 
+    public static class Delay
+    {
+        public static IEnumerator DelayAction(Action onComplete, float time2Wait)
+        {
+            yield return new WaitForSeconds(time2Wait);
+            onComplete?.Invoke();
+        }
+        public static IEnumerator DelayAction(Action onComplete, int numFrames)
+        {
+            for (int i = 0; i < numFrames; i++)
+            {
+                yield return null;
+            }
+            onComplete?.Invoke();
+        }
+    }
+
     public static class Constants
     {
         public static Transform JaiTransform;

@@ -16,6 +16,7 @@ public class ContinueSelector : Selector
             Tentacles.Releaser.ReleaseJai();
         }
 
-        Basket.Instance.ComeBackToLife();
+        (Basket.Instance as IDie).Rebirth();
+        (FindObjectOfType<Jai>() as IDie).Rebirth();
     }
 }

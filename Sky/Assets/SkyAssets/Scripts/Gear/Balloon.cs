@@ -24,9 +24,11 @@ public class Balloon : MonoBehaviour, IBasketToBalloon
     [SerializeField] private List<SpriteRenderer> _mySprites;
     [SerializeField] private AudioClip _pop;
 
-    private int _balloonNumber;
     private const float _moveSpeed = 0.75f;
     private const float _popTime = 30f;
+    
+    private Coroutine _floatUpRoutine;
+    private int _balloonNumber;
 
     private void Awake()
     {
@@ -37,7 +39,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon
         {
             _boundsCollider.enabled = false;
             StartCoroutine(((IBasketToBalloon) this).BecomeInvincible());
-            StartCoroutine(FloatUp());
+            _floatUpRoutine = StartCoroutine(FloatUp());
         }
     }
 
@@ -128,7 +130,10 @@ public class Balloon : MonoBehaviour, IBasketToBalloon
             Handheld.Vibrate();
             GameClock.Instance.SlowTime(.5f, .75f);
             GameCamera.Instance.ShakeTheCamera();
-            StopAllCoroutines(); //specifically, stop the balloon from floating up
+            if (_floatUpRoutine!=null)
+            {
+                StopCoroutine(_floatUpRoutine);
+            }
             transform.SetParent(null);
         }
         else

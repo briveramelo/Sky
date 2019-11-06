@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 public interface ITentacleToBasket
 {
     void KnockDown(float downForce);
-    void LoseAllBalloons();
     void AttachToTentacles(Transform tentaclesTransform);
     void DetachFromTentacles();
 }
@@ -18,7 +17,7 @@ public interface IBalloonToBasket
     void ReportPoppedBalloon(IBasketToBalloon poppedBalloon);
 }
 
-public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket
+public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket, IDie
 {
     public static ITentacleToBasket TentacleToBasket;
 
@@ -33,6 +32,7 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket
     [SerializeField] private AudioClip _invincible, _rebirth;
     [SerializeField] private BasketEngine _basketEngine;
 
+    private Transform _startingParentTransform;
     private List<IBasketToBalloon> _balloons;
     private Vector2[] _relativeBalloonPositions;
     private int _continuesRemaining = 1;
@@ -43,6 +43,7 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket
     protected override void Awake()
     {
         base.Awake();
+        _startingParentTransform = transform.parent;
         TentacleToBasket = this;
         Constants.BalloonCenter = _balloonCenter;
         Constants.BasketTransform = _basketCenter;
@@ -140,18 +141,6 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket
         _rigbod.AddForce(Vector2.down * downForce);
     }
 
-    void ITentacleToBasket.LoseAllBalloons()
-    {
-        _rigbod.velocity = Vector2.zero;
-        for (var i = 0; i < _balloons.Count; i++)
-        {
-            _balloons[i].DetachFromBasket();
-        }
-
-        _balloons.Clear();
-        StartCoroutine(FallToDeath());
-    }
-
     void ITentacleToBasket.AttachToTentacles(Transform tentaclesTransform)
     {
         _rigbod.velocity = Vector2.zero;
@@ -163,7 +152,7 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket
 
     void ITentacleToBasket.DetachFromTentacles()
     {
-        transform.SetParent(null);
+        transform.SetParent(_startingParentTransform);
         transform.localScale = Vector3.one;
         _basketCollider.enabled = true;
         _rigbod.isKinematic = false;
@@ -198,7 +187,24 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket
         yield return null;
     }
 
-    public void ComeBackToLife()
+    private void PlayRebirthSounds()
+    {
+        AudioManager.PlayAudio(_rebirth);
+    }
+
+    void IDie.Die()
+    {
+        _rigbod.velocity = Vector2.zero;
+        for (var i = 0; i < _balloons.Count; i++)
+        {
+            _balloons[i].DetachFromBasket();
+        }
+
+        _balloons.Clear();
+        StartCoroutine(FallToDeath());
+    }
+
+    void IDie.Rebirth()
     {
         _rigbod.gravityScale = 0;
         ((IDie) _basketEngine).Rebirth();
@@ -213,10 +219,5 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket
         }
 
         GrantBalloonInvincibility();
-    }
-
-    private void PlayRebirthSounds()
-    {
-        AudioManager.PlayAudio(_rebirth);
     }
 }

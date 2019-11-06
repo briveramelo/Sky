@@ -11,7 +11,7 @@ public enum WeaponType
     None = 3
 }
 
-public class Jai : MonoBehaviour, IFreezable
+public class Jai : MonoBehaviour, IFreezable, IDie
 {
     private static class Throw
     {
@@ -33,15 +33,17 @@ public class Jai : MonoBehaviour, IFreezable
 
     private Vector2 _startingTouchPoint;
     private int _currentFingerId = Constants.UnusedFingerId;
-    private bool _attacking, _stabbing, _beingHeld;
-    
+    private bool _attacking;
+    private bool _stabbing;
+    private bool _isFrozen;
+    private bool _isAlive;
 
     bool IFreezable.IsFrozen
     {
-        get => _beingHeld;
-        set => _beingHeld = value;
+        get => _isFrozen;
+        set => _isFrozen = value;
     }
-
+    
     private void Awake()
     {
         Constants.JaiTransform = transform;
@@ -62,6 +64,18 @@ public class Jai : MonoBehaviour, IFreezable
 
         OrderedTouchEventRegistry.Instance.OnTouchWorldBegin(typeof(Jai), OnTouchWorldBegin, false);
         OrderedTouchEventRegistry.Instance.OnTouchWorldEnd(typeof(Jai), OnTouchWorldEnd, false);
+    }
+    
+    public void Die()
+    {
+        _isAlive = false;
+        _isFrozen = true;
+    }
+
+    public void Rebirth()
+    {
+        _isAlive = true;
+        _isFrozen = false;
     }
 
     public IEnumerator CollectNewWeapon(ICollectable collectableWeapon)
@@ -105,13 +119,13 @@ public class Jai : MonoBehaviour, IFreezable
 
     private void OnTouchWorldBegin(int fingerId, Vector2 worldPosition)
     {
-        if (Pauser.Paused || !TouchInputManager.Instance.TryClaimFingerId(fingerId, _jaiName))
+        if (Pauser.Paused || !TouchInputManager.Instance.TryClaimFingerId(fingerId, _jaiName) && !_isAlive)
         {
             return;
         }
 
         _currentFingerId = fingerId;
-        if (!_beingHeld)
+        if (!_isFrozen)
         {
             _startingTouchPoint = worldPosition;
         }
@@ -123,7 +137,7 @@ public class Jai : MonoBehaviour, IFreezable
 
     private void OnTouchWorldEnd(int fingerId, Vector2 worldPosition)
     {
-        if (Pauser.Paused || fingerId != _currentFingerId)
+        if (Pauser.Paused || fingerId != _currentFingerId || _isFrozen || !_isAlive)
         {
             return;
         }

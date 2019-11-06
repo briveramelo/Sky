@@ -15,34 +15,35 @@ public class Pelican : Bird
 
     protected override BirdType MyBirdType => BirdType.Pelican;
     private int _currentTarIn;
+    private bool _isDiving;
+    private int _sideMultiplier;
+    private float _moveSpeed = 2f;
     private Vector3[] _setPositions;
 
-    private Vector3 TargetPosition => Constants.BalloonCenter.position + _sideMultiplier * _setPositions[_currentTarIn].x * Vector3.right + Vector3.up * _setPositions[_currentTarIn].y;
+    private Vector3 TargetPosition => Constants.BalloonCenter.position + new Vector3(_sideMultiplier * _setPositions[_currentTarIn].x, _setPositions[_currentTarIn].y);
 
     protected override void Awake()
     {
         _pelicanAnimator.SetInteger(Constants.AnimState, Random.Range(0, 2));
         base.Awake();
-        float yAbove = 2;
-        var yBelow = -2.2f;
+        float yDistAbove = 2/4f;
+        var yDistBelow = -2.2f/4f;
         var resolution = 0.1f;
-        var totalPoints = (int) ((yAbove - yBelow) / resolution);
+        var totalPoints = (int) ((yDistAbove - yDistBelow) / resolution);
         _setPositions = new Vector3[totalPoints];
         for (var i = 0; i < totalPoints; i++)
         {
             float iFloat = i;
-            var xPoint = -1 * Mathf.Cos(2f * Mathf.PI * (iFloat / totalPoints)) + 1f;
+            var xPoint = -1f * Mathf.Cos(2f * Mathf.PI * (iFloat / totalPoints)) + 1f;
+            xPoint *= 0.25f;
             var yPoint = -2.1f * Mathf.Cos(2f * Mathf.PI * (iFloat / (totalPoints * 2)));
+            yPoint *= 0.25f;
             var thisVector = new Vector3(xPoint, yPoint, 0f);
             _setPositions[i] = thisVector;
         }
 
         StartCoroutine(SwoopAround());
     }
-
-    private bool _isDiving;
-    private int _sideMultiplier;
-    private float _moveSpeed = 2f;
 
     //Move from one checkpoint to another
     private IEnumerator SwoopAround()
@@ -57,15 +58,10 @@ public class Pelican : Bird
             var xFromJai = Constants.JaiTransform.position.x - transform.position.x;
             transform.FaceForward(xFromJai > 0);
 
-            if (Vector3.Distance(transform.position, TargetPosition) < 0.2f)
+            if (Vector3.Distance(transform.position, TargetPosition) < 0.03f)//todo: determine better feel for transitioning between targets when Jai is moving
             {
                 _currentTarIn++;
-                if (_pelicanAnimator.GetInteger(Constants.AnimState) == PelAnimState.Flapping && _setPositions[_currentTarIn].y > 1.2f)
-                {
-                    StartCoroutine(TriggerDiveAnimation());
-                }
-
-                if (_currentTarIn > _setPositions.Length)
+                if (_currentTarIn >= _setPositions.Length)
                 {
                     break;
                 }
@@ -77,23 +73,6 @@ public class Pelican : Bird
         StartCoroutine(DiveBomb(_sideMultiplier < 0));
     }
 
-    private IEnumerator TriggerDiveAnimation()
-    {
-        float timeSinceStartedDiving = 0;
-        _pelicanAnimator.SetInteger(Constants.AnimState, PelAnimState.Diving);
-        timeSinceStartedDiving = Time.time;
-        while (true)
-        {
-            if (Time.time - timeSinceStartedDiving > 1f)
-            {
-                _currentTarIn = _setPositions.Length + 1;
-                yield break;
-            }
-
-            yield return new WaitForEndOfFrame();
-        }
-    }
-
     private Vector2 GetVelocity()
     {
         return Constants.SpeedMultiplier * _moveSpeed * (TargetPosition - transform.position).normalized;
@@ -102,11 +81,11 @@ public class Pelican : Bird
     //plunge to (un)certain balloon-popping glory
     private IEnumerator DiveBomb(bool goingRight)
     {
-        _pelicanAnimator.SetInteger(Constants.AnimState, PelAnimState.Down);
+        _pelicanAnimator.SetInteger(Constants.AnimState, PelAnimState.Diving);
         var diveAngle = goingRight ? -80f : 260f;
         _rigbod.velocity = Constants.SpeedMultiplier * 6f * ConvertAnglesAndVectors.ConvertAngleToVector2(diveAngle);
         transform.FaceForward(_rigbod.velocity.x > 0);
-        while (transform.position.y > -ScreenSpace.WorldEdge.y - 1f)
+        while (transform.position.y > -ScreenSpace.WorldEdge.y - 0.15f)
         {
             yield return null;
         }

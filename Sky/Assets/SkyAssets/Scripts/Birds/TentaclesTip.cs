@@ -18,6 +18,6 @@ public class TentaclesTip : MonoBehaviour, IToggleable
 
     private void OnTriggerEnter2D()
     {
-        StartCoroutine(_tentacles.PullDownTheKill());
+        _tentacles.PullDownTheKill();
     }
 }
