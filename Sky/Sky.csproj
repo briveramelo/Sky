@@ -104,6 +104,12 @@
      <Compile Include="Assets\SkyAssets\Scripts\Memory\EndlessScore.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Memory\SaveLoadData.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Memory\StoryScore.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Universal\DebugTools\BirdFactoryGui.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Universal\DebugTools\DebugGui.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Universal\DebugTools\EffectFactoryGui.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Universal\DebugTools\RootMenuGui.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Universal\DebugTools\SceneLoaderGui.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Universal\DebugTools\SubDebugGui.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\EventData.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\AudioManager.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\BirdFactory.cs" />

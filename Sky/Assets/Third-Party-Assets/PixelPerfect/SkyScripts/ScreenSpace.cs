@@ -36,4 +36,39 @@ public static class ScreenSpace
     public static float ScreenZoom => _pixelCam.Value.cameraZoom;
 
     private static Lazy<PixelPerfectCamera> _pixelCam = new Lazy<PixelPerfectCamera>(Object.FindObjectOfType<PixelPerfectCamera>);
+    
+    public static GUIStyle LeftAlignedButtonStyle => new GUIStyle(GUI.skin.button)
+    {
+        alignment = TextAnchor.MiddleLeft,
+        fontSize = ScreenAdjustedFontSize,
+        wordWrap = false,
+        padding = _padding
+    };
+    public static GUIStyle RightAlignedButtonStyle => new GUIStyle(GUI.skin.button)
+    {
+        alignment = TextAnchor.MiddleRight,
+        fontSize = ScreenAdjustedFontSize,
+        padding = _padding
+    };
+    public static GUIStyle CenterAlignedButtonStyle => new GUIStyle(GUI.skin.button)
+    {
+        alignment = TextAnchor.MiddleCenter,
+        fontSize = ScreenAdjustedFontSize,
+        padding = _padding
+    };
+
+    public static GUIStyle CenterAlignedLabelStyle => new GUIStyle(GUI.skin.label)
+    {
+        fontSize = ScreenAdjustedFontSize,
+        alignment = TextAnchor.MiddleCenter,
+    };
+    public static GUIStyle LeftAlignedLabelStyle => new GUIStyle(GUI.skin.label)
+    {
+        fontSize = ScreenAdjustedFontSize,
+        alignment = TextAnchor.MiddleCenter,
+    };
+
+
+    public static int ScreenAdjustedFontSize => (int) (5 + 11 * (ScreenZoom - 1));
+    private static RectOffset _padding => new RectOffset(1, 1, 1, 1);
 }
