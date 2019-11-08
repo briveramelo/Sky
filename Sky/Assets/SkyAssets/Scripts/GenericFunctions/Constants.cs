@@ -3,11 +3,8 @@ using UnityEngine;
 using System.Collections;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
  
- namespace GenericFunctions
+namespace GenericFunctions
 {
     public static class Bool
     {
@@ -47,8 +44,6 @@ using UnityEditor;
         public static Transform BalloonCenter;
         public static Transform BasketTransform;
         public static Collider2D WorldCollider;
-        public static float PositionFrameSpeed => Time.deltaTime * TargetFramesPerSecond;
-        public const float TargetFramesPerSecond = 60;
         public const int UnusedFingerId = -1;
         private static int _targetPooInt;
 
@@ -71,8 +66,6 @@ using UnityEditor;
             localScale = new Vector3((forward ? 1 : -1) * Mathf.Abs(localScale.x), localScale.y, localScale.z);
             trans.localScale = localScale;
         }
-
-        public static Vector2 WorldPadding => new Vector2(1f, 1f);
 
         public static float SpeedMultiplier => 0.25f;//accounts
 

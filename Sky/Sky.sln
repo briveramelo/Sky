@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelArtRotation", "PixelAr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayModeTestAssembly", "PlayModeTestAssembly.csproj", "{631B11BE-B174-6149-A3CF-71D0E521471E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditorTools", "EditorTools.csproj", "{4FC9DC4B-85C8-4D0F-8099-024D55E26EEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{631B11BE-B174-6149-A3CF-71D0E521471E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{631B11BE-B174-6149-A3CF-71D0E521471E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{631B11BE-B174-6149-A3CF-71D0E521471E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FC9DC4B-85C8-4D0F-8099-024D55E26EEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FC9DC4B-85C8-4D0F-8099-024D55E26EEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FC9DC4B-85C8-4D0F-8099-024D55E26EEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FC9DC4B-85C8-4D0F-8099-024D55E26EEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/SkyAssets/Scenes/Build Scenes/Scores.unity
     guid: 952de7598e7a9244e9bcfaa34cbe28bc
+  - enabled: 1
+    path: Assets/SkyAssets/Scenes/Test Scenes/BirdCage.unity
+    guid: 902c4f5d1b6748248939986931188014
   m_configObjects: {}

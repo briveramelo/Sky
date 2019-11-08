@@ -11,8 +11,14 @@ public class GameClock : Singleton<GameClock>
 
     private IEnumerator Wait4RealSeconds(float slowDuration, float timeScale)
     {
-        Time.timeScale = timeScale;
+        TimeScale = timeScale;
         yield return new WaitForSeconds(slowDuration);
-        Time.timeScale = 1f;
+        TimeScale = 1f;
+    }
+
+    public static float TimeScale
+    {
+        get => Time.timeScale;
+        set => Time.timeScale = value;
     }
 }
