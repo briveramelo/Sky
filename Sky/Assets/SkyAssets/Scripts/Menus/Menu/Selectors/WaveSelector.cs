@@ -10,6 +10,7 @@ public static class Scenes
     public const string Story = "Story";
     public const string Endless = "Endless";
     public const string Scores = "Scores";
+    public const string BirdCage = "BirdCage";
 
     private static readonly List<string> MenuScenes = new List<string>
     {
@@ -20,6 +21,7 @@ public static class Scenes
     {
         Story,
         Endless,
+        BirdCage
     };
 
     public static bool IsMenu(string sceneName) => MenuScenes.Contains(sceneName);

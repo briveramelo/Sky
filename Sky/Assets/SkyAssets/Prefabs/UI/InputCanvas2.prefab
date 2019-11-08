@@ -47,7 +47,7 @@ MonoBehaviour:
   _continueMenu: {fileID: 3979010243471699559}
   _joystick: {fileID: 3979010245092689406}
   _pauseButtonGroup: {fileID: 3979010243884140931}
-  _inputManager: {fileID: 0}
+  _inputManager: {fileID: 3979010243131922267}
 --- !u!1 &3979010243131922258
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,7 +643,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 40, y: 40}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3979010243656502208
 MonoBehaviour:
@@ -738,7 +738,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -0.000015258789, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &3979010243884140930
@@ -755,7 +755,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 3979010243884140933}
   _buttonPress: {fileID: 8300000, guid: b357caddb32f63643880763c4f33680d, type: 3}
-  _parentCanvas: {fileID: 0}
+  _parentCanvas: {fileID: 3979010243131922263}
   _joystick: {fileID: 3979010245092689406}
   _pauseMenu: {fileID: 3979010245148086763}
   _clickRadiusCanvUnits: 15
@@ -1630,7 +1630,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 45, y: 40}
-  m_SizeDelta: {x: 64, y: 64}
+  m_SizeDelta: {x: 32, y: 32}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &3979010245092689282
 MonoBehaviour:
@@ -1644,7 +1644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f25540c9e9e5847e0b4c18ca03ff0d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parentCanvas: {fileID: 0}
+  _parentCanvas: {fileID: 3979010243131922263}
   _joystickView: {fileID: 3979010243656500287}
 --- !u!114 &3979010245092689283
 MonoBehaviour:

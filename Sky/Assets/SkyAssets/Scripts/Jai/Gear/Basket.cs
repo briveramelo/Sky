@@ -108,7 +108,7 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket, ID
         AudioManager.PlayAudio(_invincible);
         if (_balloons.Count >= 1)
         {
-            AudioManager.PlayReadyDelayed(_invincible.length);
+            AudioManager.PlayDelayed(_invincible.length);
         }
     }
 

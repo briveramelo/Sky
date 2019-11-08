@@ -1,12 +1,14 @@
-﻿using UnityEngine;
+﻿using BRM.EventBrokers;
+using BRM.EventBrokers.Interfaces;
+using UnityEngine;
 
 public class WeaponCollector : MonoBehaviour
 {
-    [SerializeField] private Jai _myJai;
+    private IPublishEvents _eventPublisher = new StaticEventBroker();
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        StartCoroutine(_myJai.CollectNewWeapon(col.GetComponent<ICollectable>()));
-        FindObjectOfType<WaveUi>().GetComponent<IWaveUi>().GrabbedWeapon();
+        var collectable = col.GetComponent<ICollectable>();
+        _eventPublisher.Publish(new WeaponGrabbedData{Collectable = collectable});
     }
 }

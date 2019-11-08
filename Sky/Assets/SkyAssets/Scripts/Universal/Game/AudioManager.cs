@@ -3,30 +3,22 @@ using System.Collections;
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] private AudioSource _myAudioSource;
-    private static AudioSource MyAudioSource;
+    [SerializeField] private AudioSource _audioSource;
+    
+    private static AudioSource _myAudioSource;
 
     private void Awake()
     {
-        if (MyAudioSource == null)
-        {
-            MyAudioSource = _myAudioSource;
-        }
+        _myAudioSource = _audioSource;
     }
 
     public static void PlayAudio(AudioClip audioClip)
     {
-        MyAudioSource.PlayOneShot(audioClip);
+        _myAudioSource.PlayOneShot(audioClip);
     }
 
-    public static void PlayReadyDelayed(float delay)
+    public static void PlayDelayed(float delay)
     {
-        MyAudioSource.PlayDelayed(delay);
-    }
-
-    public static IEnumerator PlayDelayedAudio(AudioClip audioClip, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        MyAudioSource.PlayOneShot(audioClip);
+        _myAudioSource.PlayDelayed(delay);
     }
 }

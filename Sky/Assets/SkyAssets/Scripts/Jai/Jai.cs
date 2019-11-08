@@ -57,6 +57,7 @@ public class Jai : MonoBehaviour, IFreezable, IDie
     private void Start()
     {
         _eventBroker.Subscribe<ContinueData>(OnContinue);
+        _eventBroker.Subscribe<WeaponGrabbedData>(OnCollectWeapon);
         OrderedTouchEventRegistry.Instance.OnTouchWorldBegin(typeof(Jai), OnTouchWorldBegin, true);
         OrderedTouchEventRegistry.Instance.OnTouchWorldEnd(typeof(Jai), OnTouchWorldEnd, true);
     }
@@ -69,6 +70,7 @@ public class Jai : MonoBehaviour, IFreezable, IDie
         }
 
         _eventBroker.Unsubscribe<ContinueData>(OnContinue);
+        _eventBroker.Unsubscribe<WeaponGrabbedData>(OnCollectWeapon);
         OrderedTouchEventRegistry.Instance.OnTouchWorldBegin(typeof(Jai), OnTouchWorldBegin, false);
         OrderedTouchEventRegistry.Instance.OnTouchWorldEnd(typeof(Jai), OnTouchWorldEnd, false);
     }
@@ -90,23 +92,25 @@ public class Jai : MonoBehaviour, IFreezable, IDie
         _isFrozen = false;
     }
 
-    public IEnumerator CollectNewWeapon(ICollectable collectableWeapon)
+    private void OnCollectWeapon(WeaponGrabbedData data)
     {
-        _myWeaponType = collectableWeapon.GetCollected();
+        _myWeaponType = data.Collectable.Collect();
         GenerateNewWeapon(_myWeaponType);
 
         switch (_myWeaponType)
         {
-            case WeaponType.None:
-                break;
             case WeaponType.Spear:
-                yield return StartCoroutine(AnimateCollectSpear());
+                StartCoroutine(AnimateCollectSpear());
                 break;
             case WeaponType.Lightning:
-                yield return StartCoroutine(AnimateCollectLightning());
+                StartCoroutine(AnimateCollectLightning());
                 break;
             case WeaponType.Flail:
-                yield return StartCoroutine(AnimateCollectFlail());
+                StartCoroutine(AnimateCollectFlail());
+                break;
+            case WeaponType.None:
+            default:
+                Debug.LogError("unknown weapon type collected: " + _myWeaponType);
                 break;
         }
     }

@@ -12,7 +12,6 @@ public interface IWaveUi
     IEnumerator AnimateWaveEnd(WaveName waveName);
     IEnumerator AnimateStoryStart();
     IEnumerator AnimateStoryEnd();
-    void GrabbedWeapon();
 }
 public class WaveUi : MonoBehaviour, IWaveUi
 {
@@ -37,6 +36,7 @@ public class WaveUi : MonoBehaviour, IWaveUi
         public const int GetOut = 2;
     }
 
+    [SerializeField] private GameObject _pointsParent;
     [SerializeField] private TextMeshProUGUI _title;
     [SerializeField] private TextMeshProUGUI _subTitle;
     [SerializeField] private TextMeshProUGUI _pointTotal;
@@ -48,8 +48,7 @@ public class WaveUi : MonoBehaviour, IWaveUi
     [SerializeField] private Animator _streakA;
     [SerializeField] private Animator _comboA;
     [SerializeField] private Animator _scoreBackDrop;
-    [SerializeField] private GameObject _joystickHelp, _swipeHelp;
-
+    
     private bool _hasWeapon;
     private List<Tip> _newTips = System.Enum.GetValues(typeof(Tip)).Cast<Tip>().ToList();
 
@@ -67,11 +66,9 @@ public class WaveUi : MonoBehaviour, IWaveUi
 
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == Scenes.Menu)
-        {
-            StopAllCoroutines();
-            ClearText();
-        }
+        StopAllCoroutines();
+        ClearText();
+        _pointsParent.SetActive(false);
     }
 
     private void ClearText()
@@ -82,40 +79,13 @@ public class WaveUi : MonoBehaviour, IWaveUi
         _pointTotal.text = "";
         _streak.text = "";
         _combo.text = "";
-        _joystickHelp.SetActive(false);
-        _swipeHelp.SetActive(false);
     }
 
     #endregion
 
     #region Animate Story Start
 
-    void IWaveUi.GrabbedWeapon()
-    {
-        _hasWeapon = true;
-    }
-
-    IEnumerator IWaveUi.AnimateStoryStart()
-    {
-        if (!_hasWeapon)
-        {
-            yield return new WaitForSeconds(1f);
-            yield return ShowHelpTip(activate => _joystickHelp.SetActive(activate));
-            while (!_hasWeapon)
-            {
-                yield return null;
-            }
-
-            yield return ShowHelpTip(activate => _swipeHelp.SetActive(activate));
-        }
-    }
-
-    private IEnumerator ShowHelpTip(System.Action<bool> lambda)
-    {
-        lambda(true);
-        yield return new WaitForSeconds(5.5f);
-        lambda(false);
-    }
+    
 
     #endregion
 
@@ -183,13 +153,17 @@ public class WaveUi : MonoBehaviour, IWaveUi
 
     public IEnumerator DisplayPoints(bool isWaveScore)
     {
-        var scoretype = isWaveScore ? "WAVE" : "TOTAL";
-        var pointTotalPrefix = scoretype + " SCORE: ";
-        _pointTotal.text = pointTotalPrefix + ScoreSheet.Reporter.GetScore(ScoreType.Total, isWaveScore, BirdType.All).ToString();
+        _pointsParent.SetActive(true);
+        var scoreType = isWaveScore ? "Wave" : "Total";
         
-        int totalCharLength = pointTotalPrefix.Length;
-        _streak.text = "Peak Streak: ".PadRight(totalCharLength) + ScoreSheet.Reporter.GetScore(ScoreType.Streak, isWaveScore, BirdType.All).ToString();
-        _combo.text = "Combos: ".PadRight(totalCharLength) + ScoreSheet.Reporter.GetScore(ScoreType.Combo, isWaveScore, BirdType.All).ToString();
+        var pointTotalPrefix = scoreType + " Score: ";
+        const string streakPrefix = "Streak Points: ";
+        const string comboPrefix = "Combo Points: ";
+        int peakCharLength = Mathf.Max(pointTotalPrefix.Length, streakPrefix.Length, comboPrefix.Length);
+        
+        _streak.text = streakPrefix.PadRight(peakCharLength) + ScoreSheet.Reporter.GetScore(ScoreType.Streak, isWaveScore, BirdType.All).ToString();
+        _combo.text = comboPrefix.PadRight(peakCharLength) + ScoreSheet.Reporter.GetScore(ScoreType.Combo, isWaveScore, BirdType.All).ToString();
+        _pointTotal.text = pointTotalPrefix.PadRight(peakCharLength) + ScoreSheet.Reporter.GetScore(ScoreType.Total, isWaveScore, BirdType.All).ToString();
 
         _scoreBackDrop.SetInteger(Constants.AnimState, PointBackDrop.ComeIn);
         _pointTotalA.SetInteger(Constants.AnimState, PointAnimState.Shine);
@@ -207,6 +181,11 @@ public class WaveUi : MonoBehaviour, IWaveUi
     }
 
     #endregion
+
+    IEnumerator IWaveUi.AnimateStoryStart()
+    {
+        yield return null;
+    }
 
     IEnumerator IWaveUi.AnimateStoryEnd()
     {

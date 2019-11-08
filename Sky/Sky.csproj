@@ -137,6 +137,7 @@
      <Compile Include="Assets\SkyAssets\Scripts\Menus\Points\ScoreBoard.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Menus\Points\ScoreDisplayer.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Menus\Points\ScoreSheet.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Menus\Tutorial\MovementTutorialUi.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\EventData.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\AudioManager.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\GameCamera.cs" />
@@ -144,9 +145,9 @@
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\GameManager.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\Singleton.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\WorldBounds.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\Memory\EndlessScore.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\Memory\SaveLoadData.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\Memory\StoryScore.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Universal\SaveData\EndlessScore.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Universal\SaveData\SaveLoadData.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Universal\SaveData\StoryScore.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\UnityServices\AdDisplayer.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\UnityServices\ExampleAnalytics.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\VisualEffects\AnimationHelper.cs" />

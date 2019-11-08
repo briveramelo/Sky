@@ -1124,7 +1124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b24abf2753581004493707b3f9ecc046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myAudioSource: {fileID: 8299046}
+  _audioSource: {fileID: 8299046}
 --- !u!82 &8299046
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1594,7 +1594,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8e62cb551d4de5861dc02c56c8213f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanGuiDisplay: 0
 --- !u!114 &2478031847836722829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1607,7 +1606,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf4a733762b14034884ce73f15172bf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanGuiDisplay: 0
 --- !u!114 &8621704071917544677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1620,7 +1618,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc32ce15e41541c3a0874407e1f8df50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanGuiDisplay: 0
 --- !u!114 &5374381612821985675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1633,7 +1630,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5922ab447ab4634cbeaeb4246fdb84c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanGuiDisplay: 0
 --- !u!1 &7099427656412314376
 GameObject:
   m_ObjectHideFlags: 0

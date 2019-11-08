@@ -5,13 +5,16 @@ using UnityEngine;
 public class RootMenuGui : DebugGui
 {
     private List<SubDebugGui> _guis;
-    
+    private const int _numSimulTouches = 4;
+
+    public override bool CanGuiDisplay { get; set; }
+
     private void Awake()
     {
         if (Debug.isDebugBuild)
         {
             _guis = GetComponents<SubDebugGui>().ToList();
-            _guis.ForEach(gui => gui.enabled = false);
+            _guis.ForEach(gui => gui.CanGuiDisplay = false);
         }
         else
         {
@@ -19,10 +22,20 @@ public class RootMenuGui : DebugGui
             Destroy(gameObject);
         }
     }
+    
+    private void Update()
+    {
+        var touchPassed = (Input.touchCount == _numSimulTouches && Input.GetTouch(_numSimulTouches - 1).phase == TouchPhase.Began);
+        var mousePressed = false;//Input.GetMouseButtonDown(2);//middle click
+        if (touchPassed || mousePressed)
+        {
+            CanGuiDisplay = !CanGuiDisplay;
+        }
+    }
 
     protected override void OnGuiEnabled()
     {
-        if (_guis.Any(gui => gui.enabled))
+        if (_guis.Any(gui => gui.CanGuiDisplay))
         {
             return;
         }
@@ -38,7 +51,7 @@ public class RootMenuGui : DebugGui
 
             if (GUILayout.Button(guiName, ScreenSpace.LeftAlignedButtonStyle))
             {
-                _guis[i].enabled = true;
+                _guis[i].CanGuiDisplay = true;
                 return;
             }
         }

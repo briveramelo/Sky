@@ -3,14 +3,14 @@ using System.Collections;
 
 public interface ICollectable
 {
-    WeaponType GetCollected();
+    WeaponType Collect();
 }
 
 public class CollectionHandle : MonoBehaviour, ICollectable
 {
     [SerializeField] private WeaponType _myWeaponType;
 
-    WeaponType ICollectable.GetCollected()
+    WeaponType ICollectable.Collect()
     {
         StartCoroutine(DestroySelf());
         return _myWeaponType;
