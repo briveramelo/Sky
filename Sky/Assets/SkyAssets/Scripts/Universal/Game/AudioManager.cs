@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : Singleton<AudioManager>
 {
     [SerializeField] private AudioSource _audioSource;
     
     private static AudioSource _myAudioSource;
 
-    private void Awake()
+    private void Start()
     {
         _myAudioSource = _audioSource;
     }

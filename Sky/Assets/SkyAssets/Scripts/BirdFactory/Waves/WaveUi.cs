@@ -57,6 +57,7 @@ public class WaveUi : MonoBehaviour, IWaveUi
     private void Awake()
     {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
+        _pointsParent.SetActive(false);
     }
 
     private void OnDestroy()
@@ -66,9 +67,12 @@ public class WaveUi : MonoBehaviour, IWaveUi
 
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
-        StopAllCoroutines();
-        ClearText();
-        _pointsParent.SetActive(false);
+        if (Scenes.IsMenu(scene.name))
+        {
+            StopAllCoroutines();
+            ClearText();
+            _pointsParent.SetActive(false);
+        }
     }
 
     private void ClearText()
@@ -132,8 +136,10 @@ public class WaveUi : MonoBehaviour, IWaveUi
         _subTitleA.SetInteger(Constants.AnimState, TextAnimState.LeftAcross);
         while (_titleA.GetInteger(Constants.AnimState) == TextAnimState.RightAcross)
         {
+            Debug.Log("waiting for title to shift anim state");
             yield return null;
         }
+        Debug.LogWarning("Finished with anim state");
     }
 
     #endregion
@@ -177,6 +183,7 @@ public class WaveUi : MonoBehaviour, IWaveUi
         _streakA.SetInteger(Constants.AnimState, PointAnimState.Poof);
         _comboA.SetInteger(Constants.AnimState, PointAnimState.Poof);
         yield return new WaitForSeconds(2f);
+        _pointsParent.SetActive(false);
         _scoreBackDrop.SetInteger(Constants.AnimState, PointBackDrop.IdleOffScreen);
     }
 
