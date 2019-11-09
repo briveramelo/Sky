@@ -7,3 +7,8 @@ public class WeaponGrabbedData
 {
     public ICollectable Collectable;
 }
+
+public class PauseData
+{
+    public bool IsPaused;
+}

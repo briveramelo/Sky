@@ -832,7 +832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 3979010243884140933}
-  _buttonPress: {fileID: 8300000, guid: b357caddb32f63643880763c4f33680d, type: 3}
+  _audioType: 2
   _parentCanvas: {fileID: 3979010243131922263}
   _joystick: {fileID: 3979010245092689406}
   _pauseMenu: {fileID: 3979010245148086763}
@@ -990,7 +990,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 3979010244092662602}
-  _buttonPress: {fileID: 8300000, guid: b673a4a7ecb9844a88d71879cffffa9b, type: 3}
+  _audioType: 1
   _pauser: {fileID: 3979010243884140930}
   _shouldSaveScore: 1
 --- !u!114 &3979010244092662606
@@ -1148,7 +1148,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00012207031, y: 24.997755}
+  m_AnchoredPosition: {x: 0.00012207031, y: 0.000061035156}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3979010244134614164
@@ -1164,7 +1164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 3979010244134614160}
-  _buttonPress: {fileID: 8300000, guid: d9ac686a9258c48b3ba27c2266e035f2, type: 3}
+  _audioType: 3
   _pauser: {fileID: 3979010243884140930}
 --- !u!114 &3979010244134614165
 MonoBehaviour:
@@ -1473,7 +1473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 3979010244306911027}
-  _buttonPress: {fileID: 8300000, guid: 9a254ed0f883042ef93c6df9f2cbf93a, type: 3}
+  _audioType: 1
   _continuer: {fileID: 3979010243120405884}
 --- !u!114 &3979010244306911029
 MonoBehaviour:
@@ -1610,11 +1610,11 @@ RectTransform:
   m_Father: {fileID: 3979010245148086762}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00012207031, y: -46.6974}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0.00012207031, y: 30.000053}
   m_SizeDelta: {x: 20, y: 20}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &3979010244568488715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1628,7 +1628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 3979010244568488708}
-  _buttonPress: {fileID: 8300000, guid: b673a4a7ecb9844a88d71879cffffa9b, type: 3}
+  _audioType: 1
   _pauser: {fileID: 3979010243884140930}
   _shouldSaveScore: 0
 --- !u!114 &3979010244568488712

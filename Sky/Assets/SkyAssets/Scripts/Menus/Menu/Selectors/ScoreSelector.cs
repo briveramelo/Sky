@@ -8,7 +8,7 @@ public class ScoreSelector : Selector
 
     protected override void OnClick()
     {
-        AudioManager.PlayAudio(_buttonPress);
+        AudioManager.PlayAudio(_audioType);
         _theScoreDisplayer.DisplayStats(_myGameMode);
     }
 }

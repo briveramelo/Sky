@@ -69,7 +69,6 @@ namespace GenericFunctions
 
         public static float SpeedMultiplier => 0.25f;//accounts
 
-        public const float Time2Destroy = 2f;
         public const float Time2ThrowSpear = 0.333333f;
         public const float Time2StrikeLightning = 0.5f;
 

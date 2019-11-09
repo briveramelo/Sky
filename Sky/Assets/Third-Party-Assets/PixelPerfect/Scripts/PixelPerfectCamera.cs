@@ -95,7 +95,7 @@ public class PixelPerfectCamera : MonoBehaviour {
 	{
 		const int unitHeight = 240;
 		var screenSizePixels = ScreenSpace.ScreenSizePixels;
-		var calcZoom = Mathf.RoundToInt(screenSizePixels.y / unitHeight);
+		var calcZoom = Mathf.CeilToInt(screenSizePixels.y / unitHeight);
 		cameraZoom = (int)Mathf.Clamp(calcZoom, 1, Mathf.Infinity);
 		
 		return;

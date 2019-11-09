@@ -10,7 +10,7 @@ public abstract class Weapon : MonoBehaviour, IUsable
 {
     [SerializeField] private WeaponType _myWeaponType;
     [SerializeField] protected Collider2D _attackCollider;
-    [SerializeField] private AudioClip _useSound;
+    [SerializeField] private AudioClipType _useSound;
 
     protected WeaponStats MyWeaponStats = new WeaponStats();
     protected int BirdsHit;

@@ -475,9 +475,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fitType: 0
-  targetPixelHeight: 213
+  targetPixelHeight: 227
   parallaxLayerCount: 10
-  cameraZoom: 3
+  cameraZoom: 2
   pixelatedPostProcessing: 1
   heightError: 0
   showGizmos: 0
@@ -508,9 +508,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 110
-  field of view: 71.507774
+  field of view: 25.578814
   orthographic: 0
-  orthographic size: 7.2
+  orthographic size: 2.27
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1125,6 +1125,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 8299046}
+  _generateGutsClip: {fileID: 8300000, guid: b673a4a7ecb9844a88d71879cffffa9b, type: 3}
+  _pauseClip: {fileID: 8300000, guid: 9a254ed0f883042ef93c6df9f2cbf93a, type: 3}
+  _unPauseClip: {fileID: 8300000, guid: d9ac686a9258c48b3ba27c2266e035f2, type: 3}
+  _balloonPopClip: {fileID: 8300000, guid: 8029661f41e3e9d468d5c91e6795306d, type: 3}
+  _spearUseClip: {fileID: 8300000, guid: a383e95bfe8b17148b55737e5a073673, type: 3}
+  _balloonsInvincibleClip: {fileID: 8300000, guid: 54110b6b699257a4a9403255aa329c6f,
+    type: 3}
+  _balloonsVincibleClip: {fileID: 8300000, guid: b357caddb32f63643880763c4f33680d,
+    type: 3}
+  _basketRebirthClip: {fileID: 8300000, guid: cf8039895164b90438877f0da518e3a5, type: 3}
 --- !u!82 &8299046
 AudioSource:
   m_ObjectHideFlags: 0

@@ -138,8 +138,9 @@
      <Compile Include="Assets\SkyAssets\Scripts\Menus\Points\ScoreDisplayer.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Menus\Points\ScoreSheet.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Menus\Tutorial\MovementTutorialUi.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Universal\Audio\AudioManager.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Universal\Audio\PoolItem.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\EventData.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\AudioManager.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\GameCamera.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\GameClock.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\GameManager.cs" />

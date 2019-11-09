@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public abstract class Selector : MonoBehaviour
 {
     [SerializeField] protected Button _button;
-    [SerializeField] protected AudioClip _buttonPress;
+    [SerializeField] protected AudioClipType _audioType;
 
     protected virtual void Awake()
     {
@@ -14,7 +14,7 @@ public abstract class Selector : MonoBehaviour
 
     protected virtual void OnClick()
     {
-        AudioManager.PlayAudio(_buttonPress);
+        AudioManager.PlayAudio(_audioType);
         StartCoroutine(OnClickRoutine());
     }
 

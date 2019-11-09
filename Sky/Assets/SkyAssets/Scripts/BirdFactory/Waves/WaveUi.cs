@@ -136,10 +136,8 @@ public class WaveUi : MonoBehaviour, IWaveUi
         _subTitleA.SetInteger(Constants.AnimState, TextAnimState.LeftAcross);
         while (_titleA.GetInteger(Constants.AnimState) == TextAnimState.RightAcross)
         {
-            Debug.Log("waiting for title to shift anim state");
             yield return null;
         }
-        Debug.LogWarning("Finished with anim state");
     }
 
     #endregion

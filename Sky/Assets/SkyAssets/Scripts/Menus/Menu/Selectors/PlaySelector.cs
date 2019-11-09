@@ -7,6 +7,7 @@ public class PlaySelector : Selector
 
     protected override void OnClick()
     {
+        AudioManager.PlayAudio(_audioType);
         _pauser.gameObject.SetActive(true);
         _pauser.UnPause();
     }

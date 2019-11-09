@@ -46,7 +46,7 @@ public class Pauser : Selector
     {
         if (!Paused)
         {
-            AudioManager.PlayAudio(_buttonPress);
+            AudioManager.PlayAudio(_audioType);
             Pause();
         }
     }

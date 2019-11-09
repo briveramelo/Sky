@@ -13,6 +13,11 @@ public interface IBasketToBalloon
 
 public class Balloon : MonoBehaviour, IBasketToBalloon
 {
+    private static class AnimState
+    {
+        public const int Wiggle = 1;
+    }
+
     [SerializeField] private GameObject _rope;
     [SerializeField] private PixelPerfectSprite _pixelPerfect;
     [SerializeField] private SpriteRenderer _mySprite;
@@ -22,8 +27,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon
     [SerializeField] private CircleCollider2D _boundsCollider;
     [SerializeField] private Animator _balloonAnimator;
     [SerializeField] private List<SpriteRenderer> _mySprites;
-    [SerializeField] private AudioClip _pop;
-
+    
     private const float _moveSpeed = 0.75f;
     private const float _popTime = 30f;
     
@@ -127,6 +131,8 @@ public class Balloon : MonoBehaviour, IBasketToBalloon
         if (gameObject.layer == Layers.BalloonLayer)
         {
             ((IBalloonToBasket) Basket.Instance).ReportPoppedBalloon(this);
+            ScoreSheet.Tallier.TallyThreat(Threat.BalloonPopped);
+            
             Handheld.Vibrate();
             GameClock.Instance.SlowTime(.5f, .75f);
             GameCamera.Instance.ShakeTheCamera();
@@ -143,10 +149,10 @@ public class Balloon : MonoBehaviour, IBasketToBalloon
 
         _balloonCollider.enabled = false;
         _boundsCollider.enabled = false;
-        _balloonAnimator.SetInteger(Constants.AnimState, 1);
-        AudioManager.PlayAudio(_pop);
+        _balloonAnimator.SetInteger(Constants.AnimState, AnimState.Wiggle);
+        AudioManager.PlayAudio(AudioClipType.BalloonPop);
         Destroy(_rope);
-        Destroy(gameObject, Constants.Time2Destroy);
+        Destroy(gameObject, 2f);
     }
 
     private void OnDestroy()

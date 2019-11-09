@@ -32,7 +32,6 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket, ID
     [SerializeField] private Collider2D[] _boundingColliders;
     [SerializeField] private GameObject _balloonReplacement;
     [SerializeField] private List<SpriteRenderer> _mySprites;
-    [SerializeField] private AudioClip _invincible, _rebirth;
     [SerializeField] private BasketEngine _basketEngine;
 
     private IBrokerEvents _eventBroker = new StaticEventBroker();
@@ -82,7 +81,6 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket, ID
     void IBalloonToBasket.ReportPoppedBalloon(IBasketToBalloon poppedBalloon)
     {
         _balloons.Remove(poppedBalloon);
-        ScoreSheet.Tallier.TallyThreat(Threat.BalloonPopped);
         GrantBalloonInvincibility();
         PlayRecoverySounds();
         if (_balloons.Count < 1)
@@ -105,10 +103,10 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket, ID
 
     private void PlayRecoverySounds()
     {
-        AudioManager.PlayAudio(_invincible);
+        var invincibleClipLength = AudioManager.PlayAudio(AudioClipType.BalloonsInvincible);
         if (_balloons.Count >= 1)
         {
-            AudioManager.PlayDelayed(_invincible.length);
+            AudioManager.PlayAudio(AudioClipType.BalloonsVincible, invincibleClipLength);
         }
     }
 
@@ -136,7 +134,7 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket, ID
     {
         if (col.gameObject.layer == Layers.BalloonFloatingLayer)
         {
-            if (_balloons.Count < 3)
+            if (_balloons.Count < _numStartBalloons)
             {
                 CollectNewBalloon(col.gameObject.GetComponent<IBasketToBalloon>());
             }
@@ -208,11 +206,6 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket, ID
         yield return null;
     }
 
-    private void PlayRebirthSounds()
-    {
-        AudioManager.PlayAudio(_rebirth);
-    }
-
     void IDie.Die()
     {
         _rigbod.velocity = Vector2.zero;
@@ -229,7 +222,7 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket, ID
     {
         _rigbod.gravityScale = 0;
         ((IDie) _basketEngine).Rebirth();
-        PlayRebirthSounds();
+        AudioManager.PlayAudio(AudioClipType.BasketRebirth);
         transform.position = Vector3.zero;
         _rigbod.velocity = Vector2.zero;
         _boundingColliders.ToList().ForEach(col => col.enabled = true);

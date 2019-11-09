@@ -11,11 +11,10 @@ public class GutGenerator : MonoBehaviour, IBleedable
 {
     [SerializeField] private GameObject _gutPrefab;
     [SerializeField] private RuntimeAnimatorController[] _gutSplosionControllers;
-    [SerializeField] private AudioClip _gutSound;
-
+    
     void IBleedable.GenerateGuts(ref BirdStats birdStats, Vector2 gutDirection)
     {
-        AudioManager.PlayAudio(_gutSound);
+        AudioManager.PlayAudio(AudioClipType.GenerateGuts);
         var totalGutValue = birdStats.GutsToSpill;
         var gutValue = 0;
         while (gutValue < totalGutValue)
@@ -30,7 +29,7 @@ public class GutGenerator : MonoBehaviour, IBleedable
             gut.GetComponent<Rigidbody2D>().velocity = targetSpeed * targetDir;
             gut.GetComponent<Animator>().runtimeAnimatorController = _gutSplosionControllers[ConvertGutValueToIndex(subGutValue)];
             gut.transform.SetParent(transform);
-            Destroy(gameObject, Constants.Time2Destroy);
+            Destroy(gameObject, 2f);
         }
     }
 
