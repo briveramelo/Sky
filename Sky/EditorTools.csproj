@@ -58,6 +58,7 @@
   <ItemGroup>
      <Compile Include="Assets\SkyAssets\Scripts\Editor\BirdFactoryEditor.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Editor\EffectFactoryEditor.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Editor\GameCameraEditor.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Editor\ReplaceGameObjects.cs" />
      <None Include="Assets\SkyAssets\Scripts\Editor\EditorTools.asmdef" />
  <Reference Include="UnityEditor.UI">
@@ -665,6 +666,14 @@
     <ProjectReference Include="Sky.csproj">
       <Project>{DFB788AB-5875-85FB-F397-57F73CD959E0}</Project>
       <Name>Sky</Name>
+    </ProjectReference>
+    <ProjectReference Include="PixelPerfect.csproj">
+      <Project>{9C2EFC27-C06F-A19B-C066-96E2EBFC2D7D}</Project>
+      <Name>PixelPerfect</Name>
+    </ProjectReference>
+    <ProjectReference Include="PixelArtRotation.csproj">
+      <Project>{843D8394-0E03-3770-1ADD-8279B3B87D5D}</Project>
+      <Name>PixelArtRotation</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
