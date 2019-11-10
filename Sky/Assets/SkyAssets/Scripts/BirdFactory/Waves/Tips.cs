@@ -22,7 +22,7 @@ public static class Tips
         {Tip.Combos, "Hit multiple birds with one spear for big point bonuses"},
         {Tip.Crows, "Crows protect their young, viciously"},
         {Tip.Ducks, "Ducks follow their leader, but they’re lost without one"},
-        {Tip.Bats, "Don’t move too quickly with a swarm of bats around- they might pop your balloons"},
+        {Tip.Bats, "Don’t move too quickly with a swarm of bats around. They might pop your balloons"},
         {Tip.BirdOfParadise, "Kill a Bird of Paradise to gain an extra balloon"},
         {Tip.Tentacles, "Strike The Mighty Tentacles rapidly to free yourself from his grasp"},
         {Tip.Pelicans, "Move quickly sideways to avoid a Pelican dive bomb"},

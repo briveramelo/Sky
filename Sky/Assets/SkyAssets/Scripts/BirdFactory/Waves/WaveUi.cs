@@ -36,6 +36,7 @@ public class WaveUi : MonoBehaviour, IWaveUi
         public const int GetOut = 2;
     }
 
+    [SerializeField] private TipUi _tipUi;
     [SerializeField] private GameObject _pointsParent;
     [SerializeField] private GameObject _titleParent;
     [SerializeField] private TextMeshProUGUI _title;
@@ -50,7 +51,6 @@ public class WaveUi : MonoBehaviour, IWaveUi
     [SerializeField] private Animator _comboA;
     
     private bool _hasWeapon;
-    private List<Tip> _newTips = System.Enum.GetValues(typeof(Tip)).Cast<Tip>().ToList();
 
     #region Load Level
 
@@ -104,31 +104,12 @@ public class WaveUi : MonoBehaviour, IWaveUi
         yield return null;
         yield return StartCoroutine(DisplayPoints(true));
         yield return null;
-        yield return StartCoroutine(DisplayTip());
+        yield return StartCoroutine(_tipUi.DisplayTip());
     }
 
     #region AnimateWaveStart
 
-    private IEnumerator DisplayTip()
-    {
-        _titleParent.SetActive(true);
-        var nextTip = Random.Range(0, _newTips.Count);
-        _title.text = "Tip: " + _newTips[nextTip].ToString();
-        _subTitle.text = Tips.GetTip(_newTips[nextTip]);
-        _newTips.RemoveAt(nextTip);
-        if (_newTips.Count == 0)
-        {
-            _newTips = System.Enum.GetValues(typeof(Tip)).Cast<Tip>().ToList();
-        }
-
-        _titleA.SetInteger(Constants.AnimState, TextAnimState.IdleOnScreen);
-        _subTitleA.SetInteger(Constants.AnimState, TextAnimState.IdleOnScreen);
-
-        yield return new WaitForSeconds(4f);
-        _titleA.SetInteger(Constants.AnimState, TextAnimState.IdleOffscreen);
-        _subTitleA.SetInteger(Constants.AnimState, TextAnimState.IdleOffscreen);
-        _titleParent.SetActive(true);
-    }
+    
 
     private IEnumerator DisplayWaveName(WaveName waveName)
     {

@@ -92,6 +92,7 @@
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\StoryWaves\SeagullWave.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\StoryWaves\ShoebillWave.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\Tips.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\TipUi.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\Wave.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\WaveLabels.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\WaveManager.cs" />
