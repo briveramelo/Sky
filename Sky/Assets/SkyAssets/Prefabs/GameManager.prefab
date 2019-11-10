@@ -92,7 +92,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 101974}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.33, y: -2.7299998, z: 0}
+  m_LocalPosition: {x: 2.66, y: -2.5099998, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 417260}
@@ -154,14 +154,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 101974}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pixelPerfectCamera: {fileID: 11410288}
   fitType: 0
-  parallaxLayer: 0
+  parallaxLayer: 1
   pixelScale: 1
   runContinously: 1
   useParentTransform: 0
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3e4bd8c2fbf68e4180fe8b066913440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 0.00075
+  _moveSpeed: 0.6
   _toRight: 0
   _teleportXSpot: -8.56
 --- !u!1 &113520
@@ -240,7 +240,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113520}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.4, y: -1.84, z: 0}
+  m_LocalPosition: {x: 3.4199998, y: -4.84, z: 30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 490874}
@@ -302,14 +302,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113520}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pixelPerfectCamera: {fileID: 11410288}
   fitType: 0
-  parallaxLayer: 0
+  parallaxLayer: 3
   pixelScale: 1
   runContinously: 1
   useParentTransform: 0
@@ -340,7 +340,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 116932}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.52, y: -2.66, z: 0}
+  m_LocalPosition: {x: 4.3599997, y: -4.88, z: 30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 490874}
@@ -402,14 +402,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 116932}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pixelPerfectCamera: {fileID: 11410288}
   fitType: 0
-  parallaxLayer: 0
+  parallaxLayer: 3
   pixelScale: 1
   runContinously: 1
   useParentTransform: 0
@@ -475,7 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fitType: 0
-  targetPixelHeight: 227
+  targetPixelHeight: 234
   parallaxLayerCount: 10
   cameraZoom: 2
   pixelatedPostProcessing: 1
@@ -508,9 +508,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 110
-  field of view: 25.578814
+  field of view: 26.3948
   orthographic: 0
-  orthographic size: 2.27
+  orthographic size: 2.345
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -680,7 +680,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148526}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.13, y: 1.16, z: 0}
+  m_LocalPosition: {x: -0.014999986, y: 0.61499995, z: 40}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 495724}
@@ -742,14 +742,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148526}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pixelPerfectCamera: {fileID: 11410288}
   fitType: 0
-  parallaxLayer: 0
+  parallaxLayer: 4
   pixelScale: 1
   runContinously: 1
   useParentTransform: 0
@@ -829,7 +829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3e4bd8c2fbf68e4180fe8b066913440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 0.003
+  _moveSpeed: 0.6
   _toRight: 0
   _teleportXSpot: -8.56
 --- !u!1 &156762
@@ -977,7 +977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3e4bd8c2fbf68e4180fe8b066913440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 0.0025
+  _moveSpeed: 0.6
   _toRight: 0
   _teleportXSpot: -8.56
 --- !u!1 &161022
@@ -1006,7 +1006,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 161022}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.09, y: 0.28, z: 0}
+  m_LocalPosition: {x: 5.085, y: 1.0999999, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 448712}
@@ -1068,14 +1068,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 161022}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pixelPerfectCamera: {fileID: 11410288}
   fitType: 0
-  parallaxLayer: 0
+  parallaxLayer: 2
   pixelScale: 1
   runContinously: 1
   useParentTransform: 0
@@ -1257,7 +1257,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 176718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.62, y: -0.63, z: 0}
+  m_LocalPosition: {x: 3.62, y: 0.375, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 448712}
@@ -1319,14 +1319,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 176718}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pixelPerfectCamera: {fileID: 11410288}
   fitType: 0
-  parallaxLayer: 0
+  parallaxLayer: 2
   pixelScale: 1
   runContinously: 1
   useParentTransform: 0
@@ -1375,7 +1375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3e4bd8c2fbf68e4180fe8b066913440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 0.002
+  _moveSpeed: 0.6
   _toRight: 0
   _teleportXSpot: -8.56
 --- !u!1 &185180
@@ -1434,7 +1434,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189450}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.16, y: -2.05, z: 0}
+  m_LocalPosition: {x: 0.58, y: -2.46, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 417260}
@@ -1496,14 +1496,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189450}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d2ed81fca1ac3749a83e9e78e6d17fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pixelPerfectCamera: {fileID: 11410288}
   fitType: 0
-  parallaxLayer: 0
+  parallaxLayer: 1
   pixelScale: 1
   runContinously: 1
   useParentTransform: 0

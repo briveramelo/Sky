@@ -96,7 +96,9 @@
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\WaveLabels.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\WaveManager.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\WaveUi.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Buildings\ParalaxChildren.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Buildings\ParallaxChildren.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Buildings\ParallaxParent.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Buildings\PixelTransform.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\DebugGuis\BirdFactoryGui.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\DebugGuis\DebugGui.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\DebugGuis\EffectFactoryGui.cs" />

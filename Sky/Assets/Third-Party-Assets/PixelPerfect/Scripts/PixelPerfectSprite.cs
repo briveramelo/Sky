@@ -49,7 +49,7 @@ public class PixelPerfectSprite : PixelPerfectObject {
 }
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(PixelPerfectSprite))]
+[CustomEditor(typeof(PixelPerfectSprite)), CanEditMultipleObjects]
 public class PixelPerfectSpriteEditor : Editor {
 	SerializedProperty pixelPerfectCamera;
 	SerializedProperty pixelPerfectFitType;

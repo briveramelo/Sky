@@ -37,6 +37,7 @@ public class WaveUi : MonoBehaviour, IWaveUi
     }
 
     [SerializeField] private GameObject _pointsParent;
+    [SerializeField] private GameObject _titleParent;
     [SerializeField] private TextMeshProUGUI _title;
     [SerializeField] private TextMeshProUGUI _subTitle;
     [SerializeField] private TextMeshProUGUI _pointTotal;
@@ -111,6 +112,7 @@ public class WaveUi : MonoBehaviour, IWaveUi
 
     private IEnumerator DisplayTip()
     {
+        _titleParent.SetActive(true);
         var nextTip = Random.Range(0, _newTips.Count);
         _title.text = "Tip: " + _newTips[nextTip].ToString();
         _subTitle.text = Tips.GetTip(_newTips[nextTip]);
@@ -126,10 +128,12 @@ public class WaveUi : MonoBehaviour, IWaveUi
         yield return new WaitForSeconds(4f);
         _titleA.SetInteger(Constants.AnimState, TextAnimState.IdleOffscreen);
         _subTitleA.SetInteger(Constants.AnimState, TextAnimState.IdleOffscreen);
+        _titleParent.SetActive(true);
     }
 
     private IEnumerator DisplayWaveName(WaveName waveName)
     {
+        _titleParent.SetActive(true);
         _title.text = waveName.ToString() + " Wave";
         _subTitle.text = WaveLabels.GetWaveSubtitle(waveName);
         _titleA.SetInteger(Constants.AnimState, TextAnimState.RightAcross);
@@ -138,6 +142,7 @@ public class WaveUi : MonoBehaviour, IWaveUi
         {
             yield return null;
         }
+        _titleParent.SetActive(false);
     }
 
     #endregion

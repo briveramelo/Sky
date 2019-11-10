@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class WaveManager : MonoBehaviour
 {
-    [SerializeField] private WaveUi _waveUi;
     [SerializeField] private Wave[] _storyWaves;
     [SerializeField] private Wave _endlessWave;
 
@@ -18,8 +17,13 @@ public class WaveManager : MonoBehaviour
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
         _storyWaveCalls = _storyWaves;
         _endlessWaveCall = _endlessWave;
-        _myWaveUi = _waveUi;
     }
+
+    private void Start()
+    {
+        _myWaveUi = FindObjectOfType<WaveUi>();
+    }
+
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnLevelFinishedLoading;

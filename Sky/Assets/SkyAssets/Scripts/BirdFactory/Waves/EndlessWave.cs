@@ -7,10 +7,12 @@ using System.Linq;
 using GenericFunctions;
 using UnityEngine.SceneManagement;
 
+[Serializable]
 public struct Range
 {
     public float Min;
     public float Max;
+    public float Diff => Max - Min;
 
     public Range(float min, float max)
     {
