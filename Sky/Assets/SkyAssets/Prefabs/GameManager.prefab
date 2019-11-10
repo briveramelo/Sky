@@ -40,6 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 491812}
+  - component: {fileID: 1374358647}
   m_Layer: 0
   m_Name: City Background
   m_TagString: Untagged
@@ -66,6 +67,26 @@ Transform:
   m_Father: {fileID: 470096}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1374358647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5cf72237f24475fb33a3e1ca1aa4329, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeedRange:
+    Min: 0.005
+    Max: 0.08
+  _children:
+  - {fileID: 11445866}
+  - {fileID: 11460968}
+  - {fileID: 11474984}
+  - {fileID: 11494696}
 --- !u!1 &101974
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +113,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 101974}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.66, y: -2.5099998, z: 10}
+  m_LocalPosition: {x: 2.66, y: -1.9599998, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 417260}
@@ -161,7 +182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pixelPerfectCamera: {fileID: 11410288}
   fitType: 0
-  parallaxLayer: 1
+  parallaxLayer: 0
   pixelScale: 1
   runContinously: 1
   useParentTransform: 0
@@ -211,9 +232,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3e4bd8c2fbf68e4180fe8b066913440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 0.6
   _toRight: 0
-  _teleportXSpot: -8.56
+  _teleportXSpot: -5
 --- !u!1 &113520
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,7 +260,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113520}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.4199998, y: -4.84, z: 30}
+  m_LocalPosition: {x: 3.4199998, y: -1.56, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 490874}
@@ -309,7 +329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pixelPerfectCamera: {fileID: 11410288}
   fitType: 0
-  parallaxLayer: 3
+  parallaxLayer: 0
   pixelScale: 1
   runContinously: 1
   useParentTransform: 0
@@ -340,7 +360,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 116932}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.3599997, y: -4.88, z: 30}
+  m_LocalPosition: {x: 4.3599997, y: -1.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 490874}
@@ -409,7 +429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pixelPerfectCamera: {fileID: 11410288}
   fitType: 0
-  parallaxLayer: 3
+  parallaxLayer: 0
   pixelScale: 1
   runContinously: 1
   useParentTransform: 0
@@ -680,7 +700,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148526}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.014999986, y: 0.61499995, z: 40}
+  m_LocalPosition: {x: -0.014999986, y: 0.61499995, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 495724}
@@ -749,7 +769,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pixelPerfectCamera: {fileID: 11410288}
   fitType: 0
-  parallaxLayer: 4
+  parallaxLayer: 0
   pixelScale: 1
   runContinously: 1
   useParentTransform: 0
@@ -829,9 +849,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3e4bd8c2fbf68e4180fe8b066913440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 0.6
   _toRight: 0
-  _teleportXSpot: -8.56
+  _teleportXSpot: -5
 --- !u!1 &156762
 GameObject:
   m_ObjectHideFlags: 0
@@ -858,7 +877,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 156762}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.00999999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 440286}
@@ -977,9 +996,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3e4bd8c2fbf68e4180fe8b066913440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 0.6
   _toRight: 0
-  _teleportXSpot: -8.56
+  _teleportXSpot: -5
 --- !u!1 &161022
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,7 +1024,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 161022}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.085, y: 1.0999999, z: 20}
+  m_LocalPosition: {x: 5.075, y: 0.66999996, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 448712}
@@ -1075,7 +1093,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pixelPerfectCamera: {fileID: 11410288}
   fitType: 0
-  parallaxLayer: 2
+  parallaxLayer: 0
   pixelScale: 1
   runContinously: 1
   useParentTransform: 0
@@ -1257,7 +1275,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 176718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.62, y: 0.375, z: 20}
+  m_LocalPosition: {x: 3.62, y: -0.055000007, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 448712}
@@ -1326,7 +1344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pixelPerfectCamera: {fileID: 11410288}
   fitType: 0
-  parallaxLayer: 2
+  parallaxLayer: 0
   pixelScale: 1
   runContinously: 1
   useParentTransform: 0
@@ -1375,9 +1393,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3e4bd8c2fbf68e4180fe8b066913440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 0.6
   _toRight: 0
-  _teleportXSpot: -8.56
+  _teleportXSpot: -5
 --- !u!1 &185180
 GameObject:
   m_ObjectHideFlags: 0
@@ -1434,7 +1451,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189450}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.58, y: -2.46, z: 10}
+  m_LocalPosition: {x: 0.58, y: -1.9100001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 417260}
@@ -1503,7 +1520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pixelPerfectCamera: {fileID: 11410288}
   fitType: 0
-  parallaxLayer: 1
+  parallaxLayer: 0
   pixelScale: 1
   runContinously: 1
   useParentTransform: 0
