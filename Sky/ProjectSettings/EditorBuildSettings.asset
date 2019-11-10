@@ -5,15 +5,22 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/Level.unity
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/SkyAssets/Scenes/Build Scenes/Menu.unity
+    guid: d7d4fab8577b7ad4b9b4709ecdb382c0
   - enabled: 1
-    path: Assets/Scenes/Intro.unity
+    path: Assets/SkyAssets/Scenes/Build Scenes/Intro.unity
+    guid: 737cb8573781f1e46aac94c73ef5909f
   - enabled: 1
-    path: Assets/Scenes/Story.unity
+    path: Assets/SkyAssets/Scenes/Build Scenes/Story.unity
+    guid: de010b3b7490091459302252b5dc5c6a
   - enabled: 1
-    path: Assets/Scenes/Endless.unity
+    path: Assets/SkyAssets/Scenes/Build Scenes/Endless.unity
+    guid: df5be759e53d7a942a60d0d0dd40a441
   - enabled: 1
-    path: Assets/Scenes/Scores.unity
+    path: Assets/SkyAssets/Scenes/Build Scenes/Scores.unity
+    guid: 952de7598e7a9244e9bcfaa34cbe28bc
+  - enabled: 1
+    path: Assets/SkyAssets/Scenes/Build Scenes/Debug Scenes/BirdCage.unity
+    guid: 902c4f5d1b6748248939986931188014
+  m_configObjects: {}

@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3774873400701653141
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7961179997133360878}
+  - component: {fileID: 4750063344069526696}
+  m_Layer: 5
+  m_Name: _BirdFactory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7961179997133360878
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3774873400701653141}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4750063344069526696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3774873400701653141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 206818a7923014c1380c377e11b61b2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _birdPrefabs:
+  - BirdType: 0
+    Prefab: {fileID: 176178, guid: 1f5cfa2f484ef444ca3b4f4a5b00e7f4, type: 3}
+  - BirdType: 1
+    Prefab: {fileID: 121926, guid: a0823131fbf68471eb77571bea2cfa96, type: 3}
+  - BirdType: 2
+    Prefab: {fileID: 199352, guid: 16dda3956083a494ca2b7dcfbcb88730, type: 3}
+  - BirdType: 3
+    Prefab: {fileID: 140138, guid: c8a4ce405247d4d1baab38de36086969, type: 3}
+  - BirdType: 4
+    Prefab: {fileID: 173176, guid: 8a44cdc2104624eaa94cee8eeafe4cfb, type: 3}
+  - BirdType: 5
+    Prefab: {fileID: 152284, guid: fbae02674830c4d98b0964f3075cc17f, type: 3}
+  - BirdType: 6
+    Prefab: {fileID: 191540, guid: cd4056db3a7b748a49824ab3a8f3ef87, type: 3}
+  - BirdType: 7
+    Prefab: {fileID: 136588, guid: b2d924430ecf742f8a8455291b231b25, type: 3}
+  - BirdType: 8
+    Prefab: {fileID: 153434, guid: bb183bccd63d54eaba8756e9baecc2ea, type: 3}
+  - BirdType: 9
+    Prefab: {fileID: 148646, guid: fb79abea4bbcf48e0a8d873f07e7807e, type: 3}
+  - BirdType: 10
+    Prefab: {fileID: 166612, guid: 9ea679bf2282b455ea1af34a50a8e0c7, type: 3}
+  - BirdType: 11
+    Prefab: {fileID: 175384, guid: 6fac294ad61874da699aad66017bb75d, type: 3}
+  - BirdType: 12
+    Prefab: {fileID: 156092, guid: 9919c17745d5e44b09e49882610b405e, type: 3}
+  - BirdType: 7
+    Prefab: {fileID: 136588, guid: b2d924430ecf742f8a8455291b231b25, type: 3}
+  _birdParentTransform: {fileID: 7961179997133360878}
