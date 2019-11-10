@@ -105,6 +105,7 @@
      <Compile Include="Assets\SkyAssets\Scripts\DebugGuis\RootMenuGui.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\DebugGuis\SceneLoaderGui.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\DebugGuis\SubDebugGui.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\DebugGuis\WaveManagerGui.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\GenericFunctions\Constants.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\GenericFunctions\ConvertAnglesAndVectors.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Input\Joystick.cs" />

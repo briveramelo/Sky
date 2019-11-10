@@ -40,6 +40,12 @@ public class RootMenuGui : DebugGui
             return;
         }
 
+        if (GUILayout.Button("Close", ScreenSpace.LeftAlignedButtonStyle))
+        {
+            CanGuiDisplay = false;
+        }
+        GUILayout.Space(ScreenSpace.ScreenAdjustedFontSize);
+
         for (int i = 0; i < _guis.Count; i++)
         {
             var guiName = _guis[i].GetType().ToString();
