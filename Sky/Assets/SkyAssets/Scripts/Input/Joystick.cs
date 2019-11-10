@@ -12,18 +12,20 @@ public class Joystick : Singleton<Joystick>
 
     private const string _joystickName = nameof(Joystick);
 
-    private const float _joystickMaxStartCanvUnits = 32f;
+    private const float _joystickMaxStartCanvUnits = 64f;
     private const float _joystickMaxMoveCanvUnits = 16f;
-    private Vector2 _joystickStartingCanvasPosition => _joystickView.position.PixelsToCanvasPosition(_parentCanvas);
+    private Vector2 _joystickOriginCanvasPosition => (Vector2)transform.position + (transform as RectTransform).sizeDelta/2 * _parentCanvas.transform.lossyScale;
     private int _currentFingerId;
     private bool _isFingerInUse => _currentFingerId != Constants.UnusedFingerId;
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(_joystickOriginCanvasPosition, _joystickMaxStartCanvUnits);
+    }
+
     private void Start()
     {
-//        _joystickMaxStartCanvUnits = _joystickMaxStartPixels.PixelsToCanvasUnits(_parentCanvas);
-//        _joystickMaxMoveCanvUnits = _joystickMaxMovePixels.PixelsToCanvasUnits(_parentCanvas);
-//        _joystickStartingCanvasPosition = _joystickView.position.PixelsToCanvasUnits(_parentCanvas);
-        
         OrderedTouchEventRegistry.Instance.OnTouchWorldBegin(typeof(Joystick), OnTouchWorldBegin, true);
         OrderedTouchEventRegistry.Instance.OnTouchWorldHeld(typeof(Joystick), OnTouchWorldHeld, true);
         OrderedTouchEventRegistry.Instance.OnTouchWorldEnd(typeof(Joystick), OnTouchWorldEnd, true);
@@ -48,10 +50,10 @@ public class Joystick : Singleton<Joystick>
         }
 
         var touchCanvasPosition = touchWorldPosition.WorldPositionToCanvasPosition(_parentCanvas);
-        var targetAnchoredPosition = touchCanvasPosition - _joystickStartingCanvasPosition;
+        var targetAnchoredPosition = (touchCanvasPosition - _joystickOriginCanvasPosition) / _parentCanvas.transform.lossyScale;//convert to local space for anchored position
         
         var distFromStickCanvUnits = Vector2.Distance(targetAnchoredPosition, Vector2.zero);
-        if (distFromStickCanvUnits < _joystickMaxStartCanvUnits && TouchInputManager.Instance.TryClaimFingerId(fingerId, _joystickName))
+        if (distFromStickCanvUnits <= _joystickMaxStartCanvUnits && TouchInputManager.Instance.TryClaimFingerId(fingerId, _joystickName))
         {
             _currentFingerId = fingerId;
             _joystickView.anchoredPosition = Vector2.ClampMagnitude(targetAnchoredPosition, _joystickMaxMoveCanvUnits);
@@ -66,7 +68,7 @@ public class Joystick : Singleton<Joystick>
         }
 
         var touchCanvasPosition = touchWorldPosition.WorldPositionToCanvasPosition(_parentCanvas);
-        var targetAnchoredPosition = touchCanvasPosition - _joystickStartingCanvasPosition;
+        var targetAnchoredPosition = (touchCanvasPosition - _joystickOriginCanvasPosition) / _parentCanvas.transform.lossyScale;//convert to local space for anchored position
         
         float intensity = Mathf.Clamp01(targetAnchoredPosition.magnitude / _joystickMaxMoveCanvUnits);
         var joyDirection = targetAnchoredPosition.normalized;

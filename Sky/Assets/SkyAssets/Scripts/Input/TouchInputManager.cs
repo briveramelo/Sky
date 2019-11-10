@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using BRM.DebugAdapter;
+using BRM.DebugAdapter.Interfaces;
 
 public interface IFreezable
 {
@@ -16,14 +18,16 @@ public class TouchInputManager : Singleton<TouchInputManager>, IFreezable
     protected override bool _destroyOnLoad => true;
     
     private Dictionary<int, string> _fingerIdClaimers = new Dictionary<int, string>();
+    private IDebug _debugger = new UnityDebugger {Enabled = false};
     private bool _isFrozen;
     
     public bool TryClaimFingerId(int fingerId, string claimer)
     {
+        _debugger.LogFormat("requesting fingerid:{0}, claimer:{1}", fingerId, claimer);
         bool fingerIdIsClaimed = _fingerIdClaimers.TryGetValue(fingerId, out var storedClaimer);
         if (!fingerIdIsClaimed || claimer == storedClaimer)
         {
-            //Debug.LogErrorFormat("claiming fingerid:{0}, claimer:{1}", fingerId, claimer);
+            _debugger.LogErrorFormat("claiming fingerid:{0}, claimer:{1}", fingerId, claimer);
             _fingerIdClaimers[fingerId] = claimer;
             return true;
         }
@@ -35,7 +39,7 @@ public class TouchInputManager : Singleton<TouchInputManager>, IFreezable
     {
         if (_fingerIdClaimers.TryGetValue(fingerId, out var storedClaimer) && claimer == storedClaimer)
         {
-            //Debug.LogErrorFormat("releasing fingerid:{0}, claimer:{1}", fingerId, claimer);
+            _debugger.LogErrorFormat("releasing fingerid:{0}, claimer:{1}", fingerId, claimer);
             _fingerIdClaimers.Remove(fingerId);
         }
     }

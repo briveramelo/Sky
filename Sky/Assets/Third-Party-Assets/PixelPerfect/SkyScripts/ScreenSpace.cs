@@ -20,6 +20,7 @@ public static class ScreenSpace
     }
 
     public static Vector2 ScreenSizeWorldUnits => WorldEdge * 2f;
+    public static Vector2 ScreenSizeCanvasUnits(Canvas canvas) => canvas.GetSizeCanvasUnits();
     public static Vector2 WorldEdge
     {
         get

@@ -135,7 +135,7 @@ public class Jai : MonoBehaviour, IFreezable, IDie
 
     private void OnTouchWorldBegin(int fingerId, Vector2 worldPosition)
     {
-        if (Pauser.Paused || !TouchInputManager.Instance.TryClaimFingerId(fingerId, _jaiName) && !_isAlive)
+        if (Pauser.Paused || !TouchInputManager.Instance.TryClaimFingerId(fingerId, _jaiName) || !_isAlive)
         {
             return;
         }

@@ -11,8 +11,16 @@ public class Pauser : Selector
     [SerializeField] private float _clickRadiusCanvUnits;
 
     private const string _pauseName = nameof(Pauser);
-    
-    private int _fingerId;
+
+    private Vector2 _position 
+    {
+        get
+        {
+            var spot = (transform as RectTransform).sizeDelta / 2 * _parentCanvas.transform.lossyScale;
+            return (Vector2) transform.position + new Vector2(spot.x, -spot.y);
+        }
+    }
+    private int _fingerId = Constants.UnusedFingerId;
 
     private void Start()
     {
@@ -32,7 +40,8 @@ public class Pauser : Selector
     private void OnTouchWorldBegin(int fingerId, Vector2 touchWorldPosition)
     {
         var touchCanvasPosition = touchWorldPosition.WorldPositionToCanvasPosition(_parentCanvas);
-        bool isCloseEnough = Vector2.Distance(touchCanvasPosition, transform.position.WorldPositionToCanvasPosition(_parentCanvas)) < _clickRadiusCanvUnits;
+        var localPosition = (touchCanvasPosition - _position) / _parentCanvas.transform.lossyScale;
+        bool isCloseEnough = Vector2.Distance(localPosition, Vector2.zero) < _clickRadiusCanvUnits;
         if (!gameObject.activeInHierarchy || !isCloseEnough || !TouchInputManager.Instance.TryClaimFingerId(fingerId, _pauseName))
         {
             return;

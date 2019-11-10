@@ -4,15 +4,19 @@ public static class ScreenSpaceConverter
 {
     #region Conversion values
     private static Vector2 _pixelCenter => ScreenSpace.ScreenSizePixels / 2; //pixels start at bottom left as (0,0)
-    private static Vector2 _worldCenter => ScreenSpace.WorldEdge; //world units start at bottom left as (-size.x/2,-size.y/2)
     private static Vector2 _viewportCenter => Vector2.one * 0.5f;
-    private static Vector2 GetCenterCanvasUnits(this Canvas canvas) => canvas.GetSizeCanvasUnits() / 2f;
+    private static Vector2 GetCenterCanvasUnits(this Canvas canvas) => canvas.transform.position;
     
     //canvas units start at bottom left as (0,0)
     private static Vector2 _pixelsPerWorldUnit => ScreenSpace.ScreenSizePixels / ScreenSpace.ScreenSizeWorldUnits;
     private static Vector2 GetWorldUnitsPerCanvasUnit(this Canvas canvas) => ScreenSpace.ScreenSizeWorldUnits / canvas.GetSizeCanvasUnits();
     private static Vector2 GetPixelsPerCanvasUnit(this Canvas canvas) => ScreenSpace.ScreenSizePixels / canvas.GetSizeCanvasUnits();
-    private static Vector2 GetSizeCanvasUnits(this Canvas canvas) => (canvas.transform as RectTransform).sizeDelta / 2f;
+    public static Vector2 GetSizeCanvasUnits(this Canvas canvas)
+    {
+        var transform = (RectTransform) canvas.transform;
+        return transform.sizeDelta * transform.lossyScale;
+    }
+
     #endregion
     
     #region Pixel<->Viewport
@@ -52,6 +56,7 @@ public static class ScreenSpaceConverter
     
 
     #endregion
+    
     #region World<->Viewport
 
     public static float WorldToViewportX(this float worldUnits)
@@ -137,11 +142,11 @@ public static class ScreenSpaceConverter
     }
     public static Vector2 WorldPositionToCanvasPosition(this Vector2 worldPosition, Canvas canvas)
     {
-        return (worldPosition + _worldCenter) / canvas.GetWorldUnitsPerCanvasUnit();
+        return worldPosition / canvas.GetWorldUnitsPerCanvasUnit() + canvas.GetCenterCanvasUnits();
     }
     public static Vector2 WorldPositionToCanvasPosition(this Vector3 worldPosition, Canvas canvas)
     {
-        return ((Vector2)worldPosition + _worldCenter) / canvas.GetWorldUnitsPerCanvasUnit();
+        return worldPosition / canvas.GetWorldUnitsPerCanvasUnit() + canvas.GetCenterCanvasUnits();
     }
     #endregion
 

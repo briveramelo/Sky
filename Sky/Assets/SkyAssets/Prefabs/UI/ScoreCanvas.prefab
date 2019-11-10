@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f5df79d00374f97a2636d61900b21f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentCanvas: {fileID: 22315114}
   _points: {fileID: 150900, guid: 5fe84c42068584b0a875c8cb6219d485, type: 3}
   _scoreBoard: {fileID: 11422040}
 --- !u!114 &5890565432649712828
