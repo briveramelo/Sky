@@ -495,7 +495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fitType: 0
-  targetPixelHeight: 234
+  targetPixelHeight: 239
   parallaxLayerCount: 10
   cameraZoom: 2
   pixelatedPostProcessing: 1
@@ -528,9 +528,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 110
-  field of view: 26.3948
+  field of view: 26.883091
   orthographic: 0
-  orthographic size: 2.345
+  orthographic size: 2.3899999
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1588,6 +1588,7 @@ GameObject:
   - component: {fileID: 2478031847836722829}
   - component: {fileID: 8621704071917544677}
   - component: {fileID: 5374381612821985675}
+  - component: {fileID: 918768510062243662}
   m_Layer: 0
   m_Name: DebugGuis
   m_TagString: Untagged
@@ -1655,6 +1656,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5922ab447ab4634cbeaeb4246fdb84c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &918768510062243662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4626832467766076943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0bd5611de66c3b4f8d16986f4e9c3f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7099427656412314376

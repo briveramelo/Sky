@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public interface IWaveRunnable
 {
     IEnumerator RunWave();
-    WaveName MyWave { get; }
+    WaveName WaveName { get; }
 }
 
 public delegate void SpawnDelegate();
@@ -16,7 +16,7 @@ public delegate void SpawnDelegate();
 public abstract class Wave : MonoBehaviour, IWaveRunnable
 {
     [SerializeField] private WaveName _myWaveName;
-    WaveName IWaveRunnable.MyWave => _myWaveName;
+    WaveName IWaveRunnable.WaveName => _myWaveName;
 
     private IWaveUi waveUi;
     private IWaveUi _waveUi => waveUi ?? FindObjectOfType<WaveUi>().GetComponent<IWaveUi>();

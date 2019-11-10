@@ -120,7 +120,7 @@ public class Duck : Bird, ILeaderToDuck, IDirectable
         var overX = pos.x > worldEdge.x;
         var underX = pos.x < -worldEdge.x;
         var overY = pos.y > worldEdge.y;
-        var underY = pos.y < worldEdge.y;
+        var underY = pos.y < -worldEdge.y;
         if (overX || underX || overY || underY)
         {
             CurrentVelocity = new Vector2(

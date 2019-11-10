@@ -3,12 +3,7 @@ using UnityEngine;
 
 public class BirdPoints : PointDisplay
 {
-    private const float _moveSpeed = 30f;
-
-    protected override void DisplayPoints(int points)
-    {
-        _myText.text = $"+{points}";
-    }
+    private const float _moveSpeed = 300f;
 
     private void Awake()
     {
@@ -18,5 +13,10 @@ public class BirdPoints : PointDisplay
     private void Update()
     {
         transform.position += Constants.SpeedMultiplier * _moveSpeed * Time.deltaTime * Vector3.up;
+    }
+
+    protected override void DisplayPoints(int points)
+    {
+        _myText.text = $"+{points}";
     }
 }

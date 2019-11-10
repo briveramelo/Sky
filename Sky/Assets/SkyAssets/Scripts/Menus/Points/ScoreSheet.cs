@@ -101,9 +101,9 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
             CummulativeCount[BirdType.All] += change;
         }
 
-        public int GetCount(BirdType birdType, bool currentWave)
+        public int GetCount(BirdType birdType, bool isCurrentWaveCount)
         {
-            return currentWave ? CurrentCount[birdType] : CummulativeCount[birdType];
+            return isCurrentWaveCount ? CurrentCount[birdType] : CummulativeCount[birdType];
         }
 
         public void ResetCurrentCount()
@@ -139,6 +139,7 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
     public static IReportable Reporter { get; private set; }
     public static IStreakable Streaker { get; private set; }
 
+    [SerializeField] private Canvas _parentCanvas;
     [SerializeField] private GameObject _points;
     [SerializeField] private ScoreBoard _scoreBoard;
 
@@ -349,13 +350,17 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
         DisplayPoints(balloonPosition, balloonPoints);
     }
 
-    private void DisplayPoints(Vector2 position, int pointsToAdd)
+    private void DisplayPoints(Vector2 worldPosition, int pointsToAdd)
     {
-        var xClamp = ScreenSpace.ScreenSizePixels.x * .9f;
-        var yClamp = ScreenSpace.ScreenSizePixels.y * .9f;
-        var spawnPosition = new Vector2(Mathf.Clamp(position.x, -xClamp, xClamp), Mathf.Clamp(position.y, -yClamp, yClamp));
+        var worldSize = ScreenSpace.WorldEdge;
+        var xClamp = worldSize.x - 0.1f;
+        var yClamp = worldSize.y - 0.1f;
+        var worldPositionClamped = new Vector2(Mathf.Clamp(worldPosition.x, -xClamp, xClamp), Mathf.Clamp(worldPosition.y, -yClamp, yClamp));
+        var spawnPosition = worldPositionClamped.WorldPositionToCanvasPosition(_parentCanvas);
 
-        Instantiate(_points, spawnPosition, Quaternion.identity, transform).GetComponent<IPointsDisplayable>().DisplayPoints(pointsToAdd);
+        var pointsInstance = Instantiate(_points, transform);
+        (pointsInstance.transform as RectTransform).position = spawnPosition;
+        pointsInstance.GetComponent<IPointsDisplayable>().DisplayPoints(pointsToAdd);
         ((IPointsDisplayable) _scoreBoard).DisplayPoints(((PointCounter) _allCounters[CounterType.Scored]).GetCount(BirdType.All, false));
     }
 

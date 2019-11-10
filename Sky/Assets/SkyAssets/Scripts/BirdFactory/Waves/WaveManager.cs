@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.SceneManagement;
 
 public class WaveManager : MonoBehaviour
@@ -8,14 +10,14 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private Wave _endlessWave;
 
     private IWaveUi _myWaveUi;
-    private IWaveRunnable[] _storyWaveCalls;
+    private List<IWaveRunnable> _storyWaveCalls;
     private IWaveRunnable _endlessWaveCall;
     public static WaveName CurrentWave { get; private set; }
 
     private void Awake()
     {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
-        _storyWaveCalls = _storyWaves;
+        _storyWaveCalls = _storyWaves.Cast<IWaveRunnable>().ToList();
         _endlessWaveCall = _endlessWave;
     }
 
@@ -58,9 +60,9 @@ public class WaveManager : MonoBehaviour
     {
         foreach (var wave in _storyWaveCalls)
         {
-            if (wave.MyWave == WaveName.Pigeon)
+            if (wave.WaveName == WaveName.Pigeon)
             {
-                CurrentWave = wave.MyWave;
+                CurrentWave = wave.WaveName;
                 yield return StartCoroutine(wave.RunWave());
             }
         }
@@ -82,6 +84,24 @@ public class WaveManager : MonoBehaviour
         yield return StartCoroutine(_myWaveUi.AnimateStoryEnd());
 
         SceneManager.LoadScene(Scenes.Menu);
+    }
+
+    public void KillRunningWaves()
+    {
+        StopAllCoroutines();
+    }
+
+    public void RunWave(WaveName waveName)
+    {
+        var waveCall = _storyWaveCalls.Find(wave => wave.WaveName == waveName);
+        if (waveCall != null)
+        {
+            StartCoroutine(waveCall.RunWave());
+        }
+        else
+        {
+            Debug.LogErrorFormat("No Wave of type: {0} was found", waveName);
+        }
     }
 
     #endregion

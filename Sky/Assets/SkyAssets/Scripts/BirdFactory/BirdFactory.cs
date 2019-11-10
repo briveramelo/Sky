@@ -22,6 +22,9 @@ public class BirdFactory : Singleton<BirdFactory>
 
     [SerializeField] private BirdPrefab[] _birdPrefabs;
     [SerializeField] private Transform _birdParentTransform;
+
+    private List<IDeathDebug> _createdBirds = new List<IDeathDebug>();
+    
     private Dictionary<BirdType, BirdData> _birdTypeData = new Dictionary<BirdType, BirdData>();
     protected override bool _destroyOnLoad => true;
     
@@ -71,6 +74,16 @@ public class BirdFactory : Singleton<BirdFactory>
     {
         var birdGameObject = Instantiate(_birdTypeData[birdType].Prefab, position, Quaternion.identity, _birdTypeData[birdType].Parent);
         var bird = birdGameObject.GetComponent<Bird>();
+        _createdBirds.Add(bird);
         return bird;
+    }
+
+    public void KillAllLivingBirds()
+    {
+        _createdBirds.RemoveAll(bird => bird == null || bird as Bird == null);
+        for (int i = 0; i < _createdBirds.Count; i++)
+        {
+            _createdBirds[i].KillDebug();
+        }
     }
 }
