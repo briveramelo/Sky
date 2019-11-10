@@ -48,7 +48,6 @@ public class WaveUi : MonoBehaviour, IWaveUi
     [SerializeField] private Animator _pointTotalA;
     [SerializeField] private Animator _streakA;
     [SerializeField] private Animator _comboA;
-    [SerializeField] private Animator _scoreBackDrop;
     
     private bool _hasWeapon;
     private List<Tip> _newTips = System.Enum.GetValues(typeof(Tip)).Cast<Tip>().ToList();
@@ -174,20 +173,16 @@ public class WaveUi : MonoBehaviour, IWaveUi
         _combo.text = comboPrefix.PadRight(peakCharLength) + ScoreSheet.Reporter.GetScore(ScoreType.Combo, isWaveScore, BirdType.All).ToString();
         _pointTotal.text = pointTotalPrefix.PadRight(peakCharLength) + ScoreSheet.Reporter.GetScore(ScoreType.Total, isWaveScore, BirdType.All).ToString();
 
-        _scoreBackDrop.SetInteger(Constants.AnimState, PointBackDrop.ComeIn);
         _pointTotalA.SetInteger(Constants.AnimState, PointAnimState.Shine);
         _streakA.SetInteger(Constants.AnimState, PointAnimState.Shine);
         _comboA.SetInteger(Constants.AnimState, PointAnimState.Shine);
 
         yield return new WaitForSeconds(4f);
-
-        _scoreBackDrop.SetInteger(Constants.AnimState, PointBackDrop.GetOut);
         _pointTotalA.SetInteger(Constants.AnimState, PointAnimState.Poof);
         _streakA.SetInteger(Constants.AnimState, PointAnimState.Poof);
         _comboA.SetInteger(Constants.AnimState, PointAnimState.Poof);
         yield return new WaitForSeconds(2f);
         _pointsParent.SetActive(false);
-        _scoreBackDrop.SetInteger(Constants.AnimState, PointBackDrop.IdleOffScreen);
     }
 
     #endregion

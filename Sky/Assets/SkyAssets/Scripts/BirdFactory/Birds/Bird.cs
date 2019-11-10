@@ -5,7 +5,12 @@ public interface IHurtable
     void GetHurt(ref WeaponStats weaponStats);
 }
 
-public abstract class Bird : MonoBehaviour, IHurtable
+public interface IDeathDebug
+{
+    void KillDebug();
+}
+
+public abstract class Bird : MonoBehaviour, IHurtable, IDeathDebug
 {
     protected BirdStats BirdStats;
     protected abstract BirdType MyBirdType { get; }
@@ -62,5 +67,10 @@ public abstract class Bird : MonoBehaviour, IHurtable
         }
 
         StopAllCoroutines();
+    }
+
+    void IDeathDebug.KillDebug()
+    {
+        OnDeath();
     }
 }

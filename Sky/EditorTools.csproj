@@ -61,6 +61,7 @@
      <Compile Include="Assets\SkyAssets\Scripts\Editor\GameCameraEditor.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Editor\ParallaxParentEditor.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Editor\ReplaceGameObjects.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Editor\WaveManagerEditor.cs" />
      <None Include="Assets\SkyAssets\Scripts\Editor\EditorTools.asmdef" />
  <Reference Include="UnityEditor.UI">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
