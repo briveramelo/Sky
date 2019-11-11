@@ -66,23 +66,22 @@ public class EmotionalIntensity : MonoBehaviour, IThreat
     }
 
     #endregion
-
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
-    }
-
-    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
-    {
-        _intensity = 0;
-        _timeIntensity = new AnimationCurve();
-    }
-
     private void Awake()
     {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
         ThreatTracker = this;
         Decay();
+    }
+    
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
+    
+    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
+        _intensity = 0;
+        _timeIntensity = new AnimationCurve();
     }
 
 #if UNITY_EDITOR //visualize intensity as an animation curve over time
@@ -90,7 +89,7 @@ public class EmotionalIntensity : MonoBehaviour, IThreat
     {
         if (SceneManager.GetActiveScene().name != Scenes.Menu)
         {
-            _timeIntensity.AddKey(Time.time, Intensity);
+            //_timeIntensity.AddKey(Time.time, Intensity);
         }
     }
 #endif

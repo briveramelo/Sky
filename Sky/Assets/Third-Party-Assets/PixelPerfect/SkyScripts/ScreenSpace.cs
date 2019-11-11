@@ -62,14 +62,17 @@ public static class ScreenSpace
     {
         fontSize = ScreenAdjustedFontSize,
         alignment = TextAnchor.MiddleCenter,
+        padding = _padding,
+        wordWrap = false
     };
     public static GUIStyle LeftAlignedLabelStyle => new GUIStyle(GUI.skin.label)
     {
         fontSize = ScreenAdjustedFontSize,
-        alignment = TextAnchor.MiddleCenter,
+        alignment = TextAnchor.MiddleLeft,
+        padding = _padding
     };
 
 
-    public static int ScreenAdjustedFontSize => (int) (5 + 11 * (ScreenZoom - 1));
-    private static RectOffset _padding => new RectOffset(1, 1, 1, 1);
+    public static int ScreenAdjustedFontSize => (int) ( (1 / 39f) * ScreenSizePixels.magnitude);
+    private static RectOffset _padding => new RectOffset(Mathf.CeilToInt(ScreenAdjustedFontSize / 3f), ScreenAdjustedFontSize, 1, 1);
 }
