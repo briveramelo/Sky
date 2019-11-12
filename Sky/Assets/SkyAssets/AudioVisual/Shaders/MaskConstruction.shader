@@ -13,7 +13,7 @@
         Pass {
             Lighting Off
             SetTexture[_MainTex] {
-                matrix [_UVMatrix]
+                matrix [_UVMatrix]//todo: fix broken line. Eraser appears as full, 100% opaque square. Replace this deprecated+removed "fixed function" with something still available in Unity
                 ConstantColor [_Color]
                 combine texture * constant
             }

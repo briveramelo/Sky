@@ -71,7 +71,6 @@ MonoBehaviour:
   _mySprites:
   - {fileID: 21253978}
   - {fileID: 21281734}
-  _pop: {fileID: 8300000, guid: 8029661f41e3e9d468d5c91e6795306d, type: 3}
 --- !u!212 &21253978
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -276,7 +275,6 @@ MonoBehaviour:
   _mySprites:
   - {fileID: 21245520}
   - {fileID: 21269140}
-  _pop: {fileID: 8300000, guid: 8029661f41e3e9d468d5c91e6795306d, type: 3}
 --- !u!212 &21245520
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -424,7 +422,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a33e3da373a164abbd5a875ba2b2a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myJai: {fileID: 11464236}
 --- !u!58 &5842672
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -864,7 +861,6 @@ MonoBehaviour:
   _mySprites:
   - {fileID: 21219614}
   - {fileID: 21251440}
-  _pop: {fileID: 8300000, guid: 8029661f41e3e9d468d5c91e6795306d, type: 3}
 --- !u!212 &21219614
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1289,8 +1285,6 @@ MonoBehaviour:
   - {fileID: 21246820}
   - {fileID: 21204402}
   - {fileID: 21280764}
-  _invincible: {fileID: 8300000, guid: 54110b6b699257a4a9403255aa329c6f, type: 3}
-  _rebirth: {fileID: 8300000, guid: cf8039895164b90438877f0da518e3a5, type: 3}
   _basketEngine: {fileID: 11425082}
 --- !u!114 &11425082
 MonoBehaviour:
@@ -1586,7 +1580,7 @@ MonoBehaviour:
   - {fileID: 353981467614212172}
   - {fileID: 353981467614212172}
   _jaiAnimator: {fileID: 9538970}
-  _throwForceMagnitude: 380
+  _throwSpeed: 6.25
 --- !u!212 &21280764
 SpriteRenderer:
   m_ObjectHideFlags: 0

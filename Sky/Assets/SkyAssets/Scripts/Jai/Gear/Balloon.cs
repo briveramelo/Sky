@@ -28,7 +28,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon
     [SerializeField] private Animator _balloonAnimator;
     [SerializeField] private List<SpriteRenderer> _mySprites;
     
-    private const float _moveSpeed = 0.75f;
+    private const float _moveSpeed = 0.55f;
     private const float _popTime = 30f;
     
     private Coroutine _floatUpRoutine;
