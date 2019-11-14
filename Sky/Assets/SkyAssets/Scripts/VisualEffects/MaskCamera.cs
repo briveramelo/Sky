@@ -41,6 +41,7 @@ public class MaskCamera : MonoBehaviour
     private Vector2 _screenToTextureFactor => ScreenSpace.ScreenSizePixels / _pooSizeTexturePixels;
     #endregion
 
+    #region Gizmos
     private void OnDrawGizmosSelected()
     {
         DrawBoundingBox(new Rect(-ScreenSpace.ScreenSizeWorldUnits / 2, ScreenSpace.ScreenSizeWorldUnits), Color.blue);
@@ -77,6 +78,7 @@ public class MaskCamera : MonoBehaviour
         Gizmos.DrawWireSphere(touchRect.center, touchRect.size.x / 2);
         Gizmos.DrawWireCube(touchRect.center, touchRect.size);
     }
+    #endregion
 
     private void Awake()
     {
@@ -126,7 +128,7 @@ public class MaskCamera : MonoBehaviour
 
         if (_newHoleCenterPixels.HasValue)
         {
-            CutHole(_holeRectPixels.position.PixelsToViewport(), _eraserMaterial);
+            CutHole(_holeRectPixels.center.PixelsToViewport(), 0.15f, _eraserMaterial);
         }
     }
 
@@ -141,13 +143,15 @@ public class MaskCamera : MonoBehaviour
         return normalizedScreenSize * _screenToTextureFactor;
     }
 
-    private void CutHole(Vector2 holeRectPositionScreenNormalized, Material eraserMaterial)
+    private void CutHole(Vector2 holeCenterScreenNormalized, float screenPercentage, Material eraserMaterial)
     {
+        float texturePercentage = screenPercentage * new Range(_screenToTextureFactor.x, _screenToTextureFactor.y).Average;
         var holeRectImageSpace = new Rect
         {
-            position = GetTexturePositionNormalized(holeRectPositionScreenNormalized),
-            size = (Vector2.one / _pooSizeTexturePixels).normalized * 0.05f
+            position = GetTexturePositionNormalized(holeCenterScreenNormalized),
+            size = 1.4142f * texturePercentage * (Vector2.one / _pooSizeTexturePixels).normalized
         };
+        holeRectImageSpace.position -= holeRectImageSpace.size / 2;
         
         var unitRect = new Rect(Vector2.zero, Vector2.one);
         
