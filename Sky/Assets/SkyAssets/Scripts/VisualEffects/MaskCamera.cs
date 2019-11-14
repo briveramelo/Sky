@@ -169,12 +169,12 @@ public class MaskCamera : MonoBehaviour
 
     private void CutHole(Vector2 holeCenterScreenNormalized, float screenPercentage, Material eraserMaterial)
     {
-        const float sqaureRootTwo = 1.4142f;
+        const float squareRootTwo = 1.4142f;
         float texturePercentage = screenPercentage * new Range(_screenToTextureFactor).Average;
         var holeRectImageSpace = new Rect
         {
             position = GetTexturePositionNormalized(holeCenterScreenNormalized),
-            size = sqaureRootTwo * texturePercentage * (Vector2.one / _pooSizeTexturePixels).normalized
+            size = squareRootTwo * texturePercentage * (Vector2.one / _pooSizeTexturePixels).normalized
         };
         holeRectImageSpace.position -= holeRectImageSpace.size / 2;
         
