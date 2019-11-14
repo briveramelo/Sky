@@ -13,7 +13,8 @@ public struct Range
     public float Min;
     public float Max;
     public float Diff => Max - Min;
-
+    public float Average => (Min + Max) / 2;
+    
     public Range(float min, float max)
     {
         if (min > max)
@@ -25,6 +26,21 @@ public struct Range
 
         Min = min;
         Max = max;
+    }
+
+    public Range(Vector2 vec)
+    {
+        Min = vec.x;
+        Max = vec.y;
+    }
+
+    public override string ToString()
+    {
+        return $"({Min}, {Max})";
+    }
+    public string ToString(string format)
+    {
+        return $"({Min.ToString(format)}, {Max.ToString(format)})";
     }
 }
 

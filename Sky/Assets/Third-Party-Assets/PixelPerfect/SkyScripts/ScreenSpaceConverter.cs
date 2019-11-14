@@ -21,33 +21,9 @@ public static class ScreenSpaceConverter
     
     #region Pixel<->Viewport
 
-    public static float PixelsToViewportX(this float pixels)
-    {
-        return pixels / ScreenSpace.ScreenSizePixels.x;
-    }
-    public static float PixelsToViewportX(this int pixels)
-    {
-        return pixels / ScreenSpace.ScreenSizePixels.x;
-    }
-    public static float PixelsToViewportY(this float pixels)
-    {
-        return pixels / ScreenSpace.ScreenSizePixels.y;
-    }
-    public static float PixelsToViewportY(this int pixels)
-    {
-        return pixels / ScreenSpace.ScreenSizePixels.y;
-    }
     public static Vector2 PixelsToViewport(this Vector2 positionPixels)
     {
         return positionPixels / ScreenSpace.ScreenSizePixels;
-    }
-    public static float ViewportToPixelsX(this float viewportX)
-    {
-        return viewportX * ScreenSpace.ScreenSizePixels.x;
-    }
-    public static float ViewportToPixelsY(this float viewportY)
-    {
-        return viewportY * ScreenSpace.ScreenSizePixels.y;
     }
     public static Vector2 ViewportToPixels(this Vector2 positionViewport)
     {
@@ -59,38 +35,31 @@ public static class ScreenSpaceConverter
     
     #region World<->Viewport
 
-    public static float WorldToViewportX(this float worldUnits)
-    {
-        return worldUnits / ScreenSpace.ScreenSizeWorldUnits.x;
-    }
-    public static float WorldToViewportY(this float worldUnits)
-    {
-        return worldUnits / ScreenSpace.ScreenSizeWorldUnits.y;
-    }
-    public static Vector2 WorldToViewport(this Vector2 positionWorld)
+    public static Vector2 WorldToViewportPosition(this Vector2 positionWorld)
     {
         return positionWorld / ScreenSpace.ScreenSizeWorldUnits + _viewportCenter;
     }
-    public static Vector2 WorldToViewport(this Vector3 positionWorld)
+    public static Vector2 WorldToViewportPosition(this Vector3 positionWorld)
     {
         return positionWorld / ScreenSpace.ScreenSizeWorldUnits + _viewportCenter;
     }
-    public static float ViewportToWorldX(this float viewportX)
-    {
-        return (viewportX - _viewportCenter.x) * ScreenSpace.ScreenSizeWorldUnits.x;
-    }
-    public static float ViewportToWorldY(this float viewportY)
-    {
-        return (viewportY - _viewportCenter.y) * ScreenSpace.ScreenSizeWorldUnits.y;
-    }
-    public static Vector2 ViewportToWorld(this Vector2 positionViewport)
+    public static Vector2 ViewportToWorldPosition(this Vector2 positionViewport)
     {
         return (positionViewport - _viewportCenter) * ScreenSpace.ScreenSizeWorldUnits;
     }
-    public static Vector2 ViewportToWorld(this Vector3 positionViewport)
+    public static Vector2 ViewportToWorldPosition(this Vector3 positionViewport)
     {
         return ((Vector2)positionViewport - _viewportCenter) * ScreenSpace.ScreenSizeWorldUnits;
     }
+    public static Vector2 ViewportToWorldUnits(this Vector2 viewportUnits)
+    {
+        return viewportUnits * ScreenSpace.ScreenSizeWorldUnits;
+    }
+    public static Vector2 WorldToViewportUnits(this Vector2 worldUnits)
+    {
+        return worldUnits / ScreenSpace.ScreenSizeWorldUnits;
+    }
+    
 
     #endregion
 

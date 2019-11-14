@@ -38,7 +38,7 @@ public class PositionConverterTests
     private void TestWorldToOthers(Vector2 worldPos, Vector2 expectedScreen, Vector2 expectedViewport)
     {
         var screenPos = worldPos.WorldPositionToPixels();
-        var viewportPos = worldPos.WorldToViewport();
+        var viewportPos = worldPos.WorldToViewportPosition();
         
         Assert.IsTrue(ApproximatelyEqual(screenPos, expectedScreen));
         Assert.IsTrue(ApproximatelyEqual(viewportPos, expectedViewport));
@@ -46,7 +46,7 @@ public class PositionConverterTests
     private void TestWorldToOthers(Vector3 worldPos, Vector3 expectedScreen, Vector3 expectedViewport)
     {
         var screenPos = worldPos.WorldPositionToPixels();
-        var viewportPos = worldPos.WorldToViewport();
+        var viewportPos = worldPos.WorldToViewportPosition();
         
         Assert.IsTrue(ApproximatelyEqual(screenPos, expectedScreen));
         Assert.IsTrue(ApproximatelyEqual(viewportPos, expectedViewport));

@@ -41,9 +41,9 @@ public class Spear : Weapon
         }
     }
 
-    protected override void UseMe(Vector2 swipeForce)
+    protected override void UseMe(Vector2 swipeVelocity)
     {
-        base.UseMe(swipeForce);
+        base.UseMe(swipeVelocity);
         var myTran = transform;
         myTran.SetParent(_startingParentTransform);
         myTran.position = (Vector2) Constants.JaiTransform.position + _throwAdjustmentVector;
@@ -53,10 +53,10 @@ public class Spear : Weapon
         scale.x = Mathf.Abs(scale.x);
         transform.localScale = scale;
         
-        SetSpearAngle(swipeForce);
+        SetSpearAngle(swipeVelocity);
         _attackCollider.enabled = true;
         _rigbod = gameObject.AddComponent<Rigidbody2D>();
-        _rigbod.AddForce(swipeForce);
+        _rigbod.velocity = swipeVelocity;
         StartCoroutine(TiltAround());
         Destroy(gameObject, 3f);
     }

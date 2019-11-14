@@ -24,7 +24,7 @@ public class Jai : MonoBehaviour, IFreezable, IDie
     [SerializeField] private GameObject[] _weaponPrefabs = new GameObject[3];
     [SerializeField] private Transform[] _weaponSpawnParents;
     [SerializeField] private Animator _jaiAnimator;
-    [SerializeField, Range(0,1400f)] private float _throwForceMagnitude = 1400f; //Force with which Jai throws the spear
+    [SerializeField, Range(0,10)] private float _throwSpeed = 6.25f; //starting speed with which Jai throws the spear
     
     private const string _jaiName = nameof(Jai);
     private const float _distToThrow = .03f;
@@ -167,7 +167,7 @@ public class Jai : MonoBehaviour, IFreezable, IDie
         {
             if (releaseDist > _distToThrow && _myWeapon != null)
             {
-                _weaponTrigger.UseMe(swipeDir.normalized * _throwForceMagnitude);
+                _weaponTrigger.UseMe(swipeDir.normalized * _throwSpeed);
                 StartCoroutine(AnimateUseWeapon(swipeDir));
             }
         }

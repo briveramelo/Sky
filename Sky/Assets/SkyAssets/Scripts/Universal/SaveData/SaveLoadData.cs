@@ -8,7 +8,11 @@ public class SaveLoadData : MonoBehaviour
 {
     private DataSave _currentDataSave = new DataSave();
     private const int _maxScores = 5;
+    #if UNITY_EDITOR
     private string _folderName => $"{Application.dataPath}/SaveData";
+    #else
+    private string _folderName => $"{Application.persistentDataPath}/SaveData";
+    #endif
     private string _fileName => "savefile.dat";
     private string _filePath => $"{_folderName}/{_fileName}";
     public DataSave CopyCurrentDataSave() => new DataSave(_currentDataSave);

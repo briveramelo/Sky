@@ -22,13 +22,9 @@ public class EffectFactoryGui : SubDebugGui
     {
         base.OnGuiEnabled();
 
-        if (GUILayout.Button("Drip poo", ScreenSpace.LeftAlignedButtonStyle))
+        if (GUILayout.Button("Splash Poo", ScreenSpace.LeftAlignedButtonStyle))
         {
             Instantiate(_pooPrefab, Vector2.zero, Quaternion.identity);
-        }
-        if (GUILayout.Button("Splash Stationary poo", ScreenSpace.LeftAlignedButtonStyle))
-        {
-            Instantiate(_pooPrefab, Vector2.zero, Quaternion.identity).GetComponentInChildren<PooSlide>().KeepStationary();
         }
     }
 }
