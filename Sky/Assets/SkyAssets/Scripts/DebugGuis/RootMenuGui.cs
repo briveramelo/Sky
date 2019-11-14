@@ -30,6 +30,10 @@ public class RootMenuGui : DebugGui
         if (touchPassed || mousePressed)
         {
             CanGuiDisplay = !CanGuiDisplay;
+            if (!CanGuiDisplay)
+            {
+                _guis.ForEach(gui => gui.CanGuiDisplay = false);
+            }
         }
     }
 

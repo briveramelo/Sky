@@ -48,15 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mySpriteRenderer: {fileID: 21225570}
   _pooAnimator: {fileID: 9506126}
-  _pooMaterials:
-  - {fileID: 2100000, guid: 1bf9013730e0fde4f8db69b8f839b299, type: 2}
-  - {fileID: 2100000, guid: 17ebeb71f5bad4a1dbf0d3ba18ac1f5a, type: 2}
-  - {fileID: 2100000, guid: 1ebf8bfc9b7a04bb9814e5893024adf1, type: 2}
-  - {fileID: 2100000, guid: 6f8aeb0264d6e466d85c9bf8b57656c3, type: 2}
-  - {fileID: 2100000, guid: 9b4b14defb68547cb86449208210b0d7, type: 2}
   _lastPooSprites:
   - {fileID: 21300000, guid: 7259a09e810a6460b805377d386c0f82, type: 3}
-  - {fileID: 21300000, guid: d7ed63ed2beaa44d5aa2c5c35d40eef8, type: 3}
+  - {fileID: 21300000, guid: 00ad0dc28f2ce5a41b8a201604775126, type: 3}
 --- !u!212 &21225570
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -95,7 +89,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 7259a09e810a6460b805377d386c0f82, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 00ad0dc28f2ce5a41b8a201604775126, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -188,15 +182,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 461601fb4974b734daceede18c8f2aa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pooSliderTransform: {fileID: 460306}
   _eraserMaterial: {fileID: 2100000, guid: e6c0f4be1c3e2483fab3b131028092cf, type: 2}
   _myCam: {fileID: 2073886}
-  _rts:
-  - {fileID: 8400000, guid: 534c4fc2d899dab49b99d1773684b580, type: 2}
-  - {fileID: 8400000, guid: ed8ecf93e359042b1885a061d990b1b8, type: 2}
-  - {fileID: 8400000, guid: 5bb0c9a77d1724e8989b8dd12b2d3309, type: 2}
-  - {fileID: 8400000, guid: ffc349785c5eb48daa8b96bd10b7da45, type: 2}
-  - {fileID: 8400000, guid: 445bf742fda43458ab16de07607eeb5e, type: 2}
+  _pooSlide: {fileID: 11490458}
+  _pooRenderer: {fileID: 21225570}
 --- !u!20 &2073886
 Camera:
   m_ObjectHideFlags: 0
@@ -230,7 +219,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 0
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 534c4fc2d899dab49b99d1773684b580, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0

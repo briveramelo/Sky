@@ -1,7 +1,7 @@
 ﻿Shader "MaskConstruction" {
     Properties {
         _Color ("Main Color", Color) = (1,1,1,1)
-        _MainTex ("Base (RGB) Trans (A)", 2D) = "white" {}
+        _EraserTex ("Eraser Texture", 2D) = "white" {}
     }
  
     SubShader {
@@ -10,10 +10,10 @@
         ZTest Off
         Blend One One
         BlendOp Max
+        //Cull Off
         Pass {
             Lighting Off
-            SetTexture[_MainTex] {
-                matrix [_UVMatrix]//todo: fix broken line. Eraser appears as full, 100% opaque square. Replace this deprecated+removed "fixed function" with something still available in Unity
+            SetTexture[_EraserTex] {
                 ConstantColor [_Color]
                 combine texture * constant
             }

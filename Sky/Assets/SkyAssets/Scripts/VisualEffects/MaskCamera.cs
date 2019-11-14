@@ -1,59 +1,117 @@
 ﻿using UnityEngine;
-using GenericFunctions;
+using UnityEngine.Experimental.Rendering;
 
 public class MaskCamera : MonoBehaviour
 {
-    [SerializeField] private Transform _pooSliderTransform;
     [SerializeField] private Material _eraserMaterial;
     [SerializeField] private Camera _myCam;
-    [SerializeField] private RenderTexture[] _rts;
-
+    [SerializeField] private PooSlide _pooSlide;
+    [SerializeField] private SpriteRenderer _pooRenderer;
     
     private bool _firstFrame;
-    private Vector2 RenderSize => new Vector2(_myCam.targetTexture.width, _myCam.targetTexture.height);
-    private Vector2 RenderUnitsPerWorldUnits => RenderSize / ScreenSpace.ScreenSizeWorldUnits;
-    private Vector2 _newHoleWorldPos;
-    private Vector2? _newHolePositionPixels;
+
+    #region Hole
+
+    private Vector2? _newHoleCenterPixels;
+
+    private Vector2 _holeCenterPixels
+    {
+        get
+        {
+            if (!_newHoleCenterPixels.HasValue)
+            {
+                return ScreenSpace.ScreenSizePixels / 2;
+            }
+
+            return _newHoleCenterPixels.Value;
+        }
+    }
+
+    private Vector2 _holeSizePixels => 32 * ScreenSpace.ScreenZoom * Vector2.one;
+    private Rect _holeRectPixels => new Rect(_holeCenterPixels - _holeSizePixels / 2, _holeSizePixels);
+
+    #endregion
+
+    #region Poo
+
+    private Vector2 _pooSizeTexturePixels => _pooRenderer.sprite.rect.size * 2;
+
+    private Vector2 _pooSizeScreenPixels => _pooSizeTexturePixels;
+
+    //private Vector2 _pooSizeTexturePixels => ScreenSpace.ScreenSizePixels;
+    private Rect _pooRectPixels => new Rect(Vector2.zero, _pooSizeScreenPixels);
+    private Rect _pooRectWorld => new Rect(-_pooRectPixels.size.PixelsToWorldUnits() / 2, _pooRectPixels.size.PixelsToWorldUnits());
+    private Rect _holeRectWorld => new Rect(_holeRectPixels.position.PixelsToWorldPosition(), _holeRectPixels.size.PixelsToWorldUnits());
+
+    #endregion
 
     private void OnDrawGizmosSelected()
     {
-        //draw world contents
+        DrawBoundingBox(_pooRectWorld);
+        DrawBoundingBox(new Rect(Vector2.zero, Vector2.one));
+
+
+        //draw holes
+//        {
+//            Vector2[] specialSpotsPixels = new Vector2[]
+//            {
+//                new Vector2(0,0),
+//                new Vector2(ScreenSpace.ScreenSizePixels.x,ScreenSpace.ScreenSizePixels.y),
+//                new Vector2(0,ScreenSpace.ScreenSizePixels.y),
+//                new Vector2(ScreenSpace.ScreenSizePixels.x,0),
+//                new Vector2(ScreenSpace.ScreenSizePixels.x,ScreenSpace.ScreenSizePixels.y) /2,
+//            };
+//            for (int i = 0; i < specialSpotsPixels.Length; i++)
+//            {
+//                DrawTouchSpot(new Rect(specialSpotsPixels[i].PixelsToWorldPosition(), _holeRectWorld.size), Color.red);
+//                DrawTouchSpot(new Rect(specialSpotsPixels[i].PixelsToViewport(), Vector2.one.normalized * 0.05f), Color.red);
+//            }
+//        }
+
+        if (_newHoleCenterPixels == null)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(_newHoleWorldPos, .15f);
-            Gizmos.color = Color.black;
-            Vector2 pooPos = _pooSliderTransform.position;
-            var worldSize = ScreenSpace.WorldEdge;
-            var pooRectWorldUnits = new Rect(-worldSize + pooPos, 2 * worldSize);
-            Gizmos.DrawWireCube(pooRectWorldUnits.center, pooRectWorldUnits.size);
-            
-            Gizmos.DrawLine(pooRectWorldUnits.center + Vector2.up * pooRectWorldUnits.height /2, pooRectWorldUnits.center - Vector2.up * pooRectWorldUnits.height /2);
-            Gizmos.DrawLine(pooRectWorldUnits.center - Vector2.right * pooRectWorldUnits.width /2, pooRectWorldUnits.center + Vector2.right * pooRectWorldUnits.width /2);
+            return;
         }
         
-        //draw normalized contents
-        if (_newHolePositionPixels.HasValue)
+        //draw touch spots
         {
-            //draw normalized box
-            Gizmos.color = Color.black;
-            Gizmos.DrawWireCube(Vector2.one*.5f, Vector2.one);
-            Gizmos.DrawLine(new Vector2(0.5f, 1f), new Vector2(0.5f, 0f));
-            Gizmos.DrawLine(new Vector2(0f, 0.5f), new Vector2(1f, 0.5f));
-            
-            //draw normalized sphere
             Gizmos.color = Color.red;
-            Vector2 holeLocalToImageWorldPos = _pooSliderTransform.InverseTransformPoint(_newHoleWorldPos);
-            Vector2 holeSizeNormalized = GetRenderHoleSize();
-            var normHole = holeLocalToImageWorldPos.WorldToViewport();
-            Gizmos.DrawWireCube(normHole, holeSizeNormalized);
+            DrawTouchSpot(_holeRectWorld, Color.red);
+            var normalizedScreenPosition = _holeRectWorld.position.WorldToViewportPosition();
+            var normalizedScreenSize = _holeRectWorld.size.WorldToViewportUnits();
+            DrawTouchSpot(new Rect(normalizedScreenPosition, normalizedScreenSize), Color.red);
+            DrawTouchSpot(new Rect(GetImagePositionNormalized(normalizedScreenPosition), GetImageSizeNormalized(normalizedScreenSize)), Color.red);
+            PrintTest();
         }
+    }
+
+    private void DrawBoundingBox(Rect boundingRect)
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(boundingRect.center, boundingRect.size);
+
+        //draw poo image center lines (pixels)
+        Gizmos.DrawLine(boundingRect.center + Vector2.up * boundingRect.height / 2, boundingRect.center - Vector2.up * boundingRect.height / 2);
+        Gizmos.DrawLine(boundingRect.center - Vector2.right * boundingRect.width / 2, boundingRect.center + Vector2.right * boundingRect.width / 2);
+    }
+
+    private void DrawTouchSpot(Rect touchRect, Color color)
+    {
+        Gizmos.color = color;
+        Gizmos.DrawWireSphere(touchRect.center, touchRect.size.x / 2);
+        Gizmos.DrawWireCube(touchRect.center, touchRect.size);
     }
 
     private void Awake()
     {
-        _myCam.targetTexture = _rts[Constants.TargetPooInt];
+        var screenSize = ScreenSpace.ScreenSizePixels;
+        var newRenderTex = new RenderTexture((int) screenSize.x, (int) screenSize.y, 0, GraphicsFormat.R8G8B8A8_UNorm);
+        _myCam.targetTexture = newRenderTex;
+        _pooSlide.SetRenderTexture(newRenderTex);
+        
         _firstFrame = true;
         TouchInputManager.Instance.OnTouchWorldHeld += OnTouchWorldHeld;
+        TouchInputManager.Instance.OnTouchWorldEnd += OnTouchWorldEnd;
     }
 
     private void OnDestroy()
@@ -64,23 +122,22 @@ public class MaskCamera : MonoBehaviour
         }
 
         TouchInputManager.Instance.OnTouchWorldHeld -= OnTouchWorldHeld;
+        TouchInputManager.Instance.OnTouchWorldEnd -= OnTouchWorldEnd;
     }
 
     private void OnTouchWorldHeld(int fingerId, Vector2 touchWorldPosition)
     {
-        _newHoleWorldPos = touchWorldPosition;
-        Vector2 pooPos = _pooSliderTransform.position;
-        var worldSize = ScreenSpace.WorldEdge;
-        var pooRectWorldUnits = new Rect(-worldSize + pooPos, 2 * worldSize);
+        _newHoleCenterPixels = touchWorldPosition.WorldPositionToPixels();
         
-        if (pooRectWorldUnits.Contains(touchWorldPosition))
+        if (!_pooRectWorld.Overlaps(new Rect(touchWorldPosition, _holeSizePixels.PixelsToWorldUnits())))
         {
-            _newHolePositionPixels = touchWorldPosition.WorldPositionToPixels();
+            _newHoleCenterPixels = null;
         }
-        else
-        {
-            _newHolePositionPixels = null;
-        }
+    }
+
+    private void OnTouchWorldEnd(int fingerId, Vector2 touchWorldPosition)
+    {
+        _newHoleCenterPixels = null;
     }
 
     private void OnPostRender()
@@ -91,46 +148,63 @@ public class MaskCamera : MonoBehaviour
             GL.Clear(false, true, new Color(0.0f, 0.0f, 0.0f, 0.0f));
         }
 
-        if (_newHolePositionPixels.HasValue)
+        if (_newHoleCenterPixels.HasValue)
         {
-            Vector2 holeLocalToImageWorldPos = _pooSliderTransform.InverseTransformPoint(_newHoleWorldPos);
-            Vector2 holeSizeNormalized = GetRenderHoleSize();
-            var normHole = holeLocalToImageWorldPos.WorldToViewport();
-            Vector2 renderHoleBottomLeft = normHole - holeSizeNormalized/2;
-            Rect renderHoleRectNormalized = new Rect(renderHoleBottomLeft, holeSizeNormalized);
-            CutHole(renderHoleRectNormalized);
+            CutHole(_holeRectPixels.position.PixelsToViewport(), _eraserMaterial);
         }
     }
 
-    //approximately normalizes hole size across resolutions
-    private Vector2 GetRenderHoleSize()
+    private Range _xBoundsScreenNormalized => new Range(-0.5f * _pooSizeTexturePixels.x / ScreenSpace.ScreenSizePixels.x + 0.5f, 0.5f * _pooSizeTexturePixels.x / ScreenSpace.ScreenSizePixels.x + 0.5f);
+    private Range _yBoundsScreenNormalized => new Range(-0.5f * _pooSizeTexturePixels.y / ScreenSpace.ScreenSizePixels.y + 0.5f, 0.5f * _pooSizeTexturePixels.y / ScreenSpace.ScreenSizePixels.y + 0.5f);
+    private Vector2 _minScreenNormalized => new Vector2(_xBoundsScreenNormalized.Min, _yBoundsScreenNormalized.Min);
+    private Vector2 _screenToImageFactor => new Vector2((0.5f - _xBoundsScreenNormalized.Min) / _xBoundsScreenNormalized.Diff, (0.5f - _yBoundsScreenNormalized.Min) / _yBoundsScreenNormalized.Diff);
+
+    //values can exist below 0 and above 1, as the image may expand beyond the 0,1 screen bounds
+    private Vector2 GetImagePositionNormalized(Vector2 normalizedScreenPosition)
     {
-        const float zoomScalar = .16f/2;
-        const float addend = 120f-zoomScalar;
-        const float scalar = 1.5f;
-        var holeSizeScaled = scalar * (addend + zoomScalar * ScreenSpace.ScreenZoom) * (Vector2.one / RenderSize);
-        return holeSizeScaled;
+        return normalizedScreenPosition * _screenToImageFactor + _minScreenNormalized;
+    }
+    
+    private Vector2 GetImageSizeNormalized(Vector2 normalizedScreenSize)
+    {
+        return normalizedScreenSize * _screenToImageFactor;
     }
 
-    private void CutHole(Rect holeRectNormalized)
+    private void PrintTest()
     {
-        var normalizedErasableImageRect = new Rect(0.0f, 0.0f, 1.0f, 1.0f);
+        Debug.Log(GetImagePositionNormalized(new Vector2(0, 0)));
+        Debug.Log(GetImagePositionNormalized(new Vector2(1, 1)));
+        Debug.Log(GetImagePositionNormalized(new Vector2(0.5f, 0.5f)));
+    }
+
+    private void CutHole(Vector2 holeRectPositionScreenNormalized, Material eraserMaterial)
+    {
+        var holeRectImageSpace = new Rect
+        {
+            position = GetImagePositionNormalized(holeRectPositionScreenNormalized),
+            size = (Vector2.one / _pooSizeTexturePixels).normalized * 0.05f
+        };
+        
+        var unitRect = new Rect(Vector2.zero, Vector2.one);
         
         GL.PushMatrix();
         GL.LoadOrtho();
-        for (var i = 0; i < _eraserMaterial.passCount; i++)
+        for (var i = 0; i < eraserMaterial.passCount; i++)
         {
-            _eraserMaterial.SetPass(i);
+            eraserMaterial.SetPass(i);
             GL.Begin(GL.QUADS);
             GL.Color(Color.white);
-            GL.TexCoord2(normalizedErasableImageRect.xMin, normalizedErasableImageRect.yMax);
-            GL.Vertex3(holeRectNormalized.xMin, holeRectNormalized.yMax, 0.0f);
-            GL.TexCoord2(normalizedErasableImageRect.xMax, normalizedErasableImageRect.yMax);
-            GL.Vertex3(holeRectNormalized.xMax, holeRectNormalized.yMax, 0.0f);
-            GL.TexCoord2(normalizedErasableImageRect.xMax, normalizedErasableImageRect.yMin);
-            GL.Vertex3(holeRectNormalized.xMax, holeRectNormalized.yMin, 0.0f);
-            GL.TexCoord2(normalizedErasableImageRect.xMin, normalizedErasableImageRect.yMin);
-            GL.Vertex3(holeRectNormalized.xMin, holeRectNormalized.yMin, 0.0f);
+            GL.TexCoord2(unitRect.xMin, unitRect.yMax);//top left
+            GL.Vertex3(holeRectImageSpace.xMin, holeRectImageSpace.yMax, 0.0f);
+            
+            GL.TexCoord2(unitRect.xMax, unitRect.yMax);//top right
+            GL.Vertex3(holeRectImageSpace.xMax, holeRectImageSpace.yMax, 0.0f);
+            
+            GL.TexCoord2(unitRect.xMax, unitRect.yMin);//bottom right
+            GL.Vertex3(holeRectImageSpace.xMax, holeRectImageSpace.yMin, 0.0f);
+            
+            GL.TexCoord2(unitRect.xMin, unitRect.yMin);//bottom left
+            GL.Vertex3(holeRectImageSpace.xMin, holeRectImageSpace.yMin, 0.0f);
             GL.End();
         }
 

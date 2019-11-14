@@ -14,14 +14,9 @@ public class EffectFactoryEditor : Editor
 
         var pooPrefab = (serializedObject.targetObject as EffectFactory).PooEffectPrefab;
 
-        if (GUILayout.Button("Drip poo"))
+        if (GUILayout.Button("Splat poo"))
         {
             Instantiate(pooPrefab, Vector2.zero, Quaternion.identity);
         }
-        if (GUILayout.Button("Splash Stationary poo"))
-        {
-            Instantiate(pooPrefab, Vector2.zero, Quaternion.identity).GetComponentInChildren<PooSlide>().KeepStationary();
-        }
-
     }
 }
