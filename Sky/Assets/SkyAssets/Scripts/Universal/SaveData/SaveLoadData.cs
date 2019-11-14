@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using BRM.BinarySerializers;
+using BRM.DebugAdapter;
+using BRM.FileSerializers;
+using BRM.FileSerializers.Interfaces;
 
 public class SaveLoadData : MonoBehaviour
 {
-    private DataSave _currentDataSave = new DataSave();
+    public DataSave CopyCurrentDataSave() => new DataSave(_currentDataSave);
+    
     private const int _maxScores = 5;
+    
+    private DataSave _currentDataSave = new DataSave();
     #if UNITY_EDITOR
     private string _folderName => $"{Application.dataPath}/SaveData";
     #else
@@ -15,40 +20,27 @@ public class SaveLoadData : MonoBehaviour
     #endif
     private string _fileName => "savefile.dat";
     private string _filePath => $"{_folderName}/{_fileName}";
-    public DataSave CopyCurrentDataSave() => new DataSave(_currentDataSave);
+    
+    private IWriteFiles _fileWriter;
+    private IReadFiles _fileReader;
 
     private void Awake()
     {
+        var binaryFileSerializer = new BinaryFileSerializer(new SystemBinarySerializer(), new UnityDebugger());
+        _fileWriter = binaryFileSerializer;
+        _fileReader = binaryFileSerializer;
+        
         Load();
     }
     
     private void Save()
     {
-        var bf = new BinaryFormatter();
-        if (!Directory.Exists(_folderName))
-        {
-            Directory.CreateDirectory(_folderName);
-        }
-
-        var fileStream = File.Create(_filePath);
-
-        bf.Serialize(fileStream, new DataSave(_currentDataSave));
-        fileStream.Close();
+        _fileWriter.Write(_filePath, _currentDataSave);
     }
 
     private void Load()
     {
-        if (File.Exists(_filePath))
-        {
-            var bf = new BinaryFormatter();
-            var fileStream = File.Open(_filePath, FileMode.Open);
-            _currentDataSave = new DataSave((DataSave) bf.Deserialize(fileStream));
-            fileStream.Close();
-        }
-        else
-        {
-            _currentDataSave = new DataSave();
-        }
+        _currentDataSave = _fileReader.Read<DataSave>(_filePath) ?? new DataSave();
     }
 
     public void PromptSave(StoryScore newStoryScore)
