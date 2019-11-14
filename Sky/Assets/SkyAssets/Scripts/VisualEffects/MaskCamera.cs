@@ -10,10 +10,8 @@ public class MaskCamera : MonoBehaviour
     
     private bool _firstFrame;
 
-    #region Hole
-
+    #region Pixels
     private Vector2? _newHoleCenterPixels;
-
     private Vector2 _holeCenterPixels
     {
         get
@@ -26,62 +24,36 @@ public class MaskCamera : MonoBehaviour
             return _newHoleCenterPixels.Value;
         }
     }
-
     private Vector2 _holeSizePixels => 32 * ScreenSpace.ScreenZoom * Vector2.one;
     private Rect _holeRectPixels => new Rect(_holeCenterPixels - _holeSizePixels / 2, _holeSizePixels);
-
+    
+    private Vector2 _pooSizeTexturePixels => _pooRenderer.sprite.rect.size * 2;
+    private Rect _pooRectPixels => new Rect(Vector2.zero, _pooSizeTexturePixels);
     #endregion
 
-    #region Poo
-
-    private Vector2 _pooSizeTexturePixels => _pooRenderer.sprite.rect.size * 2;
-
-    private Vector2 _pooSizeScreenPixels => _pooSizeTexturePixels;
-
-    //private Vector2 _pooSizeTexturePixels => ScreenSpace.ScreenSizePixels;
-    private Rect _pooRectPixels => new Rect(Vector2.zero, _pooSizeScreenPixels);
+    #region World
     private Rect _pooRectWorld => new Rect(-_pooRectPixels.size.PixelsToWorldUnits() / 2, _pooRectPixels.size.PixelsToWorldUnits());
     private Rect _holeRectWorld => new Rect(_holeRectPixels.position.PixelsToWorldPosition(), _holeRectPixels.size.PixelsToWorldUnits());
-
     #endregion
 
     private void OnDrawGizmosSelected()
     {
+        DrawBoundingBox(new Rect(-ScreenSpace.ScreenSizeWorldUnits / 2, ScreenSpace.ScreenSizeWorldUnits), Color.blue);
         DrawBoundingBox(_pooRectWorld, Color.blue);
-        DrawBoundingBox(new Rect(Vector2.zero, Vector2.one), Color.blue);
-        DrawBoundingBox(new Rect(GetTexturePositionNormalized(Vector2.zero), GetTextureSizeNormalized(Vector2.one)), Color.blue);
-
-        //draw holes
-//        {
-//            Vector2[] specialSpotsPixels = new Vector2[]
-//            {
-//                new Vector2(0,0),
-//                new Vector2(ScreenSpace.ScreenSizePixels.x,ScreenSpace.ScreenSizePixels.y),
-//                new Vector2(0,ScreenSpace.ScreenSizePixels.y),
-//                new Vector2(ScreenSpace.ScreenSizePixels.x,0),
-//                new Vector2(ScreenSpace.ScreenSizePixels.x,ScreenSpace.ScreenSizePixels.y) /2,
-//            };
-//            for (int i = 0; i < specialSpotsPixels.Length; i++)
-//            {
-//                DrawTouchSpot(new Rect(specialSpotsPixels[i].PixelsToWorldPosition(), _holeRectWorld.size), Color.red);
-//                DrawTouchSpot(new Rect(specialSpotsPixels[i].PixelsToViewport(), Vector2.one.normalized * 0.05f), Color.red);
-//            }
-//        }
-
+        DrawBoundingBox(new Rect(Vector2.zero - Vector2.one * 0.5f, Vector2.one), Color.blue);
+        DrawBoundingBox(new Rect(GetTexturePositionNormalized(Vector2.zero)- Vector2.one * 0.5f, GetTextureSizeNormalized(Vector2.one)), Color.blue);
+        
         if (_newHoleCenterPixels == null)
         {
             return;
         }
         
-        //draw touch spots
-        {
-            Gizmos.color = Color.red;
-            DrawTouchSpot(_holeRectWorld, Color.red);
-            var normalizedScreenPosition = _holeRectWorld.position.WorldToViewportPosition();
-            var normalizedScreenSize = _holeRectWorld.size.WorldToViewportUnits();
-            DrawTouchSpot(new Rect(normalizedScreenPosition, normalizedScreenSize), Color.red);
-            DrawTouchSpot(new Rect(GetTexturePositionNormalized(normalizedScreenPosition), GetTextureSizeNormalized(normalizedScreenSize)), Color.red);
-        }
+        Gizmos.color = Color.red;
+        DrawTouchSpot(_holeRectWorld, Color.red);
+        var normalizedScreenPosition = _holeRectWorld.position.WorldToViewportPosition();
+        var normalizedScreenSize = _holeRectWorld.size.WorldToViewportUnits();
+        DrawTouchSpot(new Rect(normalizedScreenPosition- Vector2.one * 0.5f, normalizedScreenSize), Color.red);
+        DrawTouchSpot(new Rect(GetTexturePositionNormalized(normalizedScreenPosition)- Vector2.one * 0.5f, GetTextureSizeNormalized(normalizedScreenSize)), Color.red);
     }
 
     private void DrawBoundingBox(Rect boundingRect, Color color)
@@ -111,7 +83,6 @@ public class MaskCamera : MonoBehaviour
         _firstFrame = true;
         TouchInputManager.Instance.OnTouchWorldHeld += OnTouchWorldHeld;
         TouchInputManager.Instance.OnTouchWorldEnd += OnTouchWorldEnd;
-        PrintTest();
     }
 
     private void OnDestroy()
@@ -154,10 +125,8 @@ public class MaskCamera : MonoBehaviour
         }
     }
 
-    private Range _xBoundsTextureNormalized => new Range(0.5f - (0.5f * ScreenSpace.ScreenSizePixels.x / _pooSizeTexturePixels.x), 0.5f + (0.5f * ScreenSpace.ScreenSizePixels.x / _pooSizeTexturePixels.x));
-    private Range _yBoundsTextureNormalized => new Range(0.5f - (0.5f * ScreenSpace.ScreenSizePixels.y / _pooSizeTexturePixels.y), 0.5f + (0.5f * ScreenSpace.ScreenSizePixels.y / _pooSizeTexturePixels.y));
-    private Vector2 _screenToTextureOffset => 0.5f * (Vector2.one - ScreenSpace.ScreenSizePixels / _pooSizeScreenPixels);
-    private Vector2 _screenToTextureFactor => ScreenSpace.ScreenSizePixels / _pooSizeScreenPixels;
+    private Vector2 _screenToTextureOffset => 0.5f * (Vector2.one - ScreenSpace.ScreenSizePixels / _pooSizeTexturePixels);
+    private Vector2 _screenToTextureFactor => ScreenSpace.ScreenSizePixels / _pooSizeTexturePixels;
     
     //values can exist below 0 and above 1, as the image may expand beyond the 0,1 screen bounds
     private Vector2 GetTexturePositionNormalized(Vector2 normalizedScreenPosition)
@@ -168,16 +137,6 @@ public class MaskCamera : MonoBehaviour
     private Vector2 GetTextureSizeNormalized(Vector2 normalizedScreenSize)
     {
         return normalizedScreenSize * _screenToTextureFactor;
-    }
-
-    private void PrintTest()
-    {
-        Debug.Log(_xBoundsTextureNormalized.ToString("0.000") + " " + _xBoundsTextureNormalized.Average.ToString("0.000"));
-        Debug.Log(_yBoundsTextureNormalized.ToString("0.000") + " " + _yBoundsTextureNormalized.Average.ToString("0.000"));
-        
-        Debug.Log(GetTexturePositionNormalized(new Vector2(0, 0)).ToString("0.000"));
-        Debug.Log(GetTexturePositionNormalized(new Vector2(0.5f, 0.5f)).ToString("0.000"));
-        Debug.Log(GetTexturePositionNormalized(new Vector2(1, 1)).ToString("0.000"));
     }
 
     private void CutHole(Vector2 holeRectPositionScreenNormalized, Material eraserMaterial)
