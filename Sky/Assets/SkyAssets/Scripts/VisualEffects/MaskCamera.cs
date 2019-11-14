@@ -27,13 +27,18 @@ public class MaskCamera : MonoBehaviour
     private Vector2 _holeSizePixels => 32 * ScreenSpace.ScreenZoom * Vector2.one;
     private Rect _holeRectPixels => new Rect(_holeCenterPixels - _holeSizePixels / 2, _holeSizePixels);
     
-    private Vector2 _pooSizeTexturePixels => _pooRenderer.sprite.rect.size * 2;
+    private Vector2 _pooSizeTexturePixels => _pooRenderer.sprite.rect.size * ScreenSpace.ScreenZoom;
     private Rect _pooRectPixels => new Rect(Vector2.zero, _pooSizeTexturePixels);
     #endregion
 
     #region World
     private Rect _pooRectWorld => new Rect(-_pooRectPixels.size.PixelsToWorldUnits() / 2, _pooRectPixels.size.PixelsToWorldUnits());
     private Rect _holeRectWorld => new Rect(_holeRectPixels.position.PixelsToWorldPosition(), _holeRectPixels.size.PixelsToWorldUnits());
+    #endregion
+    
+    #region Screen To Texture Normalized Space Conversion Values
+    private Vector2 _screenToTextureOffset => 0.5f * (Vector2.one - ScreenSpace.ScreenSizePixels / _pooSizeTexturePixels);
+    private Vector2 _screenToTextureFactor => ScreenSpace.ScreenSizePixels / _pooSizeTexturePixels;
     #endregion
 
     private void OnDrawGizmosSelected()
@@ -125,9 +130,6 @@ public class MaskCamera : MonoBehaviour
         }
     }
 
-    private Vector2 _screenToTextureOffset => 0.5f * (Vector2.one - ScreenSpace.ScreenSizePixels / _pooSizeTexturePixels);
-    private Vector2 _screenToTextureFactor => ScreenSpace.ScreenSizePixels / _pooSizeTexturePixels;
-    
     //values can exist below 0 and above 1, as the image may expand beyond the 0,1 screen bounds
     private Vector2 GetTexturePositionNormalized(Vector2 normalizedScreenPosition)
     {
