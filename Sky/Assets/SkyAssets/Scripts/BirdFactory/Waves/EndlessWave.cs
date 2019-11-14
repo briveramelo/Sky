@@ -13,7 +13,8 @@ public struct Range
     public float Min;
     public float Max;
     public float Diff => Max - Min;
-
+    public float Average => (Min + Max) / 2;
+    
     public Range(float min, float max)
     {
         if (min > max)
@@ -30,6 +31,10 @@ public struct Range
     public override string ToString()
     {
         return $"({Min}, {Max})";
+    }
+    public string ToString(string format)
+    {
+        return $"({Min.ToString(format)}, {Max.ToString(format)})";
     }
 }
 

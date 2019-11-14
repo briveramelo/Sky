@@ -47,9 +47,9 @@ public class MaskCamera : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        DrawBoundingBox(_pooRectWorld);
-        DrawBoundingBox(new Rect(Vector2.zero, Vector2.one));
-
+        DrawBoundingBox(_pooRectWorld, Color.blue);
+        DrawBoundingBox(new Rect(Vector2.zero, Vector2.one), Color.blue);
+        DrawBoundingBox(new Rect(GetTexturePositionNormalized(Vector2.zero), GetTextureSizeNormalized(Vector2.one)), Color.blue);
 
         //draw holes
 //        {
@@ -80,14 +80,13 @@ public class MaskCamera : MonoBehaviour
             var normalizedScreenPosition = _holeRectWorld.position.WorldToViewportPosition();
             var normalizedScreenSize = _holeRectWorld.size.WorldToViewportUnits();
             DrawTouchSpot(new Rect(normalizedScreenPosition, normalizedScreenSize), Color.red);
-            DrawTouchSpot(new Rect(GetImagePositionNormalized(normalizedScreenPosition), GetImageSizeNormalized(normalizedScreenSize)), Color.red);
-            PrintTest();
+            DrawTouchSpot(new Rect(GetTexturePositionNormalized(normalizedScreenPosition), GetTextureSizeNormalized(normalizedScreenSize)), Color.red);
         }
     }
 
-    private void DrawBoundingBox(Rect boundingRect)
+    private void DrawBoundingBox(Rect boundingRect, Color color)
     {
-        Gizmos.color = Color.blue;
+        Gizmos.color = color;
         Gizmos.DrawWireCube(boundingRect.center, boundingRect.size);
 
         //draw poo image center lines (pixels)
@@ -112,6 +111,7 @@ public class MaskCamera : MonoBehaviour
         _firstFrame = true;
         TouchInputManager.Instance.OnTouchWorldHeld += OnTouchWorldHeld;
         TouchInputManager.Instance.OnTouchWorldEnd += OnTouchWorldEnd;
+        PrintTest();
     }
 
     private void OnDestroy()
@@ -154,34 +154,37 @@ public class MaskCamera : MonoBehaviour
         }
     }
 
-    private Range _xBoundsScreenNormalized => new Range(-0.5f * _pooSizeTexturePixels.x / ScreenSpace.ScreenSizePixels.x + 0.5f, 0.5f * _pooSizeTexturePixels.x / ScreenSpace.ScreenSizePixels.x + 0.5f);
-    private Range _yBoundsScreenNormalized => new Range(-0.5f * _pooSizeTexturePixels.y / ScreenSpace.ScreenSizePixels.y + 0.5f, 0.5f * _pooSizeTexturePixels.y / ScreenSpace.ScreenSizePixels.y + 0.5f);
-    private Vector2 _minScreenNormalized => new Vector2(_xBoundsScreenNormalized.Min, _yBoundsScreenNormalized.Min);
-    private Vector2 _screenToImageFactor => new Vector2((0.5f - _xBoundsScreenNormalized.Min) / _xBoundsScreenNormalized.Diff, (0.5f - _yBoundsScreenNormalized.Min) / _yBoundsScreenNormalized.Diff);
-
+    private Range _xBoundsTextureNormalized => new Range(0.5f - (0.5f * ScreenSpace.ScreenSizePixels.x / _pooSizeTexturePixels.x), 0.5f + (0.5f * ScreenSpace.ScreenSizePixels.x / _pooSizeTexturePixels.x));
+    private Range _yBoundsTextureNormalized => new Range(0.5f - (0.5f * ScreenSpace.ScreenSizePixels.y / _pooSizeTexturePixels.y), 0.5f + (0.5f * ScreenSpace.ScreenSizePixels.y / _pooSizeTexturePixels.y));
+    private Vector2 _screenToTextureOffset => 0.5f * (Vector2.one - ScreenSpace.ScreenSizePixels / _pooSizeScreenPixels);
+    private Vector2 _screenToTextureFactor => ScreenSpace.ScreenSizePixels / _pooSizeScreenPixels;
+    
     //values can exist below 0 and above 1, as the image may expand beyond the 0,1 screen bounds
-    private Vector2 GetImagePositionNormalized(Vector2 normalizedScreenPosition)
+    private Vector2 GetTexturePositionNormalized(Vector2 normalizedScreenPosition)
     {
-        return normalizedScreenPosition * _screenToImageFactor + _minScreenNormalized;
+        return normalizedScreenPosition * _screenToTextureFactor + _screenToTextureOffset;
     }
     
-    private Vector2 GetImageSizeNormalized(Vector2 normalizedScreenSize)
+    private Vector2 GetTextureSizeNormalized(Vector2 normalizedScreenSize)
     {
-        return normalizedScreenSize * _screenToImageFactor;
+        return normalizedScreenSize * _screenToTextureFactor;
     }
 
     private void PrintTest()
     {
-        Debug.Log(GetImagePositionNormalized(new Vector2(0, 0)));
-        Debug.Log(GetImagePositionNormalized(new Vector2(1, 1)));
-        Debug.Log(GetImagePositionNormalized(new Vector2(0.5f, 0.5f)));
+        Debug.Log(_xBoundsTextureNormalized.ToString("0.000") + " " + _xBoundsTextureNormalized.Average.ToString("0.000"));
+        Debug.Log(_yBoundsTextureNormalized.ToString("0.000") + " " + _yBoundsTextureNormalized.Average.ToString("0.000"));
+        
+        Debug.Log(GetTexturePositionNormalized(new Vector2(0, 0)).ToString("0.000"));
+        Debug.Log(GetTexturePositionNormalized(new Vector2(0.5f, 0.5f)).ToString("0.000"));
+        Debug.Log(GetTexturePositionNormalized(new Vector2(1, 1)).ToString("0.000"));
     }
 
     private void CutHole(Vector2 holeRectPositionScreenNormalized, Material eraserMaterial)
     {
         var holeRectImageSpace = new Rect
         {
-            position = GetImagePositionNormalized(holeRectPositionScreenNormalized),
+            position = GetTexturePositionNormalized(holeRectPositionScreenNormalized),
             size = (Vector2.one / _pooSizeTexturePixels).normalized * 0.05f
         };
         
