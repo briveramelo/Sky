@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
 public class MaskCamera : MonoBehaviour
@@ -9,6 +10,7 @@ public class MaskCamera : MonoBehaviour
     [SerializeField] private SpriteRenderer _pooRenderer;
     
     private bool _firstFrame;
+    private Vector2? _holeLastFrameCenterPixels;
 
     #region Pixels
     private Vector2? _newHoleCenterPixels;
@@ -129,6 +131,23 @@ public class MaskCamera : MonoBehaviour
         if (_newHoleCenterPixels.HasValue)
         {
             CutHole(_holeRectPixels.center.PixelsToViewport(), 0.15f, _eraserMaterial);
+            
+            if (_holeLastFrameCenterPixels.HasValue)
+            {
+                FillHoleGaps();
+            }
+        }
+
+        _holeLastFrameCenterPixels = _newHoleCenterPixels;
+    }
+
+    private void FillHoleGaps()
+    {
+        var holeIncrement = new Range(_holeRectPixels.size).Average / 3;
+        Vector2 toDest = (_holeRectPixels.center - _holeLastFrameCenterPixels.Value).normalized * holeIncrement;
+        for (var iteratedPoint = _holeLastFrameCenterPixels.Value + toDest; Vector2.Distance(iteratedPoint, _holeRectPixels.center) > holeIncrement; iteratedPoint += toDest)
+        {
+            CutHole(iteratedPoint.PixelsToViewport(), 0.15f, _eraserMaterial);
         }
     }
 
@@ -145,11 +164,12 @@ public class MaskCamera : MonoBehaviour
 
     private void CutHole(Vector2 holeCenterScreenNormalized, float screenPercentage, Material eraserMaterial)
     {
-        float texturePercentage = screenPercentage * new Range(_screenToTextureFactor.x, _screenToTextureFactor.y).Average;
+        const float sqaureRootTwo = 1.4142f;
+        float texturePercentage = screenPercentage * new Range(_screenToTextureFactor).Average;
         var holeRectImageSpace = new Rect
         {
             position = GetTexturePositionNormalized(holeCenterScreenNormalized),
-            size = 1.4142f * texturePercentage * (Vector2.one / _pooSizeTexturePixels).normalized
+            size = sqaureRootTwo * texturePercentage * (Vector2.one / _pooSizeTexturePixels).normalized
         };
         holeRectImageSpace.position -= holeRectImageSpace.size / 2;
         

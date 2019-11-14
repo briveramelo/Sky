@@ -28,6 +28,12 @@ public struct Range
         Max = max;
     }
 
+    public Range(Vector2 vec)
+    {
+        Min = vec.x;
+        Max = vec.y;
+    }
+
     public override string ToString()
     {
         return $"({Min}, {Max})";
