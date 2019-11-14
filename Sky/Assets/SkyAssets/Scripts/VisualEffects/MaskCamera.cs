@@ -84,14 +84,19 @@ public class MaskCamera : MonoBehaviour
 
     private void Awake()
     {
-        var screenSize = ScreenSpace.ScreenSizePixels;
-        var newRenderTex = new RenderTexture((int) screenSize.x, (int) screenSize.y, 0, GraphicsFormat.R8G8B8A8_UNorm);
-        _myCam.targetTexture = newRenderTex;
-        _pooSlide.SetRenderTexture(newRenderTex);
-        
+        SetRenderTexture();
         _firstFrame = true;
+        
         TouchInputManager.Instance.OnTouchWorldHeld += OnTouchWorldHeld;
         TouchInputManager.Instance.OnTouchWorldEnd += OnTouchWorldEnd;
+    }
+    
+    private void SetRenderTexture()
+    {
+        var renderTextSize = _pooSizeTexturePixels;
+        var newRenderTex = new RenderTexture((int) renderTextSize.x, (int) renderTextSize.y, 0, GraphicsFormat.R8G8B8A8_UNorm);
+        _myCam.targetTexture = newRenderTex;
+        _pooSlide.SetRenderTexture(newRenderTex);
     }
 
     private void OnDestroy()
