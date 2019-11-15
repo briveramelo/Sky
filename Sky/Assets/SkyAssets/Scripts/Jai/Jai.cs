@@ -51,7 +51,7 @@ public class Jai : MonoBehaviour, IFreezable, IDie
     private void Awake()
     {
         _isAlive = true;
-        Constants.JaiTransform = transform;
+        EasyAccess.JaiTransform = transform;
     }
 
     private void Start()
@@ -167,7 +167,8 @@ public class Jai : MonoBehaviour, IFreezable, IDie
         {
             if (releaseDist > _distToThrow && _myWeapon != null)
             {
-                _weaponTrigger.UseMe(swipeDir.normalized * _throwSpeed);
+                var spearOffset = new Vector2(0f, .085f);
+                _weaponTrigger.UseMe((Vector2)transform.position + spearOffset, swipeDir.normalized * _throwSpeed);
                 StartCoroutine(AnimateUseWeapon(swipeDir));
             }
         }

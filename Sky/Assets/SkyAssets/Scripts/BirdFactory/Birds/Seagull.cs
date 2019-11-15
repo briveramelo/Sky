@@ -43,7 +43,7 @@ public class Seagull : Bird
         };
         InitializeThisSeagull();
         StartCoroutine(GetIntoPlace());
-        StartCoroutine(Poop());
+        StartCoroutine(TargetPoop(EasyAccess.JaiTransform));
     }
 
     private void InitializeThisSeagull()
@@ -129,16 +129,16 @@ public class Seagull : Bird
         _activePooCams += hit ? 1 : -1;
     }
 
-    private IEnumerator Poop()
+    private IEnumerator TargetPoop(Transform target)
     {
-        var minPoopTimeDelay = 1f;
+        const float minPoopTimeDelay = 1f;
         var pooDistanceRange = 0.4f * new Vector2(1f, 1.5f);
         yield return new WaitForSeconds(minPoopTimeDelay);
         while (true)
         {
-            var xDist = Mathf.Abs(transform.position.x - Constants.JaiTransform.position.x);
+            var xDist = Mathf.Abs(transform.position.x - target.position.x);
             var lastTimePooped = 0f;
-            if (xDist > pooDistanceRange[0] && xDist < pooDistanceRange[1] && Mathf.Sign(GetXVelocity()) == Mathf.Sign(Constants.JaiTransform.position.x - transform.position.x))
+            if (xDist > pooDistanceRange[0] && xDist < pooDistanceRange[1] && Mathf.Sign(GetXVelocity()) == Mathf.Sign(target.position.x - transform.position.x))
             {
                 if (_activePooCams < 5)
                 {
@@ -154,6 +154,6 @@ public class Seagull : Bird
             yield return null;
         }
 
-        StartCoroutine(Poop());
+        StartCoroutine(TargetPoop(target));
     }
 }

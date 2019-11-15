@@ -20,7 +20,7 @@ public class Albatross : Bird
 
     private void Update()
     {
-        Vector2 moveDir = Constants.BalloonCenter.position - transform.position;
+        Vector2 moveDir = EasyAccess.BalloonCenter.position - transform.position;
         if (Vector2.Distance(moveDir, Vector2.zero) > _fixedSpeedDistWorldUnits)
         {
             //fixed speed approach toward balloons

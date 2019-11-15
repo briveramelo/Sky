@@ -51,8 +51,8 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket, ID
         _eventBroker.Subscribe<ContinueData>(OnContinue);
         _startingParentTransform = transform.parent;
         TentacleToBasket = this;
-        Constants.BalloonCenter = _balloonCenter;
-        Constants.BasketTransform = _basketCenter;
+        EasyAccess.BalloonCenter = _balloonCenter;
+        EasyAccess.BasketTransform = _basketCenter;
     }
 
     private void Start()
@@ -62,7 +62,7 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket, ID
         for (var i = 0; i < _balloons.Count; i++)
         {
             _balloons[i].BalloonNumber = i;
-            _relativeBalloonPositions[i] = _balloonScripts[i].transform.position - Constants.JaiTransform.position;
+            _relativeBalloonPositions[i] = _balloonScripts[i].transform.position - EasyAccess.JaiTransform.position;
         }
     }
 

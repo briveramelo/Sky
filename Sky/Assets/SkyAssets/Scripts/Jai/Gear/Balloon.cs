@@ -68,7 +68,7 @@ public class Balloon : MonoBehaviour, IBasketToBalloon
         transform.SetParent(Basket.Instance.transform);
         gameObject.layer = Layers.BalloonLayer;
         _rope.layer = Layers.BalloonBoundsLayer;
-        transform.position = (Vector2) Constants.JaiTransform.position + newPosition;
+        transform.position = (Vector2) EasyAccess.JaiTransform.position + newPosition;
         _pixelPerfect.enabled = false;
         _boundsCollider.enabled = true;
     }

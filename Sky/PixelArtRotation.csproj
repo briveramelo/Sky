@@ -60,14 +60,14 @@
      <Compile Include="Assets\Third-Party-Assets\PixelArtRotation\Scripts\PixelRotation.cs" />
      <None Include="Assets\Third-Party-Assets\PixelArtRotation\PixelArtRotation.asmdef" />
      <None Include="Assets\Third-Party-Assets\PixelArtRotation\Documentation\Documentation.txt" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Tilemap.Editor">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UI">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>D:/Unity2019.2.9f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -255,6 +255,36 @@
  <Reference Include="UnityEditor.iOS.Extensions">
  <HintPath>D:/Unity2019.2.9f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
  </Reference>
+ <Reference Include="BRM.DebugAdapter.Interfaces">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/Debuggers/BRM.DebugAdapter.Interfaces.dll</HintPath>
+ </Reference>
+ <Reference Include="BRM.DebugAdapter.Unity">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/Debuggers/BRM.DebugAdapter.Unity.dll</HintPath>
+ </Reference>
+ <Reference Include="BRM.EventBrokers">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/EventBrokers/BRM.EventBrokers.dll</HintPath>
+ </Reference>
+ <Reference Include="BRM.EventBrokers.Interfaces">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/EventBrokers/BRM.EventBrokers.Interfaces.dll</HintPath>
+ </Reference>
+ <Reference Include="BRM.BinarySerializers.System">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/SerializationServices/BRM.BinarySerializers.System.dll</HintPath>
+ </Reference>
+ <Reference Include="BRM.DataSerializers.Interfaces">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/SerializationServices/BRM.DataSerializers.Interfaces.dll</HintPath>
+ </Reference>
+ <Reference Include="BRM.FileSerializers">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/SerializationServices/BRM.FileSerializers.dll</HintPath>
+ </Reference>
+ <Reference Include="BRM.FileSerializers.Interfaces">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/SerializationServices/BRM.FileSerializers.Interfaces.dll</HintPath>
+ </Reference>
+ <Reference Include="BRM.TextSerializers.System">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/SerializationServices/BRM.TextSerializers.System.dll</HintPath>
+ </Reference>
+ <Reference Include="BRM.TextSerializers.Unity">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/SerializationServices/BRM.TextSerializers.Unity.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.Advertisements">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/PackageCache/com.unity.ads@2.0.8/UnityEngine.Advertisements.dll</HintPath>
  </Reference>
@@ -272,36 +302,6 @@
  </Reference>
  <Reference Include="UnityEditor.Purchasing">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
- </Reference>
- <Reference Include="BRM.TextSerializers.System">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/SerializationServices/BRM.TextSerializers.System.dll</HintPath>
- </Reference>
- <Reference Include="BRM.FileSerializers.Interfaces">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/SerializationServices/BRM.FileSerializers.Interfaces.dll</HintPath>
- </Reference>
- <Reference Include="BRM.EventBrokers">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/EventBrokers/BRM.EventBrokers.dll</HintPath>
- </Reference>
- <Reference Include="BRM.DebugAdapter.Unity">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/Debuggers/BRM.DebugAdapter.Unity.dll</HintPath>
- </Reference>
- <Reference Include="BRM.DataSerializers.Interfaces">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/SerializationServices/BRM.DataSerializers.Interfaces.dll</HintPath>
- </Reference>
- <Reference Include="BRM.BinarySerializers.System">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/SerializationServices/BRM.BinarySerializers.System.dll</HintPath>
- </Reference>
- <Reference Include="BRM.TextSerializers.Unity">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/SerializationServices/BRM.TextSerializers.Unity.dll</HintPath>
- </Reference>
- <Reference Include="BRM.EventBrokers.Interfaces">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/EventBrokers/BRM.EventBrokers.Interfaces.dll</HintPath>
- </Reference>
- <Reference Include="BRM.FileSerializers">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/SerializationServices/BRM.FileSerializers.dll</HintPath>
- </Reference>
- <Reference Include="BRM.DebugAdapter.Interfaces">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/Debuggers/BRM.DebugAdapter.Interfaces.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>D:/Unity2019.2.9f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

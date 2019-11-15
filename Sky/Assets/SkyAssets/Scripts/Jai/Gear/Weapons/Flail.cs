@@ -12,9 +12,9 @@ public class Flail : Weapon
         //todo: add code here
     }
 
-    protected override void UseMe(Vector2 swipeDir)
+    protected override void UseMe(Vector2 startPosition, Vector2 swipeDir)
     {
-        base.UseMe(swipeDir);
+        base.UseMe(startPosition, swipeDir);
         Debug.Log("FLAILED!");
     }
 }

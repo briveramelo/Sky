@@ -3,7 +3,7 @@ using GenericFunctions;
 
 public interface IUsable
 {
-    void UseMe(Vector2 spotSwipe);
+    void UseMe(Vector2 startPosition, Vector2 spotSwipe);
 }
 
 public abstract class Weapon : MonoBehaviour, IUsable
@@ -17,9 +17,9 @@ public abstract class Weapon : MonoBehaviour, IUsable
     protected static int TimesUsed;
     protected abstract int WeaponNumber { get; }
 
-    void IUsable.UseMe(Vector2 spotSwipe)
+    void IUsable.UseMe(Vector2 startPosition, Vector2 spotSwipe)
     {
-        UseMe(spotSwipe);
+        UseMe(startPosition, spotSwipe);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -53,7 +53,7 @@ public abstract class Weapon : MonoBehaviour, IUsable
     /// <summary>
     /// increments "timesUsed" and plays audio clip
     /// </summary>
-    protected virtual void UseMe(Vector2 swipeDir)
+    protected virtual void UseMe(Vector2 startPosition, Vector2 swipeDir)
     {
         TimesUsed++;
         AudioManager.PlayAudio(_useSound);

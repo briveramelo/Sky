@@ -5,6 +5,7 @@ using GenericFunctions;
 public class Shoebill : Bird
 {
     protected override BirdType MyBirdType => BirdType.Shoebill;
+    private Transform _target;
     private IBumpable _basket;
     private bool _canCollide = true;
     private bool _flying = true;
@@ -21,13 +22,14 @@ public class Shoebill : Bird
         base.Awake();
         _xEdge = ScreenSpace.WorldEdge.x + 0.2f;
         _sinPeriodShift = Random.Range(0f, 5f);
-        _movingRight = transform.position.x < Constants.JaiTransform.position.x;
+        _movingRight = transform.position.x < EasyAccess.JaiTransform.position.x;
         _rigbod.velocity = Constants.SpeedMultiplier * 0.01f * _movingSign * Vector2.right;
     }
 
     private void Start()
     {
         _basket = FindObjectOfType<BasketEngine>().GetComponent<IBumpable>();
+        _target = EasyAccess.BasketTransform;
     }
 
     private void Update()
@@ -53,7 +55,7 @@ public class Shoebill : Bird
 
     private float FindYVelocity()
     {
-        var yDistAway = transform.position.y - Constants.BasketTransform.position.y;
+        var yDistAway = transform.position.y - _target.position.y;
         var periodLength = 1f;
         var sinOffset = 1f * Mathf.Sin(2 * Mathf.PI * (1 / periodLength) * (Time.timeSinceLevelLoad + _sinPeriodShift));
         return Mathf.Clamp(-yDistAway, -1, 1) + sinOffset;
