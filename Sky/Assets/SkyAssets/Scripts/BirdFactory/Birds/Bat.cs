@@ -47,12 +47,12 @@ public class Bat : Bird
     {
         base.Awake();
         _targetPositions = new Vector2[_positionWindowLength];
-        StartCoroutine(Approach());
     }
 
     private void Start()
     {
         _target = EasyAccess.BalloonCenter;
+        StartCoroutine(Approach());
     }
 
     // Flap straight towards the first point on the elliptical perimeter

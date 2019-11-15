@@ -160,19 +160,19 @@
      <Compile Include="Assets\SkyAssets\Scripts\VisualEffects\GutGenerator.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\VisualEffects\MaskCamera.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\VisualEffects\PooNugget.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\VisualEffects\PooSlide.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\VisualEffects\PooSplat.cs" />
      <None Include="Assets\SkyAssets\Scripts\Sky.asmdef" />
  <Reference Include="Unity.TextMeshPro">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UI">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Tilemap.Editor">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.UI">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>D:/Unity2019.2.9f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

@@ -2,7 +2,7 @@
 using System.Collections;
 using GenericFunctions;
 
-public class PooSlide : MonoBehaviour
+public class PooSplat : MonoBehaviour
 {
     [SerializeField] private GameObject _parent;
     [SerializeField] private SpriteRenderer _mySpriteRenderer;

@@ -36,7 +36,7 @@ public class Crow : Bird, IMurderToCrow
     private IDebug _debugger = new UnityDebugger {Enabled = false};
     private ICrowToMurder _murderInterface;
 
-    private Transform _target;
+    private Transform _target => EasyAccess.BalloonCenter;
     private Vector2 _startPosition;
 
     private const float _moveSpeed = 4.5f /4f;
@@ -55,11 +55,6 @@ public class Crow : Bird, IMurderToCrow
     {
         base.Awake();
         _murderInterface = _murder;
-    }
-
-    private void Start()
-    {
-        _target = EasyAccess.BalloonCenter;
     }
 
     #endregion

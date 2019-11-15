@@ -64,14 +64,14 @@
      <Compile Include="Assets\SkyAssets\Scripts\Editor\TipUiEditor.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Editor\WaveManagerEditor.cs" />
      <None Include="Assets\SkyAssets\Scripts\Editor\EditorTools.asmdef" />
- <Reference Include="UnityEngine.UI">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
- </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Tilemap.Editor">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.UI">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.TestRunner">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>

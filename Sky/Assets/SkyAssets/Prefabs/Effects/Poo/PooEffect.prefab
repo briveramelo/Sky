@@ -46,11 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba88d237668ca44f5a0ec772fcf49fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parent: {fileID: 160972}
   _mySpriteRenderer: {fileID: 21225570}
   _pooAnimator: {fileID: 9506126}
-  _lastPooSprites:
-  - {fileID: 21300000, guid: 7259a09e810a6460b805377d386c0f82, type: 3}
-  - {fileID: 21300000, guid: 00ad0dc28f2ce5a41b8a201604775126, type: 3}
+  _lastPooSprite: {fileID: 21300000, guid: d7ed63ed2beaa44d5aa2c5c35d40eef8, type: 3}
 --- !u!212 &21225570
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -89,7 +88,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 00ad0dc28f2ce5a41b8a201604775126, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d7ed63ed2beaa44d5aa2c5c35d40eef8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -184,7 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _eraserMaterial: {fileID: 2100000, guid: e6c0f4be1c3e2483fab3b131028092cf, type: 2}
   _myCam: {fileID: 2073886}
-  _pooSlide: {fileID: 11490458}
+  _pooSplat: {fileID: 11490458}
   _pooRenderer: {fileID: 21225570}
 --- !u!20 &2073886
 Camera:
