@@ -12,7 +12,8 @@ public class Bat : Bird
 
     #region Initialize Variables
     protected override BirdType MyBirdType => BirdType.Bat;
-    
+
+    private Transform _target;
     private Vector2[] _targetPositions;
     private Vector2 _ellipseTrace;
 
@@ -46,6 +47,11 @@ public class Bat : Bird
     {
         base.Awake();
         _targetPositions = new Vector2[_positionWindowLength];
+    }
+
+    private void Start()
+    {
+        _target = EasyAccess.BalloonCenter;
         StartCoroutine(Approach());
     }
 
@@ -57,7 +63,7 @@ public class Bat : Bird
         {
             UpdatePositionIndices();
             Vector2 batPos = transform.position;
-            _targetPositions[_realTimeIndex] = (Vector2) Constants.BalloonCenter.position - _orbitDistance * _rigbod.velocity.normalized;
+            _targetPositions[_realTimeIndex] = (Vector2) _target.position - _orbitDistance * _rigbod.velocity.normalized;
             var dist2Target = Vector2.Distance(_targetPositions[_targetIndex], batPos);
 
             // Once close enough, stop approaching and start _orbiting
@@ -69,7 +75,7 @@ public class Bat : Bird
 
             var moveDir = (_targetPositions[_targetIndex] - batPos).normalized;
             _rigbod.velocity = _approachSpeed * moveDir;
-            transform.FaceForward(transform.position.x > Constants.BalloonCenter.position.x);
+            transform.FaceForward(transform.position.x > _target.position.x);
             yield return null;
         }
     }
@@ -125,7 +131,7 @@ public class Bat : Bird
             var orbitSpeed = _orbitSpeedMultiplier / _curvature;
 
             _rigbod.velocity = orbitSpeed * moveDir;
-            transform.FaceForward(transform.position.x > Constants.BalloonCenter.position.x);
+            transform.FaceForward(transform.position.x > _target.position.x);
             yield return null;
         }
     }
@@ -156,7 +162,7 @@ public class Bat : Bird
     {
         _ellipseTrace = new Vector2(_orbitalRadii[_xRadiusIndex] * Mathf.Cos((_ellipseAng + _ellipseTilt) * Mathf.Deg2Rad),
             _orbitalRadii[_yRadiusIndex] * Mathf.Sin(_ellipseAng * Mathf.Deg2Rad));
-        return (Vector2) Constants.BalloonCenter.position + _ellipseTrace;
+        return (Vector2) _target.position + _ellipseTrace;
     }
 
     protected override void OnDeath()

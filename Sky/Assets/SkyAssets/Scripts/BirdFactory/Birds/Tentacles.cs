@@ -24,7 +24,6 @@ public interface ITipToTentacle
 
 public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle
 {
-    public static Tentacles Instance;
     public static IStabbable StabbableTentacle;
 
     [SerializeField] private Transform _parentTran;
@@ -50,6 +49,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle
     private IDie _jaiDeath;
     private WeaponStats _fakeWeapon = new WeaponStats();
 
+    private Transform _target;
     private Vector2 _targetSpot;
     private Vector2 _moveDir;
     private Vector2 _homeSpot;
@@ -80,7 +80,6 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle
     {
         base.Awake();
 
-        Instance = this;
         StabbableTentacle = this;
         _tipToggler = _tentaclesTip;
         _jaiSensorToggler = _tentaclesSensor;
@@ -99,6 +98,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle
         var jai = FindObjectOfType<Jai>();
         _jaiFreezable = jai;
         _jaiDeath = jai;
+        _target = EasyAccess.BasketTransform;
     }
 
     protected override void OnDestroy()
@@ -106,10 +106,10 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle
         _eventBroker.Unsubscribe<ContinueData>(ReleaseJai);
     }
 
-    private void FaceTowardBasket(bool toward)
+    private void FaceTowardBasket(Transform target, bool toward)
     {
         var pos = transform.position;
-        var basketPos = Constants.BasketTransform.position;
+        var basketPos = target.position;
         transform.FaceForward(toward ? basketPos.x - pos.x > 0 : basketPos.x - pos.x < 0);
     }
 
@@ -117,28 +117,28 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle
 
     void ISensorToTentacle.GoForTheKill()
     {
-        StartCoroutine(MoveTowardJai());
+        StartCoroutine(MoveTowardTarget(_target));
     }
 
-    private IEnumerator MoveTowardJai()
+    private IEnumerator MoveTowardTarget(Transform target)
     {
         CurrentState = State.ApproachingBasket;
         while (_jaiDetector.JaiInRange && !_holdingJai)
         {
-            _targetSpot = Constants.BasketTransform.position - Vector3.one * 0.05f;
+            _targetSpot = _target.position - Vector3.one * 0.05f;
             _moveDir = _targetSpot - (Vector2) _tipTransform.position;
             _rigbod.velocity = Constants.SpeedMultiplier * _attackSpeed * _moveDir.normalized;
-            FaceTowardBasket(true);
+            FaceTowardBasket(target, true);
             yield return null;
         }
     }
 
     void ISensorToTentacle.ResetPosition(bool defeated)
     {
-        StartCoroutine(MoveBackHome(defeated));
+        StartCoroutine(MoveBackHome(_target, defeated));
     }
 
-    private IEnumerator MoveBackHome(bool defeated)
+    private IEnumerator MoveBackHome(Transform target, bool defeated)
     {
         CurrentState = State.MovingHome;
         var finishHeight = defeated ? _resetHeight : _defeatedHeight;
@@ -146,7 +146,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle
         while (_tipTransform.position.y > finishHeight && (defeated ? true : !_jaiDetector.JaiInRange))
         {
             _rigbod.velocity = Constants.SpeedMultiplier * _resetSpeed * ((Vector3) _homeSpot - _tipTransform.position).normalized;
-            FaceTowardBasket(!defeated);
+            FaceTowardBasket(target, !defeated);
             yield return null;
         }
 
@@ -177,7 +177,6 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle
 
         GameClock.Instance.SlowTime(0.4f, 0.5f);
         GameCamera.Instance.ShakeTheCamera();
-        Constants.WorldCollider.enabled = false;
     }
 
     private IEnumerator MoveDown(Action onSubmerge)
@@ -198,8 +197,6 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle
             (Basket.Instance as IDie).Die();
             _jaiDeath.Die();
         }
-
-        Constants.WorldCollider.enabled = true;
     }
 
     #endregion
@@ -236,7 +233,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle
 
         _jaiSensorToggler.ToggleSensor(false);
         StartCoroutine(Delay.DelayAction(() => _tipToggler.ToggleSensor(true), 1.5f));
-        StartCoroutine(MoveBackHome(true));
+        StartCoroutine(MoveBackHome(_target, true));
     }
     #region TakeDamage
 
@@ -268,11 +265,6 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle
 
     protected override void OnDeath()
     {
-        if (Constants.WorldCollider != null)
-        {
-            Constants.WorldCollider.enabled = true;
-        }
-
         if (_holdingJai)
         {
             ReleaseBasket();

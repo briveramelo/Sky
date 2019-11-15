@@ -22,7 +22,6 @@ public class BabyCrow : Bird
         new Vector2(-.25f, 0.0f),
         new Vector2(.25f, 0.0f),
     };
-    
 
     private Vector2 _moveDir;
     private float _dist2Target;
@@ -50,23 +49,23 @@ public class BabyCrow : Bird
     protected override void Awake()
     {
         base.Awake();
-        StartCoroutine(ApproachShifts());
+        StartCoroutine(ApproachShifts(EasyAccess.JaiTransform));
     }
 
-    private IEnumerator ApproachShifts()
+    private IEnumerator ApproachShifts(Transform target)
     {
-        transform.FaceForward(transform.position.x < Constants.BalloonCenter.position.x);
+        transform.FaceForward(transform.position.x < target.position.x);
         while (_currentShift < _maxShifts)
         {
             var pos = transform.position;
-            var jaiPos = Constants.JaiTransform.position;
+            var jaiPos = target.position;
             _dist2Target = Vector2.Distance(jaiPos + (Vector3) _basketOffsets[BasketOffsetIndex], pos);
             _moveDir = (jaiPos + (Vector3) _basketOffsets[BasketOffsetIndex] - pos).normalized;
             _rigbod.velocity = Constants.SpeedMultiplier * ClosenessCorrectedSpeed * _moveDir;
 
             if (_isCloseEnoughToShift && _shiftsHit == _currentShift)
             {
-                StartCoroutine(ShiftSpots());
+                StartCoroutine(ShiftSpots(target));
             }
 
             yield return null;
@@ -76,12 +75,12 @@ public class BabyCrow : Bird
         StartCoroutine(FlyAway());
     }
 
-    private IEnumerator ShiftSpots()
+    private IEnumerator ShiftSpots(Transform target)
     {
         _isLooking = true;
         _shiftsHit++;
         _babyCrowAnimator.SetInteger(Constants.AnimState, AnimState.Looking);
-        yield return StartCoroutine(LookBackAndForth(transform.position.x < Constants.BalloonCenter.position.x));
+        yield return StartCoroutine(LookBackAndForth(transform.position.x < target.position.x));
         _babyCrowAnimator.SetInteger(Constants.AnimState, AnimState.Flying);
         _currentShift++;
         BasketOffsetIndex++;

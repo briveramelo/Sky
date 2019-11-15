@@ -19,6 +19,13 @@ namespace GenericFunctions
             yield return new WaitForSeconds(time2Wait);
             lambda(true);
         }
+        
+        public static void FaceForward(this Transform trans, bool forward)
+        {
+            var localScale = trans.localScale;
+            localScale = new Vector3((forward ? 1 : -1) * Mathf.Abs(localScale.x), localScale.y, localScale.z);
+            trans.localScale = localScale;
+        }
     }
 
     public static class Delay
@@ -38,42 +45,23 @@ namespace GenericFunctions
         }
     }
 
-    public static class Constants
+    //todo, phase out when DI framework is introduced
+    public static class EasyAccess
     {
         public static Transform JaiTransform;
         public static Transform BalloonCenter;
         public static Transform BasketTransform;
-        public static Collider2D WorldCollider;
+    }
+
+    public static class Constants
+    {
         public const int UnusedFingerId = -1;
-        private static int _targetPooInt;
-
-        public static int TargetPooInt
-        {
-            get => _targetPooInt;
-            set
-            {
-                _targetPooInt = value;
-                if (_targetPooInt > 4)
-                {
-                    _targetPooInt = 0;
-                }
-            }
-        }
-
-        public static void FaceForward(this Transform trans, bool forward)
-        {
-            var localScale = trans.localScale;
-            localScale = new Vector3((forward ? 1 : -1) * Mathf.Abs(localScale.x), localScale.y, localScale.z);
-            trans.localScale = localScale;
-        }
-
-        public static float SpeedMultiplier => 0.25f;//accounts
-
+        public const float SpeedMultiplier = 0.25f;//accounts for the time things were all scaled up by 4
         public const float Time2ThrowSpear = 0.333333f;
         public const float Time2StrikeLightning = 0.5f;
 
-        private static Lazy<int> _animState = new Lazy<int>(() => Animator.StringToHash("AnimState"));
         public static int AnimState => _animState.Value;
+        private static Lazy<int> _animState = new Lazy<int>(() => Animator.StringToHash("AnimState"));
     }
     
     public static class Layers

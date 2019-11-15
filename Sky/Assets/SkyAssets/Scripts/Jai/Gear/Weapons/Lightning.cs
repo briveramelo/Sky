@@ -18,9 +18,9 @@ public class Lightning : Weapon
         Bool.Toggle(collisionDisabled => Physics2D.IgnoreCollision(_attackCollider, col, !collisionDisabled), 1.5f);
     }
 
-    protected override void UseMe(Vector2 swipeDir)
+    protected override void UseMe(Vector2 startPosition, Vector2 swipeDir)
     {
-        base.UseMe(swipeDir);
+        base.UseMe(startPosition, swipeDir);
         _strikeDir = swipeDir;
         StartCoroutine(Strike(swipeDir));
     }

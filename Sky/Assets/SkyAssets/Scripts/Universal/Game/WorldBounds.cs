@@ -19,7 +19,5 @@ public class WorldBounds : MonoBehaviour
             new Vector2(-xDist, yDist),
         };
         _worldBounds.points = points;
-
-        Constants.WorldCollider = _worldBounds;
     }
 }

@@ -14,7 +14,6 @@ public class Spear : Weapon
 
     private Transform _startingParentTransform;
     private Rigidbody2D _rigbod; //the spear's rigidbody, created only upon throwing
-    private Vector2 _throwAdjustmentVector = new Vector2(0f, .085f);
     private int _spearNumber;
 
     private void Start()
@@ -41,12 +40,12 @@ public class Spear : Weapon
         }
     }
 
-    protected override void UseMe(Vector2 swipeVelocity)
+    protected override void UseMe(Vector2 startPosition, Vector2 swipeVelocity)
     {
-        base.UseMe(swipeVelocity);
+        base.UseMe(startPosition, swipeVelocity);
         var myTran = transform;
         myTran.SetParent(_startingParentTransform);
-        myTran.position = (Vector2) Constants.JaiTransform.position + _throwAdjustmentVector;
+        myTran.position = startPosition;
         
         //ensure scale does not flip depending on Jai's orientation upon throwing
         var scale = myTran.localScale;

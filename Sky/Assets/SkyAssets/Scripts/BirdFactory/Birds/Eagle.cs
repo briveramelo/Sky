@@ -9,9 +9,11 @@ public class Eagle : Bird
     [SerializeField] private PixelRotation _pixelRotationScript;
     
     protected override BirdType MyBirdType => BirdType.Eagle;
-    private ITriggerSpawnable _myEagleFriends;
-    private Vector3 _attackDir;
 
+    private Transform _target;
+    private ITriggerSpawnable _myEagleFriends;
+
+    private Vector3 _attackDir;
     private Vector2[] _startPos;
     private Vector2[] _moveDir;
 
@@ -35,6 +37,11 @@ public class Eagle : Bird
             new Vector2(-normalizedSize.x, normalizedSize.y),
         };
         StartCoroutine(InitiateAttack(1f));
+    }
+
+    private void Start()
+    {
+        _target = EasyAccess.BalloonCenter;
     }
 
     private IEnumerator InitiateAttack(float waitTime)
@@ -61,21 +68,21 @@ public class Eagle : Bird
         else
         {
             _rigbod.velocity = Vector2.zero;
-            Strike();
+            Strike(_target);
         }
     }
 
-    private void Strike()
+    private void Strike(Transform target)
     {
         var xStartPoint = Mathf.Infinity;
         var screenSize = ScreenSpace.WorldEdge;
         while (Mathf.Abs(xStartPoint) > screenSize.x)
         {
-            xStartPoint = Constants.BalloonCenter.position.x + Random.Range(-screenSize.x, screenSize.x) * .15f;
+            xStartPoint = target.position.x + Random.Range(-screenSize.x, screenSize.x) * .15f;
         }
 
         Vector3 newPosition = new Vector2(xStartPoint, screenSize.y + 0.2f);
-        _attackDir = (Constants.BalloonCenter.position - newPosition).normalized;
+        _attackDir = (target.position - newPosition).normalized;
         transform.position = newPosition;
         const float strikeSpeed = 9f/4;
         _rigbod.velocity = strikeSpeed * _attackDir;

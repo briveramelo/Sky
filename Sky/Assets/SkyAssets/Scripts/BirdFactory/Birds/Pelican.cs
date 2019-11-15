@@ -20,7 +20,7 @@ public class Pelican : Bird
     private float _moveSpeed = 2f;
     private Vector3[] _setPositions;
 
-    private Vector3 TargetPosition => Constants.BalloonCenter.position + new Vector3(_sideMultiplier * _setPositions[_currentTarIn].x, _setPositions[_currentTarIn].y);
+    private Vector3 TargetPosition => EasyAccess.BalloonCenter.position + new Vector3(_sideMultiplier * _setPositions[_currentTarIn].x, _setPositions[_currentTarIn].y);
 
     protected override void Awake()
     {
@@ -42,11 +42,11 @@ public class Pelican : Bird
             _setPositions[i] = thisVector;
         }
 
-        StartCoroutine(SwoopAround());
+        StartCoroutine(SwoopAround(EasyAccess.JaiTransform));
     }
 
     //Move from one checkpoint to another
-    private IEnumerator SwoopAround()
+    private IEnumerator SwoopAround(Transform target)
     {
         _pelicanAnimator.SetInteger(Constants.AnimState, PelAnimState.Flapping);
         _currentTarIn = 0;
@@ -55,7 +55,7 @@ public class Pelican : Bird
         while (_currentTarIn < _setPositions.Length)
         {
             _rigbod.velocity = GetVelocity();
-            var xFromJai = Constants.JaiTransform.position.x - transform.position.x;
+            var xFromJai = target.position.x - transform.position.x;
             transform.FaceForward(xFromJai > 0);
 
             if (Vector3.Distance(transform.position, TargetPosition) < 0.03f)//todo: determine better feel for transitioning between targets when Jai is moving
@@ -70,7 +70,7 @@ public class Pelican : Bird
             yield return null;
         }
 
-        StartCoroutine(DiveBomb(_sideMultiplier < 0));
+        StartCoroutine(DiveBomb(target, _sideMultiplier < 0));
     }
 
     private Vector2 GetVelocity()
@@ -79,7 +79,7 @@ public class Pelican : Bird
     }
 
     //plunge to (un)certain balloon-popping glory
-    private IEnumerator DiveBomb(bool goingRight)
+    private IEnumerator DiveBomb(Transform target, bool goingRight)
     {
         _pelicanAnimator.SetInteger(Constants.AnimState, PelAnimState.Diving);
         var diveAngle = goingRight ? -80f : 260f;
@@ -93,7 +93,7 @@ public class Pelican : Bird
         _rigbod.velocity = Vector2.zero;
         _birdCollider.enabled = false;
         yield return new WaitForSeconds(2f);
-        StartCoroutine(SwoopAround());
+        StartCoroutine(SwoopAround(target));
         while (transform.position.y < -ScreenSpace.WorldEdge.y)
         {
             yield return null;

@@ -2,11 +2,12 @@
 using System.Collections;
 using GenericFunctions;
 
-public class PooSlide : MonoBehaviour
+public class PooSplat : MonoBehaviour
 {
+    [SerializeField] private GameObject _parent;
     [SerializeField] private SpriteRenderer _mySpriteRenderer;
     [SerializeField] private Animator _pooAnimator;
-    [SerializeField] private Sprite[] _lastPooSprites;
+    [SerializeField] private Sprite _lastPooSprite;
 
     public void SetRenderTexture(RenderTexture renderTexture)
     {
@@ -16,10 +17,8 @@ public class PooSlide : MonoBehaviour
     private void Awake()
     {
         StartCoroutine(AnimateSplat());
-        //Destroy(transform.parent.gameObject, 10f);
+        Destroy(_parent, 10f);
         ScoreSheet.Tallier.TallyThreat(Threat.Poop);
-
-        Constants.TargetPooInt++;
         Seagull.LogPooCam(true);
     }
 
@@ -31,7 +30,7 @@ public class PooSlide : MonoBehaviour
         }
 
         Destroy(_pooAnimator);
-        _mySpriteRenderer.sprite = _lastPooSprites[1];
+        _mySpriteRenderer.sprite = _lastPooSprite;
     }
 
     private void OnDestroy()

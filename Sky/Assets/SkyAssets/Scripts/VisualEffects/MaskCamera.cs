@@ -6,7 +6,7 @@ public class MaskCamera : MonoBehaviour
 {
     [SerializeField] private Material _eraserMaterial;
     [SerializeField] private Camera _myCam;
-    [SerializeField] private PooSlide _pooSlide;
+    [SerializeField] private PooSplat _pooSplat;
     [SerializeField] private SpriteRenderer _pooRenderer;
     
     private bool _firstFrame;
@@ -96,7 +96,7 @@ public class MaskCamera : MonoBehaviour
         var renderTextSize = _pooSizeTexturePixels;
         var newRenderTex = new RenderTexture((int) renderTextSize.x, (int) renderTextSize.y, 0, GraphicsFormat.R8G8B8A8_UNorm);
         _myCam.targetTexture = newRenderTex;
-        _pooSlide.SetRenderTexture(newRenderTex);
+        _pooSplat.SetRenderTexture(newRenderTex);
     }
 
     private void OnDestroy()

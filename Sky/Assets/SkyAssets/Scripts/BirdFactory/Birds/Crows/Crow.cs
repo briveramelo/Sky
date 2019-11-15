@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using BRM.DebugAdapter;
+using BRM.DebugAdapter.Interfaces;
 using PixelArtRotation;
 using GenericFunctions;
 
@@ -31,8 +33,10 @@ public class Crow : Bird, IMurderToCrow
     [SerializeField] private PixelRotation _pixelRotationScript;
     [SerializeField] private Animator _crowAnimator;
 
+    private IDebug _debugger = new UnityDebugger {Enabled = false};
     private ICrowToMurder _murderInterface;
-    
+
+    private Transform _target => EasyAccess.BalloonCenter;
     private Vector2 _startPosition;
 
     private const float _moveSpeed = 4.5f /4f;
@@ -40,7 +44,7 @@ public class Crow : Bird, IMurderToCrow
     private const float _distanceBeforeDiving = 4f/4;
     private const float _resetDistance = 15f/4;
     private const float _requestNextCrowDistance = 4.5f/4;
-    private float _distFromBalloons => Vector3.Distance(Constants.BalloonCenter.position, transform.position);
+    private float _distFromBalloons => Vector3.Distance(_target.position, transform.position);
 
     private bool _isKiller;
     private bool _readyToFly = true;
@@ -52,7 +56,7 @@ public class Crow : Bird, IMurderToCrow
         base.Awake();
         _murderInterface = _murder;
     }
-    
+
     #endregion
 
     #region IMurderToCrow Interface
@@ -71,7 +75,7 @@ public class Crow : Bird, IMurderToCrow
         _hasRequestedNext = false;
         _readyToFly = false;
         _birdCollider.enabled = true;
-        StartCoroutine(TargetBalloons());
+        StartCoroutine(TargetBalloons(_target));
         StartCoroutine(RequestNextCrow());
     }
 
@@ -91,24 +95,24 @@ public class Crow : Bird, IMurderToCrow
         _hasRequestedNext = true;
     }
 
-    private IEnumerator TargetBalloons()
+    private IEnumerator TargetBalloons(Transform target)
     {
-        Debug.Log("targeting" + name);
+        _debugger.LogFormat("targeting ", name);
         while (_distFromBalloons > _distanceBeforeDeciding)
         {
-            var balloonPos = Constants.BalloonCenter.position;
+            var balloonPos = target.position;
             var pos = transform.position;
             var moveDir = (balloonPos - pos);
             PointAndMoveInMoveDir(moveDir);
             yield return null;
         }
-        Debug.Log("moving straight" + name);
+        _debugger.LogFormat("moving straight ", name);
         yield return StartCoroutine(MoveStraightInLastDirection());
-        Debug.Log("triggering reset" + name);
+        _debugger.LogFormat("triggering reset ", name);
         StartCoroutine(TriggerReset());
         if (!_isKiller)
         {
-            Debug.Log("turning away" + name);
+            _debugger.LogFormat("turning away {0}", name);
             StartCoroutine(TurnAwayFromBalloons());
         }
     }
@@ -134,7 +138,7 @@ public class Crow : Bird, IMurderToCrow
             PointAndMoveInMoveDir(moveDir);
             yield return null;
         }
-        Debug.Log("finished turning away" + name);
+        _debugger.LogFormat("finished turning away {0}", name);
         _crowAnimator.SetInteger(Constants.AnimState, CrowStates.Flapping);
     }
 
@@ -153,7 +157,7 @@ public class Crow : Bird, IMurderToCrow
         {
             yield return null;
         }
-        Debug.Log("resetting" + name);
+        _debugger.LogFormat("resetting {0}", name);
 
         _rigbod.velocity = Vector2.zero;
         _birdCollider.enabled = false;
