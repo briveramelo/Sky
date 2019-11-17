@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
 {
-    public class BatchTriggerInputField : MonoBehaviour
+    public class BatchTriggerInputField : MonoBehaviour, IDisplayable
     {
         [SerializeField] private TMP_InputField _inputField;
         
@@ -17,6 +17,11 @@ namespace BRM.Sky.WaveEditor
                 }
                 return null;
             }
+        }
+        
+        public void ToggleDisplay(bool show)
+        {
+            gameObject.SetActive(show);
         }
     }
 }
