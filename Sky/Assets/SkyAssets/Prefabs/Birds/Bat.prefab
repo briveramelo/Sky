@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5804168}
   - component: {fileID: 5023904}
   m_Layer: 10
-  m_Name: Bat_white
+  m_Name: Bat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,6 +51,10 @@ MonoBehaviour:
   _rigbod: {fileID: 5023904}
   _birdCollider: {fileID: 5804168}
   _guts: {fileID: 105802, guid: bd3606f7728c14773af24c7153cd7e5a, type: 3}
+  _animator: {fileID: 9581288}
+  _animatorControllers:
+  - {fileID: 9100000, guid: fd388c681545d41f2a9a890c4d77be05, type: 2}
+  - {fileID: 9100000, guid: acb8b5e6dbdb04746995c9692cbd207b, type: 2}
 --- !u!114 &11495038
 MonoBehaviour:
   m_ObjectHideFlags: 0

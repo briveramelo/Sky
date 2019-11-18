@@ -15,7 +15,7 @@ namespace BRM.Sky.WaveEditor
             get
             {
                 var batchDataMarshals = _dataMarshalsParent.GetComponentsInChildren<BatchDataMarshal>();
-                var batchTriggerDataMarshals = _dataMarshalsParent.GetComponentsInChildren<BatchTriggerDataMarshal>();
+                var batchTriggerDataMarshals = _dataMarshalsParent.GetComponentsInChildren<TriggerDataMarshal>();
 
                 return new WaveData
                 {
@@ -28,6 +28,17 @@ namespace BRM.Sky.WaveEditor
                         Triggers = batchTriggerDataMarshals.Select(marshal => marshal.Data).ToList(),
                     }
                 };
+            }
+            set
+            {
+                var batchDataMarshals = _dataMarshalsParent.GetComponentsInChildren<BatchDataMarshal>().ToList();
+                var batchTriggerDataMarshals = _dataMarshalsParent.GetComponentsInChildren<TriggerDataMarshal>().ToList();
+
+                for (int i = 0; i < batchDataMarshals.Count; i++)
+                {
+                    batchDataMarshals[i].Data = value.WaveTimeline.Batches[i];
+                    batchTriggerDataMarshals[i].Data = value.WaveTimeline.Triggers[i];
+                }
             }
         }
 

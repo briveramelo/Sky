@@ -30,7 +30,7 @@ namespace BRM.Sky.WaveEditor
     public class SpawnEventData
     {
         public SpawnPrefab SpawnPrefab;
-        public Vector2 Position;
+        public Vector2 NormalizedPosition;
         public float TimeAfterBatchStartSec;
     }
 
@@ -54,8 +54,8 @@ namespace BRM.Sky.WaveEditor
     public enum BatchTriggerType
     {
         AllDead = 0,
-        NumDead = 1,
-        NumSpears = 2,
+        Dead = 1,
+        Spears = 2,
         Time = 3
     }
 
@@ -64,12 +64,12 @@ namespace BRM.Sky.WaveEditor
         //original birds
         Pigeon = 0,
         Duck = 1,
-        DuckLeader = 2,
+        LeadDuck = 2,
         Albatross = 3,
         BabyCrow = 4,
-        Crow = 5,
+        Murder = 5,
         Seagull = 6,
-        Tentacles = 7,
+        TheMightyTentacles = 7,
         Pelican = 8,
         Shoebill = 9,
         Bat = 10,
@@ -77,11 +77,11 @@ namespace BRM.Sky.WaveEditor
         BirdOfParadise = 12,
 
         //bird collections
-        PigeonMeatball = 20,
-        PigeonWall = 21,
-        PigeonSlantWall = 22,
-        PigeonBite = 23,
-        PigeonSine = 24,
-        PigeonLine = 25,
+//        PigeonMeatball = 20,
+//        PigeonWall = 21,
+//        PigeonSlantWall = 22,
+//        PigeonBite = 23,
+//        PigeonSine = 24,
+//        PigeonLine = 25,
     }
 }

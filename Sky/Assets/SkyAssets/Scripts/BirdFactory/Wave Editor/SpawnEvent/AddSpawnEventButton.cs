@@ -1,23 +1,23 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
 {
-    public class AddBatchButton : Selector
+    public class AddSpawnEventButton : Selector
     {
-        [SerializeField] private GameObject _spacerPrefab;
-        [SerializeField] private GameObject _batchButtonPrefab;
-        [SerializeField] private GameObject _batchTriggerButtonPrefab;
+        [SerializeField] private GameObject _spawnEventButton;
         [SerializeField] private Transform _prefabInstanceParentTran;
-
+        [SerializeField] private Transform _maskAvoiderTargetParent;
+        
         private IHoldData _lastDataHolder;
-
+        
         protected override void OnClick()
         {
             base.OnClick();
-            Instantiate(_spacerPrefab, _prefabInstanceParentTran);
-            var button = Instantiate(_batchButtonPrefab, _prefabInstanceParentTran);
-            Instantiate(_batchTriggerButtonPrefab, _prefabInstanceParentTran);
+            var button = Instantiate(_spawnEventButton, _prefabInstanceParentTran);
             transform.SetAsLastSibling();
+            
+            button.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item => item.SetTargetParent(_maskAvoiderTargetParent));
 
             _lastDataHolder = button.GetComponent<IHoldData>();
         }
@@ -26,6 +26,7 @@ namespace BRM.Sky.WaveEditor
         {
             if (_lastDataHolder == null || ReferenceEquals(null, _lastDataHolder))
             {
+                _button.interactable = true;
                 return;
             }
 
@@ -33,3 +34,4 @@ namespace BRM.Sky.WaveEditor
         }
     }
 }
+

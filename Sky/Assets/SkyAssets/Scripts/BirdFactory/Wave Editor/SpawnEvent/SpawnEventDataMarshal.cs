@@ -1,6 +1,4 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace BRM.Sky.WaveEditor
 {
@@ -8,14 +6,24 @@ namespace BRM.Sky.WaveEditor
     {
         [SerializeField] private SpawnTypeDropdown _spawnTypeDropdown;
         [SerializeField] private SpawnPositionMarshal _positionMarshal;
-        [SerializeField] private TMP_InputField _timeInput;
+        [SerializeField] private SpawnTimeInput _timeInput;
 
-        public override SpawnEventData Data => new SpawnEventData
+        public override SpawnEventData Data
         {
-            SpawnPrefab = _spawnTypeDropdown.SpawnPrefab,
-            Position = _positionMarshal.NormalizedPosition,
-            TimeAfterBatchStartSec = float.Parse(_timeInput.text)
-        };
-        public override bool IsDataReady { get; }
+            get => new SpawnEventData
+            {
+                SpawnPrefab = _spawnTypeDropdown.SpawnPrefab,
+                NormalizedPosition = _positionMarshal.NormalizedPosition,
+                TimeAfterBatchStartSec = float.Parse(_timeInput.Text)
+            };
+            set
+            {
+                _spawnTypeDropdown.SpawnPrefab = value.SpawnPrefab;
+                _positionMarshal.NormalizedPosition = value.NormalizedPosition;
+                _timeInput.Text = value.TimeAfterBatchStartSec.ToString("0.00");
+            }
+        }
+
+        public override bool IsDataReady => true;
     }
 }

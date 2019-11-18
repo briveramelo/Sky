@@ -1,11 +1,41 @@
 ﻿﻿using System;
 using UnityEngine;
 using System.Collections;
-using Object = UnityEngine.Object;
+ using System.Collections.Generic;
+ using System.Linq;
+ using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
  
 namespace GenericFunctions
 {
+    public static class Chance
+    {
+        public static T GetRandom<T>(this List<T> list)
+        {
+            var listCount = list.Count;
+            var randomIndex = Random.Range(0, listCount);
+            return list[randomIndex];
+        }
+    }
+
+    public static class Transforms
+    {
+        public static void DestroyChildren(this Transform tran)
+        {
+            for (int i = 0; i < tran.childCount; i++)
+            {
+                Object.Destroy(tran.GetChild(i));
+            }
+        }
+        public static List<T> GetComponentsRecursively<T>(this GameObject go) where T : Component
+        {
+            var components = go.GetComponents<T>().ToList();
+            var childBehaviours = go.GetComponentsInChildren<T>(true);
+            components.AddRange(childBehaviours);
+            return components;
+        }
+    }
+
     public static class Bool
     {
         public static bool TossCoin()

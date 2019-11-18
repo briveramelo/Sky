@@ -2,10 +2,9 @@ using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
 {
-    public class SpawnEventButton : Selector
+    public class TriggerButton : Selector
     {
-        [SerializeField] private SpawnEventUi _ui;
-
+        [SerializeField] private TriggerUi _ui;
         protected override void OnClick()
         {
             base.OnClick();

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using GenericFunctions;
 
 public class Bat : Bird
@@ -11,6 +12,10 @@ public class Bat : Bird
     // From a game design standpoint, this forces the player to slow movement to avoid this dangerous collision
 
     #region Initialize Variables
+
+    [SerializeField] private Animator _animator;
+    [SerializeField] private List<RuntimeAnimatorController> _animatorControllers;
+    
     protected override BirdType MyBirdType => BirdType.Bat;
 
     private Transform _target;
@@ -47,6 +52,12 @@ public class Bat : Bird
     {
         base.Awake();
         _targetPositions = new Vector2[_positionWindowLength];
+        ChooseBatColor();
+    }
+
+    private void ChooseBatColor()
+    {
+        _animator.runtimeAnimatorController = _animatorControllers.GetRandom();
     }
 
     private void Start()

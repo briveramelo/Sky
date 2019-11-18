@@ -1,18 +1,40 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayTestButton : MonoBehaviour
+public class PlayTestButton : Selector
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private List<GameObject> _requiredPrefabs;
+
+    private bool _isEditing;
+    private List<GameObject> _requiredInstances = new List<GameObject>();
+    
+    protected override void OnClick()
     {
+        base.OnClick();
+        _isEditing = !_isEditing;
         
+        if (_isEditing)
+        {
+            DestroyTest();
+        }
+        else
+        {
+            CreateTest();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void CreateTest()
     {
-        
+        _requiredPrefabs.ForEach(item =>
+        {
+            var instance = Instantiate(item);
+            _requiredInstances.Add(instance);
+        });
+    }
+
+    private void DestroyTest()
+    {
+        _requiredInstances.ForEach(Destroy);
+        _requiredInstances.Clear();
     }
 }

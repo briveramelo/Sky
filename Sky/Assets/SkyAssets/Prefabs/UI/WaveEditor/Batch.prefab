@@ -164,7 +164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8630113879929458084}
-  - component: {fileID: 7405891869343575505}
+  - component: {fileID: 4405952406863882535}
   - component: {fileID: 5672198648529610070}
   - component: {fileID: 8630113879929458090}
   - component: {fileID: 8630113879929458091}
@@ -196,7 +196,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 60, y: 20}
   m_Pivot: {x: 0.5, y: 0}
---- !u!114 &7405891869343575505
+--- !u!114 &4405952406863882535
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -205,9 +205,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8630113879929458085}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adc7b78ff740be247b4def251f9c0594, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c55389ff38b4938a75af3897d523628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _button: {fileID: 8630113879929458091}
+  _audioType: 1
+  _dataMarshal: {fileID: 5672198648529610070}
 --- !u!114 &5672198648529610070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 539f0c79e02547d5931bde4cb1732d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawnEventParent: {fileID: 0}
 --- !u!114 &8630113879929458090
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using GenericFunctions;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -8,37 +11,38 @@ namespace BRM.Sky.WaveEditor
 {
     public class SpawnTypeDropdown : MonoBehaviour
     {
+        public SpawnPrefab SpawnPrefab
+        {
+            get => (SpawnPrefab) _dropdown.value;
+            set => _dropdown.value = (int) value;
+        }
+
+        public string Text => SpawnPrefab.ToString();
+
         [SerializeField] private TMP_Dropdown _dropdown;
 
-        private void Awake()
+        private GameObject _prefabInstance;
+
+        private void Start()
         {
-            _dropdown.options = Enum.GetValues(typeof(SpawnPrefab)).Cast<SpawnPrefab>().Select(item => new TMP_Dropdown.OptionData(item.ToString())).ToList();
+            _dropdown.options = Enum.GetValues(typeof(SpawnPrefab)).Cast<SpawnPrefab>()
+                .Select(prefabType => new TMP_Dropdown.OptionData(prefabType.ToString(), SpawnPrefabFactory.Instance.GetSprite(prefabType))).ToList();
+            _dropdown.onValueChanged.AddListener(OnDropdownSelected);
         }
 
-        public SpawnPrefab SpawnPrefab => (SpawnPrefab)_dropdown.value;
-    }
-
-    public static class SpawnPrefabFactory
-    {
-
-        private class SpawnPrefabData
+        private void OnDropdownSelected(int value)
         {
-            /*todo: add data
-             prefabType,
-             prefab,
-             file path,
-            */
-        }
+            if (_prefabInstance != null)
+            {
+                Destroy(_prefabInstance);
+            }
 
-        public static GameObject GetPrefab(SpawnPrefab prefabType)
-        {
-            return null;
-        }
-        public static Sprite GetSprite(SpawnPrefab prefabType)
-        {
-            //AssetDatabase.GetCachedIcon()
-            //Sprite.Create(new Texture2D(0,0), new Rect)
-            return null;
+            _prefabInstance = SpawnPrefabFactory.Instance.CreateInstance((SpawnPrefab) value);
+            _prefabInstance.transform.position = new Vector2(-ScreenSpace.WorldEdge.x, 0);
+            
+            _prefabInstance.GetComponentsRecursively<Behaviour>().ForEach(b => b.enabled = false);
+            _prefabInstance.GetComponentsRecursively<Rigidbody2D>().ForEach(Destroy);
+            _prefabInstance.GetComponentsRecursively<SpriteRenderer>().ForEach(sr => sr.enabled = true);
         }
     }
 }
