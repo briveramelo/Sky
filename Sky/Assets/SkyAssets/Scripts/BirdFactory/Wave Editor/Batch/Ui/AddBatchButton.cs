@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using GenericFunctions;
 using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
@@ -26,9 +27,16 @@ namespace BRM.Sky.WaveEditor
             batchButton.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item => item.SetTargetParent(_maskAvoiderTargetParent));
             batchTrigger.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item => item.SetTargetParent(_maskAvoiderTargetParent));
 
-            batchButton.GetComponent<BatchViewController>().SetSpawnEventsParent(_spawnEventsParent);
+            var viewController = batchButton.GetComponent<BatchViewController>();
+            viewController.SetSpawnEventsParent(_spawnEventsParent);
+            viewController.OnButtonClicked += DeselectAll;
             
             _lastDataHolder = batchButton.GetComponent<IHoldData>();
+        }
+
+        private void DeselectAll()
+        {
+            _prefabInstanceParentTran.GetComponentsRecursively<BatchViewController>().ForEach(item => item.Select(false));
         }
 
         private void Update()

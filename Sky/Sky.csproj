@@ -82,6 +82,7 @@
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\BatchDataMarshal.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\BatchViewController.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\Ui\AddBatchButton.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\Ui\BatchUi.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\BatchTrigger\TriggerDataMarshal.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\BatchTrigger\TriggerViewController.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\BatchTrigger\Ui\TriggerDropdown.cs" />

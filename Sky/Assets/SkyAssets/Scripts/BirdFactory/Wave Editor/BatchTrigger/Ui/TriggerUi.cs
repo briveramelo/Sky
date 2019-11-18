@@ -22,13 +22,13 @@ namespace BRM.Sky.WaveEditor
 
         public void UpdateUi()
         {
-            if (string.IsNullOrWhiteSpace(_inputField.Text))
+            if (TriggerSettings.GetSettings(_dropdown.TriggerType).Display)
             {
-                _displayText.text = $"{_dropdown.TriggerType}";
+                _displayText.text = $"{_dropdown.TriggerType}, {_inputField.Text}";
             }
             else
             {
-                _displayText.text = $"{_dropdown.TriggerType}, {_inputField.Text}";
+                _displayText.text = $"{_dropdown.TriggerType}";
             }
         }
         
