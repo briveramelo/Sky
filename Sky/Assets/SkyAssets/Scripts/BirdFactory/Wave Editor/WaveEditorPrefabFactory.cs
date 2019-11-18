@@ -7,12 +7,12 @@ using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
 {
-    public class SpawnPrefabFactory : Singleton<SpawnPrefabFactory>
+    public class WaveEditorPrefabFactory : Singleton<WaveEditorPrefabFactory>
     {
         private class SpawnPrefabData
         {
             public SpawnPrefab SpawnPrefabType;
-            public GameObject Prefab;
+            public GameObject EditorPrefab;
             public Transform Parent;
             public string FilePath;
             public string PrefabName => SpawnPrefabType.ToString();
@@ -24,23 +24,24 @@ namespace BRM.Sky.WaveEditor
                     if (_iconSprite == null)
                     {
                         //var iconTexture = AssetDatabase.GetCachedIcon(FilePath);
-                        //var iconTexture = AssetPreview.GetMiniThumbnail(Prefab);
-                        if (Prefab == null)
+                        //var iconTexture = AssetPreview.GetMiniThumbnail(EditorPrefab);
+                        if (EditorPrefab == null)
                         {
                             Debug.LogError($"prefab not yet set for type {SpawnPrefabType}");
                             return null;
                         }
 
-                        var prefabSpriteRenderer = Prefab.GetComponent<SpriteRenderer>();
+                        var prefabSpriteRenderer = EditorPrefab.GetComponent<SpriteRenderer>();
                         if (prefabSpriteRenderer == null)
                         {
-                            prefabSpriteRenderer = Prefab.GetComponentInChildren<SpriteRenderer>();
+                            prefabSpriteRenderer = EditorPrefab.GetComponentInChildren<SpriteRenderer>();
                         }
+
                         if (prefabSpriteRenderer == null)
                         {
-                            for (int i = 0; i < Prefab.transform.childCount; i++)
+                            for (int i = 0; i < EditorPrefab.transform.childCount; i++)
                             {
-                                var rend = Prefab.transform.GetChild(i).GetComponent<SpriteRenderer>();
+                                var rend = EditorPrefab.transform.GetChild(i).GetComponent<SpriteRenderer>();
                                 if (rend == null)
                                 {
                                     continue;
@@ -50,7 +51,7 @@ namespace BRM.Sky.WaveEditor
                                 break;
                             }
                         }
-                        
+
                         if (prefabSpriteRenderer == null)
                         {
                             Debug.LogError($"No sprite renderer found on prefabType:{SpawnPrefabType}");
@@ -72,8 +73,19 @@ namespace BRM.Sky.WaveEditor
             private Sprite _iconSprite;
         }
 
-        private static Dictionary<SpawnPrefab, SpawnPrefabData> _spawnPrefabData;
-        private string _prefabRootFolder => Path.Combine(Application.dataPath, "SkyAssets/Prefabs/Birds");
+        [Serializable]
+        private class SpawnPrefabSprite
+        {
+            public SpawnPrefab PrefabType;
+            public Sprite Sprite;
+        }
+
+        [SerializeField] private List<SpawnPrefabSprite> _birdSprites;
+        
+        private Dictionary<SpawnPrefab, SpawnPrefabData> _spawnPrefabData;
+        
+        private const string _assetDatabasePath = "SkyAssets/Prefabs/Birds/Editor/EditorBird.prefab";
+        protected override bool _destroyOnLoad => true;
 
         protected override void Awake()
         {
@@ -86,43 +98,25 @@ namespace BRM.Sky.WaveEditor
         {
             _spawnPrefabData = new Dictionary<SpawnPrefab, SpawnPrefabData>();
             var spawnPrefabs = Enum.GetValues(typeof(SpawnPrefab)).Cast<SpawnPrefab>().ToList();
-            var prefabFolders = Directory.GetDirectories(_prefabRootFolder).ToList();
-            prefabFolders.Insert(0, _prefabRootFolder);
-            for (int i = 0; i < prefabFolders.Count; i++)
-            {
-                var startIndex = Application.dataPath.Length - "Assets/".Length + 1;
-                var length = prefabFolders[i].Length - startIndex;
-                prefabFolders[i] = prefabFolders[i].Substring(startIndex, length);
-            }
 
             foreach (var spawnPrefab in spawnPrefabs)
             {
-                bool fileFound = false;
-                foreach (var prefabFolder in prefabFolders)
-                {
-                    var filePath = Path.Combine(prefabFolder, $"{spawnPrefab}.prefab");
-                    if (!File.Exists(filePath))
-                    {
-                        continue;
-                    }
-
-                    _spawnPrefabData.Add(spawnPrefab, new SpawnPrefabData
-                    {
-                        SpawnPrefabType = spawnPrefab,
-                        FilePath = filePath,
-                        Prefab = AssetDatabase.LoadAssetAtPath<GameObject>(filePath)
-                    });
-                    fileFound = true;
-                    break;
-                }
-
-                if (!fileFound)
+                var filePath = _assetDatabasePath;
+                if (!File.Exists($"{Application.dataPath}/{filePath}"))
                 {
                     Debug.LogError($"No prefab found for type {spawnPrefab}");
+                    continue;
                 }
+                
+                _spawnPrefabData.Add(spawnPrefab, new SpawnPrefabData
+                {
+                    SpawnPrefabType = spawnPrefab,
+                    FilePath = filePath,
+                    EditorPrefab = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/{filePath}")
+                });
             }
         }
-
+        
         private void InitializeSpawnPrefabHierarchy()
         {
             foreach (var kvp in _spawnPrefabData)
@@ -134,34 +128,25 @@ namespace BRM.Sky.WaveEditor
             }
         }
 
-        public GameObject GetPrefab(SpawnPrefab prefabType)
-        {
-            if (_spawnPrefabData.TryGetValue(prefabType, out var data))
-            {
-                return data.Prefab;
-            }
-
-            Debug.LogError($"No Prefab found for spawnPrefabType:{prefabType}");
-            return null;
-        }
-
         public GameObject CreateInstance(SpawnPrefab prefabType)
         {
             if (_spawnPrefabData.TryGetValue(prefabType, out var data))
             {
-                var instance = Instantiate(data.Prefab, data.Parent);
+                var instance = Instantiate(data.EditorPrefab, data.Parent);
+                instance.GetComponent<SpriteRenderer>().sprite = GetSprite(prefabType);
                 return instance;
             }
 
-            Debug.LogError($"No Prefab found for spawnPrefabType:{prefabType}");
+            Debug.LogError($"No EditorPrefab found for spawnPrefabType:{prefabType}");
             return null;
         }
 
         public Sprite GetSprite(SpawnPrefab prefabType)
         {
-            if (_spawnPrefabData.TryGetValue(prefabType, out var data))
+            var birdSprite = _birdSprites.Find(bird => bird.PrefabType == prefabType);
+            if (birdSprite != null)
             {
-                return data.IconSprite;
+                return birdSprite.Sprite;
             }
 
             Debug.LogError($"No Sprite found for spawnPrefabType:{prefabType}");

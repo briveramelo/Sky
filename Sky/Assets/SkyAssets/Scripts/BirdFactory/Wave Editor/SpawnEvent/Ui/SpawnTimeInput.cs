@@ -13,10 +13,6 @@ namespace BRM.Sky.WaveEditor
             set => _inputField.text = value.ToString("0.00");
         }
 
-        public string Text
-        {
-            get => string.IsNullOrWhiteSpace(_inputField.text) ? "-" : _inputField.text;
-            set => _inputField.text = value;
-        }
+        public string Text => string.IsNullOrWhiteSpace(_inputField.text) ? "-" : _inputField.text;
     }
 }

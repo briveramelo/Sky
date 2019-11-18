@@ -1,25 +1,39 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
+using GenericFunctions;
 using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
 {
     public class AddSpawnEventButton : Selector
     {
-        [SerializeField] private GameObject _spawnEventButton;
+        [SerializeField] private GameObject _spawnButtonPrefab;
         [SerializeField] private Transform _prefabInstanceParentTran;
         [SerializeField] private Transform _maskAvoiderTargetParent;
-        
+
         private IHoldData _lastDataHolder;
-        
-        protected override void OnClick()
+
+        protected override IEnumerator OnClickRoutine()
         {
-            base.OnClick();
-            var button = Instantiate(_spawnEventButton, _prefabInstanceParentTran);
+            DeselectAll();
+
+            var button = Instantiate(_spawnButtonPrefab, _prefabInstanceParentTran);
             transform.SetAsLastSibling();
-            
+
             button.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item => item.SetTargetParent(_maskAvoiderTargetParent));
 
             _lastDataHolder = button.GetComponent<IHoldData>();
+            
+            var viewController = button.GetComponent<SpawnEventViewController>();
+            viewController.OnButtonClicked += DeselectAll;
+            yield return null;
+            
+            viewController.Select(true);
+        }
+
+        private void DeselectAll()
+        {
+            _prefabInstanceParentTran.GetComponentsRecursively<SpawnEventViewController>().ToList().ForEach(selector => selector.Select(false));
         }
 
         private void Update()
@@ -34,4 +48,3 @@ namespace BRM.Sky.WaveEditor
         }
     }
 }
-

@@ -1,4 +1,5 @@
 using System.Linq;
+using GenericFunctions;
 using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
@@ -16,7 +17,7 @@ namespace BRM.Sky.WaveEditor
         {
             get
             {
-                var spawnEventDataMarshals = _spawnEventParent.GetComponentsInChildren<SpawnEventDataMarshal>();
+                var spawnEventDataMarshals = _spawnEventParent.GetComponentsRecursively<SpawnEventDataMarshal>();
                 return new BatchData
                 {
                     SpawnEventData = spawnEventDataMarshals.Select(marshal => marshal.Data).ToList()
@@ -24,7 +25,7 @@ namespace BRM.Sky.WaveEditor
             }
             set
             {
-                var marshals = _spawnEventParent.GetComponentsInChildren<SpawnEventDataMarshal>().ToList();
+                var marshals = _spawnEventParent.GetComponentsRecursively<SpawnEventDataMarshal>().ToList();
                 for (int i = 0; i < marshals.Count; i++)
                 {
                     marshals[i].Data = value.SpawnEventData[i];

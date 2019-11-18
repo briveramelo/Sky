@@ -7,6 +7,8 @@ namespace BRM.Sky.WaveEditor
 {
     public class TriggerDropdown : MonoBehaviour, IDisplayable
     {
+        public event Action<BatchTriggerType> OnBatchTriggerSelected;
+        
         [SerializeField] private TMP_Dropdown _dropdown;
         [SerializeField] private TMP_InputField _amountInput;
 
@@ -36,6 +38,8 @@ namespace BRM.Sky.WaveEditor
 
             _amountInput.gameObject.SetActive(settings.Display);
             _amountInput.contentType = settings.InputContentType;
+            
+            OnBatchTriggerSelected?.Invoke(triggerType);
         }
     }
 }

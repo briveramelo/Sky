@@ -14,6 +14,12 @@ namespace BRM.Sky.WaveEditor
             UpdateUi();
         }
 
+        private void Start()
+        {
+            _dropdown.OnBatchTriggerSelected += OnSpawnTypeSelected;
+            _inputField.OnInputChanged += OnAmountChanged;
+        }
+
         public void UpdateUi()
         {
             if (string.IsNullOrWhiteSpace(_inputField.Text))
@@ -24,6 +30,16 @@ namespace BRM.Sky.WaveEditor
             {
                 _displayText.text = $"{_dropdown.TriggerType}, {_inputField.Text}";
             }
+        }
+        
+        private void OnSpawnTypeSelected(BatchTriggerType triggerType)
+        {
+            UpdateUi();
+        }
+
+        private void OnAmountChanged(float amount)
+        {
+            UpdateUi();
         }
     }
 }

@@ -26,7 +26,7 @@ namespace BRM.Sky.WaveEditor
             batchButton.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item => item.SetTargetParent(_maskAvoiderTargetParent));
             batchTrigger.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item => item.SetTargetParent(_maskAvoiderTargetParent));
 
-            batchButton.GetComponent<BatchButton>().SetSpawnEventsParent(_spawnEventsParent);
+            batchButton.GetComponent<BatchViewController>().SetSpawnEventsParent(_spawnEventsParent);
             
             _lastDataHolder = batchButton.GetComponent<IHoldData>();
         }

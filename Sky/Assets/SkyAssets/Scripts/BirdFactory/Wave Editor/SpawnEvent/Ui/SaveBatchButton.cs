@@ -10,14 +10,19 @@ namespace BRM.Sky.WaveEditor
 {
     public class SaveBatchButton : Selector
     {
-        [SerializeField] private BatchDataMarshal _batchDataMarshal;
         [SerializeField] private TMP_InputField _batchNameInput;
         private string _folderName => $"{Application.dataPath}/SkyAssets/WaveData/Batches/";
         private string _fileName => $"{_batchNameInput.text}.json";
         private string _filePath => Path.Combine(_folderName, _fileName);
 
+        private BatchDataMarshal _batchDataMarshal;
         private IWriteFiles _fileWriter = new TextFileSerializer(new UnityJsonSerializer(), new UnityDebugger());
-        
+
+        public void SetDataMarshal(BatchDataMarshal dataMarshal)
+        {
+            _batchDataMarshal = dataMarshal;
+        }
+
         protected override void OnClick()
         {
             base.OnClick();

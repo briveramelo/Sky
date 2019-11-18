@@ -8,7 +8,7 @@ namespace BRM.Sky.WaveEditor
         [SerializeField] private Vector2 _offset = new Vector2(60, 0);
 
         private Transform _targetParent;
-        
+
         public void SetTargetParent(Transform parent)
         {
             _targetParent = parent;
@@ -23,6 +23,5 @@ namespace BRM.Sky.WaveEditor
         {
             transform.position = _intendedParent.TransformPoint(_offset);
         }
-
     }
 }

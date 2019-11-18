@@ -1,40 +1,43 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayTestButton : Selector
+namespace BRM.Sky.WaveEditor
 {
-    [SerializeField] private List<GameObject> _requiredPrefabs;
-
-    private bool _isEditing;
-    private List<GameObject> _requiredInstances = new List<GameObject>();
-    
-    protected override void OnClick()
+    public class PlayTestButton : Selector
     {
-        base.OnClick();
-        _isEditing = !_isEditing;
-        
-        if (_isEditing)
+        [SerializeField] private List<GameObject> _requiredPrefabs;
+
+        private bool _isEditing;
+        private List<GameObject> _requiredInstances = new List<GameObject>();
+
+        protected override void OnClick()
         {
-            DestroyTest();
+            base.OnClick();
+            _isEditing = !_isEditing;
+
+            if (_isEditing)
+            {
+                DestroyTest();
+            }
+            else
+            {
+                CreateTest();
+            }
         }
-        else
+
+        private void CreateTest()
         {
-            CreateTest();
+            _requiredPrefabs.ForEach(item =>
+            {
+                var instance = Instantiate(item);
+                _requiredInstances.Add(instance);
+            });
         }
-    }
 
-    private void CreateTest()
-    {
-        _requiredPrefabs.ForEach(item =>
+        private void DestroyTest()
         {
-            var instance = Instantiate(item);
-            _requiredInstances.Add(instance);
-        });
-    }
-
-    private void DestroyTest()
-    {
-        _requiredInstances.ForEach(Destroy);
-        _requiredInstances.Clear();
+            _requiredInstances.ForEach(Destroy);
+            _requiredInstances.Clear();
+        }
     }
 }

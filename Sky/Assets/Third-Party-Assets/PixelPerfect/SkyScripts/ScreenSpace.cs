@@ -34,6 +34,8 @@ public static class ScreenSpace
         }
     }
 
+    public static Vector2 SpawnEdge => WorldEdge + new Vector2(0.13f, 0.13f);
+
     public static float ScreenZoom => _pixelCam.Value.cameraZoom;
 
     private static Lazy<PixelPerfectCamera> _pixelCam = new Lazy<PixelPerfectCamera>(Object.FindObjectOfType<PixelPerfectCamera>);

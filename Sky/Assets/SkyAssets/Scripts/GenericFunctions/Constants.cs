@@ -34,6 +34,10 @@ namespace GenericFunctions
             components.AddRange(childBehaviours);
             return components;
         }
+        public static List<T> GetComponentsRecursively<T>(this Transform tran) where T : Component
+        {
+            return GetComponentsRecursively<T>(tran.gameObject);
+        }
     }
 
     public static class Bool

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
 {
-    public class BatchButton : Selector
+    public class BatchViewController : Selector
     {
         [SerializeField] private BatchDataMarshal _dataMarshal;
         

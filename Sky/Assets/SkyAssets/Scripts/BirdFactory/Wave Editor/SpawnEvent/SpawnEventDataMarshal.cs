@@ -4,23 +4,22 @@ namespace BRM.Sky.WaveEditor
 {
     public class SpawnEventDataMarshal : DataMarshal<SpawnEventData>
     {
-        [SerializeField] private SpawnTypeDropdown _spawnTypeDropdown;
-        [SerializeField] private SpawnPositionMarshal _positionMarshal;
+        [SerializeField] private SpawnTypeSelector _spawnTypeSelector;
         [SerializeField] private SpawnTimeInput _timeInput;
 
         public override SpawnEventData Data
         {
             get => new SpawnEventData
             {
-                SpawnPrefab = _spawnTypeDropdown.SpawnPrefab,
-                NormalizedPosition = _positionMarshal.NormalizedPosition,
-                TimeAfterBatchStartSec = float.Parse(_timeInput.Text)
+                SpawnPrefab = _spawnTypeSelector.SpawnPrefab,
+                NormalizedPosition = _spawnTypeSelector.NormalizedPosition,
+                TimeAfterBatchStartSec = _timeInput.Time
             };
             set
             {
-                _spawnTypeDropdown.SpawnPrefab = value.SpawnPrefab;
-                _positionMarshal.NormalizedPosition = value.NormalizedPosition;
-                _timeInput.Text = value.TimeAfterBatchStartSec.ToString("0.00");
+                _spawnTypeSelector.SpawnPrefab = value.SpawnPrefab;
+                _spawnTypeSelector.NormalizedPosition = value.NormalizedPosition;
+                _timeInput.Time = value.TimeAfterBatchStartSec;
             }
         }
 
