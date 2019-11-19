@@ -13,7 +13,7 @@ namespace BRM.Sky.WaveEditor
         [SerializeField] private WaveDataMarshal _waveDataMarshal;
         
         private string _folderName => $"{Application.dataPath}/SkyAssets/WaveData/Waves/";
-        private string _fileName => $"{_waveDataMarshal.Data.Name}.json";
+        private string _fileName => $"{_waveDataMarshal.WaveName}.json";
         private string _filePath => Path.Combine(_folderName, _fileName);
 
         private IWriteFiles _fileWriter = new TextFileSerializer(new UnityJsonSerializer(), new UnityDebugger());

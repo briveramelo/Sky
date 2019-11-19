@@ -1,4 +1,5 @@
 using System.Linq;
+using GenericFunctions;
 using TMPro;
 using UnityEngine;
 
@@ -10,21 +11,30 @@ namespace BRM.Sky.WaveEditor
         [SerializeField] private TMP_InputField _subtitleText;
         [SerializeField] private GameObject _dataMarshalsParent;
 
+        public string WaveName => _waveNameText.text;
         public override WaveData Data
         {
             get
             {
+                _dataMarshalsParent.GetComponentsRecursively<BatchViewController>().ForEach(vc =>
+                {
+                    if (vc.IsSelected)
+                    {
+                        vc.Select(false);
+                    }
+                });//ensures data is cached for any uncached, currently selected view controllers
+                
                 var batchDataMarshals = _dataMarshalsParent.GetComponentsInChildren<BatchDataMarshal>();
                 var batchTriggerDataMarshals = _dataMarshalsParent.GetComponentsInChildren<TriggerDataMarshal>();
 
                 return new WaveData
                 {
-                    Name = _waveNameText.text,
+                    Name = WaveName,
                     Subtitle = _subtitleText.text,
 
                     WaveTimeline = new WaveTimeline
                     {
-                        Batches = batchDataMarshals.Select(marshal => marshal.Data).ToList(),
+                        Batches = batchDataMarshals.Select(marshal => marshal.GetCachedData()).ToList(),
                         Triggers = batchTriggerDataMarshals.Select(marshal => marshal.Data).ToList(),
                     }
                 };

@@ -18,7 +18,6 @@ namespace BRM.Sky.WaveEditor
         private GameObject _spawnEventsView;
         private GameObject _spawnEventsDirectParent;
         private AddSpawnEventButton _spawnEventButton;
-        private BatchData _cachedData = new BatchData();
 
         public void Initialize(GameObject spawnEventsView, GameObject spawnEventsParent, AddSpawnEventButton spawnEventButton, TMP_InputField batchNameText, int id)
         {
@@ -33,7 +32,7 @@ namespace BRM.Sky.WaveEditor
         {
             if (IsSelected && !isSelected)
             {
-                _cachedData = _dataMarshal.Data;
+                _dataMarshal.CacheData();
             }
             _batchUi.Select(isSelected);
         }
@@ -52,7 +51,7 @@ namespace BRM.Sky.WaveEditor
             if(IsSelected)
             {
                 _spawnEventsView.SetActive(true);
-                PopulateSpawnEventDataUi(_cachedData);
+                PopulateSpawnEventDataUi(_dataMarshal.GetCachedData());
             }
         }
 

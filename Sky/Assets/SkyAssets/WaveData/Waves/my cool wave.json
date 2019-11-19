@@ -1,0 +1,76 @@
+﻿{
+    "Name": "my cool wave",
+    "Subtitle": "when pigeons eat shit...",
+    "WaveTimeline": {
+        "Batches": [
+            {
+                "Name": "duck meat",
+                "SpawnEventData": [
+                    {
+                        "SpawnPrefabType": "Duck",
+                        "NormalizedPosition": {
+                            "x": -0.040776729583740237,
+                            "y": 0.5
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    },
+                    {
+                        "SpawnPrefabType": "Duck",
+                        "NormalizedPosition": {
+                            "x": -0.040776729583740237,
+                            "y": 0.5841935276985169
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    },
+                    {
+                        "SpawnPrefabType": "Duck",
+                        "NormalizedPosition": {
+                            "x": -0.04347354173660278,
+                            "y": 0.4032258093357086
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    }
+                ]
+            },
+            {
+                "Name": "duck meat",
+                "SpawnEventData": [
+                    {
+                        "SpawnPrefabType": "Duck",
+                        "NormalizedPosition": {
+                            "x": -0.040776729583740237,
+                            "y": 0.5
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    },
+                    {
+                        "SpawnPrefabType": "Duck",
+                        "NormalizedPosition": {
+                            "x": -0.040776729583740237,
+                            "y": 0.5841935276985169
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    },
+                    {
+                        "SpawnPrefabType": "Duck",
+                        "NormalizedPosition": {
+                            "x": -0.04347354173660278,
+                            "y": 0.4032258093357086
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    }
+                ]
+            }
+        ],
+        "Triggers": [
+            {
+                "BatchTriggerType": "AllDead",
+                "Amount": 1.0
+            },
+            {
+                "BatchTriggerType": "AllDead",
+                "Amount": 1.0
+            }
+        ]
+    }
+}

@@ -9,6 +9,7 @@ namespace BRM.Sky.WaveEditor
     {
         private TMP_InputField _batchNameText;
         private GameObject _spawnEventParent;
+        private BatchData _cachedData = new BatchData();
 
         public void Initialize(GameObject spawnEventParent, TMP_InputField batchNameText)
         {
@@ -18,6 +19,13 @@ namespace BRM.Sky.WaveEditor
 
         public string BatchName => _batchNameText == null ? "" : _batchNameText.text;
         public override bool IsDataReady => !string.IsNullOrWhiteSpace(BatchName);
+
+        public void CacheData()
+        {
+            _cachedData = Data;
+        }
+
+        public BatchData GetCachedData() => _cachedData;
 
         public override BatchData Data
         {
