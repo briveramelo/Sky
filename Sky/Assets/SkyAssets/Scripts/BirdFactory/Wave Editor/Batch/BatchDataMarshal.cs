@@ -17,15 +17,21 @@ namespace BRM.Sky.WaveEditor
         {
             get
             {
-                var spawnEventDataMarshals = _spawnEventParent.GetComponentsRecursively<SpawnEventDataMarshal>();
-                return new BatchData
+                var spawnEventDataMarshals = _spawnEventParent.GetComponentsRecursively<SpawnEventDataMarshal>(true);
+                var data = new BatchData
                 {
                     SpawnEventData = spawnEventDataMarshals.Select(marshal => marshal.Data).ToList()
                 };
+                return data;
             }
             set
             {
-                var marshals = _spawnEventParent.GetComponentsRecursively<SpawnEventDataMarshal>().ToList();
+                if (value == null || value.SpawnEventData.Count == 0)
+                {
+                    return;
+                }
+
+                var marshals = _spawnEventParent.GetComponentsRecursively<SpawnEventDataMarshal>(true);
                 for (int i = 0; i < marshals.Count; i++)
                 {
                     marshals[i].Data = value.SpawnEventData[i];

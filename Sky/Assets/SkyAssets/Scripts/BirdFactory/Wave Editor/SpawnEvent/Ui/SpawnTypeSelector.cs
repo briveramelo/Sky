@@ -18,6 +18,7 @@ namespace BRM.Sky.WaveEditor
                 _dropdown.value = (int) value;
                 if (_prefabInstance == null)
                 {
+                    Debug.Log(value);
                     CreateEditorInstance(value);
                 }
             }
@@ -44,11 +45,23 @@ namespace BRM.Sky.WaveEditor
 
         private GameObject _prefabInstance;
 
-        private void Start()
+        private void Awake()
         {
             _dropdown.options = Enum.GetValues(typeof(SpawnPrefab)).Cast<SpawnPrefab>()
                 .Select(prefabType => new TMP_Dropdown.OptionData(prefabType.ToString(), WaveEditorPrefabFactory.Instance.GetSprite(prefabType))).ToList();
             _dropdown.onValueChanged.AddListener(OnDropdownSelected);
+            if (_prefabInstance == null)
+            {
+                CreateEditorInstance(0);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (_prefabInstance != null && Application.isPlaying)
+            {
+                Destroy(_prefabInstance);
+            }
         }
 
         private void OnDropdownSelected(int value)
@@ -56,7 +69,7 @@ namespace BRM.Sky.WaveEditor
             CreateEditorInstance((SpawnPrefab) value);
         }
 
-        public void CreateEditorInstance(SpawnPrefab prefabType)
+        private void CreateEditorInstance(SpawnPrefab prefabType)
         {
             var lastPosition = new Vector2(-ScreenSpace.SpawnEdge.x, 0);
             if (_prefabInstance != null)
@@ -78,14 +91,6 @@ namespace BRM.Sky.WaveEditor
             if (_prefabInstance != null && isSelected)
             {
                 Selection.activeGameObject = _prefabInstance;
-            }
-        }
-
-        private void OnDestroy()
-        {
-            if (_prefabInstance != null && Application.isPlaying)
-            {
-                Destroy(_prefabInstance);
             }
         }
     }

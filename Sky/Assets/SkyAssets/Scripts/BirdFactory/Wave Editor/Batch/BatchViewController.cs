@@ -1,48 +1,61 @@
 using System;
+using System.Collections;
+using GenericFunctions;
 using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
 {
     public class BatchViewController : Selector, ISelectable
     {
-        public event Action OnButtonClicked;
-        
+        public event Action<int> OnButtonClicked;
+        public bool IsSelected => _batchUi.IsSelected;
+        public int Id { get; private set; }
+
         [SerializeField] private BatchDataMarshal _dataMarshal;
         [SerializeField] private BatchUi _batchUi;
+
+        private GameObject _spawnEventsView;
+        private GameObject _spawnEventsDirectParent;
+        private AddSpawnEventButton _spawnEventButton;
+        private BatchData _cachedData = new BatchData();
+
+        public void Initialize(GameObject spawnEventsView, GameObject spawnEventsParent, AddSpawnEventButton spawnEventButton, int id)
+        {
+            _spawnEventButton = spawnEventButton;
+            _spawnEventsView = spawnEventsView;
+            _spawnEventsDirectParent = spawnEventsParent;
+            _dataMarshal.SetSpawnEventParent(spawnEventsParent);
+            Id = id;
+        }
         
-        private GameObject _spawnEventsParent;
-
-        public void SetSpawnEventsParent(GameObject parent)
-        {
-            _spawnEventsParent = parent;
-        }
-
-        protected override void OnClick()
-        {
-            base.OnClick();
-            OnButtonClicked?.Invoke();
-
-            Select(!IsSelected);
-            PopulateSpawnEventDataUi();
-        }
-
         public void Select(bool isSelected)
         {
-            _batchUi.Select(isSelected);
-            
-            if (isSelected)
+            if (IsSelected && !isSelected)
             {
-                _spawnEventsParent.SetActive(true);
-                PopulateSpawnEventDataUi();
+                _cachedData = _dataMarshal.Data;
+            }
+            _batchUi.Select(isSelected);
+        }
+
+        protected override IEnumerator OnClickRoutine()
+        {
+            OnButtonClicked?.Invoke(Id);
+            _spawnEventsDirectParent.DestroyChildren("DontDestroyChild");
+            yield return null;
+
+            Select(!IsSelected);
+            
+            if(IsSelected)
+            {
+                _spawnEventsView.SetActive(true);
+                PopulateSpawnEventDataUi(_cachedData);
             }
         }
-        
-        private void PopulateSpawnEventDataUi()
+
+        private void PopulateSpawnEventDataUi(BatchData data)
         {
-            
+            var numButtons = data.SpawnEventData.Count;
+            _spawnEventButton.CreateButtons(numButtons, () => _dataMarshal.Data = data);
         }
-
-
-        public bool IsSelected => _batchUi.IsSelected;
     }
 }

@@ -10,10 +10,12 @@ namespace BRM.Sky.WaveEditor
         [SerializeField] private GameObject _batchButtonPrefab;
         [SerializeField] private GameObject _batchTriggerButtonPrefab;
         [SerializeField] private GameObject _spawnEventsParent;
+        [SerializeField] private GameObject _spawnEventsDirectParent;
         [SerializeField] private Transform _prefabInstanceParentTran;
         [SerializeField] private Transform _maskAvoiderTargetParent;
 
         private IHoldData _lastDataHolder;
+        private int _currentId = 0;
 
         protected override void OnClick()
         {
@@ -21,22 +23,29 @@ namespace BRM.Sky.WaveEditor
             var batchButton = Instantiate(_batchButtonPrefab, _prefabInstanceParentTran);
             var batchTrigger = Instantiate(_batchTriggerButtonPrefab, _prefabInstanceParentTran);
             Instantiate(_spacerPrefab, _prefabInstanceParentTran);
-            
+
             transform.SetAsLastSibling();
 
             batchButton.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item => item.SetTargetParent(_maskAvoiderTargetParent));
             batchTrigger.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item => item.SetTargetParent(_maskAvoiderTargetParent));
 
             var viewController = batchButton.GetComponent<BatchViewController>();
-            viewController.SetSpawnEventsParent(_spawnEventsParent);
-            viewController.OnButtonClicked += DeselectAll;
-            
+            var spawnEventButton = _spawnEventsDirectParent.GetComponentInChildren<AddSpawnEventButton>();
+            viewController.Initialize(_spawnEventsParent, _spawnEventsDirectParent, spawnEventButton, _currentId++);
+            viewController.OnButtonClicked += DeselectOthers;
+
             _lastDataHolder = batchButton.GetComponent<IHoldData>();
         }
 
-        private void DeselectAll()
+        private void DeselectOthers(int selectedId)
         {
-            _prefabInstanceParentTran.GetComponentsRecursively<BatchViewController>().ForEach(item => item.Select(false));
+            _prefabInstanceParentTran.GetComponentsRecursively<BatchViewController>(true).ForEach(item =>
+            {
+                if (item.Id != selectedId)
+                {
+                    item.Select(false);
+                }
+            });
         }
 
         private void Update()

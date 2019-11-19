@@ -16,12 +16,16 @@ namespace BRM.Sky.WaveEditor
         [SerializeField] private SpawnTypeSelector _spawnTypeSelector;
         [SerializeField] private SpawnTimeInput _spawnTime;
 
+        public bool IsSelected => _spawnTypeSelector.gameObject.activeInHierarchy;
+
+        private void Start()
+        {
+            UpdateUi();
+        }
         private void Update()
         {
             _positionText.text = _spawnTypeSelector.PositionText;
         }
-
-        public bool IsSelected => _spawnTypeSelector.gameObject.activeInHierarchy;
 
         public void UpdateUi()
         {

@@ -3536,6 +3536,7 @@ MonoBehaviour:
   _batchTriggerButtonPrefab: {fileID: 1990769159714930177, guid: 87ffeb33142a53343a29784df3cfade2,
     type: 3}
   _spawnEventsParent: {fileID: 5888498203291150324}
+  _spawnEventsDirectParent: {fileID: 5888498203104734260}
   _prefabInstanceParentTran: {fileID: 5888498203993384448}
   _maskAvoiderTargetParent: {fileID: 5888498203686706417}
 --- !u!114 &5888498203471504479

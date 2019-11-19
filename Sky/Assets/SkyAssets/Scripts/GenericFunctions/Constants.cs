@@ -1,11 +1,11 @@
-﻿﻿using System;
+﻿using System;
 using UnityEngine;
 using System.Collections;
- using System.Collections.Generic;
- using System.Linq;
- using Object = UnityEngine.Object;
+using System.Collections.Generic;
+using System.Linq;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
- 
+
 namespace GenericFunctions
 {
     public static class Chance
@@ -24,19 +24,45 @@ namespace GenericFunctions
         {
             for (int i = 0; i < tran.childCount; i++)
             {
-                Object.Destroy(tran.GetChild(i));
+                Object.Destroy(tran.GetChild(i).gameObject);
             }
         }
-        public static List<T> GetComponentsRecursively<T>(this GameObject go) where T : Component
+
+        public static void DestroyChildren(this Transform tran, string tagToAvoid)
+        {
+            for (int i = 0; i < tran.childCount; i++)
+            {
+                var targetGo = tran.GetChild(i).gameObject;
+                if (targetGo.CompareTag(tagToAvoid))
+                {
+                    return;
+                }
+
+                Object.Destroy(targetGo);
+            }
+        }
+
+        public static void DestroyChildren(this GameObject go)
+        {
+            DestroyChildren(go.transform);
+        }
+
+        public static void DestroyChildren(this GameObject go, string tagToAvoid)
+        {
+            DestroyChildren(go.transform, tagToAvoid);
+        }
+
+        public static List<T> GetComponentsRecursively<T>(this GameObject go, bool includeInactive = false) where T : Component
         {
             var components = go.GetComponents<T>().ToList();
-            var childBehaviours = go.GetComponentsInChildren<T>(true);
+            var childBehaviours = go.GetComponentsInChildren<T>(includeInactive);
             components.AddRange(childBehaviours);
             return components;
         }
-        public static List<T> GetComponentsRecursively<T>(this Transform tran) where T : Component
+
+        public static List<T> GetComponentsRecursively<T>(this Transform tran, bool includeInactive = false) where T : Component
         {
-            return GetComponentsRecursively<T>(tran.gameObject);
+            return GetComponentsRecursively<T>(tran.gameObject, includeInactive);
         }
     }
 
@@ -53,7 +79,7 @@ namespace GenericFunctions
             yield return new WaitForSeconds(time2Wait);
             lambda(true);
         }
-        
+
         public static void FaceForward(this Transform trans, bool forward)
         {
             var localScale = trans.localScale;
@@ -69,12 +95,14 @@ namespace GenericFunctions
             yield return new WaitForSeconds(time2Wait);
             onComplete?.Invoke();
         }
+
         public static IEnumerator DelayAction(Action onComplete, int numFrames)
         {
             for (int i = 0; i < numFrames; i++)
             {
                 yield return null;
             }
+
             onComplete?.Invoke();
         }
     }
@@ -90,14 +118,14 @@ namespace GenericFunctions
     public static class Constants
     {
         public const int UnusedFingerId = -1;
-        public const float SpeedMultiplier = 0.25f;//accounts for the time things were all scaled up by 4
+        public const float SpeedMultiplier = 0.25f; //accounts for the time things were all scaled up by 4
         public const float Time2ThrowSpear = 0.333333f;
         public const float Time2StrikeLightning = 0.5f;
 
         public static int AnimState => _animState.Value;
         private static Lazy<int> _animState = new Lazy<int>(() => Animator.StringToHash("AnimState"));
     }
-    
+
     public static class Layers
     {
         public const int BasketLayer = 8;

@@ -4,17 +4,33 @@ using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
 {
-    public class SpawnEventViewController : Selector
+    public class SpawnEventViewController : Selector, ISelectable
     {
-        public event Action OnButtonClicked;
+        public event Action<int> OnButtonClicked;
 
         [SerializeField] private SpawnEventUi _ui;
         [SerializeField] private SpawnTypeSelector _spawnTypeSelector;
 
+        public bool IsSelected => _ui.IsSelected;
+        public int Id { get; set; }
+
+        public void Select(bool isSelected)
+        {
+            _ui.UpdateUi();
+            _ui.Select(isSelected);
+        }
+
         private void Start()
         {
-            _spawnTypeSelector.CreateEditorInstance(0);
             _spawnTypeSelector.OnSpawnSelected += OnSpawnTypeSelected;
+        }
+
+        private void OnDestroy()
+        {
+            if (Application.isPlaying)
+            {
+                Destroy(_spawnTypeSelector.gameObject);
+            }
         }
 
         private void OnSpawnTypeSelected(SpawnPrefab selectedPrefab)
@@ -25,15 +41,9 @@ namespace BRM.Sky.WaveEditor
         protected override IEnumerator OnClickRoutine()
         {
             bool isSelected = _ui.IsSelected;
-            OnButtonClicked?.Invoke();
+            OnButtonClicked?.Invoke(Id);
             yield return null;
             Select(!isSelected);
-        }
-
-        public void Select(bool isSelected)
-        {
-            _ui.UpdateUi();
-            _ui.Select(isSelected);
         }
     }
 }
