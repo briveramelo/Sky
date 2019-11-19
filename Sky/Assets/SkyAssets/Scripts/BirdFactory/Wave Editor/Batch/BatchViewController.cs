@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using GenericFunctions;
+using TMPro;
 using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
@@ -19,15 +20,15 @@ namespace BRM.Sky.WaveEditor
         private AddSpawnEventButton _spawnEventButton;
         private BatchData _cachedData = new BatchData();
 
-        public void Initialize(GameObject spawnEventsView, GameObject spawnEventsParent, AddSpawnEventButton spawnEventButton, int id)
+        public void Initialize(GameObject spawnEventsView, GameObject spawnEventsParent, AddSpawnEventButton spawnEventButton, TMP_InputField batchNameText, int id)
         {
             _spawnEventButton = spawnEventButton;
             _spawnEventsView = spawnEventsView;
             _spawnEventsDirectParent = spawnEventsParent;
-            _dataMarshal.SetSpawnEventParent(spawnEventsParent);
+            _dataMarshal.Initialize(spawnEventsParent, batchNameText);
             Id = id;
         }
-        
+
         public void Select(bool isSelected)
         {
             if (IsSelected && !isSelected)

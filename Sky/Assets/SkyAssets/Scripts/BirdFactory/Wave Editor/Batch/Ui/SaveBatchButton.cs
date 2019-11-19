@@ -4,6 +4,7 @@ using BRM.FileSerializers;
 using BRM.FileSerializers.Interfaces;
 using BRM.TextSerializers;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
@@ -12,7 +13,7 @@ namespace BRM.Sky.WaveEditor
     {
         [SerializeField] private TMP_InputField _batchNameInput;
         private string _folderName => $"{Application.dataPath}/SkyAssets/WaveData/Batches/";
-        private string _fileName => $"{_batchNameInput.text}.json";
+        private string _fileName => $"{_batchDataMarshal.BatchName}.json";
         private string _filePath => Path.Combine(_folderName, _fileName);
 
         private BatchDataMarshal _batchDataMarshal;
@@ -25,9 +26,10 @@ namespace BRM.Sky.WaveEditor
 
         protected override void OnClick()
         {
-            base.OnClick();
             string filePath = FileUtilities.GetUniqueFilePath(_filePath);
             _fileWriter.Write(filePath, _batchDataMarshal.Data);
+            AssetDatabase.Refresh();
+            base.OnClick();
         }
 
         private void Update()

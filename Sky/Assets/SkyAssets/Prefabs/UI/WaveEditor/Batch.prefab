@@ -283,7 +283,6 @@ GameObject:
   - component: {fileID: 8630113879929458084}
   - component: {fileID: 4405952406863882535}
   - component: {fileID: 4983346856858656342}
-  - component: {fileID: 5672198648529610070}
   - component: {fileID: 8630113879929458090}
   - component: {fileID: 8630113879929458089}
   m_Layer: 5
@@ -328,7 +327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 4008743470223200630}
   _audioType: 1
-  _dataMarshal: {fileID: 5672198648529610070}
+  _dataMarshal: {fileID: 0}
   _batchUi: {fileID: 4983346856858656342}
 --- !u!114 &4983346856858656342
 MonoBehaviour:
@@ -345,18 +344,6 @@ MonoBehaviour:
   _selected: {r: 1, g: 0, b: 0, a: 1}
   _unselected: {r: 0, g: 0, b: 0, a: 0}
   _backgroundImage: {fileID: 8630113879929458090}
---- !u!114 &5672198648529610070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8630113879929458085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 539f0c79e02547d5931bde4cb1732d97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8630113879929458090
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3539,6 +3539,9 @@ MonoBehaviour:
   _spawnEventsDirectParent: {fileID: 5888498203104734260}
   _prefabInstanceParentTran: {fileID: 5888498203993384448}
   _maskAvoiderTargetParent: {fileID: 5888498203686706417}
+  _saveBatchButton: {fileID: 3243188294370027441}
+  _spawnEventButton: {fileID: 5888498203345528926}
+  _batchNameText: {fileID: 3229971183924294797}
 --- !u!114 &5888498203471504479
 MonoBehaviour:
   m_ObjectHideFlags: 0

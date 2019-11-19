@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using GenericFunctions;
+using TMPro;
 using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
@@ -13,8 +14,10 @@ namespace BRM.Sky.WaveEditor
         [SerializeField] private GameObject _spawnEventsDirectParent;
         [SerializeField] private Transform _prefabInstanceParentTran;
         [SerializeField] private Transform _maskAvoiderTargetParent;
-
-        private IHoldData _lastDataHolder;
+        [SerializeField] private SaveBatchButton _saveBatchButton;
+        [SerializeField] private AddSpawnEventButton _spawnEventButton;
+        [SerializeField] private TMP_InputField _batchNameText;
+        
         private int _currentId = 0;
 
         protected override void OnClick()
@@ -30,14 +33,11 @@ namespace BRM.Sky.WaveEditor
             batchTrigger.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item => item.SetTargetParent(_maskAvoiderTargetParent));
 
             var viewController = batchButton.GetComponent<BatchViewController>();
-            var spawnEventButton = _spawnEventsDirectParent.GetComponentInChildren<AddSpawnEventButton>();
-            viewController.Initialize(_spawnEventsParent, _spawnEventsDirectParent, spawnEventButton, _currentId++);
-            viewController.OnButtonClicked += DeselectOthers;
-
-            _lastDataHolder = batchButton.GetComponent<IHoldData>();
+            viewController.Initialize(_spawnEventsParent, _spawnEventsDirectParent, _spawnEventButton, _batchNameText, _currentId++);
+            viewController.OnButtonClicked += DeselectOthersAndSetMarshal;
         }
 
-        private void DeselectOthers(int selectedId)
+        private void DeselectOthersAndSetMarshal(int selectedId)
         {
             _prefabInstanceParentTran.GetComponentsRecursively<BatchViewController>(true).ForEach(item =>
             {
@@ -45,18 +45,11 @@ namespace BRM.Sky.WaveEditor
                 {
                     item.Select(false);
                 }
+                else
+                {
+                    _saveBatchButton.SetDataMarshal(item.GetComponent<BatchDataMarshal>());
+                }
             });
-        }
-
-        private void Update()
-        {
-            if (_lastDataHolder == null || ReferenceEquals(null, _lastDataHolder))
-            {
-                _button.interactable = true;
-                return;
-            }
-
-            _button.interactable = _lastDataHolder.IsDataReady;
         }
     }
 }

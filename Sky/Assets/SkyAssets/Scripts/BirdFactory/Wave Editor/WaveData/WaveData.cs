@@ -23,6 +23,7 @@ namespace BRM.Sky.WaveEditor
     [Serializable]
     public class BatchData
     {
+        public string Name;
         public List<SpawnEventData> SpawnEventData = new List<SpawnEventData>();
     }
 

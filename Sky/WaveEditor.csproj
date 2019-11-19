@@ -12,10 +12,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{DFB788AB-5875-85FB-F397-57F73CD959E0}</ProjectGuid>
+    <ProjectGuid>{9A9A84EC-959D-A370-6D29-57B8971E2050}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Sky</AssemblyName>
+    <AssemblyName>WaveEditor</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -56,112 +56,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\BirdFactory.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\Albatross.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\Bat.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\Bird.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\Crows\BabyCrow.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\Crows\Crow.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\Crows\Murder.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\Duck.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\Eagle.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\LeadDuck.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\LinearBirds\BirdOfParadise.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\LinearBirds\LinearBird.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\LinearBirds\Pigeon.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\LinearBirds\TeleportSideToSide.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\Pelican.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\Seagull.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\Shoebill.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\Tentacles.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\TentaclesSensor.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\TentaclesTip.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\BirdStats.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\BirdTypes.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\BirdWaiter.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\BackgroundManager.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\EagleFriends.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\EmotionalIntensity.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\EndlessWave.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\StoryWaves\BatWave.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\StoryWaves\DuckWave.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\StoryWaves\EagleWave.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\StoryWaves\PelicanWave.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\StoryWaves\PigeonWave.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\StoryWaves\PigeuckWave.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\StoryWaves\SeagullWave.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\StoryWaves\ShoebillWave.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\Tips.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\TipUi.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\Wave.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\WaveLabels.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\WaveManager.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\WaveUi.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Buildings\ParallaxChildren.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Buildings\ParallaxParent.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Buildings\PixelTransform.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\DebugGuis\BirdFactoryGui.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\DebugGuis\DebugGui.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\DebugGuis\EffectFactoryGui.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\DebugGuis\RootMenuGui.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\DebugGuis\SceneLoaderGui.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\DebugGuis\SubDebugGui.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\DebugGuis\WaveManagerGui.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\GenericFunctions\Constants.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\GenericFunctions\ConvertAnglesAndVectors.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Input\Joystick.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Input\OrderedTouchEventRegistry.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Input\TouchInputManager.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Jai\Gear\Balloon.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Jai\Gear\Basket.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Jai\Gear\BasketEngine.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Jai\Gear\Rope.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Jai\Gear\Weapons\Flail.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Jai\Gear\Weapons\Lightning.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Jai\Gear\Weapons\Spear.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Jai\Gear\Weapons\Weapon.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Jai\Gear\WeaponUtilities\CollectionHandle.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Jai\Gear\WeaponUtilities\WeaponCollector.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Jai\Gear\WeaponUtilities\WeaponStats.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Jai\Jai.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Menu\CanvasManager.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Menu\CanvasToggle.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Menu\Continuer.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Menu\Selectors\BackSelector.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Menu\Selectors\ContinueSelector.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Menu\Selectors\Pauser.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Menu\Selectors\PlaySelector.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Menu\Selectors\QuitSelector.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Menu\Selectors\ScoreSceneSelector.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Menu\Selectors\ScoreSelector.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Menu\Selectors\Selector.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Menu\Selectors\WaveSelector.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Points\BirdPoints.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Points\PointDisplay.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Points\ScoreBoard.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Points\ScoreDisplayer.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Points\ScoreSheet.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Menus\Tutorial\MovementTutorialUi.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\Audio\AudioManager.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\Audio\PoolItem.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\EventData.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\GameCamera.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\GameClock.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\GameManager.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\Singleton.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\WorldBounds.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\SaveData\EndlessScore.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\SaveData\SaveLoadData.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\SaveData\StoryScore.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\UnityServices\AdDisplayer.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\Universal\UnityServices\ExampleAnalytics.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\VisualEffects\AnimationHelper.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\VisualEffects\EffectFactory.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\VisualEffects\GutGenerator.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\VisualEffects\MaskCamera.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\VisualEffects\PooNugget.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\VisualEffects\PooSplat.cs" />
-     <None Include="Assets\SkyAssets\Scripts\Sky.asmdef" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\BatchDataMarshal.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\BatchViewController.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\Ui\AddBatchButton.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\Ui\BatchUi.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\Ui\SaveBatchButton.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\BatchTrigger\TriggerDataMarshal.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\BatchTrigger\TriggerViewController.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\BatchTrigger\Ui\TriggerDropdown.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\BatchTrigger\Ui\TriggerInputField.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\BatchTrigger\Ui\TriggerSettings.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\BatchTrigger\Ui\TriggerUi.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\DataMarshal.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\PlayTestButton.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\DeselectButton.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\DisplayToggleButton.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\ISelectable.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\IUpdateUi.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\ScreenBoundsGizmo.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\UiMaskAvoider.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\SpawnEvent\SpawnEventDataMarshal.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\SpawnEvent\SpawnEventViewController.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\SpawnEvent\Ui\AddSpawnEventButton.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\SpawnEvent\Ui\SpawnEventUi.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\SpawnEvent\Ui\SpawnTimeInput.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\SpawnEvent\Ui\SpawnTypeSelector.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\WaveData\SaveWaveDataButton.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\WaveData\WaveData.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\WaveData\WaveDataMarshal.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\WaveEditorPrefabFactory.cs" />
+     <None Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\WaveEditor.asmdef" />
  <Reference Include="Unity.TextMeshPro">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
@@ -173,6 +97,12 @@
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.TestRunner">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.TestRunner">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>D:/Unity2019.2.9f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -197,6 +127,12 @@
  </Reference>
  <Reference Include="UnityEngine.ClothModule">
  <HintPath>D:/Unity2019.2.9f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.ClusterInputModule">
+ <HintPath>D:/Unity2019.2.9f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.ClusterRendererModule">
+ <HintPath>D:/Unity2019.2.9f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.CoreModule">
  <HintPath>D:/Unity2019.2.9f1/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
@@ -407,6 +343,9 @@
  </Reference>
  <Reference Include="UnityEditor.Purchasing">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
+ </Reference>
+ <Reference Include="nunit.framework">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>D:/Unity2019.2.9f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -770,6 +709,10 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Sky.csproj">
+      <Project>{DFB788AB-5875-85FB-F397-57F73CD959E0}</Project>
+      <Name>Sky</Name>
+    </ProjectReference>
     <ProjectReference Include="PixelPerfect.csproj">
       <Project>{9C2EFC27-C06F-A19B-C066-96E2EBFC2D7D}</Project>
       <Name>PixelPerfect</Name>

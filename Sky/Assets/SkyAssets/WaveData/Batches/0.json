@@ -1,0 +1,29 @@
+﻿{
+    "Name": "",
+    "SpawnEventData": [
+        {
+            "SpawnPrefabType": "Duck",
+            "NormalizedPosition": {
+                "x": -0.05379307270050049,
+                "y": 0.6814337968826294
+            },
+            "TimeAfterBatchStartSec": 0.0
+        },
+        {
+            "SpawnPrefabType": "Pigeon",
+            "NormalizedPosition": {
+                "x": -0.05379307270050049,
+                "y": 0.3240808844566345
+            },
+            "TimeAfterBatchStartSec": 0.0
+        },
+        {
+            "SpawnPrefabType": "Albatross",
+            "NormalizedPosition": {
+                "x": -0.05379307270050049,
+                "y": 0.1724264919757843
+            },
+            "TimeAfterBatchStartSec": 0.0
+        }
+    ]
+}

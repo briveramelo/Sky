@@ -1,17 +1,23 @@
 using System.Linq;
 using GenericFunctions;
+using TMPro;
 using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
 {
     public class BatchDataMarshal : DataMarshal<BatchData>
     {
+        private TMP_InputField _batchNameText;
         private GameObject _spawnEventParent;
 
-        public void SetSpawnEventParent(GameObject spawnEventParent)
+        public void Initialize(GameObject spawnEventParent, TMP_InputField batchNameText)
         {
+            _batchNameText = batchNameText;
             _spawnEventParent = spawnEventParent;
         }
+
+        public string BatchName => _batchNameText == null ? "" : _batchNameText.text;
+        public override bool IsDataReady => !string.IsNullOrWhiteSpace(BatchName);
 
         public override BatchData Data
         {
@@ -20,6 +26,7 @@ namespace BRM.Sky.WaveEditor
                 var spawnEventDataMarshals = _spawnEventParent.GetComponentsRecursively<SpawnEventDataMarshal>(true);
                 var data = new BatchData
                 {
+                    Name = BatchName,
                     SpawnEventData = spawnEventDataMarshals.Select(marshal => marshal.Data).ToList()
                 };
                 return data;
@@ -38,7 +45,5 @@ namespace BRM.Sky.WaveEditor
                 }
             }
         }
-
-        public override bool IsDataReady => true;
     }
 }
