@@ -42,6 +42,6 @@ namespace BRM.Sky.WaveEditor
             }
         }
 
-        public override bool IsDataReady { get; }
+        public override bool IsDataReady => !string.IsNullOrWhiteSpace(_waveNameText.text) && !string.IsNullOrWhiteSpace(_subtitleText.text);
     }
 }

@@ -1,0 +1,34 @@
+﻿{
+    "Name": "hey",
+    "Subtitle": "there",
+    "WaveTimeline": {
+        "Batches": [
+            {
+                "SpawnEventData": [
+                    {
+                        "SpawnPrefab": 0,
+                        "NormalizedPosition": {
+                            "x": -0.09372866153717041,
+                            "y": 0.5
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    },
+                    {
+                        "SpawnPrefab": 10,
+                        "NormalizedPosition": {
+                            "x": -0.09372866153717041,
+                            "y": 0.1702997088432312
+                        },
+                        "TimeAfterBatchStartSec": 1.0
+                    }
+                ]
+            }
+        ],
+        "Triggers": [
+            {
+                "TriggerType": 0,
+                "Amount": 1.0
+            }
+        ]
+    }
+}

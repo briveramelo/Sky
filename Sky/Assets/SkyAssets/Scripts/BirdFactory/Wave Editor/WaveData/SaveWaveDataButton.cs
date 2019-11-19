@@ -3,8 +3,8 @@ using BRM.DebugAdapter;
 using BRM.FileSerializers;
 using BRM.FileSerializers.Interfaces;
 using BRM.TextSerializers;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace BRM.Sky.WaveEditor
 {
@@ -22,6 +22,7 @@ namespace BRM.Sky.WaveEditor
         {
             string filePath = FileUtilities.GetUniqueFilePath(_filePath);
             _fileWriter.Write(filePath, _waveDataMarshal.Data);
+            AssetDatabase.Refresh();
             base.OnClick();
         }
 

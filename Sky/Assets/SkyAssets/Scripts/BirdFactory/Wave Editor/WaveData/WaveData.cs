@@ -29,7 +29,12 @@ namespace BRM.Sky.WaveEditor
     [Serializable]
     public class SpawnEventData
     {
-        public SpawnPrefab SpawnPrefab;
+        public SpawnPrefab SpawnPrefab
+        {
+            get => (SpawnPrefab)Enum.Parse(typeof(SpawnPrefab), SpawnPrefabType);
+            set => SpawnPrefabType = value.ToString();
+        }
+        [SerializeField] private string SpawnPrefabType;
         public Vector2 NormalizedPosition;
         public float TimeAfterBatchStartSec;
     }
@@ -47,7 +52,12 @@ namespace BRM.Sky.WaveEditor
             Amount = other.Amount;
         }
 
-        public BatchTriggerType TriggerType;
+        public BatchTriggerType TriggerType
+        {
+            get => (BatchTriggerType)Enum.Parse(typeof(BatchTriggerType), BatchTriggerType);
+            set => BatchTriggerType = value.ToString();
+        }
+        [SerializeField] private string BatchTriggerType;
         public float Amount;
     }
 
