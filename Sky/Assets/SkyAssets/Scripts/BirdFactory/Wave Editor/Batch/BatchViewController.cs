@@ -40,7 +40,10 @@ namespace BRM.Sky.WaveEditor
         protected override IEnumerator OnClickRoutine()
         {
             OnButtonClicked?.Invoke(Id);
-            _spawnEventsDirectParent.DestroyChildren("DontDestroyChild");
+            if (!IsSelected)
+            {
+                _spawnEventsDirectParent.DestroyChildren("DontDestroyChild");
+            }
             yield return null;
 
             Select(!IsSelected);
