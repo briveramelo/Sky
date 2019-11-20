@@ -14,7 +14,7 @@ public class ShoebillWave : Wave
         yield return StartCoroutine(WaitFor(AllDead, true));
 
         BirdSpawnDelegates[BirdType.Shoebill]();
-        var waitFor5Shoes = new BirdWaiter(CounterType.Spawned, false, 5, BirdSpawnDelegates[BirdType.Albatross], BirdType.Shoebill);
+        var waitFor5Shoes = new BirdWaiter(BirdCounterType.BirdsSpawned, false, 5, BirdSpawnDelegates[BirdType.Albatross], BirdType.Shoebill);
         StartCoroutine(WaitFor(waitFor5Shoes));
         yield return StartCoroutine(MassProduce(BirdSpawnDelegates[BirdType.Shoebill], 7));
         yield return StartCoroutine(WaitFor(AllDead, true));

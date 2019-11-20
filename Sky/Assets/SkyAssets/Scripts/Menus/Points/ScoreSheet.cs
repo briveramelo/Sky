@@ -9,9 +9,8 @@ using UnityEngine.SceneManagement;
 
 public interface ITallyable
 {
-    void TallyBirth(ref BirdStats birdStats);
-    void TallyDeath(ref BirdStats birdStats);
-    void TallyKill(ref BirdStats birdStats);
+    void TallyBirdCount(ref BirdStats birdStats, BirdCounterType type, int amount);
+    void TallyScoreCount(ScoreCounterType type, int amount);
     void TallyPoints(ref BirdStats birdStats);
     void TallyThreat(int threatLevel);
     void TallyBirdThreat(ref BirdStats birdStats, BirdThreat myThreat);
@@ -25,9 +24,9 @@ public interface IResetable
 
 public interface IReportable
 {
-    int GetCount(CounterType counter, bool currentWave, BirdType birdType);
-    int GetCounts(CounterType counter, bool currentWave, params BirdType[] birdTypes);
-    int GetScore(ScoreType scoreType, bool currentWave, BirdType birdType);
+    int GetCount(BirdCounterType birdCounter, bool currentWave, BirdType birdType);
+    int GetCounts(BirdCounterType birdCounter, bool currentWave, params BirdType[] birdTypes);
+    int GetScore(ScoreCounterType scoreType, bool currentWave);
     void ReportScores();
     IEnumerator DisplayTotal();
 }
@@ -40,94 +39,74 @@ public interface IStreakable
 
 #endregion
 
-public enum CounterType
+public enum BirdCounterType
 {
-    Spawned = 0,
-    Alive = 1,
-    Scored = 2,
-    Killed = 3,
+    BirdsSpawned = 0,
+    BirdsAlive = 1,
+    BirdsKilled = 2,
 }
 
-public enum ScoreType
+public enum ScoreCounterType
 {
-    Total = 0,
-    Streak = 1,
-    Combo = 2
+    ScoreTotal = 3,
+    ScoreStreak = 4,
+    ScoreCombo = 5,
+    SpearsThrown = 6,
 }
 
 public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReportable, IStreakable
 {
-    #region BirdCounters
+    #region Counters
 
-    private class Counter
+    private interface ICount
     {
-        protected CounterType CounterType;
-        protected Dictionary<BirdType, int> CurrentCount;
-        protected Dictionary<BirdType, int> CummulativeCount;
+        void Add(int amount);
+        void Reset();
+        void ResetCurrent();
+        int GetCount(bool isCurrentWave);
+    }
 
-        public Counter(CounterType counterType)
+    private abstract class Counter<T> : ICount where T : Enum
+    {
+        private T _counterType;
+        private int _currentCount;
+        private int _cummulativeCount;
+
+        protected Counter(T counterType)
         {
-            CounterType = counterType;
-            CurrentCount = GetEmptyDictionary();
-            CummulativeCount = GetEmptyDictionary();
+            _counterType = counterType;
         }
 
-        private Dictionary<BirdType, int> GetEmptyDictionary()
+        public void Add(int amount)
         {
-            return new Dictionary<BirdType, int>
-            {
-                {BirdType.Albatross, 0},
-                {BirdType.Bat, 0},
-                {BirdType.Crow, 0},
-                {BirdType.Duck, 0},
-                {BirdType.Eagle, 0},
-                {BirdType.Pelican, 0},
-                {BirdType.Pigeon, 0},
-                {BirdType.Seagull, 0},
-                {BirdType.Shoebill, 0},
-                {BirdType.Tentacles, 0},
-                {BirdType.BabyCrow, 0},
-                {BirdType.DuckLeader, 0},
-                {BirdType.BirdOfParadise, 0},
-                {BirdType.All, 0}
-            };
+            _currentCount += amount;
+            _cummulativeCount += amount;
         }
 
-        public void Add(BirdType birdType, int change)
+        public void Reset()
         {
-            CurrentCount[birdType] += change;
-            CurrentCount[BirdType.All] += change;
-            CummulativeCount[birdType] += change;
-            CummulativeCount[BirdType.All] += change;
+            _currentCount = 0;
+            _cummulativeCount = 0;
         }
 
-        public int GetCount(BirdType birdType, bool isCurrentWaveCount)
+        public void ResetCurrent()
         {
-            return isCurrentWaveCount ? CurrentCount[birdType] : CummulativeCount[birdType];
+            _currentCount = 0;
         }
 
-        public void ResetCurrentCount()
+        public int GetCount(bool isCurrentWave) => isCurrentWave ? _currentCount : _cummulativeCount;
+    }
+
+    private class BirdCounter : Counter<BirdCounterType>
+    {
+        public BirdCounter(BirdCounterType counterType) : base(counterType)
         {
-            CurrentCount = GetEmptyDictionary();
         }
     }
 
-    private class BirdCounter : Counter
+    private class ScoreCounter : Counter<ScoreCounterType>
     {
-        public BirdCounter(CounterType counterType) : base(counterType)
-        {
-        }
-
-        public void SetCount(BirdType birdType, bool increase)
-        {
-            var change = increase ? 1 : -1;
-            base.Add(birdType, change);
-        }
-    }
-
-    private class PointCounter : Counter
-    {
-        public PointCounter(CounterType counterType) : base(counterType)
+        public ScoreCounter(ScoreCounterType counterType) : base(counterType)
         {
         }
     }
@@ -146,12 +125,9 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
     private static int _hitStreak;
     private static int _tempStreak;
     private static int _lastHitWeaponNumber;
-    private static Dictionary<CounterType, Counter> _allCounters;
-    private static Dictionary<ScoreType, PointCounter> _scoreCounters;
+    private static Dictionary<BirdCounterType, Dictionary<BirdType, ICount>> _birdCounters;
+    private static Dictionary<ScoreCounterType, ICount> _scoreCounters;
 
-    private const bool _increase = true;
-    private const bool _decrease = false;
-    
     private float _startTime;
 
     protected override bool _destroyOnLoad => true;
@@ -173,24 +149,20 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
 
     private void InitializeCounters()
     {
-        _allCounters = new Dictionary<CounterType, Counter>();
-        for (var i = 0; i < Enum.GetNames(typeof(CounterType)).Length; i++)
+        _birdCounters = new Dictionary<BirdCounterType, Dictionary<BirdType, ICount>>
         {
-            if ((CounterType) i == CounterType.Scored)
-            {
-                _allCounters.Add((CounterType) i, new PointCounter(CounterType.Scored));
-            }
-            else
-            {
-                _allCounters.Add((CounterType) i, new BirdCounter((CounterType) i));
-            }
-        }
+            {BirdCounterType.BirdsAlive, Enum.GetValues(typeof(BirdType)).Cast<BirdType>().ToDictionary(counter => counter, counter => (ICount) new BirdCounter(BirdCounterType.BirdsAlive))},
+            {BirdCounterType.BirdsKilled, Enum.GetValues(typeof(BirdType)).Cast<BirdType>().ToDictionary(counter => counter, counter => (ICount) new BirdCounter(BirdCounterType.BirdsKilled))},
+            {BirdCounterType.BirdsSpawned, Enum.GetValues(typeof(BirdType)).Cast<BirdType>().ToDictionary(counter => counter, counter => (ICount) new BirdCounter(BirdCounterType.BirdsSpawned))},
+        };
 
-        _scoreCounters = new Dictionary<ScoreType, PointCounter>();
-        for (var i = 0; i < Enum.GetNames(typeof(ScoreType)).Length; i++)
+        _scoreCounters = new Dictionary<ScoreCounterType, ICount>
         {
-            _scoreCounters.Add((ScoreType) i, new PointCounter(CounterType.Scored));
-        }
+            {ScoreCounterType.ScoreCombo, new ScoreCounter(ScoreCounterType.ScoreCombo)},
+            {ScoreCounterType.ScoreStreak, new ScoreCounter(ScoreCounterType.ScoreStreak)},
+            {ScoreCounterType.ScoreTotal, new ScoreCounter(ScoreCounterType.ScoreTotal)},
+            {ScoreCounterType.SpearsThrown, new ScoreCounter(ScoreCounterType.SpearsThrown)},
+        };
     }
 
     private void OnDestroy()
@@ -255,14 +227,18 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
 
     void IResetable.ResetWaveCounters()
     {
-        for (var i = 0; i < _allCounters.Count; i++)
+        foreach (var birdCounter in _birdCounters)
         {
-            _allCounters[(CounterType) i].ResetCurrentCount();
+            var birdTypesCounters = birdCounter.Value; 
+            foreach (var birdTypeCounter in birdTypesCounters)
+            {
+                birdTypeCounter.Value.ResetCurrent();
+            }
         }
 
-        for (var i = 0; i < _scoreCounters.Count; i++)
+        foreach (var scoreCounter in _scoreCounters)
         {
-            _scoreCounters[(ScoreType) i].ResetCurrentCount();
+            scoreCounter.Value.ResetCurrent();
         }
     }
 
@@ -270,25 +246,25 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
 
     #region IReportable
 
-    int IReportable.GetCount(CounterType counter, bool currentWave, BirdType birdType)
+    int IReportable.GetCount(BirdCounterType birdCounter, bool isCurrentWave, BirdType birdType)
     {
-        return _allCounters[counter].GetCount(birdType, currentWave);
+        return _birdCounters[birdCounter][birdType].GetCount(isCurrentWave);
     }
 
-    int IReportable.GetCounts(CounterType counter, bool currentWave, params BirdType[] birdTypes)
+    int IReportable.GetCounts(BirdCounterType birdCounter, bool isCurrentWave, params BirdType[] birdTypes)
     {
         var total = 0;
-        for (var i = 0; i < birdTypes.Length; i++)
+        foreach (var type in birdTypes)
         {
-            total += _allCounters[counter].GetCount(birdTypes[i], currentWave);
+            total += _birdCounters[birdCounter][type].GetCount(isCurrentWave);
         }
 
         return total;
     }
 
-    int IReportable.GetScore(ScoreType scoreType, bool currentWave, BirdType birdType)
+    int IReportable.GetScore(ScoreCounterType scoreType, bool isCurrentWave)
     {
-        return _scoreCounters[scoreType].GetCount(birdType, currentWave);
+        return _scoreCounters[scoreType].GetCount(isCurrentWave);
     }
 
     void IReportable.ReportScores()
@@ -296,12 +272,12 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
         if (WaveManager.CurrentWave == WaveName.Endless)
         {
             var duration = Time.time - _startTime;
-            var myEndlessScore = new EndlessScore(_scoreCounters[ScoreType.Total].GetCount(BirdType.All, false), duration);
+            var myEndlessScore = new EndlessScore(_scoreCounters[ScoreCounterType.ScoreTotal].GetCount(false), duration);
             FindObjectOfType<SaveLoadData>().PromptSave(myEndlessScore);
         }
         else
         {
-            var myStoryScore = new StoryScore(_scoreCounters[ScoreType.Total].GetCount(BirdType.All, false), WaveManager.CurrentWave);
+            var myStoryScore = new StoryScore(_scoreCounters[ScoreCounterType.ScoreTotal].GetCount(false), WaveManager.CurrentWave);
             FindObjectOfType<SaveLoadData>().PromptSave(myStoryScore);
         }
     }
@@ -315,38 +291,30 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
 
     #region ITallyable
 
-    void ITallyable.TallyBirth(ref BirdStats birdStats)
+    void ITallyable.TallyBirdCount(ref BirdStats birdStats, BirdCounterType type, int amount)
     {
-        ((BirdCounter) _allCounters[CounterType.Spawned]).SetCount(birdStats.MyBirdType, _increase);
-        ((BirdCounter) _allCounters[CounterType.Alive]).SetCount(birdStats.MyBirdType, _increase);
+        _birdCounters[type][birdStats.MyBirdType].Add(amount);
     }
 
-    void ITallyable.TallyDeath(ref BirdStats birdStats)
+    void ITallyable.TallyScoreCount(ScoreCounterType type, int amount)
     {
-        ((BirdCounter) _allCounters[CounterType.Alive]).SetCount(birdStats.MyBirdType, _decrease);
-    }
-
-    void ITallyable.TallyKill(ref BirdStats birdStats)
-    {
-        ((BirdCounter) _allCounters[CounterType.Killed]).SetCount(birdStats.MyBirdType, _increase);
+        _scoreCounters[type].Add(amount);
     }
 
     void ITallyable.TallyPoints(ref BirdStats birdStats)
     {
-        ((PointCounter) _allCounters[CounterType.Scored]).Add(birdStats.MyBirdType, birdStats.PointsToAdd);
-        _scoreCounters[ScoreType.Total].Add(birdStats.MyBirdType, birdStats.PointsToAdd);
-        _scoreCounters[ScoreType.Streak].Add(birdStats.MyBirdType, birdStats.StreakPoints);
-        _scoreCounters[ScoreType.Combo].Add(birdStats.MyBirdType, birdStats.ComboPoints);
+        _scoreCounters[ScoreCounterType.ScoreTotal].Add(birdStats.PointsToAdd);
+        _scoreCounters[ScoreCounterType.ScoreStreak].Add(birdStats.StreakPoints);
+        _scoreCounters[ScoreCounterType.ScoreCombo].Add(birdStats.ComboPoints);
 
         DisplayPoints(birdStats.BirdPosition, birdStats.PointsToAdd);
     }
 
     void ITallyable.TallyBalloonPoints(Vector2 balloonPosition)
     {
-        var balloonPoints = 1000;
-        ((PointCounter) _allCounters[CounterType.Scored]).Add(BirdType.BabyCrow, balloonPoints);
-        _scoreCounters[ScoreType.Total].Add(BirdType.BabyCrow, balloonPoints);
-
+        const int balloonPoints = 1000;
+        _scoreCounters[ScoreCounterType.ScoreTotal].Add(balloonPoints);
+        
         DisplayPoints(balloonPosition, balloonPoints);
     }
 
@@ -361,7 +329,7 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
         var pointsInstance = Instantiate(_points, transform);
         (pointsInstance.transform as RectTransform).position = spawnPosition;
         pointsInstance.GetComponent<IPointsDisplayable>().DisplayPoints(pointsToAdd);
-        ((IPointsDisplayable) _scoreBoard).DisplayPoints(((PointCounter) _allCounters[CounterType.Scored]).GetCount(BirdType.All, false));
+        ((IPointsDisplayable) _scoreBoard).DisplayPoints(_scoreCounters[ScoreCounterType.ScoreTotal].GetCount(false));
     }
 
     void ITallyable.TallyThreat(int threatLevel)

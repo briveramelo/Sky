@@ -101,7 +101,7 @@ public class Tentacles : Bird, ISensorToTentacle, IStabbable, ITipToTentacle
         _target = EasyAccess.BasketTransform;
     }
 
-    protected override void OnDestroy()
+    private void OnDestroy()
     {
         _eventBroker.Unsubscribe<ContinueData>(ReleaseJai);
     }

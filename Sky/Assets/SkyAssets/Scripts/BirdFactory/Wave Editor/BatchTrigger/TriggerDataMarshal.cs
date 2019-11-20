@@ -1,3 +1,4 @@
+using BRM.Sky.CustomWaveData;
 using UnityEngine;
 
 namespace BRM.Sky.WaveEditor

@@ -21,8 +21,8 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable
     private IWaveUi waveUi;
     private IWaveUi _waveUi => waveUi ?? FindObjectOfType<WaveUi>().GetComponent<IWaveUi>();
 
-    protected BirdWaiter AllDead = new BirdWaiter(CounterType.Alive, false, 0, BirdType.All);
-    protected BirdWaiter AllDeadExceptTentacles = new BirdWaiter(CounterType.Alive, true, 0, BirdType.Tentacles);
+    protected BirdWaiter AllDead = new BirdWaiter(BirdCounterType.BirdsAlive, false, 0, BirdType.All);
+    protected BirdWaiter AllDeadExceptTentacles = new BirdWaiter(BirdCounterType.BirdsAlive, true, 0, BirdType.Tentacles);
 
     protected static int WaveNumber;
     protected const float LowHeight = -0.6f;

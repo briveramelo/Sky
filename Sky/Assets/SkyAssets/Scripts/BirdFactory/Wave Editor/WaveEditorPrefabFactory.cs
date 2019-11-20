@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BRM.Sky.CustomWaveData;
 using UnityEditor;
 using UnityEngine;
 

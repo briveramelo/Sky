@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using BRM.EventBrokers;
 using BRM.EventBrokers.Interfaces;
@@ -19,7 +18,6 @@ public enum AudioClipType
 
 public class AudioManager : Singleton<AudioManager>
 {
-    [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _generateGutsClip;
     [SerializeField] private AudioClip _pauseClip;
     [SerializeField] private AudioClip _unPauseClip;
@@ -30,13 +28,11 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] private AudioClip _basketRebirthClip;
 
     private static Dictionary<AudioClipType, AudioSourcePool> _audioSourcePools = new Dictionary<AudioClipType, AudioSourcePool>();
-    private static AudioSource _fallbackAudio;
     private IBrokerEvents _eventBroker = new StaticEventBroker();
 
     private void Start()
     {
         _eventBroker.Subscribe<PauseData>(OnPause);
-        _fallbackAudio = _audioSource;
         
         //world
         _audioSourcePools.Add(AudioClipType.GenerateGuts, new AudioSourcePool(new GameObject(nameof(_generateGutsClip)), transform, _generateGutsClip, 13, 3, false));

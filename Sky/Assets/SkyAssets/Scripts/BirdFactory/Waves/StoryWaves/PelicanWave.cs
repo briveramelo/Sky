@@ -5,7 +5,7 @@ public class PelicanWave : Wave
     protected override IEnumerator GenerateBirds()
     {
         // 1 Wait 3 PELICAN
-        if (ScoreSheet.Reporter.GetCount(CounterType.Alive, false, BirdType.Tentacles) == 0)
+        if (ScoreSheet.Reporter.GetCount(BirdCounterType.BirdsAlive, false, BirdType.Tentacles) == 0)
         {
             BirdSpawnDelegates[BirdType.Tentacles]();
         }
@@ -16,9 +16,9 @@ public class PelicanWave : Wave
         // 2 PELICANS
         var waitForPigeons = new []
         {
-            new BirdWaiter(CounterType.Alive, false, 2, MassProduce(BirdSpawnDelegates[BirdType.Pigeon], 2), BirdType.Pigeon),
-            new BirdWaiter(CounterType.Spawned, false, 1, BirdSpawnDelegates[BirdType.Pelican], BirdType.Pigeon),
-            new BirdWaiter(CounterType.Spawned, false, 3, BirdSpawnDelegates[BirdType.Pelican], BirdType.Pigeon)
+            new BirdWaiter(BirdCounterType.BirdsAlive, false, 2, MassProduce(BirdSpawnDelegates[BirdType.Pigeon], 2), BirdType.Pigeon),
+            new BirdWaiter(BirdCounterType.BirdsSpawned, false, 1, BirdSpawnDelegates[BirdType.Pelican], BirdType.Pigeon),
+            new BirdWaiter(BirdCounterType.BirdsSpawned, false, 3, BirdSpawnDelegates[BirdType.Pelican], BirdType.Pigeon)
         };
         yield return StartCoroutine(MassProduce(BirdSpawnDelegates[BirdType.Pigeon], 4));
         yield return StartCoroutine(WaitInParallel(waitForPigeons));
@@ -27,8 +27,8 @@ public class PelicanWave : Wave
         // 3 DUCKS (Wait 1, +2), 2 PELICANS (Wait 1, +1)
         StartCoroutine(MassProduce(BirdSpawnDelegates[BirdType.Pelican], 2));
         yield return StartCoroutine(ProduceDucks(3));
-        var waitForDucks = new BirdWaiter(CounterType.Alive, false, 1, ProduceDucks(2), BirdType.Duck);
-        var waitForPelicans = new BirdWaiter(CounterType.Alive, false, 1, BirdSpawnDelegates[BirdType.Pelican], BirdType.Pelican);
+        var waitForDucks = new BirdWaiter(BirdCounterType.BirdsAlive, false, 1, ProduceDucks(2), BirdType.Duck);
+        var waitForPelicans = new BirdWaiter(BirdCounterType.BirdsAlive, false, 1, BirdSpawnDelegates[BirdType.Pelican], BirdType.Pelican);
         yield return StartCoroutine(WaitInParallel(waitForDucks, waitForPelicans));
         yield return StartCoroutine(WaitFor(AllDeadExceptTentacles, true));
 
@@ -38,7 +38,7 @@ public class PelicanWave : Wave
         yield return StartCoroutine(WaitFor(AllDeadExceptTentacles, true));
 
         // >>PIGEONS + DUCKLEADER (Wait -4, +Albatross)
-        var waitForKilled = new BirdWaiter(CounterType.Killed, false, 4, () => SpawnBirds(BirdType.Albatross, SpawnPoint(Right, LowHeight)), BirdType.All);
+        var waitForKilled = new BirdWaiter(BirdCounterType.BirdsKilled, false, 4, () => SpawnBirds(BirdType.Albatross, SpawnPoint(Right, LowHeight)), BirdType.All);
         StartCoroutine(FlyPigeonsAsDuckLeader());
         yield return StartCoroutine(WaitFor(waitForKilled, true));
         yield return StartCoroutine(WaitFor(AllDeadExceptTentacles, true));

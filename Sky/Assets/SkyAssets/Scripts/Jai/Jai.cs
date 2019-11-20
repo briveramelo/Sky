@@ -170,6 +170,7 @@ public class Jai : MonoBehaviour, IFreezable, IDie
                 var spearOffset = new Vector2(0f, .085f);
                 _weaponTrigger.UseMe((Vector2)transform.position + spearOffset, swipeDir.normalized * _throwSpeed);
                 StartCoroutine(AnimateUseWeapon(swipeDir));
+                ScoreSheet.Tallier.TallyScoreCount(ScoreCounterType.SpearsThrown, 1);
             }
         }
     }

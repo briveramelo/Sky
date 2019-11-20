@@ -150,9 +150,9 @@ public class WaveUi : MonoBehaviour, IWaveUi
         const string comboPrefix = "Combo Points: ";
         int peakCharLength = Mathf.Max(pointTotalPrefix.Length, streakPrefix.Length, comboPrefix.Length);
         
-        _streak.text = streakPrefix.PadRight(peakCharLength) + ScoreSheet.Reporter.GetScore(ScoreType.Streak, isWaveScore, BirdType.All).ToString();
-        _combo.text = comboPrefix.PadRight(peakCharLength) + ScoreSheet.Reporter.GetScore(ScoreType.Combo, isWaveScore, BirdType.All).ToString();
-        _pointTotal.text = pointTotalPrefix.PadRight(peakCharLength) + ScoreSheet.Reporter.GetScore(ScoreType.Total, isWaveScore, BirdType.All).ToString();
+        _streak.text = streakPrefix.PadRight(peakCharLength) + ScoreSheet.Reporter.GetScore(ScoreCounterType.ScoreStreak, isWaveScore);
+        _combo.text = comboPrefix.PadRight(peakCharLength) + ScoreSheet.Reporter.GetScore(ScoreCounterType.ScoreCombo, isWaveScore);
+        _pointTotal.text = pointTotalPrefix.PadRight(peakCharLength) + ScoreSheet.Reporter.GetScore(ScoreCounterType.ScoreTotal, isWaveScore);
 
         _pointTotalA.SetInteger(Constants.AnimState, PointAnimState.Shine);
         _streakA.SetInteger(Constants.AnimState, PointAnimState.Shine);

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BRM.Sky.CustomWaveData;
 using TMPro;
 
 namespace BRM.Sky.WaveEditor

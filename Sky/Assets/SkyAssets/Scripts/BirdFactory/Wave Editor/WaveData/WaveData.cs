@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BRM.Sky.WaveEditor
+namespace BRM.Sky.CustomWaveData
 {
     [Serializable]
     public class WaveData
@@ -58,6 +58,7 @@ namespace BRM.Sky.WaveEditor
             get => (BatchTriggerType)Enum.Parse(typeof(BatchTriggerType), BatchTriggerType);
             set => BatchTriggerType = value.ToString();
         }
+
         [SerializeField] private string BatchTriggerType;
         public float Amount;
     }

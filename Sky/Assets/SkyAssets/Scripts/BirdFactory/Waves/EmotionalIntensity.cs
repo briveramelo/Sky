@@ -120,7 +120,7 @@ public class EmotionalIntensity : MonoBehaviour, IThreat
 
     private void Decay()
     {
-        var decay = Intensity > 0 && ScoreSheet.Reporter.GetCount(CounterType.Alive, true, BirdType.All) < 5;
+        var decay = Intensity > 0 && ScoreSheet.Reporter.GetCount(BirdCounterType.BirdsAlive, true, BirdType.All) < 5;
         if (decay)
         {
             Intensity -= 3;

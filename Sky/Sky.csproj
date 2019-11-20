@@ -56,6 +56,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\BatchTrigger.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\BirdFactory.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\Albatross.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\Bat.cs" />
@@ -79,6 +80,7 @@
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\BirdStats.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\BirdTypes.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\BirdWaiter.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\SpawnFactory.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\BatchDataMarshal.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\BatchViewController.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\Ui\AddBatchButton.cs" />
@@ -109,6 +111,7 @@
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\WaveData\WaveDataMarshal.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\WaveEditorPrefabFactory.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\BackgroundManager.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\DataWave.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\EagleFriends.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\EmotionalIntensity.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\EndlessWave.cs" />

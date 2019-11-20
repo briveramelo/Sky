@@ -13,10 +13,10 @@ public class DuckWave : Wave
         yield return StartCoroutine(WaitFor(AllDead));
 
         SpawnBirds(BirdType.DuckLeader, SpawnPoint(Right, 0f));
-        var oneDeadLeader = new BirdWaiter(CounterType.Killed, false, 1, BirdType.DuckLeader);
+        var oneDeadLeader = new BirdWaiter(BirdCounterType.BirdsKilled, false, 1, BirdType.DuckLeader);
         yield return StartCoroutine(WaitFor(oneDeadLeader));
         SpawnBirds(BirdType.DuckLeader, SpawnPoint(Left, 0f));
-        oneDeadLeader = new BirdWaiter(CounterType.Killed, false, 1, BirdType.DuckLeader);
+        oneDeadLeader = new BirdWaiter(BirdCounterType.BirdsKilled, false, 1, BirdType.DuckLeader);
         yield return StartCoroutine(WaitFor(oneDeadLeader));
         var topIsRight = Bool.TossCoin();
         SpawnBirds(BirdType.DuckLeader, SpawnPoint(topIsRight, HighHeight));

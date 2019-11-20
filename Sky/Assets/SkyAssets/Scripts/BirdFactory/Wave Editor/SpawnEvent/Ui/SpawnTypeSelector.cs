@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using BRM.Sky.CustomWaveData;
 using TMPro;
 using UnityEngine;
 using UnityEditor;
@@ -60,6 +61,8 @@ namespace BRM.Sky.WaveEditor
         {
             if (_prefabInstance != null && Application.isPlaying)
             {
+                //note: OnDestroy is not called if the gameobject never becomes active.
+                //i assume awakening/starting also triggers registering of other unity callbacks, like OnDestroy
                 Destroy(_prefabInstance);
             }
         }

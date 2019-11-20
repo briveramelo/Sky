@@ -14,10 +14,10 @@ public class PigeonWave : Wave
         yield return StartCoroutine(WaitFor(AllDead));
 
         StartCoroutine(PigeonMeatball(Right, HighHeight));
-        var oneDeadPigeon = new BirdWaiter(CounterType.Killed, false, 1, BirdType.Pigeon);
+        var oneDeadPigeon = new BirdWaiter(BirdCounterType.BirdsKilled, false, 1, BirdType.Pigeon);
         yield return StartCoroutine(WaitFor(oneDeadPigeon));
         StartCoroutine(PigeonMeatball(Left, LowHeight));
-        oneDeadPigeon = new BirdWaiter(CounterType.Killed, false, 1, BirdType.Pigeon);
+        oneDeadPigeon = new BirdWaiter(BirdCounterType.BirdsKilled, false, 1, BirdType.Pigeon);
         yield return StartCoroutine(WaitFor(oneDeadPigeon));
         StartCoroutine(PigeonMeatball(Right, MedHeight));
         yield return StartCoroutine(WaitFor(AllDead));

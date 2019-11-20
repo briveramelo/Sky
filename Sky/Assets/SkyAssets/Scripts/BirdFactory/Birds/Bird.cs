@@ -22,7 +22,8 @@ public abstract class Bird : MonoBehaviour, IHurtable, IDeathDebug
     protected virtual void Awake()
     {
         BirdStats = new BirdStats(MyBirdType);
-        ScoreSheet.Tallier.TallyBirth(ref BirdStats);
+        ScoreSheet.Tallier.TallyBirdCount(ref BirdStats, BirdCounterType.BirdsAlive, 1);
+        ScoreSheet.Tallier.TallyBirdCount(ref BirdStats, BirdCounterType.BirdsSpawned, 1);
         ScoreSheet.Tallier.TallyBirdThreat(ref BirdStats, BirdThreat.Spawn);
     }
 
@@ -37,7 +38,9 @@ public abstract class Bird : MonoBehaviour, IHurtable, IDeathDebug
         if (BirdStats.Health <= 0)
         {
             GameClock.Instance.SlowTime(.1f, .8f);
-            ScoreSheet.Tallier.TallyKill(ref BirdStats);
+            ScoreSheet.Tallier.TallyBirdThreat(ref BirdStats, BirdThreat.Leave);
+            ScoreSheet.Tallier.TallyBirdCount(ref BirdStats, BirdCounterType.BirdsAlive, -1);
+            ScoreSheet.Tallier.TallyBirdCount(ref BirdStats, BirdCounterType.BirdsKilled, 1);
             OnDeath();
         }
     }
@@ -53,20 +56,6 @@ public abstract class Bird : MonoBehaviour, IHurtable, IDeathDebug
     protected virtual void OnDeath()
     {
         Destroy(gameObject);
-    }
-
-    protected virtual void OnDestroy()
-    {
-        if (ScoreSheet.Instance)
-        {
-            ScoreSheet.Tallier.TallyDeath(ref BirdStats);
-            if (BirdStats.Health > 0)
-            {
-                ScoreSheet.Tallier.TallyBirdThreat(ref BirdStats, BirdThreat.Leave);
-            }
-        }
-
-        StopAllCoroutines();
     }
 
     void IDeathDebug.KillDebug()
