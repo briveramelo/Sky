@@ -23,13 +23,17 @@ public class DataWave : Wave
         var numWaves = batches.Count;
         for (int i = 0; i < numWaves; i++)
         {
-            yield return StartCoroutine(RunBatch(batches[i], triggers[i]));
+            yield return StartCoroutine(RunBatch(batches[i]));
+            
+            var batchTrigger = TriggerFactory.Create(triggers[i]);
+            while (batchTrigger.IsWaiting)
+            {
+                yield return null;
+            }
         }
-
-        yield return null;
     }
 
-    private IEnumerator RunBatch(BatchData batchData, BatchTriggerData triggerData)
+    private IEnumerator RunBatch(BatchData batchData)
     {
         var spawnEventData = batchData.SpawnEventData;
         var spawnCount = spawnEventData.Count;
@@ -45,8 +49,5 @@ public class DataWave : Wave
             var instance = SpawnFactory.Instance.CreateInstance(spawnEvent.SpawnPrefab);
             instance.transform.position = spawnEvent.NormalizedPosition.ViewportToWorldPosition();
         }
-
-        //var waiter = new BirdWaiter();//todo wait for trigger
-        //yield return StartCoroutine(WaitFor(, false));
     }
 }

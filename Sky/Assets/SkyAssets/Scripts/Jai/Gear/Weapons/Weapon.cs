@@ -50,18 +50,12 @@ public abstract class Weapon : MonoBehaviour, IUsable
 
     protected abstract Vector2 MyVelocity { get; }
 
-    /// <summary>
-    /// increments "timesUsed" and plays audio clip
-    /// </summary>
     protected virtual void UseMe(Vector2 startPosition, Vector2 swipeDir)
     {
         TimesUsed++;
         AudioManager.PlayAudio(_useSound);
     }
 
-    /// <summary>
-    /// calls the collider's IHurtable GetHurt(ref MyWeaponStats)
-    /// </summary>
     protected virtual void DeliverDamage(Collider2D col)
     {
         col.GetComponent<IHurtable>().GetHurt(ref MyWeaponStats);

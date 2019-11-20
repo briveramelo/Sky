@@ -14,6 +14,7 @@ public enum WaveName
     Eagle = 8,
     Complete = 9,
     Endless = 10,
+    Data=11,
 }
 public static class WaveLabels
 {

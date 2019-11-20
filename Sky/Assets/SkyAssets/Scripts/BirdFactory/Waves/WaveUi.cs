@@ -5,6 +5,7 @@ using System.Linq;
 using GenericFunctions;
 using TMPro;
 using UnityEngine.SceneManagement;
+using static ScoreSheet;
 
 public interface IWaveUi
 {
@@ -131,7 +132,7 @@ public class WaveUi : MonoBehaviour, IWaveUi
 
     private IEnumerator DisplayWaveComplete()
     {
-        _title.text += " Complete";
+        _title.text = $"{_title.text} Complete";
         _titleA.SetInteger(Constants.AnimState, TextAnimState.RightCenter);
         //move progress sprites to the center 
         while (_titleA.GetInteger(Constants.AnimState) == TextAnimState.RightCenter)
@@ -145,14 +146,14 @@ public class WaveUi : MonoBehaviour, IWaveUi
         _pointsParent.SetActive(true);
         var scoreType = isWaveScore ? "Wave" : "Total";
         
-        var pointTotalPrefix = scoreType + " Score: ";
+        var pointTotalPrefix = $"{scoreType} Score: ";
         const string streakPrefix = "Streak Points: ";
         const string comboPrefix = "Combo Points: ";
         int peakCharLength = Mathf.Max(pointTotalPrefix.Length, streakPrefix.Length, comboPrefix.Length);
         
-        _streak.text = streakPrefix.PadRight(peakCharLength) + ScoreSheet.Reporter.GetScore(ScoreCounterType.ScoreStreak, isWaveScore);
-        _combo.text = comboPrefix.PadRight(peakCharLength) + ScoreSheet.Reporter.GetScore(ScoreCounterType.ScoreCombo, isWaveScore);
-        _pointTotal.text = pointTotalPrefix.PadRight(peakCharLength) + ScoreSheet.Reporter.GetScore(ScoreCounterType.ScoreTotal, isWaveScore);
+        _streak.text = $"{streakPrefix.PadRight(peakCharLength)}{Reporter.GetScore(ScoreCounterType.ScoreStreak, isWaveScore)}";
+        _combo.text = $"{comboPrefix.PadRight(peakCharLength)}{Reporter.GetScore(ScoreCounterType.ScoreCombo, isWaveScore)}";
+        _pointTotal.text = $"{pointTotalPrefix.PadRight(peakCharLength)}{Reporter.GetScore(ScoreCounterType.ScoreTotal, isWaveScore)}";
 
         _pointTotalA.SetInteger(Constants.AnimState, PointAnimState.Shine);
         _streakA.SetInteger(Constants.AnimState, PointAnimState.Shine);

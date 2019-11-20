@@ -17,7 +17,7 @@ public class WaveManagerGui : SubDebugGui
             {
                 _waveManager.KillRunningWaves();
                 BirdFactory.Instance.KillAllLivingBirds();
-                _waveManager.RunWave(waveName);
+                _waveManager.RunStoryWave(waveName);
                 break;
             }
         }

@@ -23,7 +23,7 @@ public class WaveManagerEditor : Editor
                 var waveManager = serializedObject.targetObject as WaveManager;
                 waveManager.KillRunningWaves();
                 BirdFactory.Instance.KillAllLivingBirds();
-                waveManager.RunWave(waveName);
+                waveManager.RunStoryWave(waveName);
                 break;
             }
         }
