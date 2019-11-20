@@ -1,31 +1,36 @@
 using System;
 using System.Collections;
 using BRM.Sky.CustomWaveData;
+using BRM.Sky.WaveEditor.Ui;
 using GenericFunctions;
 using TMPro;
 using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
 {
-    public class BatchViewController : Selector, ISelectable
+    public class BatchViewController : SelectorViewController<BatchView>, ISelectable
     {
         public event Action<int> OnButtonClicked;
-        public bool IsSelected => _batchUi.IsSelected;
+        public bool IsSelected => _batchView.IsSelected;
         public int Id { get; private set; }
 
         [SerializeField] private BatchDataMarshal _dataMarshal;
-        [SerializeField] private BatchUi _batchUi;
+        [SerializeField] private BatchView _batchView;
 
+        protected override BatchView View => _batchView;
+        
         private GameObject _spawnEventsView;
         private GameObject _spawnEventsDirectParent;
-        private AddSpawnEventButton _spawnEventButton;
+        private SpawnEventButtonFactory _spawnEventButtonFactory;
 
-        public void Initialize(GameObject spawnEventsView, GameObject spawnEventsParent, AddSpawnEventButton spawnEventButton, TMP_InputField batchNameText, int id)
+        public void Initialize(GameObject spawnEventsView, GameObject spawnEventsParent, SpawnEventButtonFactory spawnEventButtonFactory, TMP_InputField batchNameInput, int id)
         {
-            _spawnEventButton = spawnEventButton;
+            _spawnEventButtonFactory = spawnEventButtonFactory;
             _spawnEventsView = spawnEventsView;
             _spawnEventsDirectParent = spawnEventsParent;
-            _dataMarshal.Initialize(spawnEventsParent, batchNameText);
+            
+            View.Initialize(batchNameInput);
+            _dataMarshal.Initialize(spawnEventsParent, View);
             Id = id;
         }
 
@@ -35,7 +40,7 @@ namespace BRM.Sky.WaveEditor
             {
                 _dataMarshal.CacheData();
             }
-            _batchUi.Select(isSelected);
+            View.Select(isSelected);
         }
 
         protected override IEnumerator OnClickRoutine()
@@ -59,7 +64,7 @@ namespace BRM.Sky.WaveEditor
         private void PopulateSpawnEventDataUi(BatchData data)
         {
             var numButtons = data.SpawnEventData.Count;
-            _spawnEventButton.CreateButtons(numButtons, () => _dataMarshal.Data = data);
+            _spawnEventButtonFactory.CreateButtons(numButtons, () => _dataMarshal.Data = data);
         }
     }
 }

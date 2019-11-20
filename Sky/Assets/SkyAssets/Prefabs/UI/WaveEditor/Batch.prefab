@@ -174,7 +174,7 @@ MonoBehaviour:
   _button: {fileID: 4341432957408242864}
   _audioType: 1
   _dataMarshal: {fileID: 8766564030415121586}
-  _batchUi: {fileID: 5671812210032206736}
+  _batchView: {fileID: 5671812210032206736}
 --- !u!114 &5671812210032206736
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -987,7 +987,6 @@ MonoBehaviour:
   _button: {fileID: 2628876349385866544}
   _audioType: 1
   _ui: {fileID: 8604558790906619832}
-  _spawnTypeSelector: {fileID: 4194521639873805274}
 --- !u!114 &8604558790906619832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1000,15 +999,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f1ff35a52db4e54a48193b3c74c2f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selected: {r: 1, g: 0, b: 0, a: 1}
-  _unselected: {r: 0, g: 0, b: 0, a: 0}
+  _dropdown: {fileID: 6026508340092791783}
+  _timeInputField: {fileID: 8186151339976698529}
+  _positionDisplay: {fileID: 9197200952958933646}
+  _spawnTypeText: {fileID: 5187315384268941023}
   _buttonOutline: {fileID: 5818045485875675892}
   _iconPreview: {fileID: 4673668810425384031}
-  _spawnTypeText: {fileID: 5187315384268941023}
-  _positionText: {fileID: 9197200952958933646}
-  _timeText: {fileID: 3364003399091538783}
-  _spawnTypeSelector: {fileID: 4194521639873805274}
-  _spawnTime: {fileID: 6244589189830361445}
+  _selected: {r: 1, g: 0, b: 0, a: 1}
+  _unselected: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &5713017046492931979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1021,8 +1019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482681e2982e4b28839432940d251464, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnTypeSelector: {fileID: 4194521639873805274}
-  _timeInput: {fileID: 6244589189830361445}
+  _view: {fileID: 8604558790906619832}
 --- !u!114 &3336547206347065260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1093,7 +1090,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4473937035731906990}
-  - component: {fileID: 4194521639873805274}
   - component: {fileID: 7114640585347494397}
   - component: {fileID: 6026508340092791783}
   - component: {fileID: 4062862622072902753}
@@ -1129,19 +1125,6 @@ RectTransform:
   m_AnchoredPosition: {x: -40, y: -15}
   m_SizeDelta: {x: 90, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4194521639873805274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4069669301709791499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f1f4828026b4c369dc93880184ea830, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dropdown: {fileID: 6026508340092791783}
 --- !u!114 &7114640585347494397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1345,7 +1328,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5968181317034380732}
-  - component: {fileID: 6244589189830361445}
   - component: {fileID: 8186151339976698529}
   - component: {fileID: 2380080895192224796}
   - component: {fileID: 966956563347163754}
@@ -1376,19 +1358,6 @@ RectTransform:
   m_AnchoredPosition: {x: -65, y: 0}
   m_SizeDelta: {x: 40, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6244589189830361445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5239081391432007330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62c3b383a3ea4d17bd9e7b3904e698ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputField: {fileID: 8186151339976698529}
 --- !u!114 &8186151339976698529
 MonoBehaviour:
   m_ObjectHideFlags: 0

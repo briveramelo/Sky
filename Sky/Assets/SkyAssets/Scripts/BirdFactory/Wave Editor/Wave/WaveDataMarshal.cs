@@ -6,13 +6,12 @@ using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
 {
-    public class WaveDataMarshal : DataMarshal<WaveData>
+    public class WaveDataMarshal : DataMarshal<WaveData, WaveView>
     {
-        [SerializeField] private TMP_InputField _waveNameText;
-        [SerializeField] private TMP_InputField _subtitleText;
         [SerializeField] private GameObject _dataMarshalsParent;
+        [SerializeField] private WaveView _view;
 
-        public string WaveName => _waveNameText.text;
+        public string WaveName => View.WaveNameText;
         public override WaveData Data
         {
             get
@@ -31,7 +30,7 @@ namespace BRM.Sky.WaveEditor
                 return new WaveData
                 {
                     Name = WaveName,
-                    Subtitle = _subtitleText.text,
+                    Subtitle = View.SubtitleText,
 
                     WaveTimeline = new WaveTimeline
                     {
@@ -53,6 +52,7 @@ namespace BRM.Sky.WaveEditor
             }
         }
 
-        public override bool IsDataReady => !string.IsNullOrWhiteSpace(_waveNameText.text) && !string.IsNullOrWhiteSpace(_subtitleText.text);
+        public override bool IsDataReady => !string.IsNullOrWhiteSpace(WaveName) && !string.IsNullOrWhiteSpace(View.SubtitleText);
+        protected override WaveView View => _view;
     }
 }

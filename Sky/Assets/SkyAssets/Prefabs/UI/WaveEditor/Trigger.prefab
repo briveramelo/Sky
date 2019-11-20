@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8780353590973457604}
-  - component: {fileID: 8780353590973457600}
   - component: {fileID: 2031420587756473413}
   - component: {fileID: 8780353590973457607}
   - component: {fileID: 8780353590973457606}
@@ -44,20 +43,6 @@ RectTransform:
   m_AnchoredPosition: {x: 60, y: -0.0000076293945}
   m_SizeDelta: {x: 60, y: 20}
   m_Pivot: {x: 0, y: 0.5}
---- !u!114 &8780353590973457600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8780353590973457611}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 234b54894a226dd44953cb771e4ce4b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dropdown: {fileID: 8780353590973457606}
-  _amountInput: {fileID: 8780353591340437320}
 --- !u!114 &2031420587756473413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -634,7 +619,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8780353591340437326}
-  - component: {fileID: 4922916640451908907}
   - component: {fileID: 8780353591340437320}
   - component: {fileID: 8780353591340437321}
   - component: {fileID: 8780353591340437327}
@@ -665,19 +649,6 @@ RectTransform:
   m_AnchoredPosition: {x: 60, y: 0}
   m_SizeDelta: {x: 60, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4922916640451908907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8780353591340437325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7fd591b5c354172ba5878f8801ccd27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputField: {fileID: 8780353591340437320}
 --- !u!114 &8780353591340437320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1744,8 +1715,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayText: {fileID: 8780353591269685548}
-  _dropdown: {fileID: 8780353590973457600}
-  _inputField: {fileID: 4922916640451908907}
+  _dropdown: {fileID: 8780353590973457606}
+  _inputField: {fileID: 8780353591340437320}
 --- !u!114 &670521204412232934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1758,8 +1729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fd280b781f3ca84a8271c12ac789429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dropdown: {fileID: 8780353590973457600}
-  _inputField: {fileID: 4922916640451908907}
+  _view: {fileID: 107548399787254281}
 --- !u!114 &8780353592176999677
 MonoBehaviour:
   m_ObjectHideFlags: 0

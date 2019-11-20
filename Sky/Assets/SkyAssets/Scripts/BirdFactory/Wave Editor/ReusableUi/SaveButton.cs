@@ -3,43 +3,42 @@ using BRM.DebugAdapter;
 using BRM.FileSerializers;
 using BRM.FileSerializers.Interfaces;
 using BRM.TextSerializers;
-using TMPro;
 using UnityEditor;
 using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
 {
-    public class SaveBatchButton : Selector
+    public abstract class SaveButton<TMarshal, TData, TView> : Selector where TMarshal : DataMarshal<TData, TView> where TData : class, new() where TView : MonoBehaviour
     {
-        [SerializeField] private TMP_InputField _batchNameInput;
-        private string _folderName => $"{Application.dataPath}/SkyAssets/WaveData/Batches/";
-        private string _fileName => $"{_batchDataMarshal.BatchName}.json";
+        protected abstract string _folderName { get; }
+        protected abstract string _fileName { get; }
+        
+        protected TMarshal _dataMarshal;
+        
         private string _filePath => Path.Combine(_folderName, _fileName);
-
-        private BatchDataMarshal _batchDataMarshal;
         private IWriteFiles _fileWriter = new TextFileSerializer(new UnityJsonSerializer(), new UnityDebugger());
 
-        public void SetDataMarshal(BatchDataMarshal dataMarshal)
+        public void SetDataMarshal(TMarshal dataMarshal)
         {
-            _batchDataMarshal = dataMarshal;
+            _dataMarshal = dataMarshal;
         }
 
         protected override void OnClick()
         {
             string filePath = FileUtilities.GetUniqueFilePath(_filePath);
-            _fileWriter.Write(filePath, _batchDataMarshal.Data);
+            _fileWriter.Write(filePath, _dataMarshal.Data);
             AssetDatabase.Refresh();
             base.OnClick();
         }
 
         private void Update()
         {
-            if (_batchDataMarshal == null)
+            if (_dataMarshal == null)
             {
                 return;
             }
 
-            _button.interactable = _batchDataMarshal.IsDataReady;
+            _button.interactable = _dataMarshal.IsDataReady;
         }
     }
 }

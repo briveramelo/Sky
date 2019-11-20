@@ -5,15 +5,15 @@ using System.Linq;
 using GenericFunctions;
 using UnityEngine;
 
-namespace BRM.Sky.WaveEditor
+namespace BRM.Sky.WaveEditor.Ui
 {
-    public class AddSpawnEventButton : Selector
+    //factory for making spawn event buttons for the wave editor ui
+    public class SpawnEventButtonFactory : Selector
     {
         [SerializeField] private GameObject _spawnButtonPrefab;
         [SerializeField] private Transform _prefabInstanceParentTran;
         [SerializeField] private Transform _maskAvoiderTargetParent;
-
-        private IHoldData _lastDataHolder;
+        
         private int _currentId = 0;
 
         public void CreateButtons(int numButtons, Action onComplete)
@@ -26,7 +26,7 @@ namespace BRM.Sky.WaveEditor
             var viewControllers = new List<SpawnEventViewController>();
             for (int i = 0; i < numButtons; i++)
             {
-                viewControllers.Add(CreateSpawnEventViewController());
+                viewControllers.Add(CreateAndInitializeButton());
             }
             yield return null;
             viewControllers.ForEach(vc => vc.Select(true));
@@ -39,25 +39,27 @@ namespace BRM.Sky.WaveEditor
         {
             DeselectOthers(-1);
 
-            var viewController = CreateSpawnEventViewController();
+            var viewController = CreateAndInitializeButton();
+            Reposition();
             yield return null;
 
             viewController.Select(true);
         }
 
-        private SpawnEventViewController CreateSpawnEventViewController()
+        private SpawnEventViewController CreateAndInitializeButton()
         {
             var button = Instantiate(_spawnButtonPrefab, _prefabInstanceParentTran);
-            transform.SetAsLastSibling();
-
-            button.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item => item.SetTargetParent(_maskAvoiderTargetParent));
-
-            _lastDataHolder = button.GetComponent<IHoldData>();
+            button.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item => item.Initialize(_maskAvoiderTargetParent));
 
             var viewController = button.GetComponent<SpawnEventViewController>();
             viewController.Id = _currentId++;
             viewController.OnButtonClicked += DeselectOthers;
             return viewController;
+        }
+
+        private void Reposition()
+        {
+            transform.SetAsLastSibling();
         }
 
         private void DeselectOthers(int selectedId)
@@ -69,17 +71,6 @@ namespace BRM.Sky.WaveEditor
                     selector.Select(false);
                 }
             });
-        }
-
-        private void Update()
-        {
-            if (_lastDataHolder == null || ReferenceEquals(null, _lastDataHolder))
-            {
-                _button.interactable = true;
-                return;
-            }
-
-            _button.interactable = _lastDataHolder.IsDataReady;
         }
     }
 }

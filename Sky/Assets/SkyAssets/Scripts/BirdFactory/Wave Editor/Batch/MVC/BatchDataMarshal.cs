@@ -6,27 +6,20 @@ using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
 {
-    public class BatchDataMarshal : DataMarshal<BatchData>
+    public class BatchDataMarshal : DataMarshal<BatchData, BatchView>
     {
-        private TMP_InputField _batchNameText;
         private GameObject _spawnEventParent;
-        private BatchData _cachedData = new BatchData();
+        private BatchView _view;
+        protected override BatchView View => _view;
 
-        public void Initialize(GameObject spawnEventParent, TMP_InputField batchNameText)
+        public void Initialize(GameObject spawnEventParent, BatchView view)
         {
-            _batchNameText = batchNameText;
+            _view = view;
             _spawnEventParent = spawnEventParent;
         }
 
-        public string BatchName => _batchNameText == null ? "" : _batchNameText.text;
+        public string BatchName => View == null ? "" : View.Text;
         public override bool IsDataReady => !string.IsNullOrWhiteSpace(BatchName);
-
-        public void CacheData()
-        {
-            _cachedData = Data;
-        }
-
-        public BatchData GetCachedData() => _cachedData;
 
         public override BatchData Data
         {

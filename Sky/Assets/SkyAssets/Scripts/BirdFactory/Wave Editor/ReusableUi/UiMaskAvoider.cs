@@ -9,7 +9,7 @@ namespace BRM.Sky.WaveEditor
 
         private Transform _targetParent;
 
-        public void SetTargetParent(Transform parent)
+        public void Initialize(Transform parent)
         {
             _targetParent = parent;
         }
