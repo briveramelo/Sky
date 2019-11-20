@@ -6,6 +6,7 @@ namespace BRM.Sky.WaveEditor
     public class SpawnEventDataMarshal : DataMarshal<SpawnEventData, SpawnEventView>
     {
         [SerializeField] private SpawnEventView _view;
+        [SerializeField] private SpawnEventViewController _controller;
         protected override SpawnEventView View => _view;
         
         public override SpawnEventData Data
@@ -18,7 +19,8 @@ namespace BRM.Sky.WaveEditor
             };
             set
             {
-                View.SpawnPrefab = value.SpawnPrefab;
+                _controller.SpawnPrefab = value.SpawnPrefab;
+                View.SpawnPrefab = value.SpawnPrefab;//redundant, but hey, whatever, it looks complete
                 View.NormalizedPosition = value.NormalizedPosition;
                 View.Time = value.TimeAfterBatchStartSec;
             }

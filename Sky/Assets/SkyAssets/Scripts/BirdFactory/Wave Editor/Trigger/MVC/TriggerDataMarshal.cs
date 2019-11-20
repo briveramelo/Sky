@@ -20,9 +20,6 @@ namespace BRM.Sky.WaveEditor
             };
             set
             {
-                var settings = TriggerSettings.GetSettings(value.TriggerType);
-                View.gameObject.SetActive(settings.Display);
-                View.ContentType = settings.InputContentType;
                 View.TriggerType = value.TriggerType;
                 View.Amount = value.Amount;
             }

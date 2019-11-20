@@ -528,7 +528,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Option A
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -597,13 +597,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 6637152018765524350}
-    characterCount: 8
+    characterCount: 0
     spriteCount: 0
-    spaceCount: 1
-    wordCount: 2
+    spaceCount: 0
+    wordCount: 0
     linkCount: 0
-    lineCount: 1
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -999,12 +999,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f1ff35a52db4e54a48193b3c74c2f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dropdown: {fileID: 6026508340092791783}
-  _timeInputField: {fileID: 8186151339976698529}
-  _positionDisplay: {fileID: 9197200952958933646}
-  _spawnTypeText: {fileID: 5187315384268941023}
-  _buttonOutline: {fileID: 5818045485875675892}
+  _spawnTypeDropdown: {fileID: 6026508340092791783}
+  _timeInput: {fileID: 8186151339976698529}
   _iconPreview: {fileID: 4673668810425384031}
+  _spawnTypeDisplay: {fileID: 5187315384268941023}
+  _positionDisplay: {fileID: 9197200952958933646}
+  _timeDisplay: {fileID: 3364003399091538783}
+  _buttonOutline: {fileID: 5818045485875675892}
   _selected: {r: 1, g: 0, b: 0, a: 1}
   _unselected: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &5713017046492931979
@@ -1020,6 +1021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _view: {fileID: 8604558790906619832}
+  _controller: {fileID: 5524411424323169029}
 --- !u!114 &3336547206347065260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1101,7 +1103,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4473937035731906990
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1414,7 +1416,7 @@ MonoBehaviour:
   m_CharacterValidation: 3
   m_RegexValue: 
   m_GlobalPointSize: 6
-  m_CharacterLimit: 0
+  m_CharacterLimit: 5
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []

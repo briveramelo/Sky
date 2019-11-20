@@ -86,10 +86,6 @@
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\MVC\BatchView.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\MVC\BatchViewController.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\SaveBatchButton.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\BatchTrigger\MVC\TriggerDataMarshal.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\BatchTrigger\MVC\TriggerView.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\BatchTrigger\MVC\TriggerViewController.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\BatchTrigger\TriggerSettings.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\MVC\DataMarshal.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\MVC\ViewController.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\MVC\WaveData.cs" />
@@ -105,6 +101,10 @@
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\SpawnEvent\MVC\SpawnEventView.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\SpawnEvent\MVC\SpawnEventViewController.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\SpawnEvent\SpawnEventButtonFactory.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Trigger\MVC\TriggerDataMarshal.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Trigger\MVC\TriggerView.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Trigger\MVC\TriggerViewController.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Trigger\TriggerSettings.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Wave\SaveWaveDataButton.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Wave\WaveDataMarshal.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Wave\WaveView.cs" />

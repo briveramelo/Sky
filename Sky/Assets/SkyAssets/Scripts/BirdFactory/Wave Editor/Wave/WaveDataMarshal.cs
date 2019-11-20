@@ -10,7 +10,8 @@ namespace BRM.Sky.WaveEditor
     {
         [SerializeField] private GameObject _dataMarshalsParent;
         [SerializeField] private WaveView _view;
-
+        protected override WaveView View => _view;
+        
         public string WaveName => View.WaveNameText;
         public override WaveData Data
         {
@@ -20,7 +21,7 @@ namespace BRM.Sky.WaveEditor
                 {
                     if (vc.IsSelected)
                     {
-                        vc.Select(false);
+                        vc.GetComponent<BatchDataMarshal>().CacheData();
                     }
                 });//ensures data is cached for any uncached, currently selected view controllers
                 
@@ -34,8 +35,8 @@ namespace BRM.Sky.WaveEditor
 
                     WaveTimeline = new WaveTimeline
                     {
-                        Batches = batchDataMarshals.Select(marshal => marshal.GetCachedData()).ToList(),
-                        Triggers = batchTriggerDataMarshals.Select(marshal => marshal.Data).ToList(),
+                        Batches = batchDataMarshals.Select(marshal => marshal.GetCachedData()).ToList(),//batch ui repopulates with currently selected batch, so cached data is needed
+                        Triggers = batchTriggerDataMarshals.Select(marshal => marshal.Data).ToList(),//trigger ui always represents the data, so regular data coming from ui is fine
                     }
                 };
             }
@@ -53,6 +54,5 @@ namespace BRM.Sky.WaveEditor
         }
 
         public override bool IsDataReady => !string.IsNullOrWhiteSpace(WaveName) && !string.IsNullOrWhiteSpace(View.SubtitleText);
-        protected override WaveView View => _view;
     }
 }

@@ -24,6 +24,6 @@ namespace BRM.Sky.WaveEditor
         }
 
         public bool IsSelected => _isSelected;
-        public string Text => _batchNameInput.text;
+        public string BatchName => _batchNameInput.text;
     }
 }

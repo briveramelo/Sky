@@ -64,7 +64,8 @@ namespace BRM.Sky.WaveEditor
         private void PopulateSpawnEventDataUi(BatchData data)
         {
             var numButtons = data.SpawnEventData.Count;
-            _spawnEventButtonFactory.CreateButtons(numButtons, () => _dataMarshal.Data = data);
+            _spawnEventButtonFactory.RecreateButtons(numButtons);
+            _dataMarshal.Data = data;
         }
     }
 }

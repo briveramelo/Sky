@@ -16,20 +16,26 @@ namespace BRM.Sky.WaveEditor
         [SerializeField] private SpawnEventView _ui;
         
         protected override SpawnEventView View => _ui;
-
-        private GameObject _prefabInstance;
         #endregion
 
+        private GameObject _prefabInstance;
+        
         public void Select(bool isSelected)
         {
             _ui.UpdateDisplayText();
             _ui.Select(isSelected);
-            if (_prefabInstance != null && isSelected)
+        }
+
+        public SpawnPrefab SpawnPrefab
+        {
+            get => View.SpawnPrefab;
+            set
             {
-                Selection.activeGameObject = _prefabInstance;
+                CreateEditorInstance(value);
+                View.SpawnPrefab = value;
             }
         }
-        
+
         protected override IEnumerator OnClickRoutine()
         {
             bool isSelected = _ui.IsSelected;
@@ -41,17 +47,11 @@ namespace BRM.Sky.WaveEditor
         private void Start()
         {
             View.OnDropdownSelected += OnDropdownSelected;
-            View.Initialize(GetPrefabInstancePosition);
-        }
-
-        private Vector2? GetPrefabInstancePosition()
-        {
             if (_prefabInstance == null)
             {
-                return null;
+                CreateEditorInstance(0);
+                Select(true);
             }
-
-            return _prefabInstance.transform.position;
         }
 
         private void OnDestroy()
@@ -81,8 +81,7 @@ namespace BRM.Sky.WaveEditor
 
             _prefabInstance = WaveEditorPrefabFactory.Instance.CreateInstance(prefabType);
             _prefabInstance.transform.position = lastPosition;
-
-            Select(true);
+            View.SetPrefabInstance(_prefabInstance);
         }
     }
 }

@@ -13,37 +13,28 @@ namespace BRM.Sky.WaveEditor.Ui
         [SerializeField] private GameObject _spawnButtonPrefab;
         [SerializeField] private Transform _prefabInstanceParentTran;
         [SerializeField] private Transform _maskAvoiderTargetParent;
-        
+
         private int _currentId = 0;
+        private List<SpawnEventViewController> _viewControllers = new List<SpawnEventViewController>();
 
-        public void CreateButtons(int numButtons, Action onComplete)
+        public void RecreateButtons(int numButtons)
         {
-            StartCoroutine(CreateButtonsRoutine(numButtons, onComplete));
-        }
-
-        private IEnumerator CreateButtonsRoutine(int numButtons, Action onComplete)
-        {
-            var viewControllers = new List<SpawnEventViewController>();
+            _viewControllers.Clear();
             for (int i = 0; i < numButtons; i++)
             {
-                viewControllers.Add(CreateAndInitializeButton());
+                _viewControllers.Add(CreateAndInitializeButton());
             }
-            yield return null;
-            viewControllers.ForEach(vc => vc.Select(true));
-            yield return null;
-            DeselectOthers(-1);
-            onComplete?.Invoke();
+
+            _viewControllers.ForEach(vc => vc.Select(false));
+            Reposition();
         }
 
-        protected override IEnumerator OnClickRoutine()
+        protected override void OnClick()
         {
-            DeselectOthers(-1);
-
-            var viewController = CreateAndInitializeButton();
+            base.OnClick();
+            _viewControllers.ForEach(selector => selector.Select(false));
+            _viewControllers.Add(CreateAndInitializeButton());
             Reposition();
-            yield return null;
-
-            viewController.Select(true);
         }
 
         private SpawnEventViewController CreateAndInitializeButton()
@@ -64,7 +55,7 @@ namespace BRM.Sky.WaveEditor.Ui
 
         private void DeselectOthers(int selectedId)
         {
-            _prefabInstanceParentTran.GetComponentsRecursively<SpawnEventViewController>(true).ToList().ForEach(selector =>
+            _viewControllers.ForEach(selector =>
             {
                 if (selector.Id != selectedId)
                 {

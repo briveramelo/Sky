@@ -18,22 +18,21 @@ namespace BRM.Sky.WaveEditor
                 .Select(prefabType => new TMP_Dropdown.OptionData(prefabType.ToString())).ToList();
             _dropdown.onValueChanged.AddListener(OnSpawnTypeSelected);
             _inputField.onValueChanged.AddListener(OnAmountChanged);
-            
-            UpdateDisplayText();
-        }
 
-        public string DisplayText => _displayText.text;
+            OnSpawnTypeSelected(0);
+            Amount = 1;
+        }
 
         public BatchTriggerType TriggerType
         {
             get => (BatchTriggerType) _dropdown.value;
-            set => _dropdown.value = (int) value;
-        }
-        
-        public TMP_InputField.ContentType ContentType
-        {
-            get => _inputField.contentType;
-            set => _inputField.contentType = value;
+            set
+            {
+                var settings = TriggerSettings.GetSettings(value);
+                _inputField.contentType = settings.InputContentType;
+                _inputField.gameObject.SetActive(settings.Display);
+                _dropdown.value = (int) value;
+            }
         }
 
         public float Amount
@@ -61,10 +60,7 @@ namespace BRM.Sky.WaveEditor
         private void OnSpawnTypeSelected(int newValue)
         {
             var triggerType = (BatchTriggerType) newValue;
-            var settings = TriggerSettings.GetSettings(triggerType);
-
-            _inputField.gameObject.SetActive(settings.Display);
-            _inputField.contentType = settings.InputContentType;
+            TriggerType = triggerType;
             UpdateDisplayText();
         }
 

@@ -12,10 +12,6 @@ namespace BRM.Sky.WaveEditor
         public void Initialize(Transform parent)
         {
             _targetParent = parent;
-        }
-
-        private void Awake()
-        {
             transform.SetParent(_targetParent);
         }
 

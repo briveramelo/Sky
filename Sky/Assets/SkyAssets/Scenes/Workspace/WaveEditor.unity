@@ -185,11 +185,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2091520, guid: 60554f9710c5649689e1ffa39739f096, type: 3}
       propertyPath: field of view
-      value: 34.446873
+      value: 25.851103
       objectReference: {fileID: 0}
     - target: {fileID: 2091520, guid: 60554f9710c5649689e1ffa39739f096, type: 3}
       propertyPath: orthographic size
-      value: 3.1
+      value: 2.2949998
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60554f9710c5649689e1ffa39739f096, type: 3}
@@ -4719,7 +4719,7 @@ MonoBehaviour:
   _maskAvoiderTargetParent: {fileID: 5888498203097542829}
   _saveBatchButton: {fileID: 3243188294925896685}
   _spawnEventButtonFactory: {fileID: 5888498203859190786}
-  _batchNameInput: {fileID: 1127251777068288600}
+  _batchNameInput: {fileID: 3229971183443908817}
 --- !u!1 &5888498203985430558
 GameObject:
   m_ObjectHideFlags: 0

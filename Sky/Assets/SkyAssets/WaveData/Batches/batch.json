@@ -1,27 +1,27 @@
 ﻿{
-    "Name": "duck meat",
+    "Name": "batch",
     "SpawnEventData": [
         {
-            "SpawnPrefabType": "Duck",
+            "SpawnPrefabType": "Pigeon",
             "NormalizedPosition": {
-                "x": -0.040776729583740237,
+                "x": -0.03677511215209961,
                 "y": 0.5
             },
             "TimeAfterBatchStartSec": 0.0
         },
         {
-            "SpawnPrefabType": "Duck",
+            "SpawnPrefabType": "LeadDuck",
             "NormalizedPosition": {
-                "x": -0.040776729583740237,
-                "y": 0.5841935276985169
+                "x": -0.03677511215209961,
+                "y": 0.6119825839996338
             },
             "TimeAfterBatchStartSec": 0.0
         },
         {
-            "SpawnPrefabType": "Duck",
+            "SpawnPrefabType": "Albatross",
             "NormalizedPosition": {
-                "x": -0.04347354173660278,
-                "y": 0.4032258093357086
+                "x": -0.03677511215209961,
+                "y": 0.25468409061431887
             },
             "TimeAfterBatchStartSec": 0.0
         }

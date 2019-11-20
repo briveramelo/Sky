@@ -1,7 +1,6 @@
 using System.Linq;
 using BRM.Sky.CustomWaveData;
 using GenericFunctions;
-using TMPro;
 using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
@@ -18,7 +17,7 @@ namespace BRM.Sky.WaveEditor
             _spawnEventParent = spawnEventParent;
         }
 
-        public string BatchName => View == null ? "" : View.Text;
+        public string BatchName => View == null ? "" : View.BatchName;
         public override bool IsDataReady => !string.IsNullOrWhiteSpace(BatchName);
 
         public override BatchData Data
