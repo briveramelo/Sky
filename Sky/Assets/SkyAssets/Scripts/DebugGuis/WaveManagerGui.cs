@@ -10,7 +10,7 @@ public class WaveManagerGui : SubDebugGui
     protected override void OnGuiEnabled()
     {
         base.OnGuiEnabled();
-        var waveNames = Enum.GetValues(typeof(WaveName)).Cast<WaveName>();
+        var waveNames = EnumHelpers.GetAll<WaveName>();
         foreach (var waveName in waveNames)
         {
             if (GUILayout.Button(waveName.ToString(), ScreenSpace.LeftAlignedButtonStyle))

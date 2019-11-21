@@ -14,8 +14,7 @@ namespace BRM.Sky.WaveEditor
 
         private void Start()
         {
-            _dropdown.options = Enum.GetValues(typeof(BatchTriggerType)).Cast<BatchTriggerType>()
-                .Select(prefabType => new TMP_Dropdown.OptionData(prefabType.ToString())).ToList();
+            _dropdown.options = EnumHelpers.GetAll<BatchTriggerType>().Select(prefabType => new TMP_Dropdown.OptionData(prefabType.ToString())).ToList();
             _dropdown.onValueChanged.AddListener(OnSpawnTypeSelected);
             _inputField.onValueChanged.AddListener(OnAmountChanged);
 

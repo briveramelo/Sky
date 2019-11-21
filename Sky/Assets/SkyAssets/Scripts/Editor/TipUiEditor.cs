@@ -15,7 +15,7 @@ public class TipUiEditor : Editor
         }
 
         serializedObject.Update();
-        var tips = Enum.GetValues(typeof(Tip)).Cast<Tip>();
+        var tips = EnumHelpers.GetAll<Tip>();
         foreach (var tip in tips)
         {
             if (GUILayout.Button(tip.ToString()))

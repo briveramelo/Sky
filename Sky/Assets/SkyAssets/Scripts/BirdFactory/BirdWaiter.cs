@@ -40,7 +40,7 @@ public class BirdWaiter
         _birdCounterType = birdCounterType;
         if (invertBirdTypes)
         {
-            var inverted = birdTypes.InvertEnums();
+            var inverted = birdTypes.Invert();
             inverted.Remove(BirdType.All);
             _birdTypes = inverted.ToArray();
         }
@@ -59,9 +59,9 @@ public class BirdWaiter
     }
 }
 
-public static class Helpers
+public static class EnumHelpers
 {
-    public static List<TEnum> InvertEnums<TEnum>(this TEnum[] birdTypes) where TEnum : Enum
+    public static List<TEnum> Invert<TEnum>(this TEnum[] birdTypes) where TEnum : Enum
     {
         var birdsToWaitFor = Enum.GetValues(typeof(TEnum)).Cast<TEnum>().ToList();
         foreach (var birdType in birdTypes)
@@ -70,5 +70,10 @@ public static class Helpers
         }
 
         return birdsToWaitFor;
+    }
+
+    public static List<TEnum> GetAll<TEnum>() where TEnum : Enum
+    {
+        return Enum.GetValues(typeof(TEnum)).Cast<TEnum>().ToList();
     }
 }

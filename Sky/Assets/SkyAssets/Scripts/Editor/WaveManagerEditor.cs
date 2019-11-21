@@ -15,7 +15,7 @@ public class WaveManagerEditor : Editor
         }
 
         serializedObject.Update();
-        var waveNames = Enum.GetValues(typeof(WaveName)).Cast<WaveName>();
+        var waveNames = EnumHelpers.GetAll<WaveName>();
         foreach (var waveName in waveNames)
         {
             if (GUILayout.Button(waveName.ToString()))

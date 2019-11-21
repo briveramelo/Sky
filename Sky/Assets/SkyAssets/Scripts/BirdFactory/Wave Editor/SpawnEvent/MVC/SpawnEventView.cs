@@ -87,7 +87,7 @@ namespace BRM.Sky.WaveEditor
 
         private void Awake()
         {
-            _spawnTypeDropdown.options = Enum.GetValues(typeof(SpawnPrefab)).Cast<SpawnPrefab>()
+            _spawnTypeDropdown.options = EnumHelpers.GetAll<SpawnPrefab>()
                 .Select(prefabType => new TMP_Dropdown.OptionData(prefabType.ToString(), WaveEditorPrefabFactory.Instance.GetSprite(prefabType))).ToList();
             _spawnTypeDropdown.onValueChanged.AddListener(OnDropSelected);
             _timeInput.onValueChanged.AddListener(OnTimeValueChanged);

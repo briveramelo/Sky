@@ -95,11 +95,12 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
 
     private void InitializeCounters()
     {
+        var allBirds = EnumHelpers.GetAll<BirdType>();
         _birdCounters = new Dictionary<BirdCounterType, Dictionary<BirdType, ICount>>
         {
-            {BirdCounterType.BirdsAlive, Enum.GetValues(typeof(BirdType)).Cast<BirdType>().ToDictionary(counter => counter, counter => (ICount) new BirdCounter(BirdCounterType.BirdsAlive))},
-            {BirdCounterType.BirdsKilled, Enum.GetValues(typeof(BirdType)).Cast<BirdType>().ToDictionary(counter => counter, counter => (ICount) new BirdCounter(BirdCounterType.BirdsKilled))},
-            {BirdCounterType.BirdsSpawned, Enum.GetValues(typeof(BirdType)).Cast<BirdType>().ToDictionary(counter => counter, counter => (ICount) new BirdCounter(BirdCounterType.BirdsSpawned))},
+            {BirdCounterType.BirdsAlive, allBirds.ToDictionary(counter => counter, counter => (ICount) new BirdCounter(BirdCounterType.BirdsAlive))},
+            {BirdCounterType.BirdsKilled, allBirds.ToDictionary(counter => counter, counter => (ICount) new BirdCounter(BirdCounterType.BirdsKilled))},
+            {BirdCounterType.BirdsSpawned, allBirds.ToDictionary(counter => counter, counter => (ICount) new BirdCounter(BirdCounterType.BirdsSpawned))},
         };
 
         _scoreCounters = new Dictionary<ScoreCounterType, ICount>

@@ -117,7 +117,7 @@ namespace BRM.Sky.WaveEditor
         private void InitializeSpawnPrefabData()
         {
             _spawnPrefabData = new Dictionary<SpawnPrefab, SpawnPrefabData>();
-            var spawnPrefabs = Enum.GetValues(typeof(SpawnPrefab)).Cast<SpawnPrefab>().ToList();
+            var spawnPrefabs = EnumHelpers.GetAll<SpawnPrefab>().ToList();
 
             foreach (var spawnPrefab in spawnPrefabs)
             {

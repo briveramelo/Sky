@@ -22,7 +22,7 @@ public class TipUi : MonoBehaviour
     [SerializeField] private Animator _titleA;
     [SerializeField] private Animator _subTitleA;
     
-    private List<Tip> _newTips = System.Enum.GetValues(typeof(Tip)).Cast<Tip>().ToList();
+    private List<Tip> _newTips = EnumHelpers.GetAll<Tip>().ToList();
 
     public IEnumerator DisplayTip()
     {
@@ -41,7 +41,7 @@ public class TipUi : MonoBehaviour
         _newTips.Remove(tip);
         if (_newTips.Count == 0)
         {
-            _newTips = System.Enum.GetValues(typeof(Tip)).Cast<Tip>().ToList();
+            _newTips = EnumHelpers.GetAll<Tip>().ToList();
         }
 
         return tip;

@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -14,7 +13,7 @@ public class BirdFactoryEditor : Editor
         }
 
         serializedObject.Update();
-        var birdTypes = Enum.GetValues(typeof(BirdType)).Cast<BirdType>().OrderBy(item => item.ToString());
+        var birdTypes = EnumHelpers.GetAll<BirdType>().OrderBy(item => item.ToString());
         
         foreach (var birdType in birdTypes)
         {
