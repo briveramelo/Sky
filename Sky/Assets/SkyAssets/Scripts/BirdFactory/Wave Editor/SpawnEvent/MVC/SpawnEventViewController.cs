@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using BRM.Sky.CustomWaveData;
-using UnityEditor;
 using UnityEngine;
 
 namespace BRM.Sky.WaveEditor

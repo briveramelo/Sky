@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BRM.Sky.CustomWaveData;
-using UnityEditor;
+using BRM.UnityAssets;
+using BRM.UnityAssets.Editor;
+using BRM.UnityAssets.Interfaces;
 using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
@@ -15,7 +17,6 @@ namespace BRM.Sky.WaveEditor
             public SpawnPrefab SpawnPrefabType;
             public GameObject EditorPrefab;
             public Transform Parent;
-            public string FilePath;
             public string PrefabName => SpawnPrefabType.ToString();
 
             public Sprite IconSprite
@@ -24,8 +25,6 @@ namespace BRM.Sky.WaveEditor
                 {
                     if (_iconSprite == null)
                     {
-                        //var iconTexture = AssetDatabase.GetCachedIcon(FilePath);
-                        //var iconTexture = AssetPreview.GetMiniThumbnail(EditorPrefab);
                         if (EditorPrefab == null)
                         {
                             Debug.LogError($"prefab not yet set for type {SpawnPrefabType}");
@@ -82,15 +81,21 @@ namespace BRM.Sky.WaveEditor
         }
 
         [SerializeField] private List<SpawnPrefabSprite> _birdSprites;
+
+        private SimpleAssetLoader<GameObject> _prefabLoader;
         
         private Dictionary<SpawnPrefab, SpawnPrefabData> _spawnPrefabData;
-        
-        private const string _assetDatabasePath = "SkyAssets/Prefabs/Birds/Editor/EditorBird.prefab";
+
         protected override bool _destroyOnLoad => true;
 
         protected override void Awake()
         {
             base.Awake();
+        #if UNITY_EDITOR
+            _prefabLoader = new AssetDatabaseLoader<GameObject>();
+        #else
+            _prefabLoader = null;
+        #endif
             InitializeSpawnPrefabData();
             InitializeSpawnPrefabHierarchy();
         }
@@ -102,22 +107,28 @@ namespace BRM.Sky.WaveEditor
 
             foreach (var spawnPrefab in spawnPrefabs)
             {
-                var filePath = _assetDatabasePath;
-                if (!File.Exists($"{Application.dataPath}/{filePath}"))
+                var spawnData = new SpawnPrefabData
+                {
+                    SpawnPrefabType = spawnPrefab,
+                };
+                var prefabLoadingData = new AssetData<GameObject>
+                {
+                    OnAssetLoaded = asset => spawnData.EditorPrefab = asset,
+                    Name = "EditorBird",
+                    ContainerName = "SkyAssets/Prefabs/Birds/Editor/",
+                    FileExtension = "prefab"
+                };
+                if (!File.Exists($"{Application.dataPath}/{prefabLoadingData.CombinedPath}"))
                 {
                     Debug.LogError($"No prefab found for type {spawnPrefab}");
                     continue;
                 }
                 
-                _spawnPrefabData.Add(spawnPrefab, new SpawnPrefabData
-                {
-                    SpawnPrefabType = spawnPrefab,
-                    FilePath = filePath,
-                    EditorPrefab = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/{filePath}")
-                });
+                _prefabLoader.Load(prefabLoadingData);
+                _spawnPrefabData.Add(spawnPrefab, spawnData);
             }
         }
-        
+
         private void InitializeSpawnPrefabHierarchy()
         {
             foreach (var kvp in _spawnPrefabData)

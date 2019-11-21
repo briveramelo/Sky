@@ -1,0 +1,52 @@
+﻿{
+    "Name": "test",
+    "Subtitle": "me",
+    "WaveTimeline": {
+        "Batches": [
+            {
+                "Name": "",
+                "SpawnEventData": [
+                    {
+                        "SpawnPrefabType": "Duck",
+                        "NormalizedPosition": {
+                            "x": -0.055162668228149417,
+                            "y": 0.7061818242073059
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    },
+                    {
+                        "SpawnPrefabType": "LeadDuck",
+                        "NormalizedPosition": {
+                            "x": -0.055162668228149417,
+                            "y": 0.3145454525947571
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    }
+                ]
+            },
+            {
+                "Name": "",
+                "SpawnEventData": [
+                    {
+                        "SpawnPrefabType": "Pigeon",
+                        "NormalizedPosition": {
+                            "x": -0.055162668228149417,
+                            "y": 0.5
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    }
+                ]
+            }
+        ],
+        "Triggers": [
+            {
+                "BatchTriggerType": "AllDead",
+                "Amount": 1.0
+            },
+            {
+                "BatchTriggerType": "AllDead",
+                "Amount": 1.0
+            }
+        ]
+    }
+}

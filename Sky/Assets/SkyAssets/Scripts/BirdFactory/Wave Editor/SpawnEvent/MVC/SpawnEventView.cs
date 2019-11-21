@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using BRM.Sky.CustomWaveData;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +24,7 @@ namespace BRM.Sky.WaveEditor
         [SerializeField] private Color _selected, _unselected;
 
         private GameObject _prefabInstance;
+        private readonly GameObjectSelector _selector = new EditorSelector();
 
         public void SetPrefabInstance(GameObject prefabInstance)
         {
@@ -81,7 +81,7 @@ namespace BRM.Sky.WaveEditor
             _spawnTypeDropdown.gameObject.SetActive(isSelected);
             if (_prefabInstance != null && isSelected)
             {
-                Selection.activeGameObject = _prefabInstance;
+                _selector.Select(_prefabInstance);
             }
         }
 
@@ -131,7 +131,7 @@ namespace BRM.Sky.WaveEditor
             OnDropdownSelected?.Invoke(newValue);
             if (_prefabInstance != null)
             {
-                Selection.activeGameObject = _prefabInstance;
+                _selector.Select(_prefabInstance);
             }
         }
     }

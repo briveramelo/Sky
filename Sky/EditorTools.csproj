@@ -319,6 +319,15 @@
  <Reference Include="UnityEditor.Purchasing">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
  </Reference>
+ <Reference Include="BRM.UnityAssets.Interfaces">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/UnityAssetLoading/BRM.UnityAssets.Interfaces.dll</HintPath>
+ </Reference>
+ <Reference Include="BRM.UnityAssets">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/UnityAssetLoading/BRM.UnityAssets.dll</HintPath>
+ </Reference>
+ <Reference Include="BRM.UnityAssets.Editor">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/UnityAssetLoading/BRM.UnityAssets.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="nunit.framework">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
