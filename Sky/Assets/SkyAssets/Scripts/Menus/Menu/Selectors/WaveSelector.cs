@@ -11,6 +11,7 @@ public static class Scenes
     public const string Endless = "Endless";
     public const string Scores = "Scores";
     public const string BirdCage = "BirdCage";
+    public const string WaveEditor = "WaveEditor";
 
     private static readonly List<string> MenuScenes = new List<string>
     {

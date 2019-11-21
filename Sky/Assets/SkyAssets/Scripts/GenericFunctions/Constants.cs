@@ -124,6 +124,23 @@ namespace GenericFunctions
 
         public static int AnimState => _animState.Value;
         private static Lazy<int> _animState = new Lazy<int>(() => Animator.StringToHash("AnimState"));
+
+        public static readonly BirdType[] AllBirdTypes = new[]
+        {
+            BirdType.Albatross,
+            BirdType.BabyCrow,
+            BirdType.Bat,
+            BirdType.BirdOfParadise,
+            BirdType.Crow,
+            BirdType.Duck,
+            BirdType.DuckLeader,
+            BirdType.Eagle,
+            BirdType.Pelican,
+            BirdType.Pigeon,
+            BirdType.Tentacles,
+            BirdType.Seagull,
+            BirdType.Shoebill,
+        };
     }
 
     public static class Layers

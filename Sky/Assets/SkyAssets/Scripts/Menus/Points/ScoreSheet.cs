@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
+using GenericFunctions;
 using UnityEngine.SceneManagement;
 
 #region Interfaces
@@ -221,6 +222,7 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
     void ITallyable.TallyBirdCount(ref BirdStats birdStats, BirdCounterType type, int amount)
     {
         _birdCounters[type][birdStats.MyBirdType].Add(amount);
+        _birdCounters[type][BirdType.All].Add(amount);
     }
 
     void ITallyable.TallyScoreCount(ScoreCounterType type, int amount)

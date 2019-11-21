@@ -34,7 +34,7 @@ public static class WaveLabels
 
     public static string GetWaveSubtitle(WaveName waveName)
     {
-        string subtitle = "";
+        string subtitle = null;
         if (!_waveSubtitles.TryGetValue(waveName, out subtitle))
         {
             Debug.LogError("No subtitle found for " + waveName);

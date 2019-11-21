@@ -8,6 +8,7 @@ namespace BRM.Sky.WaveEditor
 {
     public class PlayTestButton : Selector
     {
+        [SerializeField] private GameObject _designView;
         [SerializeField] private WaveDataMarshal _waveDataMarshal;
         [SerializeField] private List<GameObject> _requiredPrefabs;
         [SerializeField] private string _textDuringTest, _textDuringEditor;
@@ -27,6 +28,8 @@ namespace BRM.Sky.WaveEditor
             base.OnClick();
             _isEditing = !_isEditing;
             _buttonText.text = _isEditing ? _textDuringEditor : _textDuringTest;
+            _designView.SetActive(_isEditing);
+            
             var eventData = new WaveEditorTestData {State = _isEditing ? WaveEditorState.Editing : WaveEditorState.Testing};
             if (_isEditing)
             {

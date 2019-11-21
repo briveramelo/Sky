@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class DataWave : Wave
 {
+    public override string WaveName => _waveData.Name;
+    public override string Subtitle => _waveData.Subtitle;
+    
     private WaveData _waveData;
     private float _waveStartTime;
     private float _currentTimeAfterWaveStart => Time.time - _waveStartTime;
@@ -14,7 +17,7 @@ public class DataWave : Wave
         _waveData = waveData;
     }
 
-    protected override IEnumerator GenerateBirds()
+    public override IEnumerator GenerateBirds()
     {
         _waveStartTime = Time.time;
         

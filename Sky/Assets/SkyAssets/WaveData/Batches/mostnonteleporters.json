@@ -1,0 +1,77 @@
+﻿{
+    "Name": "mostnonteleporters",
+    "SpawnEventData": [
+        {
+            "SpawnPrefabType": "Duck",
+            "NormalizedPosition": {
+                "x": -0.04785275459289551,
+                "y": 0.9472727179527283
+            },
+            "TimeAfterBatchStartSec": 0.0
+        },
+        {
+            "SpawnPrefabType": "Albatross",
+            "NormalizedPosition": {
+                "x": -0.04785275459289551,
+                "y": 0.8490909337997437
+            },
+            "TimeAfterBatchStartSec": 0.0
+        },
+        {
+            "SpawnPrefabType": "BabyCrow",
+            "NormalizedPosition": {
+                "x": -0.04785275459289551,
+                "y": 0.7345454692840576
+            },
+            "TimeAfterBatchStartSec": 0.0
+        },
+        {
+            "SpawnPrefabType": "Murder",
+            "NormalizedPosition": {
+                "x": -0.05214720964431763,
+                "y": 0.614545464515686
+            },
+            "TimeAfterBatchStartSec": 0.0
+        },
+        {
+            "SpawnPrefabType": "Seagull",
+            "NormalizedPosition": {
+                "x": -0.04785275459289551,
+                "y": 0.5381818413734436
+            },
+            "TimeAfterBatchStartSec": 0.0
+        },
+        {
+            "SpawnPrefabType": "Pelican",
+            "NormalizedPosition": {
+                "x": -0.04785275459289551,
+                "y": 0.4399999976158142
+            },
+            "TimeAfterBatchStartSec": 0.0
+        },
+        {
+            "SpawnPrefabType": "Shoebill",
+            "NormalizedPosition": {
+                "x": -0.04785275459289551,
+                "y": 0.3418181836605072
+            },
+            "TimeAfterBatchStartSec": 0.0
+        },
+        {
+            "SpawnPrefabType": "Bat",
+            "NormalizedPosition": {
+                "x": -0.04785275459289551,
+                "y": 0.2545454502105713
+            },
+            "TimeAfterBatchStartSec": 0.0
+        },
+        {
+            "SpawnPrefabType": "BirdOfParadise",
+            "NormalizedPosition": {
+                "x": -0.04785275459289551,
+                "y": 0.15090909600257874
+            },
+            "TimeAfterBatchStartSec": 0.0
+        }
+    ]
+}

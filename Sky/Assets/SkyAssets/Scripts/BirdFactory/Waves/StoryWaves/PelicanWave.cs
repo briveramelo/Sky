@@ -2,7 +2,7 @@
 
 public class PelicanWave : Wave
 {
-    protected override IEnumerator GenerateBirds()
+    public override IEnumerator GenerateBirds()
     {
         // 1 Wait 3 PELICAN
         if (ScoreSheet.Reporter.GetCount(BirdCounterType.BirdsAlive, false, BirdType.Tentacles) == 0)

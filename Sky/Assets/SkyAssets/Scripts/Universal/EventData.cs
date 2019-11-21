@@ -1,21 +1,30 @@
 using BRM.Sky.CustomWaveData;
 
-public class ContinueData
+public interface ISkyEventData
+{
+}
+
+public class ContinueData : ISkyEventData
 {
     public int NumContinuesRemaining;
 }
 
-public class WeaponGrabbedData
+public class BasketDeathData : ISkyEventData
+{
+    public int NumContinuesRemaining;
+}
+
+public class WeaponGrabbedData : ISkyEventData
 {
     public ICollectable Collectable;
 }
 
-public class PauseData
+public class PauseData : ISkyEventData
 {
     public bool IsPaused;
 }
 
-public class WaveEditorTestData
+public class WaveEditorTestData : ISkyEventData
 {
     public WaveEditorState State;
     public WaveData WaveData;

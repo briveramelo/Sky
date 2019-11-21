@@ -7,7 +7,7 @@ public class DuckWave : Wave
 {
     private float _duckSinPeriod => ScreenSpace.ScreenSizeWorldUnits.x;
 
-    protected override IEnumerator GenerateBirds()
+    public override IEnumerator GenerateBirds()
     {
         yield return StartCoroutine(DuckSine(true, .5f, 0f, DuckDirection.UpRight));
         yield return StartCoroutine(WaitFor(AllDead));

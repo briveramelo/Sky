@@ -1,19 +1,21 @@
 ﻿using System.Collections;
 using System.Linq;
 using System;
+using System.Collections.Generic;
 
 public class BirdWaiter
 {
     public bool Wait => _wait(_movingNumber);
     public IEnumerator Perform;
     public SpawnDelegate Spawn;
-    
+
     private BirdCounterType _birdCounterType;
     private BirdType[] _birdTypes;
     private int _numberToWaitFor;
     private int _movingNumber => ScoreSheet.Reporter.GetCounts(_birdCounterType, true, _birdTypes);
 
     private delegate bool BoolDelegate(int mover);
+
     private BoolDelegate _wait;
 
     public BirdWaiter(BirdCounterType birdCounterType, bool invertBirdTypes, int numberToWaitFor, IEnumerator perform, params BirdType[] birdTypes)
@@ -36,7 +38,17 @@ public class BirdWaiter
     private void Initialize(BirdCounterType birdCounterType, bool invertBirdTypes, int numberToWaitFor, params BirdType[] birdTypes)
     {
         _birdCounterType = birdCounterType;
-        _birdTypes = invertBirdTypes ? InvertBirdTypes(birdTypes) : birdTypes;
+        if (invertBirdTypes)
+        {
+            var inverted = birdTypes.InvertEnums();
+            inverted.Remove(BirdType.All);
+            _birdTypes = inverted.ToArray();
+        }
+        else
+        {
+            _birdTypes = birdTypes;
+        }
+
         _numberToWaitFor = numberToWaitFor;
         _wait = mover => mover > _numberToWaitFor;
         if (birdCounterType == BirdCounterType.BirdsSpawned || birdCounterType == BirdCounterType.BirdsKilled)
@@ -45,16 +57,18 @@ public class BirdWaiter
             _wait = mover => mover < _numberToWaitFor;
         }
     }
+}
 
-    private static BirdType[] InvertBirdTypes(params BirdType[] birdTypes)
+public static class Helpers
+{
+    public static List<TEnum> InvertEnums<TEnum>(this TEnum[] birdTypes) where TEnum : Enum
     {
-        var birdsToWaitFor = Enum.GetValues(typeof(BirdType)).Cast<BirdType>().ToList();
-        birdsToWaitFor.Remove(BirdType.All);
+        var birdsToWaitFor = Enum.GetValues(typeof(TEnum)).Cast<TEnum>().ToList();
         foreach (var birdType in birdTypes)
         {
             birdsToWaitFor.Remove(birdType);
         }
 
-        return birdsToWaitFor.ToArray();
+        return birdsToWaitFor;
     }
 }

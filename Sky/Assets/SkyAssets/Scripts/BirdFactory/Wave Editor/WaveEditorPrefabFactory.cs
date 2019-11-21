@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BRM.EventBrokers;
+using BRM.EventBrokers.Interfaces;
 using BRM.Sky.CustomWaveData;
 using BRM.UnityAssets;
 using BRM.UnityAssets.Editor;
@@ -85,6 +87,7 @@ namespace BRM.Sky.WaveEditor
         private SimpleAssetLoader<GameObject> _prefabLoader;
         
         private Dictionary<SpawnPrefab, SpawnPrefabData> _spawnPrefabData;
+        private IBrokerEvents _eventBroker = new StaticEventBroker();
 
         protected override bool _destroyOnLoad => true;
 
@@ -98,6 +101,17 @@ namespace BRM.Sky.WaveEditor
         #endif
             InitializeSpawnPrefabData();
             InitializeSpawnPrefabHierarchy();
+            _eventBroker.Subscribe<WaveEditorTestData>(OnWaveEditorStateChange);
+        }
+
+        private void OnDestroy()
+        {
+            _eventBroker.Unsubscribe<WaveEditorTestData>(OnWaveEditorStateChange);
+        }
+
+        private void OnWaveEditorStateChange(WaveEditorTestData data)
+        {
+            gameObject.SetActive(data.State == WaveEditorState.Editing);
         }
 
         private void InitializeSpawnPrefabData()

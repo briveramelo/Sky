@@ -3,28 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using GenericFunctions;
 using System;
-using UnityEngine.SceneManagement;
-
-public interface IWaveRunnable
-{
-    IEnumerator RunWave();
-    WaveName WaveName { get; }
-}
 
 public delegate void SpawnDelegate();
 
-public abstract class Wave : MonoBehaviour, IWaveRunnable
+public abstract class Wave : MonoBehaviour
 {
     [SerializeField] private WaveName _myWaveName;
-    WaveName IWaveRunnable.WaveName => _myWaveName;
-
-    private IWaveUi waveUi;
-    private IWaveUi _waveUi => waveUi ?? FindObjectOfType<WaveUi>().GetComponent<IWaveUi>();
+    public WaveName WaveNameType => _myWaveName;
+    public virtual string WaveName => WaveNameType.ToString();
+    public virtual string Subtitle => WaveLabels.GetWaveSubtitle(WaveNameType);
 
     protected BirdWaiter AllDead = new BirdWaiter(BirdCounterType.BirdsAlive, false, 0, BirdType.All);
     protected BirdWaiter AllDeadExceptTentacles = new BirdWaiter(BirdCounterType.BirdsAlive, true, 0, BirdType.Tentacles);
 
-    protected static int WaveNumber;
     protected const float LowHeight = -0.6f;
     protected const float MedHeight = 0f;
     protected const float HighHeight = 0.6f;
@@ -58,8 +49,6 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable
             SpawnBirds(birdType, spawnPoint, (DuckDirection) UnityEngine.Random.Range(0, Enum.GetNames(typeof(DuckDirection)).Length));
         };
     }
-
-
     #endregion
 
     private void Start()
@@ -76,36 +65,7 @@ public abstract class Wave : MonoBehaviour, IWaveRunnable
             BirdSpawnDelegates.Add((BirdType) i, SpawnAtRandom((BirdType) i));
         }
     }
-
-    IEnumerator IWaveRunnable.RunWave()
-    {
-        Debug.Log("running wave");
-        yield return StartCoroutine(StartWave());
-        Debug.Log("generating birds");
-        yield return StartCoroutine(GenerateBirds());
-        Debug.Log("finishing wave");
-        yield return StartCoroutine(FinishWave());
-    }
-
-    private IEnumerator StartWave()
-    {
-        yield return StartCoroutine(_waveUi.AnimateWaveStart(_myWaveName));
-    }
-
-    protected virtual IEnumerator GenerateBirds()
-    {
-        yield return null;
-    }
-
-    private IEnumerator FinishWave()
-    {
-        yield return new WaitForSeconds(2f);
-        SpawnBirds(BirdType.BirdOfParadise, SpawnPoint(Right, LowHeight));
-        yield return StartCoroutine(WaitFor(AllDeadExceptTentacles, true));
-        yield return StartCoroutine(_waveUi.AnimateWaveEnd(_myWaveName));
-        WaveNumber++;
-        ScoreSheet.Resetter.ResetWaveCounters();
-    }
+    public abstract IEnumerator GenerateBirds();
 
     /// <summary> Spawn Birds
     /// </summary>

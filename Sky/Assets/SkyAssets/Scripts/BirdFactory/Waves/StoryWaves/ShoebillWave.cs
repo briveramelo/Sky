@@ -4,7 +4,7 @@ using GenericFunctions;
 public class ShoebillWave : Wave
 {
     //SHOEBILLS
-    protected override IEnumerator GenerateBirds()
+    public override IEnumerator GenerateBirds()
     {
         yield return StartCoroutine(Produce1Wait3(BirdSpawnDelegates[BirdType.Shoebill]));
 

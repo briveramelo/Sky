@@ -185,11 +185,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2091520, guid: 60554f9710c5649689e1ffa39739f096, type: 3}
       propertyPath: field of view
-      value: 25.851103
+      value: 30.752504
       objectReference: {fileID: 0}
     - target: {fileID: 2091520, guid: 60554f9710c5649689e1ffa39739f096, type: 3}
       propertyPath: orthographic size
-      value: 2.2949998
+      value: 2.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60554f9710c5649689e1ffa39739f096, type: 3}
@@ -2012,11 +2012,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 5888498203815372210}
   _audioType: 1
+  _designView: {fileID: 5888498203648971809}
   _waveDataMarshal: {fileID: 4338520428162946635}
   _requiredPrefabs:
   - {fileID: 4379850310323762910, guid: 988c378eb4ea17d43af83f61e531b864, type: 3}
-  _textDuringTest: Play Test
-  _textDuringEditor: Stop Test
+  _textDuringTest: Stop Test
+  _textDuringEditor: Play Test
   _buttonText: {fileID: 5888498203859185596}
 --- !u!222 &5800389165810857962
 CanvasRenderer:

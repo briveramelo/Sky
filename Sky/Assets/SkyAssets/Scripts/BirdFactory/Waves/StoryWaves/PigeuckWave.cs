@@ -4,7 +4,7 @@ using System.Collections;
 public class PigeuckWave : Wave
 {
     //PIGEONS AND DUCKS
-    protected override IEnumerator GenerateBirds()
+    public override IEnumerator GenerateBirds()
     {
         //DUCK LEADER
         SpawnBirds(BirdType.DuckLeader, SpawnPoint(Right, 0));

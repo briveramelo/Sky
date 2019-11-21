@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 public interface ITriggerSpawnable
 {
@@ -43,5 +44,10 @@ public class EagleFriends : Wave, ITriggerSpawnable
                 SpawnBirds(BirdType.Albatross, SpawnPoint(Left, LowHeight));
                 break;
         }
+    }
+
+    public override IEnumerator GenerateBirds()
+    {
+        yield return null;
     }
 }

@@ -3,7 +3,7 @@ using GenericFunctions;
 
 public class SeagullWave : Wave
 {
-    protected override IEnumerator GenerateBirds()
+    public override IEnumerator GenerateBirds()
     {
         // 1 WAIT 3 SEAGULL
         if (ScoreSheet.Reporter.GetCount(BirdCounterType.BirdsAlive, false, BirdType.Tentacles) == 0)

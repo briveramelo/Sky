@@ -8,13 +8,26 @@ using UnityEngine.SceneManagement;
 
 public class WaveManager : MonoBehaviour
 {
-    [SerializeField] private Wave[] _storyWaves;
-    [SerializeField] private Wave _endlessWave;
+    [SerializeField] private List<Wave> _storyWaves;
+    [SerializeField] private EndlessWave _endlessWave;
     [SerializeField] private DataWave _dataWave;
+    [SerializeField] private WaveRunner _waveRunner;
 
-    private IWaveUi _myWaveUi;
-    private List<IWaveRunnable> _storyWaveCalls;
-    private IWaveRunnable _endlessWaveCall;
+    private WaveUi waveUi;
+
+    private WaveUi _waveUi
+    {
+        get
+        {
+            if (waveUi)
+            {
+                return waveUi;
+            }
+
+            waveUi = FindObjectOfType<WaveUi>();
+            return waveUi;
+        }
+    }
     public static WaveName CurrentWave { get; private set; }
     
     private IBrokerEvents _eventBroker = new StaticEventBroker();
@@ -22,14 +35,7 @@ public class WaveManager : MonoBehaviour
     private void Awake()
     {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
-        _storyWaveCalls = _storyWaves.Cast<IWaveRunnable>().ToList();
-        _endlessWaveCall = _endlessWave;
         _eventBroker.Subscribe<WaveEditorTestData>(OnWaveEditorStateChange);
-    }
-
-    private void Start()
-    {
-        _myWaveUi = FindObjectOfType<WaveUi>();
     }
 
     private void OnDestroy()
@@ -52,37 +58,36 @@ public class WaveManager : MonoBehaviour
                 break;
             case WaveEditorState.Testing:
                 _dataWave.SetWaveData(data.WaveData);
-                StartCoroutine(((IWaveRunnable) _dataWave).RunWave());
+                RunWave(_dataWave);
                 break;
         }
     }
 
     private void ChooseMode(string loadedScene)
     {
-        Debug.LogFormat("mode chosen with scene: {0}", loadedScene);
         switch (loadedScene)
         {
             case Scenes.Story:
                 StartCoroutine(RunStoryWaves());
                 break;
             case Scenes.Endless:
-                RunEndlessWaves();
+                RunWave(_endlessWave);
                 break;
             default:
                 Debug.LogFormat("coroutines stopped with scene: {0}", loadedScene);
                 StopAllCoroutines();
-                break;
+                return;
         }
+        Debug.LogFormat("mode chosen with scene: {0}", loadedScene);
     }
 
     #region StoryWaves
 
     private IEnumerator RunStoryWaves()
     {
-        foreach (var wave in _storyWaveCalls)
+        foreach (var wave in _storyWaves)
         {
-            CurrentWave = wave.WaveName;
-            yield return StartCoroutine(wave.RunWave());
+            yield return RunWave(wave);
         }
 
         yield return StartCoroutine(FinishStoryMode());
@@ -91,7 +96,7 @@ public class WaveManager : MonoBehaviour
     private IEnumerator StartStoryMode()
     {
         CurrentWave = WaveName.Intro;
-        yield return StartCoroutine(_myWaveUi.AnimateStoryStart());
+        yield return StartCoroutine(_waveUi.AnimateStoryStart());
     }
 
     private IEnumerator FinishStoryMode()
@@ -99,7 +104,7 @@ public class WaveManager : MonoBehaviour
         Debug.Log("Play Victory noises and stuff");
         CurrentWave = WaveName.Complete;
         ScoreSheet.Reporter.ReportScores();
-        yield return StartCoroutine(_myWaveUi.AnimateStoryEnd());
+        yield return StartCoroutine(_waveUi.AnimateStoryEnd());
 
         SceneManager.LoadScene(Scenes.Menu);
     }
@@ -111,10 +116,10 @@ public class WaveManager : MonoBehaviour
 
     public void RunStoryWave(WaveName waveName)
     {
-        var waveCall = _storyWaveCalls.Find(wave => wave.WaveName == waveName);
-        if (waveCall != null)
+        var wave = _storyWaves.Find(wav => wav.WaveNameType == waveName);
+        if (wave != null)
         {
-            StartCoroutine(waveCall.RunWave());
+            RunWave(wave);
         }
         else
         {
@@ -124,9 +129,15 @@ public class WaveManager : MonoBehaviour
 
     #endregion
 
-    private void RunEndlessWaves()
+    private Coroutine RunWave(Wave wave)
     {
-        CurrentWave = WaveName.Endless;
-        StartCoroutine(_endlessWaveCall.RunWave());
+        if (!_waveRunner.IsInitialized)
+        {
+            _waveRunner.Initialize(_waveUi);
+        }
+
+        _waveRunner.SetWave(wave);
+        CurrentWave = _waveRunner.CurrentWave;
+        return StartCoroutine(_waveRunner.RunWave());
     }
 }

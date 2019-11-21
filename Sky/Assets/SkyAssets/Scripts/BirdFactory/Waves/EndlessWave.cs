@@ -78,7 +78,7 @@ public class EndlessWave : Wave
     private float _emotionalCap = 50f;
     private float _emotionalSafePoint = 10f;
 
-    protected override IEnumerator GenerateBirds()
+    public override IEnumerator GenerateBirds()
     {
         StartCoroutine(UnlockBirdies(_lockedStandardBirds, _unlockedStandardBirds));
         StartCoroutine(UnlockBirdies(_lockedBossBirds, _unlockedBossBirds));

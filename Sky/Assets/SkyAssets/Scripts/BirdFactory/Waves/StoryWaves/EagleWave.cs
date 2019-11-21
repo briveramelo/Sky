@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EagleWave : Wave
 {
-    protected override IEnumerator GenerateBirds()
+    public override IEnumerator GenerateBirds()
     {
         SpawnBirds(BirdType.DuckLeader, SpawnPoint(Right, MedHeight));
         SpawnBirds(BirdType.Eagle, Vector2.zero);

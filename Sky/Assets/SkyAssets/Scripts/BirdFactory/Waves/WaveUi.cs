@@ -1,20 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using GenericFunctions;
 using TMPro;
 using UnityEngine.SceneManagement;
 using static ScoreSheet;
 
-public interface IWaveUi
-{
-    IEnumerator AnimateWaveStart(WaveName waveName);
-    IEnumerator AnimateWaveEnd(WaveName waveName);
-    IEnumerator AnimateStoryStart();
-    IEnumerator AnimateStoryEnd();
-}
-public class WaveUi : MonoBehaviour, IWaveUi
+public class WaveUi : MonoBehaviour
 {
     private static class TextAnimState
     {
@@ -87,19 +78,13 @@ public class WaveUi : MonoBehaviour, IWaveUi
     }
 
     #endregion
-
-    #region Animate Story Start
-
     
-
-    #endregion
-
-    IEnumerator IWaveUi.AnimateWaveStart(WaveName waveName)
+    public IEnumerator AnimateWaveStart(string waveName, string subtitle)
     {
-        yield return StartCoroutine(DisplayWaveName(waveName));
+        yield return StartCoroutine(DisplayWaveName(waveName, subtitle));
     }
 
-    IEnumerator IWaveUi.AnimateWaveEnd(WaveName waveName)
+    public IEnumerator AnimateWaveEnd()
     {
         yield return StartCoroutine(DisplayWaveComplete());
         yield return null;
@@ -109,14 +94,11 @@ public class WaveUi : MonoBehaviour, IWaveUi
     }
 
     #region AnimateWaveStart
-
-    
-
-    private IEnumerator DisplayWaveName(WaveName waveName)
+    private IEnumerator DisplayWaveName(string waveName, string waveSubtitle)
     {
         _titleParent.SetActive(true);
-        _title.text = waveName.ToString() + " Wave";
-        _subTitle.text = WaveLabels.GetWaveSubtitle(waveName);
+        _title.text = waveName;
+        _subTitle.text = waveSubtitle;
         _titleA.SetInteger(Constants.AnimState, TextAnimState.RightAcross);
         _subTitleA.SetInteger(Constants.AnimState, TextAnimState.LeftAcross);
         while (_titleA.GetInteger(Constants.AnimState) == TextAnimState.RightAcross)
@@ -169,12 +151,12 @@ public class WaveUi : MonoBehaviour, IWaveUi
 
     #endregion
 
-    IEnumerator IWaveUi.AnimateStoryStart()
+    public IEnumerator AnimateStoryStart()
     {
         yield return null;
     }
 
-    IEnumerator IWaveUi.AnimateStoryEnd()
+    public IEnumerator AnimateStoryEnd()
     {
         _title.text = "Story Complete";
         _titleA.SetInteger(Constants.AnimState, TextAnimState.RightCenter);

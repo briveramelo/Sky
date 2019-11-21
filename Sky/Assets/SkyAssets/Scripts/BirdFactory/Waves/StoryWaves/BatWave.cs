@@ -4,7 +4,7 @@ using GenericFunctions;
 public class BatWave : Wave
 {
     //BATS
-    protected override IEnumerator GenerateBirds()
+    public override IEnumerator GenerateBirds()
     {
         BirdSpawnDelegates[BirdType.Bat]();
         yield return StartCoroutine(WaitFor(AllDead, true));

@@ -9,8 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3135641925524967636}
-  - component: {fileID: 3135641925524967643}
   - component: {fileID: 3135641925524967642}
+  - component: {fileID: 8668606336031890006}
+  - component: {fileID: 7036911966646899100}
+  - component: {fileID: 3135641925524967617}
+  - component: {fileID: 3135641925524967643}
   - component: {fileID: 3135641925524967641}
   - component: {fileID: 3135641925524967640}
   - component: {fileID: 3135641925524967647}
@@ -19,8 +22,6 @@ GameObject:
   - component: {fileID: 3135641925524967644}
   - component: {fileID: 3135641925524967619}
   - component: {fileID: 3135641925524967618}
-  - component: {fileID: 3135641925524967617}
-  - component: {fileID: 7036911966646899100}
   m_Layer: 0
   m_Name: WaveManager
   m_TagString: Untagged
@@ -42,24 +43,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3135641925524967643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3135641925524967616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1677720698b14efda8bb4819c1f5190, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _timeIntensity:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &3135641925524967642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,6 +66,64 @@ MonoBehaviour:
   - {fileID: 3135641925524967618}
   _endlessWave: {fileID: 3135641925524967617}
   _dataWave: {fileID: 7036911966646899100}
+  _waveRunner: {fileID: 8668606336031890006}
+--- !u!114 &8668606336031890006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3135641925524967616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89026a44c18e474183d35904294550e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7036911966646899100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3135641925524967616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 286ef2da1603423293221528d81560a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myWaveName: 11
+--- !u!114 &3135641925524967617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3135641925524967616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d46309452fb5a4e549160530ac9a6192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myWaveName: 10
+  _toughness: 1
+--- !u!114 &3135641925524967643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3135641925524967616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1677720698b14efda8bb4819c1f5190, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeIntensity:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &3135641925524967641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,30 +228,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myWaveName: 8
---- !u!114 &3135641925524967617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3135641925524967616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d46309452fb5a4e549160530ac9a6192, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _myWaveName: 10
-  _toughness: 1
---- !u!114 &7036911966646899100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3135641925524967616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 286ef2da1603423293221528d81560a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _myWaveName: 11

@@ -5,7 +5,7 @@ using GenericFunctions;
 
 public class PigeonWave : Wave
 {
-    protected override IEnumerator GenerateBirds()
+    public override IEnumerator GenerateBirds()
     {
         SpawnBirds(BirdType.Pigeon, SpawnPoint(Right, MedHeight));
         yield return StartCoroutine(WaitFor(AllDead));

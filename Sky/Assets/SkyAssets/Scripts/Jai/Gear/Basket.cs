@@ -1,12 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using GenericFunctions;
 using System.Linq;
 using BRM.EventBrokers;
 using BRM.EventBrokers.Interfaces;
-using UnityEngine.SceneManagement;
 
 public interface ITentacleToBasket
 {
@@ -177,15 +175,7 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket, ID
         _rigbod.isKinematic = false;
         ScoreSheet.Tallier.TallyThreat(Threat.BasketReleased);
     }
-
     #endregion
-
-    private IEnumerator FinishPlay()
-    {
-        ScoreSheet.Reporter.ReportScores();
-        yield return StartCoroutine(ScoreSheet.Reporter.DisplayTotal());
-        SceneManager.LoadScene(Scenes.Menu);
-    }
 
     private IEnumerator FallToDeath()
     {
@@ -193,17 +183,8 @@ public class Basket : Singleton<Basket>, IBalloonToBasket, ITentacleToBasket, ID
         ((IDie) _basketEngine).Die();
         _boundingColliders.ToList().ForEach(col => col.enabled = false);
         yield return new WaitForSeconds(_invincibleTime);
-        if (_continuesRemaining > 0)
-        {
-            _continuesRemaining--;
-            FindObjectOfType<Continuer>().DisplayContinueMenu(true);
-        }
-        else
-        {
-            StartCoroutine(FinishPlay());
-        }
-
-        yield return null;
+        _continuesRemaining--;
+        _eventPublisher.Publish(new BasketDeathData{NumContinuesRemaining = _continuesRemaining});
     }
 
     void IDie.Die()

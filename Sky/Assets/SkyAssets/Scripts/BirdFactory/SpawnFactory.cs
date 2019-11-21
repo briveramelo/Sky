@@ -65,7 +65,7 @@ public class SpawnFactory : Singleton<SpawnFactory>
 
     private void OnWaveEditorStateChange(WaveEditorTestData data)
     {
-        if (data.State == WaveEditorState.Testing)
+        if (data.State == WaveEditorState.Editing)
         {
             DestroyAllBirds();
         }
