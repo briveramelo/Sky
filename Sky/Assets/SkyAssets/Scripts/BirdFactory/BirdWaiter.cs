@@ -2,6 +2,9 @@
 using System.Linq;
 using System;
 using System.Collections.Generic;
+using BRM.DebugAdapter;
+using BRM.DebugAdapter.Interfaces;
+using UnityEngine;
 
 public class BirdWaiter
 {
@@ -12,7 +15,7 @@ public class BirdWaiter
     private BirdCounterType _birdCounterType;
     private BirdType[] _birdTypes;
     private int _numberToWaitFor;
-    private int _movingNumber => ScoreSheet.Reporter.GetCounts(_birdCounterType, true, _birdTypes);
+    private int _movingNumber => ScoreSheet.Reporter.GetCounts(_birdCounterType, WavePhase.CurrentWave, _birdTypes);
 
     private delegate bool BoolDelegate(int mover);
 
@@ -53,7 +56,7 @@ public class BirdWaiter
         _wait = mover => mover > _numberToWaitFor;
         if (birdCounterType == BirdCounterType.BirdsSpawned || birdCounterType == BirdCounterType.BirdsKilled)
         {
-            _numberToWaitFor += ScoreSheet.Reporter.GetCounts(birdCounterType, true, birdTypes);
+            _numberToWaitFor += ScoreSheet.Reporter.GetCounts(birdCounterType, WavePhase.CurrentWave, birdTypes);
             _wait = mover => mover < _numberToWaitFor;
         }
     }
@@ -61,6 +64,7 @@ public class BirdWaiter
 
 public static class EnumHelpers
 {
+    private static IDebug _debugger = new UnityDebugger();
     public static List<TEnum> Invert<TEnum>(this TEnum[] birdTypes) where TEnum : Enum
     {
         var birdsToWaitFor = Enum.GetValues(typeof(TEnum)).Cast<TEnum>().ToList();
@@ -75,5 +79,16 @@ public static class EnumHelpers
     public static List<TEnum> GetAll<TEnum>() where TEnum : Enum
     {
         return Enum.GetValues(typeof(TEnum)).Cast<TEnum>().ToList();
+    }
+
+    public static TVal SafeGet<TKey, TVal>(this Dictionary<TKey, TVal> dic, TKey key) where TKey : Enum
+    {
+        if(dic.TryGetValue(key, out var val))
+        {
+            return val;
+        }
+
+        _debugger.LogErrorFormat("No value found in dictionary for keyed enum {0}", key);
+        return default;
     }
 }

@@ -6,7 +6,7 @@ public class SeagullWave : Wave
     public override IEnumerator GenerateBirds()
     {
         // 1 WAIT 3 SEAGULL
-        if (ScoreSheet.Reporter.GetCount(BirdCounterType.BirdsAlive, false, BirdType.Tentacles) == 0)
+        if (ScoreSheet.Reporter.GetCount(BirdCounterType.BirdsAlive, WavePhase.CurrentRun, BirdType.Tentacles) == 0)
         {
             BirdSpawnDelegates[BirdType.Tentacles]();
         }

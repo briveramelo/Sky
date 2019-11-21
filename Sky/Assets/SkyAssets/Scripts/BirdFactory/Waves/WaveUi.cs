@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using GenericFunctions;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -15,12 +17,14 @@ public class WaveUi : MonoBehaviour
         public const int RightAcross = 2;
         public const int RightCenter = 4;
     }
+
     private static class PointAnimState
     {
         public const int Idle = 0;
         public const int Shine = 1;
         public const int Poof = 2;
     }
+
     private static class PointBackDrop
     {
         public const int IdleOffScreen = 0;
@@ -41,7 +45,16 @@ public class WaveUi : MonoBehaviour
     [SerializeField] private Animator _pointTotalA;
     [SerializeField] private Animator _streakA;
     [SerializeField] private Animator _comboA;
-    
+
+    private Dictionary<WavePhase, string> _phaseLabels = new Dictionary<WavePhase, string>
+    {
+        {WavePhase.AllTime, "All Time"},
+        {WavePhase.CurrentPlaySession, "Current Play Session"},
+        {WavePhase.CurrentRun, "Current Run"},
+        {WavePhase.CurrentWave, "Current Wave"},
+        {WavePhase.CurrentBatch, "Current Batch"},
+    };
+
     private bool _hasWeapon;
 
     #region Load Level
@@ -78,7 +91,7 @@ public class WaveUi : MonoBehaviour
     }
 
     #endregion
-    
+
     public IEnumerator AnimateWaveStart(string waveName, string subtitle)
     {
         yield return StartCoroutine(DisplayWaveName(waveName, subtitle));
@@ -88,12 +101,13 @@ public class WaveUi : MonoBehaviour
     {
         yield return StartCoroutine(DisplayWaveComplete());
         yield return null;
-        yield return StartCoroutine(DisplayPoints(true));
+        yield return StartCoroutine(DisplayPoints(WavePhase.CurrentWave));
         yield return null;
         yield return StartCoroutine(_tipUi.DisplayTip());
     }
 
     #region AnimateWaveStart
+
     private IEnumerator DisplayWaveName(string waveName, string waveSubtitle)
     {
         _titleParent.SetActive(true);
@@ -105,6 +119,7 @@ public class WaveUi : MonoBehaviour
         {
             yield return null;
         }
+
         _titleParent.SetActive(false);
     }
 
@@ -123,19 +138,19 @@ public class WaveUi : MonoBehaviour
         }
     }
 
-    public IEnumerator DisplayPoints(bool isWaveScore)
+    public IEnumerator DisplayPoints(WavePhase phase)
     {
         _pointsParent.SetActive(true);
-        var scoreType = isWaveScore ? "Wave" : "Total";
-        
+        var scoreType = _phaseLabels.SafeGet(phase);
+
         var pointTotalPrefix = $"{scoreType} Score: ";
         const string streakPrefix = "Streak Points: ";
         const string comboPrefix = "Combo Points: ";
         int peakCharLength = Mathf.Max(pointTotalPrefix.Length, streakPrefix.Length, comboPrefix.Length);
-        
-        _streak.text = $"{streakPrefix.PadRight(peakCharLength)}{Reporter.GetScore(ScoreCounterType.ScoreStreak, isWaveScore)}";
-        _combo.text = $"{comboPrefix.PadRight(peakCharLength)}{Reporter.GetScore(ScoreCounterType.ScoreCombo, isWaveScore)}";
-        _pointTotal.text = $"{pointTotalPrefix.PadRight(peakCharLength)}{Reporter.GetScore(ScoreCounterType.ScoreTotal, isWaveScore)}";
+
+        _streak.text = $"{streakPrefix.PadRight(peakCharLength)}{Reporter.GetScore(ScoreCounterType.ScoreStreak, phase)}";
+        _combo.text = $"{comboPrefix.PadRight(peakCharLength)}{Reporter.GetScore(ScoreCounterType.ScoreCombo, phase)}";
+        _pointTotal.text = $"{pointTotalPrefix.PadRight(peakCharLength)}{Reporter.GetScore(ScoreCounterType.ScoreTotal, phase)}";
 
         _pointTotalA.SetInteger(Constants.AnimState, PointAnimState.Shine);
         _streakA.SetInteger(Constants.AnimState, PointAnimState.Shine);

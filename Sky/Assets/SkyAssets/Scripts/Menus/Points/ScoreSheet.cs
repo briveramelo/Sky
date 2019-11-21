@@ -25,9 +25,9 @@ public interface IResetable
 
 public interface IReportable
 {
-    int GetCount(BirdCounterType birdCounter, bool currentWave, BirdType birdType);
-    int GetCounts(BirdCounterType birdCounter, bool currentWave, params BirdType[] birdTypes);
-    int GetScore(ScoreCounterType scoreType, bool currentWave);
+    int GetCount(BirdCounterType birdCounter, WavePhase phase, BirdType birdType);
+    int GetCounts(BirdCounterType birdCounter, WavePhase phase, params BirdType[] birdTypes);
+    int GetScore(ScoreCounterType scoreType, WavePhase phase);
     void ReportScores();
     IEnumerator DisplayTotal();
 }
@@ -37,8 +37,17 @@ public interface IStreakable
     void ReportHit(int spearNumber);
     int GetHitStreak();
 }
-
 #endregion
+
+#region Enums
+public enum WavePhase
+{
+    AllTime,
+    CurrentPlaySession,
+    CurrentRun,
+    CurrentWave,
+    CurrentBatch,
+}
 
 public enum BirdCounterType
 {
@@ -54,6 +63,7 @@ public enum ScoreCounterType
     ScoreCombo = 5,
     SpearsThrown = 6,
 }
+#endregion
 
 public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReportable, IStreakable
 {
@@ -113,7 +123,6 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
     }
     #endregion
     
-
     #region IStreakable
     private void ResetHitStreak()
     {
@@ -165,37 +174,41 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
             var birdTypesCounters = birdCounter.Value; 
             foreach (var birdTypeCounter in birdTypesCounters)
             {
-                birdTypeCounter.Value.ResetCurrent();
+                var counter = birdTypeCounter.Value;
+                counter.ResetPhase(WavePhase.CurrentWave);
+                counter.ResetPhase(WavePhase.CurrentBatch);
             }
         }
 
         foreach (var scoreCounter in _scoreCounters)
         {
-            scoreCounter.Value.ResetCurrent();
+            var counter = scoreCounter.Value;
+            counter.ResetPhase(WavePhase.CurrentWave);
+            counter.ResetPhase(WavePhase.CurrentBatch);
         }
     }
     #endregion
 
     #region IReportable
-    int IReportable.GetCount(BirdCounterType birdCounter, bool isCurrentWave, BirdType birdType)
+    int IReportable.GetCount(BirdCounterType birdCounter, WavePhase phase, BirdType birdType)
     {
-        return _birdCounters[birdCounter][birdType].GetCount(isCurrentWave);
+        return _birdCounters.SafeGet(birdCounter).SafeGet(birdType).GetCount(phase);
     }
 
-    int IReportable.GetCounts(BirdCounterType birdCounter, bool isCurrentWave, params BirdType[] birdTypes)
+    int IReportable.GetCounts(BirdCounterType birdCounter, WavePhase phase, params BirdType[] birdTypes)
     {
         var total = 0;
         foreach (var type in birdTypes)
         {
-            total += _birdCounters[birdCounter][type].GetCount(isCurrentWave);
+            total += _birdCounters.SafeGet(birdCounter).SafeGet(type).GetCount(phase);
         }
 
         return total;
     }
 
-    int IReportable.GetScore(ScoreCounterType scoreType, bool isCurrentWave)
+    int IReportable.GetScore(ScoreCounterType scoreType, WavePhase phase)
     {
-        return _scoreCounters[scoreType].GetCount(isCurrentWave);
+        return _scoreCounters.SafeGet(scoreType).GetCount(phase);
     }
 
     void IReportable.ReportScores()
@@ -203,32 +216,32 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
         if (WaveManager.CurrentWave == WaveName.Endless)
         {
             var duration = Time.time - _startTime;
-            var myEndlessScore = new EndlessScore(_scoreCounters[ScoreCounterType.ScoreTotal].GetCount(false), duration);
+            var myEndlessScore = new EndlessScore(_scoreCounters[ScoreCounterType.ScoreTotal].GetCount(WavePhase.CurrentRun), duration);
             FindObjectOfType<SaveLoadData>().PromptSave(myEndlessScore);
         }
         else
         {
-            var myStoryScore = new StoryScore(_scoreCounters[ScoreCounterType.ScoreTotal].GetCount(false), WaveManager.CurrentWave);
+            var myStoryScore = new StoryScore(_scoreCounters[ScoreCounterType.ScoreTotal].GetCount(WavePhase.CurrentRun), WaveManager.CurrentWave);
             FindObjectOfType<SaveLoadData>().PromptSave(myStoryScore);
         }
     }
 
     IEnumerator IReportable.DisplayTotal()
     {
-        yield return StartCoroutine(FindObjectOfType<WaveUi>().DisplayPoints(false));
+        yield return StartCoroutine(FindObjectOfType<WaveUi>().DisplayPoints(WavePhase.CurrentRun));
     }
     #endregion
 
     #region ITallyable
     void ITallyable.TallyBirdCount(ref BirdStats birdStats, BirdCounterType type, int amount)
     {
-        _birdCounters[type][birdStats.MyBirdType].Add(amount);
-        _birdCounters[type][BirdType.All].Add(amount);
+        _birdCounters.SafeGet(type).SafeGet(birdStats.MyBirdType).Add(amount);
+        _birdCounters.SafeGet(type)[BirdType.All].Add(amount);
     }
 
     void ITallyable.TallyScoreCount(ScoreCounterType type, int amount)
     {
-        _scoreCounters[type].Add(amount);
+        _scoreCounters.SafeGet(type).Add(amount);
     }
 
     void ITallyable.TallyPoints(ref BirdStats birdStats)
@@ -248,20 +261,6 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
         DisplayPoints(balloonPosition, balloonPoints);
     }
 
-    private void DisplayPoints(Vector2 worldPosition, int pointsToAdd)
-    {
-        var worldSize = ScreenSpace.WorldEdge;
-        var xClamp = worldSize.x - 0.1f;
-        var yClamp = worldSize.y - 0.1f;
-        var worldPositionClamped = new Vector2(Mathf.Clamp(worldPosition.x, -xClamp, xClamp), Mathf.Clamp(worldPosition.y, -yClamp, yClamp));
-        var spawnPosition = worldPositionClamped.WorldPositionToCanvasPosition(_parentCanvas);
-
-        var pointsInstance = Instantiate(_points, transform);
-        pointsInstance.transform.position = spawnPosition;
-        pointsInstance.GetComponent<IPointsDisplayable>().DisplayPoints(pointsToAdd);
-        ((IPointsDisplayable) _scoreBoard).DisplayPoints(_scoreCounters[ScoreCounterType.ScoreTotal].GetCount(false));
-    }
-
     void ITallyable.TallyThreat(int threatLevel)
     {
         EmotionalIntensity.ThreatTracker.RaiseThreat(threatLevel);
@@ -274,6 +273,20 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
             EmotionalIntensity.ThreatTracker.BirdThreat(ref birdStats, myThreat);
         }
     }
+    
+    private void DisplayPoints(Vector2 worldPosition, int pointsToAdd)
+    {
+        var worldSize = ScreenSpace.WorldEdge;
+        var xClamp = worldSize.x - 0.1f;
+        var yClamp = worldSize.y - 0.1f;
+        var worldPositionClamped = new Vector2(Mathf.Clamp(worldPosition.x, -xClamp, xClamp), Mathf.Clamp(worldPosition.y, -yClamp, yClamp));
+        var spawnPosition = worldPositionClamped.WorldPositionToCanvasPosition(_parentCanvas);
+
+        var pointsInstance = Instantiate(_points, transform);
+        pointsInstance.transform.position = spawnPosition;
+        pointsInstance.GetComponent<IPointsDisplayable>().DisplayPoints(pointsToAdd);
+        ((IPointsDisplayable) _scoreBoard).DisplayPoints(_scoreCounters[ScoreCounterType.ScoreTotal].GetCount(WavePhase.CurrentRun));
+    }
     #endregion
     
     
@@ -281,40 +294,44 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
     private interface ICount
     {
         void Add(int amount);
-        void Reset();
-        void ResetCurrent();
-        int GetCount(bool isCurrentWave);
+        void ResetAll();
+        void ResetPhase(WavePhase phase);
+        int GetCount(WavePhase phase);
     }
 
     private abstract class Counter<T> : ICount where T : Enum
     {
         private T _counterType;
-        private int _currentCount;
-        private int _cummulativeCount;
+        private Dictionary<WavePhase, int> _phaseCounts;
 
         protected Counter(T counterType)
         {
             _counterType = counterType;
+            _phaseCounts = EnumHelpers.GetAll<WavePhase>().ToDictionary(phase => phase, phase => 0);
         }
 
         public void Add(int amount)
         {
-            _currentCount += amount;
-            _cummulativeCount += amount;
+            foreach (var kvp in _phaseCounts)
+            {
+                _phaseCounts[kvp.Key] += amount;
+            }
         }
 
-        public void Reset()
+        public void ResetAll()
         {
-            _currentCount = 0;
-            _cummulativeCount = 0;
+            foreach (var kvp in _phaseCounts)
+            {
+                _phaseCounts[kvp.Key] = 0;
+            }
         }
 
-        public void ResetCurrent()
+        public void ResetPhase(WavePhase phase)
         {
-            _currentCount = 0;
+            _phaseCounts[phase] = 0;
         }
 
-        public int GetCount(bool isCurrentWave) => isCurrentWave ? _currentCount : _cummulativeCount;
+        public int GetCount(WavePhase phase) => _phaseCounts[phase];
     }
 
     private class BirdCounter : Counter<BirdCounterType>

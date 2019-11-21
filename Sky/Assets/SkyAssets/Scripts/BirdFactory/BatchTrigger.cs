@@ -43,19 +43,19 @@ public static class Triggers
 {
     public static bool IsWaitingForAllDead(float dummy = 0)
     {
-        var currentAlive = ScoreSheet.Reporter.GetCount(BirdCounterType.BirdsAlive, true, BirdType.All);
+        var currentAlive = ScoreSheet.Reporter.GetCount(BirdCounterType.BirdsAlive, WavePhase.CurrentWave, BirdType.All);
         return currentAlive == 0;
     }
     
     public static bool IsWaitingForNumDead(float numDeadToWaitFor)
     {
-        var currentKilled = ScoreSheet.Reporter.GetCount(BirdCounterType.BirdsKilled, true, BirdType.All);
+        var currentKilled = ScoreSheet.Reporter.GetCount(BirdCounterType.BirdsKilled, WavePhase.CurrentBatch, BirdType.All);
         return currentKilled < numDeadToWaitFor;
     }
     
     public static bool IsWaitingForNumSpears(float numSpearsToWaitFor)
     {
-        var currentThrown = ScoreSheet.Reporter.GetScore(ScoreCounterType.SpearsThrown, true);
+        var currentThrown = ScoreSheet.Reporter.GetScore(ScoreCounterType.SpearsThrown, WavePhase.CurrentBatch);
         return currentThrown < numSpearsToWaitFor;
     }
 }
