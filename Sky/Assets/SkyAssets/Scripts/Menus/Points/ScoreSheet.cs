@@ -20,7 +20,8 @@ public interface ITallyable
 
 public interface IResetable
 {
-    void ResetWaveCounters();
+    void ResetWave();
+    void ResetBatch();
 }
 
 public interface IReportable
@@ -167,7 +168,17 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
     #endregion
 
     #region IResetable
-    void IResetable.ResetWaveCounters()
+    void IResetable.ResetWave()
+    {
+        ResetPhase(WavePhase.CurrentWave);
+        ResetPhase(WavePhase.CurrentBatch);
+    }
+    void IResetable.ResetBatch()
+    {
+        ResetPhase(WavePhase.CurrentBatch);
+    }
+
+    private void ResetPhase(WavePhase phase)
     {
         foreach (var birdCounter in _birdCounters)
         {
@@ -175,18 +186,17 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
             foreach (var birdTypeCounter in birdTypesCounters)
             {
                 var counter = birdTypeCounter.Value;
-                counter.ResetPhase(WavePhase.CurrentWave);
-                counter.ResetPhase(WavePhase.CurrentBatch);
+                counter.ResetPhase(phase);
             }
         }
 
         foreach (var scoreCounter in _scoreCounters)
         {
             var counter = scoreCounter.Value;
-            counter.ResetPhase(WavePhase.CurrentWave);
-            counter.ResetPhase(WavePhase.CurrentBatch);
+            counter.ResetPhase(phase);
         }
     }
+
     #endregion
 
     #region IReportable
@@ -312,17 +322,19 @@ public class ScoreSheet : Singleton<ScoreSheet>, ITallyable, IResetable, IReport
 
         public void Add(int amount)
         {
-            foreach (var kvp in _phaseCounts)
+            var phaseKeys = _phaseCounts.Keys.ToList();
+            foreach (var key in phaseKeys)
             {
-                _phaseCounts[kvp.Key] += amount;
+                _phaseCounts[key] += amount;
             }
         }
 
         public void ResetAll()
         {
-            foreach (var kvp in _phaseCounts)
+            var phaseKeys = _phaseCounts.Keys.ToList();
+            foreach (var key in phaseKeys)
             {
-                _phaseCounts[kvp.Key] = 0;
+                _phaseCounts[key] = 0;
             }
         }
 

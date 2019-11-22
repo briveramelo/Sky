@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using BRM.Sky.CustomWaveData;
 using BRM.Sky.WaveEditor.Ui;
-using GenericFunctions;
 using TMPro;
 using UnityEngine;
 
@@ -20,14 +19,12 @@ namespace BRM.Sky.WaveEditor
         protected override BatchView View => _batchView;
         
         private GameObject _spawnEventsView;
-        private GameObject _spawnEventsDirectParent;
         private SpawnEventButtonFactory _spawnEventButtonFactory;
 
         public void Initialize(GameObject spawnEventsView, GameObject spawnEventsParent, SpawnEventButtonFactory spawnEventButtonFactory, TMP_InputField batchNameInput, int id)
         {
             _spawnEventButtonFactory = spawnEventButtonFactory;
             _spawnEventsView = spawnEventsView;
-            _spawnEventsDirectParent = spawnEventsParent;
             
             View.Initialize(batchNameInput);
             _dataMarshal.Initialize(spawnEventsParent, View);
@@ -48,7 +45,7 @@ namespace BRM.Sky.WaveEditor
             OnButtonClicked?.Invoke(Id);
             if (!IsSelected)
             {
-                _spawnEventsDirectParent.DestroyChildren("DontDestroyChild");
+                _spawnEventButtonFactory.DestroyButtons();
             }
             yield return null;
 
@@ -64,7 +61,7 @@ namespace BRM.Sky.WaveEditor
         private void PopulateSpawnEventDataUi(BatchData data)
         {
             var numButtons = data.SpawnEventData.Count;
-            _spawnEventButtonFactory.RecreateButtons(numButtons);
+            _spawnEventButtonFactory.CreateButtons(numButtons);
             _dataMarshal.Data = data;
         }
     }

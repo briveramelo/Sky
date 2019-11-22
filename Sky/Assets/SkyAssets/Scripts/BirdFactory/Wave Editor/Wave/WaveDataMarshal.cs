@@ -17,7 +17,7 @@ namespace BRM.Sky.WaveEditor
         {
             get
             {
-                _dataMarshalsParent.GetComponentsRecursively<BatchViewController>().ForEach(vc =>
+                _dataMarshalsParent.GetComponentsRecursively<BatchViewController>(true).ForEach(vc =>
                 {
                     if (vc.IsSelected)
                     {
@@ -25,8 +25,8 @@ namespace BRM.Sky.WaveEditor
                     }
                 });//ensures data is cached for any uncached, currently selected view controllers
                 
-                var batchDataMarshals = _dataMarshalsParent.GetComponentsInChildren<BatchDataMarshal>();
-                var batchTriggerDataMarshals = _dataMarshalsParent.GetComponentsInChildren<TriggerDataMarshal>();
+                var batchDataMarshals = _dataMarshalsParent.GetComponentsRecursively<BatchDataMarshal>(true);
+                var batchTriggerDataMarshals = _dataMarshalsParent.GetComponentsRecursively<TriggerDataMarshal>(true);
 
                 return new WaveData
                 {
@@ -42,12 +42,13 @@ namespace BRM.Sky.WaveEditor
             }
             set
             {
-                var batchDataMarshals = _dataMarshalsParent.GetComponentsInChildren<BatchDataMarshal>().ToList();
-                var batchTriggerDataMarshals = _dataMarshalsParent.GetComponentsInChildren<TriggerDataMarshal>().ToList();
+                var batchDataMarshals = _dataMarshalsParent.GetComponentsRecursively<BatchDataMarshal>(true).ToList();
+                var batchTriggerDataMarshals = _dataMarshalsParent.GetComponentsRecursively<TriggerDataMarshal>(true).ToList();
 
                 for (int i = 0; i < batchDataMarshals.Count; i++)
                 {
                     batchDataMarshals[i].Data = value.WaveTimeline.Batches[i];
+                    batchDataMarshals[i].CacheData(value.WaveTimeline.Batches[i]);
                     batchTriggerDataMarshals[i].Data = value.WaveTimeline.Triggers[i];
                 }
             }

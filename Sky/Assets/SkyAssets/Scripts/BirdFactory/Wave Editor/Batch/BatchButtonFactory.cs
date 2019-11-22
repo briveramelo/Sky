@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using GenericFunctions;
 using TMPro;
 using UnityEngine;
@@ -15,42 +16,62 @@ namespace BRM.Sky.WaveEditor.Ui
         [SerializeField] private Transform _prefabInstanceParentTran;
         [SerializeField] private Transform _maskAvoiderTargetParent;
         [SerializeField] private SaveBatchButton _saveBatchButton;
+        [SerializeField] private LoadBatchButton _loadBatchButton;
         [SerializeField] private SpawnEventButtonFactory _spawnEventButtonFactory;
         [SerializeField] private TMP_InputField _batchNameInput;
 
         private int _currentId = 0;
+        private List<GameObject> _buttonGameObjects = new List<GameObject>();
+
+        public void DestroyButtons()
+        {
+            _buttonGameObjects.ForEach(Destroy);
+            _buttonGameObjects.Clear();
+        }
+
+        public void CreateButtons(int numButtons)
+        {
+            for (int i = 0; i < numButtons; i++)
+            {
+                InitializeBatchButton();
+                InitializeBatchTrigger();
+            }
+            Reposition();
+        }
 
         protected override void OnClick()
         {
             base.OnClick();
-            InitializeBatchButton();
-            InitializeBatchTrigger();
-            Reposition();
+            CreateButtons(1);
         }
 
         private void InitializeBatchButton()
         {
             var batchButton = Instantiate(_batchButtonPrefab, _prefabInstanceParentTran);
             batchButton.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item => item.Initialize(_maskAvoiderTargetParent));
-            
+
             var viewController = batchButton.GetComponent<BatchViewController>();
             viewController.Initialize(_spawnEventsParent, _spawnEventsDirectParent, _spawnEventButtonFactory, _batchNameInput, _currentId++);
             viewController.OnButtonClicked += DeselectOthersAndSetMarshal;
+            _buttonGameObjects.Add(batchButton);
         }
 
         private void InitializeBatchTrigger()
         {
-            var batchTrigger = Instantiate(_batchTriggerButtonPrefab, _prefabInstanceParentTran);
-            batchTrigger.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item => item.Initialize(_maskAvoiderTargetParent));
+            var trigger = Instantiate(_batchTriggerButtonPrefab, _prefabInstanceParentTran);
+            trigger.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item => item.Initialize(_maskAvoiderTargetParent));
+            _buttonGameObjects.Add(trigger);
+            
+            var viewController = trigger.GetComponent<TriggerViewController>();
+            viewController.Initialize();
         }
-        
+
         private void Reposition()
         {
             Instantiate(_spacerPrefab, _prefabInstanceParentTran);
             transform.SetAsLastSibling();
         }
-        
-        
+
 
         private void DeselectOthersAndSetMarshal(int selectedId)
         {
@@ -62,7 +83,9 @@ namespace BRM.Sky.WaveEditor.Ui
                 }
                 else
                 {
-                    _saveBatchButton.SetDataMarshal(item.GetComponent<BatchDataMarshal>());
+                    var marshal = item.GetComponent<BatchDataMarshal>();
+                    _saveBatchButton.SetDataMarshal(marshal);
+                    _loadBatchButton.SetDataMarshal(marshal);
                 }
             });
         }

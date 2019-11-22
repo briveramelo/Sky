@@ -55,7 +55,16 @@ namespace BRM.Sky.CustomWaveData
 
         public BatchTriggerType TriggerType
         {
-            get => (BatchTriggerType)Enum.Parse(typeof(BatchTriggerType), BatchTriggerType);
+            get
+            {
+                if (Enum.TryParse<BatchTriggerType>(BatchTriggerType, out var type))
+                {
+                    return type;
+                }
+
+                Debug.LogError($"could not deserialize string:{BatchTriggerType} to enum:{nameof(BatchTriggerType)}");
+                return default;
+            } 
             set => BatchTriggerType = value.ToString();
         }
 

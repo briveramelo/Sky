@@ -34,16 +34,17 @@ public class WaveRunner : MonoBehaviour
 
     private IEnumerator FinishWave()
     {
+        ScoreSheet.Resetter.ResetWave();
+        
         yield return new WaitForSeconds(2f);
         var instance = SpawnFactory.Instance.CreateInstance(SpawnPrefab.BirdOfParadise);
         instance.transform.position = new Vector2(1.05f, 0.3f).ViewportToWorldPosition();
         
         var trigger = TriggerFactory.Create(new BatchTriggerData {TriggerType = BatchTriggerType.AllDead});
-        while (trigger.IsWaiting)
+        while (!trigger.CanAdvance)
         {
             yield return null;
         }
         yield return StartCoroutine(_waveUi.AnimateWaveEnd());
-        ScoreSheet.Resetter.ResetWaveCounters();
     }
 }

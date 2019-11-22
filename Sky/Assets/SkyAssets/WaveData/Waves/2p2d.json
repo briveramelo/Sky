@@ -1,24 +1,24 @@
 ﻿{
-    "Name": "test",
-    "Subtitle": "me",
+    "Name": "2p2d",
+    "Subtitle": "eh",
     "WaveTimeline": {
         "Batches": [
             {
                 "Name": "",
                 "SpawnEventData": [
                     {
-                        "SpawnPrefabType": "Duck",
+                        "SpawnPrefabType": "Pigeon",
                         "NormalizedPosition": {
-                            "x": -0.055162668228149417,
-                            "y": 0.7061818242073059
+                            "x": 0.026881694793701173,
+                            "y": 0.6121019124984741
                         },
                         "TimeAfterBatchStartSec": 0.0
                     },
                     {
-                        "SpawnPrefabType": "LeadDuck",
+                        "SpawnPrefabType": "Pigeon",
                         "NormalizedPosition": {
-                            "x": -0.055162668228149417,
-                            "y": 0.3145454525947571
+                            "x": 0.02520906925201416,
+                            "y": 0.33779191970825198
                         },
                         "TimeAfterBatchStartSec": 0.0
                     }
@@ -28,10 +28,18 @@
                 "Name": "",
                 "SpawnEventData": [
                     {
-                        "SpawnPrefabType": "Pigeon",
+                        "SpawnPrefabType": "Duck",
                         "NormalizedPosition": {
-                            "x": -0.055162668228149417,
-                            "y": 0.5
+                            "x": 0.010394245386123658,
+                            "y": 0.7033970355987549
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    },
+                    {
+                        "SpawnPrefabType": "Duck",
+                        "NormalizedPosition": {
+                            "x": 0.010394245386123658,
+                            "y": 0.8889596462249756
                         },
                         "TimeAfterBatchStartSec": 0.0
                     }
@@ -40,11 +48,11 @@
         ],
         "Triggers": [
             {
-                "BatchTriggerType": "AllDead",
+                "BatchTriggerType": "Dead",
                 "Amount": 1.0
             },
             {
-                "BatchTriggerType": "AllDead",
+                "BatchTriggerType": "Spears",
                 "Amount": 1.0
             }
         ]

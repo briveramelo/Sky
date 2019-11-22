@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using BRM.Sky.CustomWaveData;
 using TMPro;
@@ -12,14 +11,11 @@ namespace BRM.Sky.WaveEditor
         [SerializeField] private TMP_Dropdown _dropdown;
         [SerializeField] private TMP_InputField _inputField;
 
-        private void Start()
+        public void Initialize()
         {
             _dropdown.options = EnumHelpers.GetAll<BatchTriggerType>().Select(prefabType => new TMP_Dropdown.OptionData(prefabType.ToString())).ToList();
             _dropdown.onValueChanged.AddListener(OnSpawnTypeSelected);
             _inputField.onValueChanged.AddListener(OnAmountChanged);
-
-            OnSpawnTypeSelected(0);
-            Amount = 1;
         }
 
         public BatchTriggerType TriggerType
@@ -31,6 +27,7 @@ namespace BRM.Sky.WaveEditor
                 _inputField.contentType = settings.InputContentType;
                 _inputField.gameObject.SetActive(settings.Display);
                 _dropdown.value = (int) value;
+                UpdateDisplayText();
             }
         }
 
@@ -41,6 +38,7 @@ namespace BRM.Sky.WaveEditor
             {
                 var stringFormat = Mathf.Approximately(value, (int) value) ? "0" : "0.00";
                 _inputField.text = value.ToString(stringFormat);
+                UpdateDisplayText();
             }
         }
 
@@ -60,7 +58,6 @@ namespace BRM.Sky.WaveEditor
         {
             var triggerType = (BatchTriggerType) newValue;
             TriggerType = triggerType;
-            UpdateDisplayText();
         }
 
         private void OnAmountChanged(string newAmount)

@@ -8,6 +8,10 @@ namespace BRM.Sky.WaveEditor
         {
             _cachedData = Data;
         }
+        public void CacheData(TModel data)
+        {
+            _cachedData = data;
+        }
         
         private TModel _cachedData;
         public TModel GetCachedData() => _cachedData ?? (_cachedData = new TModel());//todo: nothing to do here. Just want to call out this simple "lazy" implementation!

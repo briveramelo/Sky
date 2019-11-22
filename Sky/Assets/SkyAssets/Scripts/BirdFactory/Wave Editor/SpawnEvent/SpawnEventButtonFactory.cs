@@ -17,9 +17,14 @@ namespace BRM.Sky.WaveEditor.Ui
         private int _currentId = 0;
         private List<SpawnEventViewController> _viewControllers = new List<SpawnEventViewController>();
 
-        public void RecreateButtons(int numButtons)
+        public void DestroyButtons()
         {
+            _viewControllers.ForEach(vc => Destroy(vc.gameObject));
             _viewControllers.Clear();
+        }
+
+        public void CreateButtons(int numButtons)
+        {
             for (int i = 0; i < numButtons; i++)
             {
                 _viewControllers.Add(CreateAndInitializeButton());

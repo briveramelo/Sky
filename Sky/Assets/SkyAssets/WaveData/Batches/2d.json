@@ -1,0 +1,21 @@
+﻿{
+    "Name": "2d",
+    "SpawnEventData": [
+        {
+            "SpawnPrefabType": "Duck",
+            "NormalizedPosition": {
+                "x": 0.010394245386123658,
+                "y": 0.7033970355987549
+            },
+            "TimeAfterBatchStartSec": 0.0
+        },
+        {
+            "SpawnPrefabType": "Duck",
+            "NormalizedPosition": {
+                "x": 0.010394245386123658,
+                "y": 0.8889596462249756
+            },
+            "TimeAfterBatchStartSec": 0.0
+        }
+    ]
+}
