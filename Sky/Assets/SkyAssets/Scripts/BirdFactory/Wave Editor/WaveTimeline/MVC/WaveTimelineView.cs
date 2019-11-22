@@ -19,7 +19,7 @@ namespace BRM.Sky.WaveEditor
         {
             _existingLabels.ForEach(label => Destroy(label.gameObject));
             _existingLabels.Clear();
-            _slider.maxValue = labels.Count;
+            _slider.maxValue = labels.Count - 1;
             for (var i=0; i<labels.Count; i++)
             {
                 var label = labels[i];
@@ -50,11 +50,6 @@ namespace BRM.Sky.WaveEditor
         private void OnValueChanged(float newValue)
         {
             OnWaveSelected?.Invoke((int) newValue);
-        }
-
-        private Vector3 GetPosition(int index)
-        {
-            return default;//todo: proper placement needed
         }
     }
 }

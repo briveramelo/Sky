@@ -42,7 +42,7 @@ namespace BRM.Sky.WaveEditor
                 for (int i = 0; i < value.Batches.Count; i++)
                 {
                     var batchName = value.Batches[i].Name;
-                    var label = string.IsNullOrWhiteSpace(batchName) ? i.ToString() : batchName;
+                    var label = string.IsNullOrWhiteSpace(batchName) ? (i+1).ToString() : batchName;
                     labels.Add(label);
                 }
 
