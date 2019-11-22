@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BRM.Sky.CustomWaveData;
 using GenericFunctions;
 using TMPro;
 using UnityEngine;
@@ -22,11 +23,13 @@ namespace BRM.Sky.WaveEditor.Ui
 
         private int _currentId = 0;
         private List<GameObject> _buttonGameObjects = new List<GameObject>();
+        private List<TriggerDataMarshal> _triggerDataMarshals = new List<TriggerDataMarshal>();
 
         public void DestroyButtons()
         {
             _buttonGameObjects.ForEach(Destroy);
             _buttonGameObjects.Clear();
+            _triggerDataMarshals.Clear();
         }
 
         public void CreateButtons(int numButtons)
@@ -43,6 +46,7 @@ namespace BRM.Sky.WaveEditor.Ui
         {
             base.OnClick();
             CreateButtons(1);
+            _triggerDataMarshals[_triggerDataMarshals.Count - 1].Data = new BatchTriggerData {Amount = 1, TriggerType = default};
         }
 
         private void InitializeBatchButton()
@@ -64,6 +68,8 @@ namespace BRM.Sky.WaveEditor.Ui
             
             var viewController = trigger.GetComponent<TriggerViewController>();
             viewController.Initialize();
+            var triggerDataMarshal = trigger.GetComponent<TriggerDataMarshal>();
+            _triggerDataMarshals.Add(triggerDataMarshal);
         }
 
         private void Reposition()
