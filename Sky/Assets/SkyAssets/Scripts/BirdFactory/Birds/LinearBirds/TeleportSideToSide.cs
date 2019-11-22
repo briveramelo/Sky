@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GenericFunctions;
 
-//todo: measure time to cross across resolutions
 public class TeleportSideToSide : MonoBehaviour
 {
     [SerializeField] private Collider2D _buddyCollider;
@@ -29,29 +27,36 @@ public class TeleportSideToSide : MonoBehaviour
     {
         if (_teleporterType == Teleporter.Pigeon)
         {
-            if (col.gameObject.GetComponent<Pigeon>())
+            var pigeon = col.gameObject.GetComponent<Pigeon>();
+            if (pigeon)
             {
-                //teleport pigeons across sides
-                StartCoroutine(TemporaryTeleport(col));
+                var isCorrectTeleporter = (int) Mathf.Sign(pigeon.MoveDirection.x) == (int) Mathf.Sign(transform.position.x);
+                if (isCorrectTeleporter)
+                {
+                    //teleport pigeons across sides
+                    StartCoroutine(TemporaryTeleport(col));
+                }
             }
         }
 
         if (_teleporterType == Teleporter.DuckLeader)
         {
-            if (col.gameObject.GetComponent<LeadDuck>())
+            var leadDuck = col.gameObject.GetComponent<LeadDuck>();
+            if (leadDuck)
             {
-                //teleport duck squads across sides
-                StartCoroutine(TemporaryTeleport(col));
+                var isCorrectTeleporter = (int) Mathf.Sign(leadDuck.MoveDirection.x) == (int) Mathf.Sign(transform.position.x);
+                if (isCorrectTeleporter)
+                {
+                    //teleport duck squads across sides
+                    StartCoroutine(TemporaryTeleport(col));
+                }
             }
         }
     }
 
 
-    private float t1;
     private IEnumerator TemporaryTeleport(Collider2D col)
     {
-        //todo: measure Debug.Log(Time.time - t1);
-        t1 = Time.time;
         var colTran = col.transform;
         colTran.position = _destination + Vector2.up * colTran.position.y;
         Physics2D.IgnoreCollision(col, _buddyCollider, true);

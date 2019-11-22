@@ -10,23 +10,23 @@ public interface IDuckToLeader
 }
 // The DuckLeader communicates with Ducks through this interface
 
-public class LeadDuck : Bird, IDuckToLeader
+public class LeadDuck : LinearBird, IDuckToLeader
 {
     // The DuckLeader ensures all ducks follow as closely behind in an evenly distributed Flying V Formation
     // The DuckLeader will fly linearly across the screen
     protected override BirdType MyBirdType => BirdType.DuckLeader;
+    protected override float MoveSpeed => 2.5f;
     
     [SerializeField] private Duck[] _duckScripts;
     [SerializeField] private Transform[] _formationTransforms;
     
     private List<ILeaderToDuck> _ducks;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         _ducks = new List<ILeaderToDuck>(_duckScripts);
         var goLeft = transform.position.x > 0;
-        transform.FaceForward(goLeft);
-        _rigbod.velocity = 2.5f / 4f * new Vector2(goLeft ? -1 : 1, 0);
         SetDuckFormation(goLeft);
     }
 

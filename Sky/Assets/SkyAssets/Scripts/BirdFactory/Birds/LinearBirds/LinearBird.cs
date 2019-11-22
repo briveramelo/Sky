@@ -3,15 +3,15 @@ using GenericFunctions;
 
 public abstract class LinearBird : Bird
 {
-    protected float MoveSpeed;
+    protected abstract float MoveSpeed { get; }
+    public Vector2 MoveDirection => _rigbod.velocity;
 
-    protected override void Awake()
+    protected virtual void Start()
     {
-        base.Awake();
-        SetVelocity(Vector2.right);
+        SetDirection(transform.position.x > 0 ? Vector2.left : Vector2.right);
     }
 
-    public void SetVelocity(Vector2 desiredDirection)
+    private void SetDirection(Vector2 desiredDirection)
     {
         _rigbod.velocity = Constants.SpeedMultiplier * MoveSpeed * desiredDirection.normalized;
         transform.FaceForward(desiredDirection.x < 0);

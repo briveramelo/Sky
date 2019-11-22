@@ -1,0 +1,84 @@
+﻿{
+    "Name": "linear birds each side",
+    "Subtitle": "linear test",
+    "WaveTimeline": {
+        "Batches": [
+            {
+                "Name": "",
+                "SpawnEventData": [
+                    {
+                        "SpawnPrefabType": "Pigeon",
+                        "NormalizedPosition": {
+                            "x": -0.04318934679031372,
+                            "y": 0.5
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    },
+                    {
+                        "SpawnPrefabType": "BirdOfParadise",
+                        "NormalizedPosition": {
+                            "x": -0.04318934679031372,
+                            "y": 0.3799999952316284
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    },
+                    {
+                        "SpawnPrefabType": "LeadDuck",
+                        "NormalizedPosition": {
+                            "x": -0.04318934679031372,
+                            "y": 0.6230508685112
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    },
+                    {
+                        "SpawnPrefabType": "Pigeon",
+                        "NormalizedPosition": {
+                            "x": -0.04318934679031372,
+                            "y": 0.7155932188034058
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    }
+                ]
+            },
+            {
+                "Name": "",
+                "SpawnEventData": [
+                    {
+                        "SpawnPrefabType": "Pigeon",
+                        "NormalizedPosition": {
+                            "x": 1.0481727123260499,
+                            "y": 0.5
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    },
+                    {
+                        "SpawnPrefabType": "BirdOfParadise",
+                        "NormalizedPosition": {
+                            "x": 1.0481727123260499,
+                            "y": 0.8254237174987793
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    },
+                    {
+                        "SpawnPrefabType": "LeadDuck",
+                        "NormalizedPosition": {
+                            "x": 1.0481727123260499,
+                            "y": 0.6474575996398926
+                        },
+                        "TimeAfterBatchStartSec": 0.0
+                    }
+                ]
+            }
+        ],
+        "Triggers": [
+            {
+                "BatchTriggerType": "AllDead",
+                "Amount": 1.0
+            },
+            {
+                "BatchTriggerType": "AllDead",
+                "Amount": 1.0
+            }
+        ]
+    }
+}

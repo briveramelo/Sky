@@ -1,15 +1,15 @@
 ﻿{
     "Name": "alltriggers_progressive",
-    "Subtitle": "all triggers used, birds advance",
+    "Subtitle": "some nice subtitle",
     "WaveTimeline": {
         "Batches": [
             {
-                "Name": "1p",
+                "Name": "",
                 "SpawnEventData": [
                     {
                         "SpawnPrefabType": "Pigeon",
                         "NormalizedPosition": {
-                            "x": 0.045909106731414798,
+                            "x": -0.027638137340545656,
                             "y": 0.9052727222442627
                         },
                         "TimeAfterBatchStartSec": 0.0
@@ -17,7 +17,7 @@
                     {
                         "SpawnPrefabType": "Pigeon",
                         "NormalizedPosition": {
-                            "x": 0.045909106731414798,
+                            "x": -0.027638137340545656,
                             "y": 0.06309092044830322
                         },
                         "TimeAfterBatchStartSec": 0.0
@@ -25,12 +25,12 @@
                 ]
             },
             {
-                "Name": "1p",
+                "Name": "",
                 "SpawnEventData": [
                     {
                         "SpawnPrefabType": "Duck",
                         "NormalizedPosition": {
-                            "x": 0.054545462131500247,
+                            "x": 0.014271408319473267,
                             "y": 0.5
                         },
                         "TimeAfterBatchStartSec": 0.0
@@ -38,12 +38,12 @@
                 ]
             },
             {
-                "Name": "1p",
+                "Name": "",
                 "SpawnEventData": [
                     {
                         "SpawnPrefabType": "Albatross",
                         "NormalizedPosition": {
-                            "x": 0.06045454740524292,
+                            "x": -0.07708543539047241,
                             "y": 0.07345455884933472
                         },
                         "TimeAfterBatchStartSec": 0.0
@@ -51,7 +51,7 @@
                     {
                         "SpawnPrefabType": "Albatross",
                         "NormalizedPosition": {
-                            "x": 0.057272762060165408,
+                            "x": -0.08026719093322754,
                             "y": 0.9123636484146118
                         },
                         "TimeAfterBatchStartSec": 0.0
@@ -59,12 +59,12 @@
                 ]
             },
             {
-                "Name": "1p",
+                "Name": "",
                 "SpawnEventData": [
                     {
                         "SpawnPrefabType": "Seagull",
                         "NormalizedPosition": {
-                            "x": 0.0631818175315857,
+                            "x": -0.027035176753997804,
                             "y": 0.5
                         },
                         "TimeAfterBatchStartSec": 0.0
@@ -72,12 +72,12 @@
                 ]
             },
             {
-                "Name": "1p",
+                "Name": "",
                 "SpawnEventData": [
                     {
                         "SpawnPrefabType": "BirdOfParadise",
                         "NormalizedPosition": {
-                            "x": 0.07500001788139343,
+                            "x": -0.029447197914123536,
                             "y": 0.5
                         },
                         "TimeAfterBatchStartSec": 0.0

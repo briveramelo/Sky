@@ -6,11 +6,11 @@ public class BirdOfParadise : LinearBird
     [SerializeField] private GameObject _balloon;
     
     protected override BirdType MyBirdType => BirdType.BirdOfParadise;
+    protected override float MoveSpeed => 3f;
     
-    protected override void Awake()
+    protected override void Start()
     {
-        MoveSpeed = 3f;
-        base.Awake();
+        base.Start();
         Destroy(gameObject, 10f);
     }
 

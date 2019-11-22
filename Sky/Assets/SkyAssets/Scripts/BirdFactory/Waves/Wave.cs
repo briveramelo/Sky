@@ -46,7 +46,8 @@ public abstract class Wave : MonoBehaviour
                 spawnPoint = SpawnPoint(Bool.TossCoin(), LowHeight, HighHeight);
             }
 
-            SpawnBirds(birdType, spawnPoint, (DuckDirection) UnityEngine.Random.Range(0, Enum.GetNames(typeof(DuckDirection)).Length));
+            var direction = birdType == BirdType.Duck ? EnumHelpers.GetRandom<DuckDirection>() : DuckDirection.DownLeft;
+            SpawnBirds(birdType, spawnPoint, direction);
         };
     }
     #endregion
@@ -71,8 +72,6 @@ public abstract class Wave : MonoBehaviour
     /// </summary>
     protected static void SpawnBirds(BirdType birdType, Vector2 spawnPoint, DuckDirection duckDir = DuckDirection.UpRight)
     {
-        var direction = spawnPoint.x < 0 ? 1 : -1;
-
         if (birdType == BirdType.Eagle)
         {
             spawnPoint = new Vector2(-ScreenSpace.WorldEdge.x * 5f, 0f);
@@ -80,12 +79,7 @@ public abstract class Wave : MonoBehaviour
 
         var bird = BirdFactory.Instance.CreateBird(birdType, spawnPoint);
 
-        if (birdType == BirdType.Pigeon || birdType == BirdType.BirdOfParadise)
-        {
-            var linearBirdScript = (LinearBird) bird;
-            linearBirdScript.SetVelocity(Vector2.right * direction);
-        }
-        else if (birdType == BirdType.Duck)
+        if (birdType == BirdType.Duck)
         {
             var duckScript = (IDirectable) bird;
             duckScript.SetDuckDirection(duckDir);

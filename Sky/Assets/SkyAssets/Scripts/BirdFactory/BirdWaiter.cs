@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using BRM.DebugAdapter;
 using BRM.DebugAdapter.Interfaces;
 using UnityEngine;
+using Random = System.Random;
 
 public class BirdWaiter
 {
@@ -90,5 +91,12 @@ public static class EnumHelpers
 
         _debugger.LogErrorFormat("No value found in dictionary for keyed enum {0}", key);
         return default;
+    }
+
+    public static TEnum GetRandom<TEnum>() where TEnum : Enum
+    {
+        var all = GetAll<TEnum>();
+        var index = UnityEngine.Random.Range(0, all.Count);
+        return all[index];
     }
 }
