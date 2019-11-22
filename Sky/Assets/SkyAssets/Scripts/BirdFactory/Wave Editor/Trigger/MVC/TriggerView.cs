@@ -64,5 +64,13 @@ namespace BRM.Sky.WaveEditor
         {
             UpdateDisplayText();
         }
+        
+        private void OnDestroy()
+        {
+            if (Application.isPlaying)
+            {
+                Destroy(_dropdown.gameObject);
+            }
+        }
     }
 }

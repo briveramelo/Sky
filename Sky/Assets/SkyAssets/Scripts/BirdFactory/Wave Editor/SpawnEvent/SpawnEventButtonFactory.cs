@@ -19,6 +19,7 @@ namespace BRM.Sky.WaveEditor.Ui
 
         public void DestroyButtons()
         {
+            _viewControllers.RemoveAll(vc => !vc);//remove all nulls
             _viewControllers.ForEach(vc => Destroy(vc.gameObject));
             _viewControllers.Clear();
         }
@@ -45,8 +46,14 @@ namespace BRM.Sky.WaveEditor.Ui
         private SpawnEventViewController CreateAndInitializeButton()
         {
             var button = Instantiate(_spawnButtonPrefab, _prefabInstanceParentTran);
-            button.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item => item.Initialize(_maskAvoiderTargetParent));
-
+            var deleteButton = button.GetComponentInChildren<DeleteButton>();
+            var toDelete = new List<GameObject>();
+            button.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item =>
+            {
+                item.Initialize(_maskAvoiderTargetParent);
+            });
+            toDelete.Add(button);
+            deleteButton.SetGameObjectsToDelete(toDelete);
             var viewController = button.GetComponent<SpawnEventViewController>();
             viewController.Id = _currentId++;
             viewController.OnButtonClicked += DeselectOthers;

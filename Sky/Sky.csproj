@@ -92,6 +92,7 @@
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\MVC\ViewController.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\MVC\WaveData.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\PlayTestButton.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\DeleteButton.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\DeselectButton.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\DisplayToggleButton.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\FileButton.cs" />

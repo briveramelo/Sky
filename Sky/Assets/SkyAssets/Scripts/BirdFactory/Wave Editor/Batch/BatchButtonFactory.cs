@@ -36,8 +36,12 @@ namespace BRM.Sky.WaveEditor.Ui
         {
             for (int i = 0; i < numButtons; i++)
             {
-                InitializeBatchButton();
-                InitializeBatchTrigger();
+                var batch = InitializeBatchButton();
+                var trigger = InitializeBatchTrigger();
+                _buttonGameObjects.Add(batch);
+                _buttonGameObjects.Add(trigger);
+                var toDelete = new List<GameObject> {batch, trigger};
+                InitializeDeleteButton(batch, toDelete);
             }
             Reposition();
         }
@@ -49,7 +53,7 @@ namespace BRM.Sky.WaveEditor.Ui
             _triggerDataMarshals[_triggerDataMarshals.Count - 1].Data = new BatchTriggerData {Amount = 1, TriggerType = default};
         }
 
-        private void InitializeBatchButton()
+        private GameObject InitializeBatchButton()
         {
             var batchButton = Instantiate(_batchButtonPrefab, _prefabInstanceParentTran);
             batchButton.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item => item.Initialize(_maskAvoiderTargetParent));
@@ -57,24 +61,30 @@ namespace BRM.Sky.WaveEditor.Ui
             var viewController = batchButton.GetComponent<BatchViewController>();
             viewController.Initialize(_spawnEventsParent, _spawnEventsDirectParent, _spawnEventButtonFactory, _batchNameInput, _currentId++);
             viewController.OnButtonClicked += DeselectOthersAndSetMarshal;
-            _buttonGameObjects.Add(batchButton);
+            
+            return batchButton;
         }
 
-        private void InitializeBatchTrigger()
+        private GameObject InitializeBatchTrigger()
         {
             var trigger = Instantiate(_batchTriggerButtonPrefab, _prefabInstanceParentTran);
             trigger.GetComponentsInChildren<UiMaskAvoider>(true).ToList().ForEach(item => item.Initialize(_maskAvoiderTargetParent));
-            _buttonGameObjects.Add(trigger);
-            
+
             var viewController = trigger.GetComponent<TriggerViewController>();
             viewController.Initialize();
             var triggerDataMarshal = trigger.GetComponent<TriggerDataMarshal>();
             _triggerDataMarshals.Add(triggerDataMarshal);
+            return trigger;
+        }
+
+        private void InitializeDeleteButton(GameObject deleteButton, List<GameObject> gos)
+        {
+            var button = deleteButton.GetComponentInChildren<DeleteButton>(true);
+            button.SetGameObjectsToDelete(gos); 
         }
 
         private void Reposition()
         {
-            Instantiate(_spacerPrefab, _prefabInstanceParentTran);
             transform.SetAsLastSibling();
         }
 
