@@ -1,61 +1,110 @@
 using System;
+using System.Collections.Generic;
 using BRM.Sky.CustomWaveData;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 public static class TriggerFactory
 {
+    private static Dictionary<BatchTriggerType, Func<BatchTriggerData, BatchTrigger>> _factoryInstructions = new Dictionary<BatchTriggerType, Func<BatchTriggerData, BatchTrigger>>
+    {
+        {BatchTriggerType.AllDead, data => new AllDeadTrigger(data)},
+        {BatchTriggerType.Dead, data => new NumDeadTrigger(data)},
+        {BatchTriggerType.Spears, data => new SpearsTrigger(data)},
+        {BatchTriggerType.Time, data => new TimeTrigger(data)},
+    };
+
     public static BatchTrigger Create(BatchTriggerData data)
     {
-        Func<float, bool> canAdvance = null;
-        switch (data.TriggerType)
+        if (_factoryInstructions.TryGetValue(data.TriggerType, out var getTrigger))
         {
-            case BatchTriggerType.AllDead: canAdvance = Triggers.CanAdvancePastAllDead; break;
-            case BatchTriggerType.Dead: canAdvance = Triggers.CanAdvancePastNumDead; break;
-            case BatchTriggerType.Spears: canAdvance = Triggers.CanAdvancePastNumSpears; break;
-            case BatchTriggerType.Time:
-                var creationTime = Time.time;
-                canAdvance = timeToWait => Time.time - creationTime > timeToWait; 
-                break;
+            return getTrigger(data);
         }
-
-        return new BatchTrigger(data, canAdvance);
-    }
-}
-
-public class BatchTrigger
-{
-    public BatchTrigger(BatchTriggerData data, Func<float, bool> canAdvance)
-    {
-        Assert.IsNotNull(canAdvance);
-        Assert.IsNotNull(data);
         
-        _data = data;
-        _canAdvance = canAdvance;
+        Debug.LogError("No instructions found for BatchTriggerType{}");
+        return null;
     }
-
-    public bool CanAdvance => _canAdvance(_data.Amount);
-    private Func<float, bool> _canAdvance;
-    private BatchTriggerData _data;
 }
 
-public static class Triggers
+public abstract class BatchTrigger
 {
-    public static bool CanAdvancePastAllDead(float dummy = 0)
+    protected BatchTrigger(BatchTriggerData data)
     {
-        var currentAlive = ScoreSheet.Reporter.GetCount(BirdCounterType.BirdsAlive, WavePhase.CurrentWave, BirdType.All);
-        return currentAlive <= 0;
+        Assert.IsNotNull(data);
+        _data = data;
     }
-    
-    public static bool CanAdvancePastNumDead(float numDeadToWaitFor)
+
+    protected BatchTriggerData _data;
+    public abstract bool CanAdvance { get; }
+}
+
+public class AllDeadTrigger : BatchTrigger
+{
+    public AllDeadTrigger(BatchTriggerData data) : base(data)
     {
-        var currentKilled = ScoreSheet.Reporter.GetCount(BirdCounterType.BirdsKilled, WavePhase.CurrentBatch, BirdType.All);
-        return currentKilled >= numDeadToWaitFor;
     }
-    
-    public static bool CanAdvancePastNumSpears(float numSpearsToWaitFor)
+
+    public override bool CanAdvance
     {
-        var currentThrown = ScoreSheet.Reporter.GetScore(ScoreCounterType.SpearsThrown, WavePhase.CurrentBatch);
-        return currentThrown >= numSpearsToWaitFor;
+        get
+        {
+            var numAlive = ScoreSheet.Reporter.GetCount(BirdCounterType.BirdsAlive, WavePhase.CurrentWave, BirdType.All);
+            const int numAliveNeed = 0;
+            return numAlive <= numAliveNeed;
+        }
+    }
+}
+
+public class NumDeadTrigger : BatchTrigger
+{
+    public NumDeadTrigger(BatchTriggerData data) : base(data)
+    {
+    }
+
+    public override bool CanAdvance
+    {
+        get
+        {
+            var killedInBatch = ScoreSheet.Reporter.GetCount(BirdCounterType.BirdsKilled, WavePhase.CurrentBatch, BirdType.All);
+            var numDeadNeeded = _data.Amount;
+            return killedInBatch >= numDeadNeeded;
+        }
+    }
+}
+
+public class SpearsTrigger : BatchTrigger
+{
+    public SpearsTrigger(BatchTriggerData data) : base(data)
+    {
+    }
+
+    public override bool CanAdvance
+    {
+        get
+        {
+            var currentThrown = ScoreSheet.Reporter.GetScore(ScoreCounterType.SpearsThrown, WavePhase.CurrentBatch);
+            var numSpearsToThrow = _data.Amount;
+            return currentThrown >= numSpearsToThrow;
+        }
+    }
+}
+
+public class TimeTrigger : BatchTrigger
+{
+    private float _startTime;
+
+    public TimeTrigger(BatchTriggerData data) : base(data)
+    {
+        _startTime = Time.time;
+    }
+
+    public override bool CanAdvance
+    {
+        get
+        {
+            var currentTimePastStart = Time.time - _startTime;
+            var timeToWait = _data.Amount;
+            return currentTimePastStart >= timeToWait;
+        }
     }
 }
