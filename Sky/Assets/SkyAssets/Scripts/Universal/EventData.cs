@@ -30,6 +30,16 @@ public class WaveEditorTestData : ISkyEventData
     public WaveData WaveData;
 }
 
+public class WaveEditorSliderData : ISkyEventData
+{
+    public int TargetWave;
+}
+
+public class BatchStartData : ISkyEventData
+{
+    public int StartedBatchIndex;
+}
+
 public enum WaveEditorState
 {
     Testing,

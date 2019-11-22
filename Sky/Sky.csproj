@@ -115,6 +115,9 @@
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Wave\WaveDataMarshal.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Wave\WaveView.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\WaveEditorPrefabFactory.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\WaveTimeline\MVC\WaveTimelineDataMarshal.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\WaveTimeline\MVC\WaveTimelineView.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\WaveTimeline\MVC\WaveTimelineViewController.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\BackgroundManager.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\DataWave.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Waves\EagleFriends.cs" />

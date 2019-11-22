@@ -8,8 +8,9 @@ namespace BRM.Sky.WaveEditor
 {
     public class PlayTestButton : Selector
     {
-        [SerializeField] private GameObject _designView;
         [SerializeField] private WaveDataMarshal _waveDataMarshal;
+        [SerializeField] private WaveTimelineDataMarshal _waveTimelineMarshal;
+        [SerializeField] private GameObject _designView;
         [SerializeField] private List<GameObject> _requiredPrefabs;
         [SerializeField] private string _textDuringTest, _textDuringEditor;
         [SerializeField] private TextMeshProUGUI _buttonText;
@@ -38,7 +39,8 @@ namespace BRM.Sky.WaveEditor
             else
             {
                 CreateTest();
-                eventData.WaveData = _waveDataMarshal.Data;
+                var waveData = _waveDataMarshal.Data;
+                eventData.WaveData = waveData;
             }
 
             _eventPublisher.Publish(eventData);

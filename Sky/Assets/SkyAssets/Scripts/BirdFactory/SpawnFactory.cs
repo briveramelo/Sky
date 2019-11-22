@@ -32,6 +32,13 @@ public class SpawnFactory : Singleton<SpawnFactory>
         InitializeSpawnPrefabHierarchy();
 
         _eventBroker.Subscribe<WaveEditorTestData>(OnWaveEditorStateChange);
+        _eventBroker.Subscribe<WaveEditorSliderData>(OnWaveEditorSliderChange);
+    }
+
+    private void OnDestroy()
+    {
+        _eventBroker.Unsubscribe<WaveEditorTestData>(OnWaveEditorStateChange);
+        _eventBroker.Unsubscribe<WaveEditorSliderData>(OnWaveEditorSliderChange);
     }
 
     private void InitializeSpawnPrefabData()
@@ -69,6 +76,11 @@ public class SpawnFactory : Singleton<SpawnFactory>
         {
             DestroyAllBirds();
         }
+    }
+
+    private void OnWaveEditorSliderChange(WaveEditorSliderData data)
+    {
+        DestroyAllBirds();
     }
 
     private void DestroyAllBirds()

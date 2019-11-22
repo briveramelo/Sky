@@ -6,4 +6,8 @@ namespace BRM.Sky.WaveEditor
     {
         protected abstract TView View { get; }
     }
+    public abstract class ViewController<TView> : MonoBehaviour where TView : MonoBehaviour
+    {
+        protected abstract TView View { get; }
+    }
 }
