@@ -20,59 +20,6 @@ namespace BRM.Sky.WaveEditor
             public GameObject EditorPrefab;
             public Transform Parent;
             public string PrefabName => SpawnPrefabType.ToString();
-
-            public Sprite IconSprite
-            {
-                get
-                {
-                    if (_iconSprite == null)
-                    {
-                        if (EditorPrefab == null)
-                        {
-                            Debug.LogError($"prefab not yet set for type {SpawnPrefabType}");
-                            return null;
-                        }
-
-                        var prefabSpriteRenderer = EditorPrefab.GetComponent<SpriteRenderer>();
-                        if (prefabSpriteRenderer == null)
-                        {
-                            prefabSpriteRenderer = EditorPrefab.GetComponentInChildren<SpriteRenderer>();
-                        }
-
-                        if (prefabSpriteRenderer == null)
-                        {
-                            for (int i = 0; i < EditorPrefab.transform.childCount; i++)
-                            {
-                                var rend = EditorPrefab.transform.GetChild(i).GetComponent<SpriteRenderer>();
-                                if (rend == null)
-                                {
-                                    continue;
-                                }
-
-                                prefabSpriteRenderer = rend;
-                                break;
-                            }
-                        }
-
-                        if (prefabSpriteRenderer == null)
-                        {
-                            Debug.LogError($"No sprite renderer found on prefabType:{SpawnPrefabType}");
-                            return null;
-                        }
-
-                        var prefabTex = prefabSpriteRenderer.sprite.texture;
-                        var iconTexture = prefabTex;
-
-                        var iconSize = new Vector2(iconTexture.width, iconTexture.height);
-                        var sprite = Sprite.Create(new Texture2D((int) iconSize.x, (int) iconSize.y), new Rect(Vector2.zero, iconSize), Vector2.one * 0.5f);
-                        _iconSprite = sprite;
-                    }
-
-                    return _iconSprite;
-                }
-            }
-
-            private Sprite _iconSprite;
         }
 
         [Serializable]
