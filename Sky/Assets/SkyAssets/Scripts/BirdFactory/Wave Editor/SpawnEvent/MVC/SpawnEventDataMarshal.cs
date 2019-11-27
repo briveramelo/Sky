@@ -29,9 +29,9 @@ namespace BRM.Sky.WaveEditor
             set
             {
                 _batchNameInput.text = value.BatchName;
-                View.BatchName = value.BatchName;
                 _controller.SpawnPrefab = value.SpawnPrefab;
                 View.SpawnPrefab = value.SpawnPrefab;
+                View.BatchName = value.BatchName;
                 View.NormalizedPosition = value.NormalizedPosition;
                 View.Time = value.TimeAfterBatchStartSec;
             }

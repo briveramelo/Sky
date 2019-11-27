@@ -78,8 +78,7 @@ namespace BRM.Sky.WaveEditor
 
         private void OnDropdownSelected(int value)
         {
-            var spawnPrefab = (SpawnPrefab) value;
-            CreateEditorInstance(spawnPrefab);
+            CreateEditorInstance((SpawnPrefab) value);
             View.UpdateDisplayText();
         }
 

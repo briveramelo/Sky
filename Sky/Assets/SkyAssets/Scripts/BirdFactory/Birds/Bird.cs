@@ -58,7 +58,7 @@ public abstract class Bird : MonoBehaviour, IHurtable, IDeathDebug
         Destroy(gameObject);
     }
 
-    void IDeathDebug.KillDebug()
+    public void KillDebug()
     {
         OnDeath();
     }

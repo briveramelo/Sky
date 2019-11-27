@@ -49,11 +49,29 @@ namespace BRM.Sky.WaveEditor
 
         public SpawnPrefab SpawnPrefab
         {
-            get => (SpawnPrefab) _spawnTypeDropdown.value;
+            get
+            {
+                var dropValue = Mathf.Clamp(_spawnTypeDropdown.value, 0, (int) SpawnPrefab.Batch);
+                return (SpawnPrefab) dropValue;
+            }
             set => _spawnTypeDropdown.value = (int) value;
         }
 
-        public string BatchName { get; set; }
+        public string BatchName
+        {
+            get => _batchName;
+            set
+            {
+                _batchName = value;
+                var matchingIndex = _spawnTypeDropdown.options.FindIndex(option => option.text == value);
+                if (matchingIndex >= 0)
+                {
+                    _spawnTypeDropdown.value = matchingIndex;
+                }
+            }
+        }
+
+        private string _batchName;
 
         public Vector2 NormalizedPosition
         {
@@ -156,6 +174,7 @@ namespace BRM.Sky.WaveEditor
         private void OnDropSelected(int newValue)
         {
             BatchName = _spawnTypeDropdown.options[newValue].text;
+            newValue = Mathf.Clamp(newValue, 0, (int) SpawnPrefab.Batch);
             OnDropdownSelected?.Invoke(newValue);
             if (_prefabInstance != null)
             {

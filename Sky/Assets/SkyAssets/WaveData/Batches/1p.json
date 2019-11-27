@@ -1,0 +1,15 @@
+﻿{
+    "Name": "1p",
+    "_batchType": "CustomBirdCollection",
+    "SpawnEventData": [
+        {
+            "SpawnPrefabType": "Pigeon",
+            "BatchName": "",
+            "NormalizedPosition": {
+                "x": -0.037845730781555179,
+                "y": 0.5
+            },
+            "TimeAfterBatchStartSec": 0.0
+        }
+    ]
+}

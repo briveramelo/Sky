@@ -23,7 +23,6 @@ public class SpawnFactory : Singleton<SpawnFactory>
     protected override bool _destroyOnLoad => true;
 
     private Dictionary<SpawnPrefab, SpawnPrefabData> _spawnPrefabData;
-    private List<GameObject> _spawnedInstances = new List<GameObject>();
     private List<BatchData> _customBatchData = new List<BatchData>();
     private IBrokerEvents _eventBroker = new StaticEventBroker();
 
@@ -72,7 +71,6 @@ public class SpawnFactory : Singleton<SpawnFactory>
         if (_spawnPrefabData.TryGetValue(prefabType, out var data))
         {
             var instance = Instantiate(data.Prefab, data.Parent);
-            _spawnedInstances.Add(instance);
             return instance;
         }
 
@@ -145,20 +143,11 @@ public class SpawnFactory : Singleton<SpawnFactory>
 
     private void DestroyAllBirds()
     {
-        for (int i = 0; i < _spawnedInstances.Count; i++)
+        var aliveBirds = FindObjectsOfType<Bird>();
+        for (int i = 0; i < aliveBirds.Length; i++)
         {
-            var instance = _spawnedInstances[i];
-            if (instance != null)
-            {
-                var deathDebug = instance.GetComponentInChildren<IDeathDebug>(true);
-                if (deathDebug != null && !ReferenceEquals(null, deathDebug))
-                {
-                    deathDebug.KillDebug();
-                }
-            }
+            aliveBirds[i].KillDebug();
         }
-
-        _spawnedInstances.Clear();
     }
     #endregion
 }

@@ -16,10 +16,10 @@ public class LeadDuck : LinearBird, IDuckToLeader
     // The DuckLeader will fly linearly across the screen
     protected override BirdType MyBirdType => BirdType.DuckLeader;
     protected override float MoveSpeed => 2.5f;
-    
+
     [SerializeField] private Duck[] _duckScripts;
     [SerializeField] private Transform[] _formationTransforms;
-    
+
     private List<ILeaderToDuck> _ducks;
 
     protected override void Start()
@@ -121,9 +121,12 @@ public class LeadDuck : LinearBird, IDuckToLeader
         transform.DetachChildren();
         for (var i = 0; i < _formationTransforms.Length; i++)
         {
+            var duckTransform = _formationTransforms[i].GetChild(0);
+            duckTransform.SetParent(transform.parent);
             _formationTransforms[i].DetachChildren();
             Destroy(_formationTransforms[i].gameObject);
         }
+
         _ducks.ForEach(duck => duck.Scatter());
     }
 }
