@@ -10,6 +10,7 @@ namespace BRM.Sky.WaveEditor
         [SerializeField] private GameObject _dataMarshalsParent;
         [SerializeField] private WaveView _view;
         protected override WaveView View => _view;
+        public override bool IsDataReady => !string.IsNullOrWhiteSpace(WaveName) && !string.IsNullOrWhiteSpace(View.SubtitleText);
         
         public string WaveName => View.WaveNameText;
         public override WaveData Data
@@ -52,7 +53,5 @@ namespace BRM.Sky.WaveEditor
                 }
             }
         }
-
-        public override bool IsDataReady => !string.IsNullOrWhiteSpace(WaveName) && !string.IsNullOrWhiteSpace(View.SubtitleText);
     }
 }

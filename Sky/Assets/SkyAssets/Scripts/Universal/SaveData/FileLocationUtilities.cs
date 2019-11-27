@@ -9,6 +9,6 @@ public static class FileLocationUtilities
     public static string GetDataPath(string relativeLocation)
     {
         string dataPath = Application.isEditor ? Application.dataPath : Application.persistentDataPath;
-        return Path.Combine(dataPath, relativeLocation);
+        return $"{dataPath}{relativeLocation}";
     }
 }

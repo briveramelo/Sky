@@ -5,9 +5,6 @@ using System.Linq;
 using BRM.EventBrokers;
 using BRM.EventBrokers.Interfaces;
 using BRM.Sky.CustomWaveData;
-using BRM.UnityAssets;
-using BRM.UnityAssets.Editor;
-using BRM.UnityAssets.Interfaces;
 using UnityEngine;
 
 namespace BRM.Sky.WaveEditor
@@ -29,10 +26,9 @@ namespace BRM.Sky.WaveEditor
             public Sprite Sprite;
         }
 
+        [SerializeField] private GameObject _editorBirdPrefab;
         [SerializeField] private List<SpawnPrefabSprite> _birdSprites;
 
-        private SimpleAssetLoader<GameObject> _prefabLoader;
-        
         private Dictionary<SpawnPrefab, SpawnPrefabData> _spawnPrefabData;
         private IBrokerEvents _eventBroker = new StaticEventBroker();
 
@@ -41,11 +37,6 @@ namespace BRM.Sky.WaveEditor
         protected override void Awake()
         {
             base.Awake();
-        #if UNITY_EDITOR
-            _prefabLoader = new AssetDatabaseLoader<GameObject>();
-        #else
-            _prefabLoader = null;//todo: abstract for builds (now it's editor only)
-        #endif
             InitializeSpawnPrefabData();
             InitializeSpawnPrefabHierarchy();
             _eventBroker.Subscribe<WaveEditorTestData>(OnWaveEditorStateChange);
@@ -71,21 +62,8 @@ namespace BRM.Sky.WaveEditor
                 var spawnData = new SpawnPrefabData
                 {
                     SpawnPrefabType = spawnPrefabType,
+                    EditorPrefab = _editorBirdPrefab
                 };
-                var prefabLoadingData = new AssetData<GameObject>
-                {
-                    OnAssetLoaded = asset => spawnData.EditorPrefab = asset,
-                    Name = "EditorBird",
-                    ContainerName = "SkyAssets/Prefabs/Birds/Editor/",
-                    FileExtension = "prefab"
-                };
-                if (!File.Exists($"{Application.dataPath}/{prefabLoadingData.CombinedPath}"))//todo: abstract for builds (now it's editor only)
-                {
-                    Debug.LogError($"No prefab found for type {spawnPrefabType}");
-                    continue;
-                }
-                
-                _prefabLoader.Load(prefabLoadingData);
                 _spawnPrefabData.Add(spawnPrefabType, spawnData);
             }
         }
@@ -110,7 +88,7 @@ namespace BRM.Sky.WaveEditor
                 return instance;
             }
 
-            Debug.LogError($"No EditorPrefab found for spawnPrefabType:{prefabType}");
+            Debug.LogError($"No EditorPrefab found for spawnPrefabType:{prefabType.ToString()}");
             return null;
         }
 
@@ -122,7 +100,7 @@ namespace BRM.Sky.WaveEditor
                 return birdSprite.Sprite;
             }
 
-            Debug.LogError($"No Sprite found for spawnPrefabType:{prefabType}");
+            Debug.LogError($"No Sprite found for spawnPrefabType:{prefabType.ToString()}");
             return null;
         }
     }

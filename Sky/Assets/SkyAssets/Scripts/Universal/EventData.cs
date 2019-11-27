@@ -40,6 +40,10 @@ public class BatchStartData : ISkyEventData
     public int StartedBatchIndex;
 }
 
+public class BatchSavedData : ISkyEventData
+{
+}
+
 public enum WaveEditorState
 {
     Testing,

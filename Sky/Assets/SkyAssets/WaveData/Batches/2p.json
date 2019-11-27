@@ -1,0 +1,24 @@
+﻿{
+    "Name": "2p",
+    "_batchType": "CustomBirdCollection",
+    "SpawnEventData": [
+        {
+            "SpawnPrefabType": "Pigeon",
+            "BatchName": "2p",
+            "NormalizedPosition": {
+                "x": -0.027638137340545656,
+                "y": 0.9052727222442627
+            },
+            "TimeAfterBatchStartSec": 0.0
+        },
+        {
+            "SpawnPrefabType": "Pigeon",
+            "BatchName": "2p",
+            "NormalizedPosition": {
+                "x": -0.027638137340545656,
+                "y": 0.06309092044830322
+            },
+            "TimeAfterBatchStartSec": 0.0
+        }
+    ]
+}

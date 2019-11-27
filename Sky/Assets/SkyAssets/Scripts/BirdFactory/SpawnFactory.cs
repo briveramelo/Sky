@@ -5,6 +5,7 @@ using System.Linq;
 using BRM.EventBrokers;
 using BRM.EventBrokers.Interfaces;
 using BRM.Sky.CustomWaveData;
+using BRM.Sky.WaveEditor;
 using UnityEngine;
 
 public class SpawnFactory : Singleton<SpawnFactory>
@@ -22,10 +23,9 @@ public class SpawnFactory : Singleton<SpawnFactory>
     protected override bool _destroyOnLoad => true;
 
     private Dictionary<SpawnPrefab, SpawnPrefabData> _spawnPrefabData;
-    private Dictionary<string, BatchData> _spawnCollectionData;
     private List<GameObject> _spawnedInstances = new List<GameObject>();
+    private List<BatchData> _customBatchData = new List<BatchData>();
     private IBrokerEvents _eventBroker = new StaticEventBroker();
-
 
     protected override void Awake()
     {
@@ -35,12 +35,20 @@ public class SpawnFactory : Singleton<SpawnFactory>
 
         _eventBroker.Subscribe<WaveEditorTestData>(OnWaveEditorStateChange);
         _eventBroker.Subscribe<WaveEditorSliderData>(OnWaveEditorSliderChange);
+        _eventBroker.Subscribe<BatchSavedData>(OnBatchSaved);
+        OnBatchSaved(null);
+    }
+
+    private void OnBatchSaved(BatchSavedData data)
+    {
+        _customBatchData = CustomBatchDataLoader.GetCustomBatchData();
     }
 
     private void OnDestroy()
     {
         _eventBroker.Unsubscribe<WaveEditorTestData>(OnWaveEditorStateChange);
         _eventBroker.Unsubscribe<WaveEditorSliderData>(OnWaveEditorSliderChange);
+        _eventBroker.Unsubscribe<BatchSavedData>(OnBatchSaved);
     }
 
     private void InitializeSpawnPrefabData()
@@ -68,7 +76,7 @@ public class SpawnFactory : Singleton<SpawnFactory>
             return instance;
         }
 
-        Debug.LogError($"No EditorPrefab found for spawnPrefabType:{prefabType}");
+        Debug.LogError($"No EditorPrefab found for spawnPrefabType:{prefabType.ToString()}");
         return null;
     }
 
@@ -92,9 +100,33 @@ public class SpawnFactory : Singleton<SpawnFactory>
                 yield return new WaitForSeconds(waitTime);
             }
 
-            var instance = CreateInstance(spawnEvent.SpawnPrefab);
-            instance.transform.position = spawnEvent.NormalizedPosition.ViewportToWorldPosition();
+            if (TryExtractCustomBatchData(spawnEvent, out var customBatch))
+            {
+                yield return StartCoroutine(GenerateBatch(customBatch));
+            }
+            else
+            {
+                var instance = CreateInstance(spawnEvent.SpawnPrefab);
+                instance.transform.position = spawnEvent.NormalizedPosition.ViewportToWorldPosition();
+            }
         }
+    }
+
+    private bool TryExtractCustomBatchData(SpawnEventData spawnEventData, out BatchData batchData)
+    {
+        batchData = null;
+        if (spawnEventData.SpawnPrefab != SpawnPrefab.Batch)
+        {
+            return false;
+        }
+
+        batchData = _customBatchData.Find(batch => batch.Name == spawnEventData.BatchName);
+        if (batchData == null)
+        {
+            Debug.LogErrorFormat("No custom batch found for batch name:{0}", spawnEventData.BatchName);
+        }
+
+        return true;
     }
 
     #region Wave Editor Support

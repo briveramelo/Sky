@@ -1,5 +1,6 @@
 using System.Collections;
 using BRM.Sky.CustomWaveData;
+using GenericFunctions;
 using UnityEngine;
 
 namespace BRM.Sky.WaveEditor.Ui
@@ -8,8 +9,8 @@ namespace BRM.Sky.WaveEditor.Ui
     {
 
         [SerializeField] private SpawnEventButtonFactory _buttonFactory;
-        protected override string _folderName => FileLocationUtilities.GetDataPath("/SkyAssets/WaveData/Batches/");
-        protected override string _fileName => $"{_dataMarshal.BatchName}.json";
+        protected override string _folderName => FileLocationUtilities.GetDataPath(Constants.BatchRelativeFolder);
+        protected override string _fileName => $"{_dataMarshal.BatchName}.{Constants.BatchFileExtension}";
         
         protected override IEnumerator OnClickRoutine()
         {

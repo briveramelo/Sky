@@ -106,6 +106,7 @@
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\SaveButton.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\ScreenBoundsGizmo.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\UiMaskAvoider.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\SpawnEvent\CustomBatchDataLoader.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\SpawnEvent\MVC\SpawnEventDataMarshal.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\SpawnEvent\MVC\SpawnEventView.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\SpawnEvent\MVC\SpawnEventViewController.cs" />

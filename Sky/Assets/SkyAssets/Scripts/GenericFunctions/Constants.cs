@@ -121,6 +121,10 @@ namespace GenericFunctions
         public const float SpeedMultiplier = 0.25f; //accounts for the time things were all scaled up by 4
         public const float Time2ThrowSpear = 0.333333f;
         public const float Time2StrikeLightning = 0.5f;
+        public const string BatchRelativeFolder = "/SkyAssets/WaveData/Batches/";
+        public const string WaveRelativeFolder = "/SkyAssets/WaveData/Waves/";
+        public const string BatchFileExtension = "json";
+        public const string WaveFileExtension = "json";
 
         public static int AnimState => _animState.Value;
         private static Lazy<int> _animState = new Lazy<int>(() => Animator.StringToHash("AnimState"));

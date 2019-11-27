@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using BRM.Sky.CustomWaveData;
 using UnityEngine;
 
@@ -8,17 +9,29 @@ namespace BRM.Sky.WaveEditor
     public class SpawnEventViewController : SelectorViewController<SpawnEventView>, ISelectable
     {
         #region Variables
-        public event Action<int> OnButtonClicked;
         public bool IsSelected => _ui.IsSelected;
-        public int Id { get; set; }
+        public int Id { get; private set; }
 
         [SerializeField] private SpawnEventView _ui;
-        
+
         protected override SpawnEventView View => _ui;
         #endregion
 
         private GameObject _prefabInstance;
+        private event Action<int> OnButtonClicked;
         
+        public void Initialize(int id, Action<int> onButtonClicked, List<BatchData> customBatchData)
+        {
+            OnButtonClicked += onButtonClicked;
+            Id = id;
+            View.SetBatchDropdowns(customBatchData);
+        }
+
+        public void ResetCustomBatchData(List<BatchData> customBatchData)
+        {
+            View.SetBatchDropdowns(customBatchData);
+        }
+
         public void Select(bool isSelected)
         {
             _ui.UpdateDisplayText();

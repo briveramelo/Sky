@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using BRM.Sky.CustomWaveData;
 using TMPro;
@@ -10,21 +11,22 @@ namespace BRM.Sky.WaveEditor
     public class SpawnEventView : MonoBehaviour, IUpdateUi, ISelectable
     {
         #region Variables
+
         public event Action<int> OnDropdownSelected;
-        
+
         [SerializeField] private TMP_Dropdown _spawnTypeDropdown;
         [SerializeField] private TMP_InputField _timeInput;
-        
+
         [SerializeField] private Image _iconPreview;
         [SerializeField] private TextMeshProUGUI _spawnTypeDisplay;
         [SerializeField] private TextMeshProUGUI _positionDisplay;
         [SerializeField] private TextMeshProUGUI _timeDisplay;
-        
+
         [SerializeField] private Image _buttonOutline;
         [SerializeField] private Color _selected, _unselected;
 
         private GameObject _prefabInstance;
-        private readonly GameObjectSelector _selector = new EditorSelector();//todo: abstract for builds (now it's editor only)
+        private readonly GameObjectSelector _selector = new EditorSelector(); //todo: abstract for builds (now it's editor only)
 
         public void SetPrefabInstance(GameObject prefabInstance)
         {
@@ -44,11 +46,17 @@ namespace BRM.Sky.WaveEditor
         }
 
         public bool IsSelected => _spawnTypeDropdown.gameObject.activeInHierarchy;
-        
+
         public SpawnPrefab SpawnPrefab
         {
             get => (SpawnPrefab) _spawnTypeDropdown.value;
             set => _spawnTypeDropdown.value = (int) value;
+        }
+
+        public string BatchName
+        {
+            get => _spawnTypeDisplay.text;
+            set => _spawnTypeDisplay.text = value;
         }
 
         public Vector2 NormalizedPosition
@@ -64,8 +72,9 @@ namespace BRM.Sky.WaveEditor
         private string _prefabText => SpawnPrefab.ToString();
         private string _timeText => GetFormattedTimeString(_timeInput.text);
         private string _positionText => NormalizedPosition.ToString("0.00");
+
         #endregion
-        
+
         public void UpdateDisplayText()
         {
             _iconPreview.sprite = WaveEditorPrefabFactory.Instance.GetSprite(SpawnPrefab);
@@ -87,16 +96,38 @@ namespace BRM.Sky.WaveEditor
 
         private void Awake()
         {
-            _spawnTypeDropdown.options = EnumHelpers.GetAll<SpawnPrefab>()
-                .Select(prefabType => new TMP_Dropdown.OptionData(prefabType.ToString(), WaveEditorPrefabFactory.Instance.GetSprite(prefabType))).ToList();
+            if (_spawnTypeDropdown.options.Count == 0)
+            {
+                SetBatchDropdowns(null);
+            }
+
             _spawnTypeDropdown.onValueChanged.AddListener(OnDropSelected);
             _timeInput.onValueChanged.AddListener(OnTimeValueChanged);
+        }
+
+        public void SetBatchDropdowns(List<BatchData> batchDropdowns)
+        {
+            var baseSet = EnumHelpers.GetAll<SpawnPrefab>();
+            baseSet.Remove(SpawnPrefab.Batch);
+            _spawnTypeDropdown.options = baseSet.Select(prefabType => new TMP_Dropdown.OptionData(prefabType.ToString(), WaveEditorPrefabFactory.Instance.GetSprite(prefabType))).ToList();
+
+            if (batchDropdowns == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < batchDropdowns.Count; i++)
+            {
+                var batch = batchDropdowns[i];
+                _spawnTypeDropdown.options.Add(new TMP_Dropdown.OptionData(batch.Name, WaveEditorPrefabFactory.Instance.GetSprite(SpawnPrefab.Batch)));
+            }
         }
 
         private void Start()
         {
             UpdateDisplayText();
         }
+
         private void Update()
         {
             NormalizedPosition = _prefabInstance == null ? default : _prefabInstance.transform.position.WorldToViewportPosition();
@@ -117,12 +148,13 @@ namespace BRM.Sky.WaveEditor
 
         private string GetFormattedTimeString(string timeInput)
         {
-            if(float.TryParse(timeInput, out var value))
+            if (float.TryParse(timeInput, out var value))
             {
-                var stringFormat = Mathf.Approximately((int)value, value) ? "0" : "0.00";
+                var stringFormat = Mathf.Approximately((int) value, value) ? "0" : "0.00";
                 var formattedValue = value.ToString(stringFormat);
                 return formattedValue;
             }
+
             return timeInput;
         }
 

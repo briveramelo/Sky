@@ -8,7 +8,7 @@ namespace BRM.Sky.WaveEditor
 {
     public abstract class SaveButton<TMarshal, TData, TView> : FileButton<TMarshal, TData, TView> where TMarshal : DataMarshal<TData, TView> where TData : class, new() where TView : MonoBehaviour
     {
-        private IWriteFiles _fileWriter = new TextFileSerializer(new UnityJsonSerializer(), new UnityDebugger());
+        protected IWriteFiles _fileWriter = new TextFileSerializer(new UnityJsonSerializer(), new UnityDebugger());
         protected override bool _isButtonInteractable => _dataMarshal != null && _dataMarshal.IsDataReady;
 
         protected override void OnClick()

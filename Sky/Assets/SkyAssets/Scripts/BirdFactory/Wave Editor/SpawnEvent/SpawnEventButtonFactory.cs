@@ -1,5 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using BRM.EventBrokers;
+using BRM.EventBrokers.Interfaces;
+using BRM.Sky.CustomWaveData;
+using TMPro;
 using UnityEngine;
 
 namespace BRM.Sky.WaveEditor.Ui
@@ -7,16 +12,41 @@ namespace BRM.Sky.WaveEditor.Ui
     //factory for making spawn event buttons for the wave editor ui
     public class SpawnEventButtonFactory : Selector
     {
+        [SerializeField] private TMP_InputField _batchNameInput;
         [SerializeField] private GameObject _spawnButtonPrefab;
         [SerializeField] private Transform _prefabInstanceParentTran;
         [SerializeField] private Transform _maskAvoiderTargetParent;
 
         private int _currentId = 0;
         private List<SpawnEventViewController> _viewControllers = new List<SpawnEventViewController>();
+        private List<BatchData> _customBatchData = new List<BatchData>();
+        private IBrokerEvents _eventBroker = new StaticEventBroker();
+
+        private void Start()
+        {
+            RestCustomBatchData();
+            _eventBroker.Subscribe<BatchSavedData>(OnBatchSaved);
+        }
+
+        private void OnDestroy()
+        {
+            _eventBroker.Unsubscribe<BatchSavedData>(OnBatchSaved);
+        }
+
+        private void OnBatchSaved(BatchSavedData data)
+        {
+            RestCustomBatchData();
+        }
+
+        private void RestCustomBatchData()
+        {
+            _customBatchData = CustomBatchDataLoader.GetCustomBatchData();
+            _viewControllers.ForEach(vc => vc.ResetCustomBatchData(_customBatchData));
+        }
 
         public void DestroyButtons()
         {
-            _viewControllers.RemoveAll(vc => !vc);//remove all nulls
+            _viewControllers.RemoveAll(vc => vc == null);
             _viewControllers.ForEach(vc => Destroy(vc.gameObject));
             _viewControllers.Clear();
         }
@@ -52,8 +82,11 @@ namespace BRM.Sky.WaveEditor.Ui
             toDelete.Add(button);
             deleteButton.SetGameObjectsToDelete(toDelete);
             var viewController = button.GetComponent<SpawnEventViewController>();
-            viewController.Id = _currentId++;
-            viewController.OnButtonClicked += DeselectOthers;
+            viewController.Initialize(_currentId++, DeselectOthers, _customBatchData);
+            
+            var dataMarshal = button.GetComponent<SpawnEventDataMarshal>();
+            dataMarshal.Initialize(_batchNameInput);
+            
             return viewController;
         }
 
