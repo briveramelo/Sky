@@ -3,6 +3,7 @@ using System.Linq;
 using BRM.EventBrokers;
 using BRM.EventBrokers.Interfaces;
 using BRM.Sky.CustomWaveData;
+using BRM.Sky.WaveEditor;
 using UnityEngine;
 
 public class DataWave : Wave
@@ -11,9 +12,6 @@ public class DataWave : Wave
     public override string Subtitle => _waveData.Subtitle;
 
     private WaveData _waveData;
-    private float _batchStartTime;
-    private float _currentTimeAfterBatchStart => Time.time - _batchStartTime;
-
     private Coroutine _currentBatch;
     private int _currentBatchIndex;
     private IBrokerEvents _eventBroker = new StaticEventBroker();
@@ -61,34 +59,13 @@ public class DataWave : Wave
         yield return null;//to prevent collisions with the spawn factory destroying all these...
         _eventPublisher.Publish(new BatchStartData{StartedBatchIndex = batchIndex});
         ScoreSheet.Resetter.ResetBatch();
-        yield return StartCoroutine(GenerateBatch(batch));
+        yield return StartCoroutine(SpawnFactory.Instance.GenerateBatch(batch));
 
         yield return null; //wait for unity lifecycle events in the awake/start functions to count spawned/alive tallys
         var batchTrigger = TriggerFactory.Create(trigger);
         while (!batchTrigger.CanAdvance)
         {
             yield return null;
-        }
-    }
-
-    private IEnumerator GenerateBatch(BatchData batchData)
-    {
-        _batchStartTime = Time.time;
-
-        var spawnEventData = batchData.SpawnEventData;
-        var spawnCount = spawnEventData.Count;
-        spawnEventData = spawnEventData.OrderBy(spawnEvent => spawnEvent.TimeAfterBatchStartSec).ToList();
-        for (int i = 0; i < spawnCount; i++)
-        {
-            var spawnEvent = spawnEventData[i];
-            var waitTime = _currentTimeAfterBatchStart - spawnEvent.TimeAfterBatchStartSec;
-            if (!Mathf.Approximately(0, waitTime))
-            {
-                yield return new WaitForSeconds(waitTime);
-            }
-
-            var instance = SpawnFactory.Instance.CreateInstance(spawnEvent.SpawnPrefab);
-            instance.transform.position = spawnEvent.NormalizedPosition.ViewportToWorldPosition();
         }
     }
 }

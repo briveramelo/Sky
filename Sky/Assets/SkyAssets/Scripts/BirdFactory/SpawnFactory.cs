@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using BRM.EventBrokers;
@@ -21,6 +22,7 @@ public class SpawnFactory : Singleton<SpawnFactory>
     protected override bool _destroyOnLoad => true;
 
     private Dictionary<SpawnPrefab, SpawnPrefabData> _spawnPrefabData;
+    private Dictionary<string, BatchData> _spawnCollectionData;
     private List<GameObject> _spawnedInstances = new List<GameObject>();
     private IBrokerEvents _eventBroker = new StaticEventBroker();
 
@@ -70,6 +72,32 @@ public class SpawnFactory : Singleton<SpawnFactory>
         return null;
     }
 
+    public IEnumerator GenerateBatch(BatchData batchData)
+    {
+        var batchStartTime = Time.time;
+        float GetTimeAfterBatchStart()
+        {
+            return Time.time - batchStartTime;
+        }
+
+        var spawnEventData = batchData.SpawnEventData;
+        var spawnCount = spawnEventData.Count;
+        spawnEventData = spawnEventData.OrderBy(spawnEvent => spawnEvent.TimeAfterBatchStartSec).ToList();
+        for (int i = 0; i < spawnCount; i++)
+        {
+            var spawnEvent = spawnEventData[i];
+            var waitTime = GetTimeAfterBatchStart() - spawnEvent.TimeAfterBatchStartSec;
+            if (!Mathf.Approximately(0, waitTime))
+            {
+                yield return new WaitForSeconds(waitTime);
+            }
+
+            var instance = CreateInstance(spawnEvent.SpawnPrefab);
+            instance.transform.position = spawnEvent.NormalizedPosition.ViewportToWorldPosition();
+        }
+    }
+
+    #region Wave Editor Support
     private void OnWaveEditorStateChange(WaveEditorTestData data)
     {
         if (data.State == WaveEditorState.Editing)
@@ -100,4 +128,5 @@ public class SpawnFactory : Singleton<SpawnFactory>
 
         _spawnedInstances.Clear();
     }
+    #endregion
 }

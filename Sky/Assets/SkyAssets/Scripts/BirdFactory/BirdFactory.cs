@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class BirdFactory : Singleton<BirdFactory>
 {
-    [System.Serializable]
+    [Serializable]
     private struct BirdPrefab
     {
         public BirdType BirdType;
@@ -23,10 +23,10 @@ public class BirdFactory : Singleton<BirdFactory>
     [SerializeField] private BirdPrefab[] _birdPrefabs;
     [SerializeField] private Transform _birdParentTransform;
 
-    private List<IDeathDebug> _createdBirds = new List<IDeathDebug>();
-    
-    private Dictionary<BirdType, BirdData> _birdTypeData = new Dictionary<BirdType, BirdData>();
     protected override bool _destroyOnLoad => true;
+    
+    private List<IDeathDebug> _createdBirds = new List<IDeathDebug>();
+    private Dictionary<BirdType, BirdData> _birdTypeData = new Dictionary<BirdType, BirdData>();
     
     protected override void Awake()
     {
@@ -80,7 +80,7 @@ public class BirdFactory : Singleton<BirdFactory>
 
     public void KillAllLivingBirds()
     {
-        _createdBirds.RemoveAll(bird => bird == null || bird as Bird == null);
+        _createdBirds.RemoveAll(bird => bird == null);
         for (int i = 0; i < _createdBirds.Count; i++)
         {
             _createdBirds[i].KillDebug();

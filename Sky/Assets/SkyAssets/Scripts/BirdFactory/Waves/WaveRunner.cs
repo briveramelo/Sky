@@ -1,5 +1,6 @@
 using System.Collections;
 using BRM.Sky.CustomWaveData;
+using BRM.Sky.WaveEditor;
 using UnityEngine;
 
 public class WaveRunner : MonoBehaviour

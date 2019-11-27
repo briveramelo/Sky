@@ -56,7 +56,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\BatchTrigger.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\BatchTriggers\AllDeadTrigger.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\BatchTriggers\BatchTrigger.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\BatchTriggers\NumDeadTrigger.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\BatchTriggers\SpearsTrigger.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\BatchTriggers\TimeTrigger.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\BatchTriggers\TriggerFactory.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\BirdFactory.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\Albatross.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Birds\Bat.cs" />
@@ -87,18 +92,17 @@
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\MVC\BatchView.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\MVC\BatchViewController.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Batch\SaveBatchButton.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\GameObjectSelector.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\MVC\DataMarshal.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\MVC\ViewController.cs" />
-     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\MVC\WaveData.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\PlayTestButton.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\DeleteButton.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\DeselectButton.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\DisplayToggleButton.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\FileButton.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\GameObjectSelector.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\ISelectable.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\IUpdateUi.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\LoadButton.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\MVC\DataMarshal.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\MVC\ViewController.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\SaveButton.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\ScreenBoundsGizmo.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\ReusableUi\UiMaskAvoider.cs" />
@@ -114,6 +118,7 @@
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Wave\SaveWaveButton.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Wave\WaveDataMarshal.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\Wave\WaveView.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\WaveData.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\WaveEditorPrefabFactory.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\WaveTimeline\MVC\WaveTimelineDataMarshal.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\BirdFactory\Wave Editor\WaveTimeline\MVC\WaveTimelineView.cs" />
