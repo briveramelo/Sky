@@ -155,6 +155,7 @@
      <Compile Include="Assets\SkyAssets\Scripts\DebugGuis\WaveManagerGui.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\GenericFunctions\Constants.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\GenericFunctions\ConvertAnglesAndVectors.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\GenericFunctions\EnumHelpers.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Input\Joystick.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Input\OrderedTouchEventRegistry.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Input\TouchInputManager.cs" />
