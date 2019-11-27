@@ -14,7 +14,7 @@ namespace BRM.Sky.WaveEditor
         }
         
         private TModel _cachedData;
-        public TModel GetCachedData() => _cachedData ?? (_cachedData = new TModel());//todo: nothing to do here. Just want to call out this simple "lazy" implementation!
+        public TModel GetCachedData() => _cachedData ?? (_cachedData = new TModel());
         public abstract TModel Data { get; set; }
         public abstract bool IsDataReady { get; }
         

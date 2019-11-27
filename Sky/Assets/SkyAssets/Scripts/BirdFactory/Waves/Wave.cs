@@ -6,7 +6,7 @@ using System;
 
 public delegate void SpawnDelegate();
 
-public abstract class Wave : MonoBehaviour
+public abstract class Wave : MonoBehaviour//todo: phase this out... shift all waves to DataWaves
 {
     [SerializeField] private WaveName _myWaveName;
     public WaveName WaveNameType => _myWaveName;

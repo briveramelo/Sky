@@ -24,7 +24,7 @@ namespace BRM.Sky.WaveEditor
         [SerializeField] private Color _selected, _unselected;
 
         private GameObject _prefabInstance;
-        private readonly GameObjectSelector _selector = new EditorSelector();
+        private readonly GameObjectSelector _selector = new EditorSelector();//todo: abstract for builds (now it's editor only)
 
         public void SetPrefabInstance(GameObject prefabInstance)
         {

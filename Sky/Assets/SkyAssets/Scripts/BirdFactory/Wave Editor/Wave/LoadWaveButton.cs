@@ -10,7 +10,7 @@ namespace BRM.Sky.WaveEditor
         [SerializeField] private WaveDataMarshal _waveDataMarshal;
         [SerializeField] private BatchButtonFactory _batchButtonFactory;
 
-        protected override string _folderName => $"{Application.dataPath}/SkyAssets/WaveData/Waves/";
+        protected override string _folderName => FileLocationUtilities.GetDataPath("/SkyAssets/WaveData/Waves/");
         protected override string _fileName => $"{_dataMarshal.WaveName}.json";
 
         protected override void Awake()

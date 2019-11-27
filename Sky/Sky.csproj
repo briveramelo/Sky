@@ -192,6 +192,7 @@
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\Singleton.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\Game\WorldBounds.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\SaveData\EndlessScore.cs" />
+     <Compile Include="Assets\SkyAssets\Scripts\Universal\SaveData\FileLocationUtilities.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\SaveData\SaveLoadData.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\SaveData\StoryScore.cs" />
      <Compile Include="Assets\SkyAssets\Scripts\Universal\UnityServices\AdDisplayer.cs" />

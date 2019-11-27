@@ -8,7 +8,7 @@ namespace BRM.Sky.WaveEditor.Ui
     {
 
         [SerializeField] private SpawnEventButtonFactory _buttonFactory;
-        protected override string _folderName => $"{Application.dataPath}/SkyAssets/WaveData/Batches/";
+        protected override string _folderName => FileLocationUtilities.GetDataPath("/SkyAssets/WaveData/Batches/");
         protected override string _fileName => $"{_dataMarshal.BatchName}.json";
         
         protected override IEnumerator OnClickRoutine()

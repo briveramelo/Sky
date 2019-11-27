@@ -44,7 +44,7 @@ namespace BRM.Sky.WaveEditor
         #if UNITY_EDITOR
             _prefabLoader = new AssetDatabaseLoader<GameObject>();
         #else
-            _prefabLoader = null;
+            _prefabLoader = null;//todo: abstract for builds (now it's editor only)
         #endif
             InitializeSpawnPrefabData();
             InitializeSpawnPrefabHierarchy();
@@ -64,13 +64,13 @@ namespace BRM.Sky.WaveEditor
         private void InitializeSpawnPrefabData()
         {
             _spawnPrefabData = new Dictionary<SpawnPrefab, SpawnPrefabData>();
-            var spawnPrefabs = EnumHelpers.GetAll<SpawnPrefab>().ToList();
+            var spawnPrefabTypes = EnumHelpers.GetAll<SpawnPrefab>().ToList();
 
-            foreach (var spawnPrefab in spawnPrefabs)
+            foreach (var spawnPrefabType in spawnPrefabTypes)
             {
                 var spawnData = new SpawnPrefabData
                 {
-                    SpawnPrefabType = spawnPrefab,
+                    SpawnPrefabType = spawnPrefabType,
                 };
                 var prefabLoadingData = new AssetData<GameObject>
                 {
@@ -79,14 +79,14 @@ namespace BRM.Sky.WaveEditor
                     ContainerName = "SkyAssets/Prefabs/Birds/Editor/",
                     FileExtension = "prefab"
                 };
-                if (!File.Exists($"{Application.dataPath}/{prefabLoadingData.CombinedPath}"))
+                if (!File.Exists($"{Application.dataPath}/{prefabLoadingData.CombinedPath}"))//todo: abstract for builds (now it's editor only)
                 {
-                    Debug.LogError($"No prefab found for type {spawnPrefab}");
+                    Debug.LogError($"No prefab found for type {spawnPrefabType}");
                     continue;
                 }
                 
                 _prefabLoader.Load(prefabLoadingData);
-                _spawnPrefabData.Add(spawnPrefab, spawnData);
+                _spawnPrefabData.Add(spawnPrefabType, spawnData);
             }
         }
 
