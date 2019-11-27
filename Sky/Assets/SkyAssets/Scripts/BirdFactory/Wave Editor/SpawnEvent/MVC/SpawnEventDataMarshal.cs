@@ -29,13 +29,11 @@ namespace BRM.Sky.WaveEditor
             set
             {
                 _batchNameInput.text = value.BatchName;
-                View.BatchName = string.IsNullOrWhiteSpace(value.BatchName) ? value.SpawnPrefab.ToString() : value.BatchName;
-                
+                View.BatchName = value.BatchName;
                 _controller.SpawnPrefab = value.SpawnPrefab;
                 View.SpawnPrefab = value.SpawnPrefab;
                 View.NormalizedPosition = value.NormalizedPosition;
                 View.Time = value.TimeAfterBatchStartSec;
-                CacheData(value);
             }
         }
 

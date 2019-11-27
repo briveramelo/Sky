@@ -53,11 +53,7 @@ namespace BRM.Sky.WaveEditor
             set => _spawnTypeDropdown.value = (int) value;
         }
 
-        public string BatchName
-        {
-            get => _spawnTypeDisplay.text;
-            set => _spawnTypeDisplay.text = value;
-        }
+        public string BatchName { get; set; }
 
         public Vector2 NormalizedPosition
         {
@@ -69,7 +65,6 @@ namespace BRM.Sky.WaveEditor
             }
         }
 
-        private string _prefabText => SpawnPrefab.ToString();
         private string _timeText => GetFormattedTimeString(_timeInput.text);
         private string _positionText => NormalizedPosition.ToString("0.00");
 
@@ -78,7 +73,7 @@ namespace BRM.Sky.WaveEditor
         public void UpdateDisplayText()
         {
             _iconPreview.sprite = WaveEditorPrefabFactory.Instance.GetSprite(SpawnPrefab);
-            _spawnTypeDisplay.text = _prefabText;
+            _spawnTypeDisplay.text = string.IsNullOrWhiteSpace(BatchName) ? SpawnPrefab.ToString() : BatchName;
             _positionDisplay.text = _positionText;
             _timeInput.text = _timeText;
             _timeDisplay.text = _timeText;
@@ -160,6 +155,7 @@ namespace BRM.Sky.WaveEditor
 
         private void OnDropSelected(int newValue)
         {
+            BatchName = _spawnTypeDropdown.options[newValue].text;
             OnDropdownSelected?.Invoke(newValue);
             if (_prefabInstance != null)
             {

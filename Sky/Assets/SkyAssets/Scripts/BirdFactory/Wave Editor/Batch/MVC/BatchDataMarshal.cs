@@ -29,7 +29,7 @@ namespace BRM.Sky.WaveEditor
                 {
                     Name = BatchName,
                     BatchType = BatchType.TimelineBatch,
-                    SpawnEventData = spawnEventDataMarshals.Select(marshal => marshal.GetCachedData()).ToList()
+                    SpawnEventData = spawnEventDataMarshals.Select(marshal => marshal.Data).ToList()
                 };
                 return data;
             }
