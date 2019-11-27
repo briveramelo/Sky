@@ -14,7 +14,7 @@ public class SaveLoadData : MonoBehaviour
     
     private DataSave _currentDataSave = new DataSave();
     #if UNITY_EDITOR
-    private string _folderName => $"{Application.dataPath}/SaveData";
+    private string _folderName => $"{Application.dataPath}/SkyAssets/SaveData";
     #else
     private string _folderName => $"{Application.persistentDataPath}/SaveData";
     #endif
@@ -24,7 +24,7 @@ public class SaveLoadData : MonoBehaviour
     private IWriteFiles _fileWriter;
     private IReadFiles _fileReader;
 
-    private void Awake()
+    private void Start()
     {
         var binaryFileSerializer = new BinaryFileSerializer(new SystemBinarySerializer(), new UnityDebugger());
         _fileWriter = binaryFileSerializer;
