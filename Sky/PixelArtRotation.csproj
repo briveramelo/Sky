@@ -273,6 +273,18 @@
  <Reference Include="BRM.EventBrokers.Interfaces">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/EventBrokers/BRM.EventBrokers.Interfaces.dll</HintPath>
  </Reference>
+ <Reference Include="BRM.InteractionRecorder.TmpEditor">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/InteractionRecording/BRM.InteractionRecorder.TmpEditor.dll</HintPath>
+ </Reference>
+ <Reference Include="BRM.InteractionRecorder.TmpUi">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/InteractionRecording/BRM.InteractionRecorder.TmpUi.dll</HintPath>
+ </Reference>
+ <Reference Include="BRM.InteractionRecorder.UnityEditor">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/InteractionRecording/BRM.InteractionRecorder.UnityEditor.dll</HintPath>
+ </Reference>
+ <Reference Include="BRM.InteractionRecorder.UnityUi">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/InteractionRecording/BRM.InteractionRecorder.UnityUi.dll</HintPath>
+ </Reference>
  <Reference Include="BRM.BinarySerializers.System">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/SerializationServices/BRM.BinarySerializers.System.dll</HintPath>
  </Reference>
