@@ -17,7 +17,6 @@ namespace BRM.Sky.WaveEditor
         {
             string filePath = FileUtilities.GetUniqueFilePath(_filePath);
             var data = _dataMarshal.Data;
-            data.BatchType = BatchType.CustomBirdCollection;
             _fileWriter.Write(filePath, data);
 #if UNITY_EDITOR
             UnityEditor.AssetDatabase.Refresh();

@@ -24,12 +24,6 @@ namespace BRM.Sky.CustomWaveData
     public class BatchData
     {
         public string Name;
-        public BatchType BatchType
-        {
-            get => _batchType.ToEnum<BatchType>();
-            set => _batchType = value.ToString();
-        }
-        [SerializeField] private string _batchType;
         public List<SpawnEventData> SpawnEventData = new List<SpawnEventData>();
     }
 
@@ -62,16 +56,7 @@ namespace BRM.Sky.CustomWaveData
 
         public BatchTriggerType TriggerType
         {
-            get
-            {
-                if (Enum.TryParse<BatchTriggerType>(BatchTriggerType, out var type))
-                {
-                    return type;
-                }
-
-                Debug.LogError($"could not deserialize string:{BatchTriggerType} to enum:{nameof(BatchTriggerType)}");
-                return default;
-            } 
+            get => BatchTriggerType.ToEnum<BatchTriggerType>();
             set => BatchTriggerType = value.ToString();
         }
 
@@ -85,12 +70,6 @@ namespace BRM.Sky.CustomWaveData
         Dead = 1,
         Spears = 2,
         Time = 3
-    }
-
-    public enum BatchType
-    {
-        TimelineBatch,
-        CustomBirdCollection
     }
 
     public enum SpawnPrefab : ushort
