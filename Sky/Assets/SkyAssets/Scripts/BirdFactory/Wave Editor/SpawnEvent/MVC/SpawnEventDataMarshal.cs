@@ -31,7 +31,7 @@ namespace BRM.Sky.WaveEditor
                 _batchNameInput.text = value.BatchName;
                 _controller.SpawnPrefab = value.SpawnPrefab;
                 View.SpawnPrefab = value.SpawnPrefab;
-                View.BatchName = value.BatchName;
+                View.BatchName = value.BatchName;//order matters here. Batch SpawnPrefabs need batchname defined to distinguish them from one another
                 View.NormalizedPosition = value.NormalizedPosition;
                 View.Time = value.TimeAfterBatchStartSec;
             }

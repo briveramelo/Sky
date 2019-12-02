@@ -109,14 +109,6 @@ namespace BRM.Sky.CustomWaveData
         Bat = 10,
         Eagle = 11,
         BirdOfParadise = 12,
-        Batch=13,
-
-        //bird collections
-//        PigeonMeatball = 20,
-//        PigeonWall = 21,
-//        PigeonSlantWall = 22,
-//        PigeonBite = 23,
-//        PigeonSine = 24,
-//        PigeonLine = 25,
+        Batch=13,//special case, wherein a collection of spawn prefabs may exist.
     }
 }

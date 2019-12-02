@@ -41,11 +41,7 @@ namespace BRM.Sky.WaveEditor
         public SpawnPrefab SpawnPrefab
         {
             get => View.SpawnPrefab;
-            set
-            {
-                CreateEditorInstance(value);
-                View.SpawnPrefab = value;
-            }
+            set => CreateEditorInstance(value);
         }
 
         protected override IEnumerator OnClickRoutine()
@@ -68,6 +64,7 @@ namespace BRM.Sky.WaveEditor
 
         private void OnDestroy()
         {
+            View.OnDropdownSelected -= OnDropdownSelected;
             if (_prefabInstance != null && Application.isPlaying)
             {
                 //note: OnDestroy is not called if the gameobject never becomes active.
@@ -76,9 +73,9 @@ namespace BRM.Sky.WaveEditor
             }
         }
 
-        private void OnDropdownSelected(int value)
+        private void OnDropdownSelected(SpawnPrefab spawnPrefab)
         {
-            CreateEditorInstance((SpawnPrefab) value);
+            CreateEditorInstance(spawnPrefab);
             View.UpdateDisplayText();
         }
 

@@ -113,18 +113,19 @@ public class SpawnFactory : Singleton<SpawnFactory>
     private bool TryExtractCustomBatchData(SpawnEventData spawnEventData, out BatchData batchData)
     {
         batchData = null;
-        if (spawnEventData.SpawnPrefab != SpawnPrefab.Batch)
+        if (spawnEventData.SpawnPrefab == SpawnPrefab.Batch)
         {
-            return false;
+            batchData = _customBatchData.Find(batch => batch.Name == spawnEventData.BatchName);
+            if (batchData == null)
+            {
+                Debug.LogErrorFormat("No custom batch found for batch name:{0}", spawnEventData.BatchName);
+                return false;
+            }
+
+            return true;
         }
 
-        batchData = _customBatchData.Find(batch => batch.Name == spawnEventData.BatchName);
-        if (batchData == null)
-        {
-            Debug.LogErrorFormat("No custom batch found for batch name:{0}", spawnEventData.BatchName);
-        }
-
-        return true;
+        return false;
     }
 
     #region Wave Editor Support

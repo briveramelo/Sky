@@ -12,7 +12,7 @@ namespace BRM.Sky.WaveEditor
     {
         #region Variables
 
-        public event Action<int> OnDropdownSelected;
+        public event Action<SpawnPrefab> OnDropdownSelected;
 
         [SerializeField] private TMP_Dropdown _spawnTypeDropdown;
         [SerializeField] private TMP_InputField _timeInput;
@@ -51,7 +51,7 @@ namespace BRM.Sky.WaveEditor
         {
             get
             {
-                var dropValue = Mathf.Clamp(_spawnTypeDropdown.value, 0, (int) SpawnPrefab.Batch);
+                var dropValue = Mathf.Clamp(_spawnTypeDropdown.value, 0, (int) SpawnPrefab.Batch);//batch
                 return (SpawnPrefab) dropValue;
             }
             set => _spawnTypeDropdown.value = (int) value;
@@ -88,6 +88,7 @@ namespace BRM.Sky.WaveEditor
 
         #endregion
 
+        #region Public Interface
         public void UpdateDisplayText()
         {
             _iconPreview.sprite = WaveEditorPrefabFactory.Instance.GetSprite(SpawnPrefab);
@@ -107,22 +108,9 @@ namespace BRM.Sky.WaveEditor
             }
         }
 
-        private void Awake()
-        {
-            if (_spawnTypeDropdown.options.Count == 0)
-            {
-                SetBatchDropdowns(null);
-            }
-
-            _spawnTypeDropdown.onValueChanged.AddListener(OnDropSelected);
-            _timeInput.onValueChanged.AddListener(OnTimeValueChanged);
-        }
-
         public void SetBatchDropdowns(List<BatchData> batchDropdowns)
         {
-            var baseSet = EnumHelpers.GetAll<SpawnPrefab>();
-            baseSet.Remove(SpawnPrefab.Batch);
-            _spawnTypeDropdown.options = baseSet.Select(prefabType => new TMP_Dropdown.OptionData(prefabType.ToString(), WaveEditorPrefabFactory.Instance.GetSprite(prefabType))).ToList();
+            ResetSpawnEventDropdownOptions();
 
             if (batchDropdowns == null)
             {
@@ -134,6 +122,19 @@ namespace BRM.Sky.WaveEditor
                 var batch = batchDropdowns[i];
                 _spawnTypeDropdown.options.Add(new TMP_Dropdown.OptionData(batch.Name, WaveEditorPrefabFactory.Instance.GetSprite(SpawnPrefab.Batch)));
             }
+        }
+        #endregion
+        
+        #region Unity Lifecycle
+        private void Awake()
+        {
+            if (_spawnTypeDropdown.options.Count == 0)
+            {
+                ResetSpawnEventDropdownOptions();
+            }
+
+            _spawnTypeDropdown.onValueChanged.AddListener(OnDropSelected);
+            _timeInput.onValueChanged.AddListener(OnTimeValueChanged);
         }
 
         private void Start()
@@ -152,6 +153,15 @@ namespace BRM.Sky.WaveEditor
             {
                 Destroy(_spawnTypeDropdown.gameObject);
             }
+        }
+        #endregion
+        
+        #region Private interface
+        private void ResetSpawnEventDropdownOptions()
+        {
+            var baseSet = EnumHelpers.GetAll<SpawnPrefab>();
+            baseSet.Remove(SpawnPrefab.Batch);
+            _spawnTypeDropdown.options = baseSet.Select(prefabType => new TMP_Dropdown.OptionData(prefabType.ToString(), WaveEditorPrefabFactory.Instance.GetSprite(prefabType))).ToList();
         }
 
         private void OnTimeValueChanged(string timeValue)
@@ -175,11 +185,12 @@ namespace BRM.Sky.WaveEditor
         {
             BatchName = _spawnTypeDropdown.options[newValue].text;
             newValue = Mathf.Clamp(newValue, 0, (int) SpawnPrefab.Batch);
-            OnDropdownSelected?.Invoke(newValue);
+            OnDropdownSelected?.Invoke((SpawnPrefab) newValue);
             if (_prefabInstance != null)
             {
                 _selector.Select(_prefabInstance);
             }
         }
+        #endregion
     }
 }
