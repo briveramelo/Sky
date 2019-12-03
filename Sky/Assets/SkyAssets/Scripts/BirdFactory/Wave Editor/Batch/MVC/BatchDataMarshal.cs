@@ -42,7 +42,7 @@ namespace BRM.Sky.WaveEditor
                 var marshals = _spawnEventParent.GetComponentsRecursively<SpawnEventDataMarshal>(true);
                 for (int i = 0; i < marshals.Count; i++)
                 {
-                    marshals[i].Data = value.SpawnEventData[i];
+                    marshals[i].Data = value.SpawnEventData[i];//todo: fix bug here when loading twice (load once, click the first batch, then click load again)
                 }
             }
         }

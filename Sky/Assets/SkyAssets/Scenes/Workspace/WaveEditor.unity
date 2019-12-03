@@ -286,14 +286,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 11410288, guid: 60554f9710c5649689e1ffa39739f096, type: 3}
-      propertyPath: targetPixelHeight
-      value: 248
-      objectReference: {fileID: 0}
-    - target: {fileID: 11410288, guid: 60554f9710c5649689e1ffa39739f096, type: 3}
-      propertyPath: cameraZoom
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 427720, guid: 60554f9710c5649689e1ffa39739f096, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -340,11 +332,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2091520, guid: 60554f9710c5649689e1ffa39739f096, type: 3}
       propertyPath: field of view
-      value: 30.3793
+      value: 21.073217
       objectReference: {fileID: 0}
     - target: {fileID: 2091520, guid: 60554f9710c5649689e1ffa39739f096, type: 3}
       propertyPath: orthographic size
-      value: 2.715
+      value: 1.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 11410288, guid: 60554f9710c5649689e1ffa39739f096, type: 3}
+      propertyPath: targetPixelHeight
+      value: 248
+      objectReference: {fileID: 0}
+    - target: {fileID: 11410288, guid: 60554f9710c5649689e1ffa39739f096, type: 3}
+      propertyPath: cameraZoom
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60554f9710c5649689e1ffa39739f096, type: 3}
@@ -1079,6 +1079,63 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1447957622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1447957625}
+  - component: {fileID: 1447957624}
+  - component: {fileID: 1447957623}
+  m_Layer: 0
+  m_Name: Replayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1447957623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447957622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1841686013, guid: fa79a3604219a5b46a8929342c0c3568, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1447957624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447957622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdc4c85d7f9fcba48b8cc523b8e2a0fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _controller: {fileID: 1447957623}
+--- !u!4 &1447957625
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447957622}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.8159765, y: 0.0923415, z: -1.0392252}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1604601931
 GameObject:
   m_ObjectHideFlags: 0
@@ -1384,35 +1441,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _editorBirdPrefab: {fileID: 5216388185068851960, guid: da0ea8b93fcda3f44b573a7d9c9d0325,
     type: 3}
-  _birdSprites:
-  - PrefabType: 0
+  _spawnPrefabList:
+  - SpawnPrefabType: 0
     Sprite: {fileID: 21300000, guid: 2073ffcd6badc6c49b7a8eb0077c502c, type: 3}
-  - PrefabType: 1
+    Parent: {fileID: 0}
+  - SpawnPrefabType: 1
     Sprite: {fileID: 21300000, guid: d3ef3d2cec0ded24b84a5f2b97b54f00, type: 3}
-  - PrefabType: 3
-    Sprite: {fileID: 21300000, guid: 33a51b06a7bab2e41932a0fd32ce7a11, type: 3}
-  - PrefabType: 4
-    Sprite: {fileID: 21300000, guid: 42d917a7ec6aa4fc29b535c39da85338, type: 3}
-  - PrefabType: 5
-    Sprite: {fileID: 21300000, guid: ab41559737aa44e5083ac5a6f6e2247c, type: 3}
-  - PrefabType: 6
-    Sprite: {fileID: 21300000, guid: 9c4fbaa471b194841bbc74166814f4d9, type: 3}
-  - PrefabType: 7
-    Sprite: {fileID: 21300000, guid: 595c94ad8f68e458babad374d63a61d9, type: 3}
-  - PrefabType: 8
-    Sprite: {fileID: 21300000, guid: 004dc1f85d77609498c4caa17f39d314, type: 3}
-  - PrefabType: 9
-    Sprite: {fileID: 21300000, guid: a5525676df32345e287cae1cffbb1f96, type: 3}
-  - PrefabType: 10
-    Sprite: {fileID: 21300002, guid: 52ae7c7e3aa3d48bf8582b5197f96c78, type: 3}
-  - PrefabType: 11
-    Sprite: {fileID: 21300000, guid: 86fa671c3a16d44c49cd231a6100aae9, type: 3}
-  - PrefabType: 12
-    Sprite: {fileID: 21300000, guid: 2dbeac8382b5741a697bf0b5688486e4, type: 3}
-  - PrefabType: 2
+    Parent: {fileID: 0}
+  - SpawnPrefabType: 2
     Sprite: {fileID: 21300000, guid: 672e8b2fa5dc1b449a24775b658e13a7, type: 3}
-  - PrefabType: 13
+    Parent: {fileID: 0}
+  - SpawnPrefabType: 3
+    Sprite: {fileID: 21300000, guid: 33a51b06a7bab2e41932a0fd32ce7a11, type: 3}
+    Parent: {fileID: 0}
+  - SpawnPrefabType: 4
+    Sprite: {fileID: 21300000, guid: 42d917a7ec6aa4fc29b535c39da85338, type: 3}
+    Parent: {fileID: 0}
+  - SpawnPrefabType: 5
+    Sprite: {fileID: 21300000, guid: ab41559737aa44e5083ac5a6f6e2247c, type: 3}
+    Parent: {fileID: 0}
+  - SpawnPrefabType: 6
+    Sprite: {fileID: 21300000, guid: 9c4fbaa471b194841bbc74166814f4d9, type: 3}
+    Parent: {fileID: 0}
+  - SpawnPrefabType: 7
+    Sprite: {fileID: 21300000, guid: 595c94ad8f68e458babad374d63a61d9, type: 3}
+    Parent: {fileID: 0}
+  - SpawnPrefabType: 8
+    Sprite: {fileID: 21300000, guid: 004dc1f85d77609498c4caa17f39d314, type: 3}
+    Parent: {fileID: 0}
+  - SpawnPrefabType: 9
+    Sprite: {fileID: 21300000, guid: a5525676df32345e287cae1cffbb1f96, type: 3}
+    Parent: {fileID: 0}
+  - SpawnPrefabType: 10
+    Sprite: {fileID: 21300000, guid: 52ae7c7e3aa3d48bf8582b5197f96c78, type: 3}
+    Parent: {fileID: 0}
+  - SpawnPrefabType: 11
+    Sprite: {fileID: 21300000, guid: 86fa671c3a16d44c49cd231a6100aae9, type: 3}
+    Parent: {fileID: 0}
+  - SpawnPrefabType: 12
+    Sprite: {fileID: 21300000, guid: 2dbeac8382b5741a697bf0b5688486e4, type: 3}
+    Parent: {fileID: 0}
+  - SpawnPrefabType: 13
     Sprite: {fileID: 21300000, guid: ebd8324212c924a49bc2ce83595056dd, type: 3}
+    Parent: {fileID: 0}
 --- !u!4 &2144418442
 Transform:
   m_ObjectHideFlags: 0

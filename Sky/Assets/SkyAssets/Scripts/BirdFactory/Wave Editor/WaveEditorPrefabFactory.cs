@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using BRM.EventBrokers;
 using BRM.EventBrokers.Interfaces;
@@ -11,25 +10,19 @@ namespace BRM.Sky.WaveEditor
 {
     public class WaveEditorPrefabFactory : Singleton<WaveEditorPrefabFactory>
     {
+        [Serializable]
         private class SpawnPrefabData
         {
             public SpawnPrefab SpawnPrefabType;
-            public GameObject EditorPrefab;
-            public Transform Parent;
+            public Sprite Sprite;
+            [HideInInspector] public Transform Parent;
             public string PrefabName => SpawnPrefabType.ToString();
         }
 
-        [Serializable]
-        private class SpawnPrefabSprite
-        {
-            public SpawnPrefab PrefabType;
-            public Sprite Sprite;
-        }
-
         [SerializeField] private GameObject _editorBirdPrefab;
-        [SerializeField] private List<SpawnPrefabSprite> _birdSprites;
+        [SerializeField] private List<SpawnPrefabData> _spawnPrefabList;
 
-        private Dictionary<SpawnPrefab, SpawnPrefabData> _spawnPrefabData;
+        private Dictionary<SpawnPrefab, SpawnPrefabData> _spawnPrefabDict;
         private IBrokerEvents _eventBroker = new StaticEventBroker();
 
         protected override bool _destroyOnLoad => true;
@@ -37,7 +30,7 @@ namespace BRM.Sky.WaveEditor
         protected override void Awake()
         {
             base.Awake();
-            InitializeSpawnPrefabData();
+            _spawnPrefabDict = _spawnPrefabList.ToDictionary(item=>item.SpawnPrefabType);
             InitializeSpawnPrefabHierarchy();
             _eventBroker.Subscribe<WaveEditorTestData>(OnWaveEditorStateChange);
         }
@@ -52,25 +45,9 @@ namespace BRM.Sky.WaveEditor
             gameObject.SetActive(data.State == WaveEditorState.Editing);
         }
 
-        private void InitializeSpawnPrefabData()
-        {
-            _spawnPrefabData = new Dictionary<SpawnPrefab, SpawnPrefabData>();
-            var spawnPrefabTypes = EnumHelpers.GetAll<SpawnPrefab>().ToList();
-
-            foreach (var spawnPrefabType in spawnPrefabTypes)
-            {
-                var spawnData = new SpawnPrefabData
-                {
-                    SpawnPrefabType = spawnPrefabType,
-                    EditorPrefab = _editorBirdPrefab
-                };
-                _spawnPrefabData.Add(spawnPrefabType, spawnData);
-            }
-        }
-
         private void InitializeSpawnPrefabHierarchy()
         {
-            foreach (var kvp in _spawnPrefabData)
+            foreach (var kvp in _spawnPrefabDict)
             {
                 var prefabName = kvp.Value.PrefabName;
                 var hierarchyParent = new GameObject(prefabName);
@@ -81,9 +58,9 @@ namespace BRM.Sky.WaveEditor
 
         public GameObject CreateInstance(SpawnPrefab prefabType)
         {
-            if (_spawnPrefabData.TryGetValue(prefabType, out var data))
+            if (_spawnPrefabDict.TryGetValue(prefabType, out var data))
             {
-                var instance = Instantiate(data.EditorPrefab, data.Parent);
+                var instance = Instantiate(_editorBirdPrefab, data.Parent);
                 instance.GetComponent<SpriteRenderer>().sprite = GetSprite(prefabType);
                 return instance;
             }
@@ -94,10 +71,9 @@ namespace BRM.Sky.WaveEditor
 
         public Sprite GetSprite(SpawnPrefab prefabType)
         {
-            var birdSprite = _birdSprites.Find(bird => bird.PrefabType == prefabType);
-            if (birdSprite != null)
+            if (_spawnPrefabDict.TryGetValue(prefabType, out var data))
             {
-                return birdSprite.Sprite;
+                return data.Sprite;
             }
 
             Debug.LogError($"No Sprite found for spawnPrefabType:{prefabType.ToString()}");

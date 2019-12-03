@@ -15,3 +15,25 @@
     BirdOfParadise = 12,
     All = 13
 }
+
+namespace BRM.Sky.CustomWaveData
+{
+    public enum SpawnPrefab : ushort
+    {
+        //original birds
+        Pigeon,
+        Duck,
+        LeadDuck,
+        Albatross,
+        BabyCrow,
+        Murder,
+        Seagull,
+        TheMightyTentacles,
+        Pelican,
+        Shoebill,
+        Bat,
+        Eagle,
+        BirdOfParadise,
+        Batch, //special case, wherein a collection of spawn prefabs may exist.
+    }
+}
