@@ -495,7 +495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fitType: 0
-  targetPixelHeight: 239
+  targetPixelHeight: 155
   parallaxLayerCount: 10
   cameraZoom: 2
   pixelatedPostProcessing: 1
@@ -528,9 +528,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 110
-  field of view: 26.883091
+  field of view: 17.677412
   orthographic: 0
-  orthographic size: 2.3899999
+  orthographic size: 1.555
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1142,7 +1142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b24abf2753581004493707b3f9ecc046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioSource: {fileID: 8299046}
   _generateGutsClip: {fileID: 8300000, guid: b673a4a7ecb9844a88d71879cffffa9b, type: 3}
   _pauseClip: {fileID: 8300000, guid: 9a254ed0f883042ef93c6df9f2cbf93a, type: 3}
   _unPauseClip: {fileID: 8300000, guid: d9ac686a9258c48b3ba27c2266e035f2, type: 3}
@@ -1680,7 +1679,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1270268836166694926}
   - component: {fileID: 8033644165477668945}
-  - component: {fileID: 8732415512573801479}
+  - component: {fileID: 7941746683268101409}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1717,7 +1716,7 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
---- !u!114 &8732415512573801479
+--- !u!114 &7941746683268101409
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1726,7 +1725,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7099427656412314376}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 855120223, guid: 7dd5f038f6d6f9344982a09e17c2293f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalAxis: Horizontal

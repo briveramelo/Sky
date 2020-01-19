@@ -1,21 +1,21 @@
-﻿using BRM.DebugAdapter;
-using BRM.FileSerializers;
-using BRM.InteractionAnalysis.TmpPlayback;
-using BRM.InteractionAnalysis.UnityPlayback;
-using BRM.InteractionRecorder.UnityUi.Models;
+﻿using BRM.EventAnalysis.TmpPlayback;
+using BRM.EventAnalysis.UnityPlayback;
+using BRM.EventRecorder.UnityUi.Models;
 using BRM.TextSerializers;
 using UnityEngine;
 
 public class ReplayContext : MonoBehaviour
 {
     [SerializeField] private ReplayController _controller;
+    [SerializeField] private TextAsset _eventText;
+    
     private void Start()
     {
         var replayerFactory = new TmpReplayInstructionFactory();
         _controller.Initialize(replayerFactory.GetInstructions());
-        var fileSerializer = new TextFileSerializer(new UnityJsonSerializer(), new UnityDebugger());
-        var recording = fileSerializer.Read<EventAndAppPayload>($"{Application.dataPath}/InteractionRecorder/JSON/interaction_data1.json");
         
+        var serializer = new UnityJsonSerializer();
+        var recording = serializer.AsObject<EventAndAppPayload>(_eventText.text);
         _controller.Replay(recording);
     }
 }

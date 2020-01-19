@@ -428,17 +428,23 @@
  <Reference Include="BRM.EventBrokers.Interfaces">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/EventBrokers/BRM.EventBrokers.Interfaces.dll</HintPath>
  </Reference>
- <Reference Include="BRM.InteractionRecorder.TmpEditor">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/InteractionRecording/BRM.InteractionRecorder.TmpEditor.dll</HintPath>
+ <Reference Include="BRM.EventAnalysis.TmpPlayback">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/InteractionRecording/BRM.EventAnalysis.TmpPlayback.dll</HintPath>
  </Reference>
- <Reference Include="BRM.InteractionRecorder.TmpUi">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/InteractionRecording/BRM.InteractionRecorder.TmpUi.dll</HintPath>
+ <Reference Include="BRM.EventAnalysis.UnityPlayback">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/InteractionRecording/BRM.EventAnalysis.UnityPlayback.dll</HintPath>
  </Reference>
- <Reference Include="BRM.InteractionRecorder.UnityEditor">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/InteractionRecording/BRM.InteractionRecorder.UnityEditor.dll</HintPath>
+ <Reference Include="BRM.EventRecorder.TmpEditor">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/InteractionRecording/BRM.EventRecorder.TmpEditor.dll</HintPath>
  </Reference>
- <Reference Include="BRM.InteractionRecorder.UnityUi">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/InteractionRecording/BRM.InteractionRecorder.UnityUi.dll</HintPath>
+ <Reference Include="BRM.EventRecorder.TmpUi">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/InteractionRecording/BRM.EventRecorder.TmpUi.dll</HintPath>
+ </Reference>
+ <Reference Include="BRM.EventRecorder.UnityEditor">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/InteractionRecording/BRM.EventRecorder.UnityEditor.dll</HintPath>
+ </Reference>
+ <Reference Include="BRM.EventRecorder.UnityUi">
+ <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/InteractionRecording/BRM.EventRecorder.UnityUi.dll</HintPath>
  </Reference>
  <Reference Include="BRM.BinarySerializers.System">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/SerializationServices/BRM.BinarySerializers.System.dll</HintPath>
@@ -484,12 +490,6 @@
  </Reference>
  <Reference Include="UnityEditor.Purchasing">
  <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
- </Reference>
- <Reference Include="BRM.InteractionAnalysis.UnityPlayback">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/InteractionRecording/BRM.InteractionAnalysis.UnityPlayback.dll</HintPath>
- </Reference>
- <Reference Include="BRM.InteractionAnalysis.TmpPlayback">
- <HintPath>D:/Repos/PersonalProjects/Sky/Sky/Assets/Third-Party-Assets/BRMPackages/InteractionRecording/BRM.InteractionAnalysis.TmpPlayback.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>D:/Unity2019.2.14f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

@@ -1,0 +1,696 @@
+﻿{
+    "AppData": {
+        "AppVersion": "1.0",
+        "UnityVersion": "2019.2.14f1",
+        "GitSha": "",
+        "Server": "unassigned"
+    },
+    "DeviceData": {
+        "DeviceModel": "Alienware 15 R2 (Alienware)",
+        "DeviceType": "Desktop",
+        "GraphicsDeviceName": "NVIDIA GeForce GTX 970M",
+        "GraphicsDeviceType": "Direct3D11",
+        "MemorySizeMB": 32632,
+        "OperatingSystemFamily": "Windows",
+        "ScreenSizePixels": {
+            "x": 790,
+            "y": 444
+        }
+    },
+    "EventModels": {
+        "SceneChangedEvents": [],
+        "SimpleTouchEvents": [
+            {
+                "EventType": "TouchDownEvent",
+                "TimestampMillis": 1579408152869,
+                "IsFromEventSubscription": false,
+                "TouchPointPixels": {
+                    "x": 56,
+                    "y": 312
+                }
+            },
+            {
+                "EventType": "TouchUpEvent",
+                "TimestampMillis": 1579408153681,
+                "IsFromEventSubscription": false,
+                "TouchPointPixels": {
+                    "x": 56,
+                    "y": 312
+                }
+            },
+            {
+                "EventType": "TouchDownEvent",
+                "TimestampMillis": 1579408154917,
+                "IsFromEventSubscription": false,
+                "TouchPointPixels": {
+                    "x": 59,
+                    "y": 313
+                }
+            },
+            {
+                "EventType": "TouchUpEvent",
+                "TimestampMillis": 1579408155574,
+                "IsFromEventSubscription": false,
+                "TouchPointPixels": {
+                    "x": 59,
+                    "y": 313
+                }
+            },
+            {
+                "EventType": "TouchDownEvent",
+                "TimestampMillis": 1579408157050,
+                "IsFromEventSubscription": false,
+                "TouchPointPixels": {
+                    "x": 668,
+                    "y": 359
+                }
+            },
+            {
+                "EventType": "TouchUpEvent",
+                "TimestampMillis": 1579408157508,
+                "IsFromEventSubscription": false,
+                "TouchPointPixels": {
+                    "x": 668,
+                    "y": 359
+                }
+            },
+            {
+                "EventType": "TouchDownEvent",
+                "TimestampMillis": 1579408158326,
+                "IsFromEventSubscription": false,
+                "TouchPointPixels": {
+                    "x": 520,
+                    "y": 347
+                }
+            },
+            {
+                "EventType": "TouchUpEvent",
+                "TimestampMillis": 1579408158708,
+                "IsFromEventSubscription": false,
+                "TouchPointPixels": {
+                    "x": 520,
+                    "y": 347
+                }
+            },
+            {
+                "EventType": "TouchDownEvent",
+                "TimestampMillis": 1579408159572,
+                "IsFromEventSubscription": false,
+                "TouchPointPixels": {
+                    "x": 487,
+                    "y": 251
+                }
+            },
+            {
+                "EventType": "TouchUpEvent",
+                "TimestampMillis": 1579408160051,
+                "IsFromEventSubscription": false,
+                "TouchPointPixels": {
+                    "x": 487,
+                    "y": 251
+                }
+            },
+            {
+                "EventType": "TouchDownEvent",
+                "TimestampMillis": 1579408161424,
+                "IsFromEventSubscription": false,
+                "TouchPointPixels": {
+                    "x": 616,
+                    "y": 355
+                }
+            },
+            {
+                "EventType": "TouchUpEvent",
+                "TimestampMillis": 1579408161855,
+                "IsFromEventSubscription": false,
+                "TouchPointPixels": {
+                    "x": 616,
+                    "y": 355
+                }
+            }
+        ],
+        "IPointerEvents": [
+            {
+                "EventType": "IPointerEnterEvent",
+                "TimestampMillis": 1579408151440,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerEnterHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Name Entry",
+                "TouchPointPixels": {
+                    "x": 180,
+                    "y": 402
+                }
+            },
+            {
+                "EventType": "IPointerExitEvent",
+                "TimestampMillis": 1579408151484,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerExitHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Name Entry",
+                "TouchPointPixels": {
+                    "x": 161,
+                    "y": 381
+                }
+            },
+            {
+                "EventType": "IPointerEnterEvent",
+                "TimestampMillis": 1579408151508,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerEnterHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Subtitle Entry",
+                "TouchPointPixels": {
+                    "x": 152,
+                    "y": 372
+                }
+            },
+            {
+                "EventType": "IPointerExitEvent",
+                "TimestampMillis": 1579408151568,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerExitHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Subtitle Entry",
+                "TouchPointPixels": {
+                    "x": 124,
+                    "y": 353
+                }
+            },
+            {
+                "EventType": "IPointerEnterEvent",
+                "TimestampMillis": 1579408151568,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerEnterHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Scroll View/Viewport/Content/Deselect Batch Button",
+                "TouchPointPixels": {
+                    "x": 124,
+                    "y": 353
+                }
+            },
+            {
+                "EventType": "IPointerExitEvent",
+                "TimestampMillis": 1579408151619,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerExitHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Scroll View/Viewport/Content/Deselect Batch Button",
+                "TouchPointPixels": {
+                    "x": 99,
+                    "y": 338
+                }
+            },
+            {
+                "EventType": "IPointerEnterEvent",
+                "TimestampMillis": 1579408151619,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerEnterHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Scroll View/Viewport/Content/Add Batch Button",
+                "TouchPointPixels": {
+                    "x": 99,
+                    "y": 338
+                }
+            },
+            {
+                "EventType": "IPointerDownEvent",
+                "TimestampMillis": 1579408152869,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerDownHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Scroll View/Viewport/Content/Add Batch Button",
+                "TouchPointPixels": {
+                    "x": 56,
+                    "y": 312
+                }
+            },
+            {
+                "EventType": "IPointerUpEvent",
+                "TimestampMillis": 1579408153681,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerUpHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Scroll View/Viewport/Content/Add Batch Button",
+                "TouchPointPixels": {
+                    "x": 56,
+                    "y": 312
+                }
+            },
+            {
+                "EventType": "IPointerClickEvent",
+                "TimestampMillis": 1579408153681,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerClickHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Scroll View/Viewport/Content/Add Batch Button",
+                "TouchPointPixels": {
+                    "x": 56,
+                    "y": 312
+                }
+            },
+            {
+                "EventType": "IPointerExitEvent",
+                "TimestampMillis": 1579408153732,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerExitHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Scroll View/Viewport/Content/Add Batch Button",
+                "TouchPointPixels": {
+                    "x": 56,
+                    "y": 312
+                }
+            },
+            {
+                "EventType": "IPointerEnterEvent",
+                "TimestampMillis": 1579408153732,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerEnterHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Scroll View/Viewport/Content/Batch(Clone)/Button",
+                "TouchPointPixels": {
+                    "x": 56,
+                    "y": 312
+                }
+            },
+            {
+                "EventType": "IPointerDownEvent",
+                "TimestampMillis": 1579408154917,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerDownHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Scroll View/Viewport/Content/Batch(Clone)/Button",
+                "TouchPointPixels": {
+                    "x": 59,
+                    "y": 313
+                }
+            },
+            {
+                "EventType": "IPointerUpEvent",
+                "TimestampMillis": 1579408155574,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerUpHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Scroll View/Viewport/Content/Batch(Clone)/Button",
+                "TouchPointPixels": {
+                    "x": 59,
+                    "y": 313
+                }
+            },
+            {
+                "EventType": "IPointerClickEvent",
+                "TimestampMillis": 1579408155574,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerClickHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Scroll View/Viewport/Content/Batch(Clone)/Button",
+                "TouchPointPixels": {
+                    "x": 59,
+                    "y": 313
+                }
+            },
+            {
+                "EventType": "IPointerExitEvent",
+                "TimestampMillis": 1579408156071,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerExitHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Scroll View/Viewport/Content/Batch(Clone)/Button",
+                "TouchPointPixels": {
+                    "x": 174,
+                    "y": 313
+                }
+            },
+            {
+                "EventType": "IPointerEnterEvent",
+                "TimestampMillis": 1579408156071,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerEnterHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Scroll View/Viewport/Content/Batch(Clone)/Delete Button",
+                "TouchPointPixels": {
+                    "x": 174,
+                    "y": 313
+                }
+            },
+            {
+                "EventType": "IPointerExitEvent",
+                "TimestampMillis": 1579408156083,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerExitHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/Wave Timeline/Scroll View/Viewport/Content/Batch(Clone)/Delete Button",
+                "TouchPointPixels": {
+                    "x": 208,
+                    "y": 313
+                }
+            },
+            {
+                "EventType": "IPointerEnterEvent",
+                "TimestampMillis": 1579408156574,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerEnterHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Scroll View/Viewport/Content/Add Spawn Event Button",
+                "TouchPointPixels": {
+                    "x": 631,
+                    "y": 353
+                }
+            },
+            {
+                "EventType": "IPointerDownEvent",
+                "TimestampMillis": 1579408157050,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerDownHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Scroll View/Viewport/Content/Add Spawn Event Button",
+                "TouchPointPixels": {
+                    "x": 668,
+                    "y": 359
+                }
+            },
+            {
+                "EventType": "IPointerUpEvent",
+                "TimestampMillis": 1579408157508,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerUpHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Scroll View/Viewport/Content/Add Spawn Event Button",
+                "TouchPointPixels": {
+                    "x": 668,
+                    "y": 359
+                }
+            },
+            {
+                "EventType": "IPointerClickEvent",
+                "TimestampMillis": 1579408157508,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerClickHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Scroll View/Viewport/Content/Add Spawn Event Button",
+                "TouchPointPixels": {
+                    "x": 668,
+                    "y": 359
+                }
+            },
+            {
+                "EventType": "IPointerExitEvent",
+                "TimestampMillis": 1579408157763,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerExitHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Scroll View/Viewport/Content/Add Spawn Event Button",
+                "TouchPointPixels": {
+                    "x": 668,
+                    "y": 359
+                }
+            },
+            {
+                "EventType": "IPointerEnterEvent",
+                "TimestampMillis": 1579408157763,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerEnterHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Scroll View/Viewport/Content/SpawnEventButton(Clone)/Button",
+                "TouchPointPixels": {
+                    "x": 668,
+                    "y": 359
+                }
+            },
+            {
+                "EventType": "IPointerExitEvent",
+                "TimestampMillis": 1579408158055,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerExitHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Scroll View/Viewport/Content/SpawnEventButton(Clone)/Button",
+                "TouchPointPixels": {
+                    "x": 562,
+                    "y": 349
+                }
+            },
+            {
+                "EventType": "IPointerEnterEvent",
+                "TimestampMillis": 1579408158055,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerEnterHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown",
+                "TouchPointPixels": {
+                    "x": 562,
+                    "y": 349
+                }
+            },
+            {
+                "EventType": "IPointerDownEvent",
+                "TimestampMillis": 1579408158326,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerDownHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown",
+                "TouchPointPixels": {
+                    "x": 520,
+                    "y": 347
+                }
+            },
+            {
+                "EventType": "IPointerUpEvent",
+                "TimestampMillis": 1579408158708,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerUpHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown",
+                "TouchPointPixels": {
+                    "x": 520,
+                    "y": 347
+                }
+            },
+            {
+                "EventType": "IPointerClickEvent",
+                "TimestampMillis": 1579408158708,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerClickHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown",
+                "TouchPointPixels": {
+                    "x": 520,
+                    "y": 347
+                }
+            },
+            {
+                "EventType": "IPointerExitEvent",
+                "TimestampMillis": 1579408158778,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerExitHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown",
+                "TouchPointPixels": {
+                    "x": 520,
+                    "y": 347
+                }
+            },
+            {
+                "EventType": "IPointerEnterEvent",
+                "TimestampMillis": 1579408158778,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerEnterHandler",
+                "GameObjectName": "WaveEditor_Canvas/Blocker",
+                "TouchPointPixels": {
+                    "x": 520,
+                    "y": 347
+                }
+            },
+            {
+                "EventType": "IPointerExitEvent",
+                "TimestampMillis": 1579408159114,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerExitHandler",
+                "GameObjectName": "WaveEditor_Canvas/Blocker",
+                "TouchPointPixels": {
+                    "x": 514,
+                    "y": 329
+                }
+            },
+            {
+                "EventType": "IPointerEnterEvent",
+                "TimestampMillis": 1579408159114,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerEnterHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown",
+                "TouchPointPixels": {
+                    "x": 514,
+                    "y": 329
+                }
+            },
+            {
+                "EventType": "IPointerExitEvent",
+                "TimestampMillis": 1579408159249,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerExitHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown/Dropdown List/Viewport/Content/Item 0: Pigeon",
+                "TouchPointPixels": {
+                    "x": 499,
+                    "y": 292
+                }
+            },
+            {
+                "EventType": "IPointerEnterEvent",
+                "TimestampMillis": 1579408159249,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerEnterHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown/Dropdown List/Viewport/Content/Item 1: Duck",
+                "TouchPointPixels": {
+                    "x": 499,
+                    "y": 292
+                }
+            },
+            {
+                "EventType": "IPointerExitEvent",
+                "TimestampMillis": 1579408159365,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerExitHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown/Dropdown List/Viewport/Content/Item 1: Duck",
+                "TouchPointPixels": {
+                    "x": 489,
+                    "y": 262
+                }
+            },
+            {
+                "EventType": "IPointerEnterEvent",
+                "TimestampMillis": 1579408159365,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerEnterHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown/Dropdown List/Viewport/Content/Item 2: LeadDuck",
+                "TouchPointPixels": {
+                    "x": 489,
+                    "y": 262
+                }
+            },
+            {
+                "EventType": "IPointerDownEvent",
+                "TimestampMillis": 1579408159572,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerDownHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown/Dropdown List/Viewport/Content/Item 2: LeadDuck",
+                "TouchPointPixels": {
+                    "x": 487,
+                    "y": 251
+                }
+            },
+            {
+                "EventType": "IPointerUpEvent",
+                "TimestampMillis": 1579408160051,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerUpHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown/Dropdown List/Viewport/Content/Item 2: LeadDuck",
+                "TouchPointPixels": {
+                    "x": 487,
+                    "y": 251
+                }
+            },
+            {
+                "EventType": "IPointerClickEvent",
+                "TimestampMillis": 1579408160051,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerClickHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown/Dropdown List/Viewport/Content/Item 2: LeadDuck",
+                "TouchPointPixels": {
+                    "x": 487,
+                    "y": 251
+                }
+            },
+            {
+                "EventType": "IPointerEnterEvent",
+                "TimestampMillis": 1579408160229,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerEnterHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown",
+                "TouchPointPixels": {
+                    "x": 487,
+                    "y": 251
+                }
+            },
+            {
+                "EventType": "IPointerExitEvent",
+                "TimestampMillis": 1579408160238,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerExitHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown",
+                "TouchPointPixels": {
+                    "x": 487,
+                    "y": 251
+                }
+            },
+            {
+                "EventType": "IPointerEnterEvent",
+                "TimestampMillis": 1579408160773,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerEnterHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown",
+                "TouchPointPixels": {
+                    "x": 561,
+                    "y": 336
+                }
+            },
+            {
+                "EventType": "IPointerExitEvent",
+                "TimestampMillis": 1579408160986,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerExitHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown",
+                "TouchPointPixels": {
+                    "x": 591,
+                    "y": 348
+                }
+            },
+            {
+                "EventType": "IPointerEnterEvent",
+                "TimestampMillis": 1579408160986,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerEnterHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Scroll View/Viewport/Content/SpawnEventButton(Clone)/Button",
+                "TouchPointPixels": {
+                    "x": 591,
+                    "y": 348
+                }
+            },
+            {
+                "EventType": "IPointerDownEvent",
+                "TimestampMillis": 1579408161424,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerDownHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Scroll View/Viewport/Content/SpawnEventButton(Clone)/Button",
+                "TouchPointPixels": {
+                    "x": 616,
+                    "y": 355
+                }
+            },
+            {
+                "EventType": "IPointerUpEvent",
+                "TimestampMillis": 1579408161855,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerUpHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Scroll View/Viewport/Content/SpawnEventButton(Clone)/Button",
+                "TouchPointPixels": {
+                    "x": 616,
+                    "y": 355
+                }
+            },
+            {
+                "EventType": "IPointerClickEvent",
+                "TimestampMillis": 1579408161855,
+                "IsFromEventSubscription": false,
+                "ComponentType": "UnityEngine.EventSystems.IPointerClickHandler",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Scroll View/Viewport/Content/SpawnEventButton(Clone)/Button",
+                "TouchPointPixels": {
+                    "x": 616,
+                    "y": 355
+                }
+            }
+        ],
+        "TextInputEvents": [],
+        "SliderEvents": [],
+        "DropdownEvents": [
+            {
+                "EventType": "TmpDropdownEvent",
+                "TimestampMillis": 1579408160057,
+                "IsFromEventSubscription": true,
+                "ComponentType": "TMPro.TMP_Dropdown",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown",
+                "TouchPointPixels": {
+                    "x": 487,
+                    "y": 251
+                },
+                "PropertyName": "value",
+                "NewIntValue": 2,
+                "NewStringValue": "LeadDuck"
+            }
+        ],
+        "ToggleEvents": [
+            {
+                "EventType": "ToggleEvent",
+                "TimestampMillis": 1579408160059,
+                "IsFromEventSubscription": true,
+                "ComponentType": "UnityEngine.UI.Toggle",
+                "GameObjectName": "WaveEditor_Canvas/Design/BatchView/Spawn Type Dropdown/Dropdown List/Viewport/Content/Item 2: LeadDuck",
+                "TouchPointPixels": {
+                    "x": 487,
+                    "y": 251
+                },
+                "PropertyName": "isOn",
+                "NewValue": true
+            }
+        ]
+    }
+}
